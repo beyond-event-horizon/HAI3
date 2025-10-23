@@ -13,12 +13,13 @@
 - Export types with component
 - Follow SOLID and DRY principles
 
-### Enums - Vertical Slice
-- Use enums for string constants - NO hardcoded strings
-- Define in slice file (NOT central constants.ts)
-- Export from slice files
-- BAD: `theme: 'light'` GOOD: `theme: Theme.Light`
-- BAD: `'menu'` GOOD: `LayoutDomains.Menu`
+### Enums & Types - NO Hardcoded Strings
+- Use enums OR derived types for string constants - NO hardcoded strings
+- Enums: Define in slice file when slice owns the values
+- Types: Use `keyof typeof` when source of truth exists elsewhere
+- BAD: `theme: 'light'` GOOD: `theme: ThemeName` (derived from themes object)
+- GOOD: `domain: LayoutDomains.Menu` (enum in layoutSlice)
+- Prefer types over duplicate enums (DRY principle)
 
 ### Documentation
 - NO emoji in .md files
@@ -39,6 +40,12 @@
 - Keep files under 100 lines when possible
 - No duplications across files - reference instead
 - Each file = one concern only
+
+**Self-Improvement Rule:**
+- Made a mistake during contribution? Check if guidelines caused it
+- If guidelines have gap -> add decision rule to prevent future mistakes
+- Always verify your .ai edits follow the rules above
+- Examples are OK if they prevent mistakes
 
 ---
 

@@ -15,3 +15,4 @@ export { Button, type ButtonProps, ButtonVariant, ButtonSize } from './base/butt
 
 // Composite components
 export { IconButton, type IconButtonProps, IconButtonSize } from './composite/buttons/IconButton';
+export { ThemeSelector, type ThemeSelectorProps } from './composite/selectors/ThemeSelector';

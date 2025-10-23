@@ -13,6 +13,13 @@
 - shadcn -> base -> composite
 - NEVER skip layers - composite imports from base, NOT shadcn
 
+**Decision Rule (AI: READ THIS):**
+- Creating new component? Check imports:
+  - Imports from `@/uikit/base/_shadcn/*` -> PUT IN `base/`
+  - Imports from `@/uikit/base/*` -> PUT IN `composite/`
+  - Example: Button imports shadcn -> `base/buttons/Button.tsx`
+  - Example: ThemeToggle imports Button -> `composite/buttons/ThemeToggle.tsx`
+
 **Component Rules:**
 - NO Redux, NO business logic, NO API calls
 - Pure presentational only

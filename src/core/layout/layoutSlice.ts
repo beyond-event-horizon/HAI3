@@ -1,13 +1,9 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { ThemeName } from '@/styles/themes';
 
 /**
  * Layout slice for managing layout state
  */
-
-export enum Theme {
-  Light = 'light',
-  Dark = 'dark',
-}
 
 export enum LayoutDomains {
   Header = 'header',
@@ -22,25 +18,22 @@ export enum LayoutDomains {
 const LAYOUT_SLICE_NAME = 'layout';
 
 interface LayoutState {
-  theme: Theme;
+  theme: ThemeName;
 }
 
 const initialState: LayoutState = {
-  theme: Theme.Light,
+  theme: 'light',
 };
 
 const layoutSlice = createSlice({
   name: LAYOUT_SLICE_NAME,
   initialState,
   reducers: {
-    setTheme: (state, action: PayloadAction<Theme>) => {
+    setTheme: (state, action: PayloadAction<ThemeName>) => {
       state.theme = action.payload;
-    },
-    toggleTheme: (state) => {
-      state.theme = state.theme === Theme.Light ? Theme.Dark : Theme.Light;
     },
   },
 });
 
-export const { setTheme, toggleTheme } = layoutSlice.actions;
+export const { setTheme } = layoutSlice.actions;
 export default layoutSlice.reducer;
