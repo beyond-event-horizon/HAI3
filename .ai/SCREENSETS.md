@@ -6,7 +6,7 @@
 # Stack Specifics
 - Redux Toolkit for state management (screenset-specific slices)
 - Uses UI Kit components (see .ai/UIKIT.md)
-- Uses UI Core layout (see .ai/CORE.md)
+- Uses UI Core (see .ai/CORE.md)
 - Uses themes (see .ai/THEMES.md)
 
 # Structure
