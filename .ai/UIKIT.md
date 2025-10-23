@@ -30,32 +30,19 @@ src/uikit/
 - Emit events via callbacks
 - Reusable across all screensets
 
+## Component Composition (AI: READ THIS)
+**Hierarchy:**
+- shadcn -> UI Kit Base -> UI Kit Composite
+- Base components (Button) wrap shadcn from `@/uikit/_shadcn`
+- Composite components (IconButton) compose from UI Kit base
+- NEVER skip layers - Composite must use UI Kit base, not shadcn directly
+
 # Component Requirements
 - MUST support theming from `src/styles/themes`
 - MUST be responsive
 - MUST handle loading/error states (if applicable)
 - MUST support accessibility (ARIA attributes, keyboard nav)
 - Export component + types from index.ts
-
-# Component Structure
-```typescript
-// Component.types.ts
-export interface ComponentProps {
-  // props definition
-}
-
-// Component.tsx
-import React from 'react';
-import { ComponentProps } from './Component.types';
-
-export const Component: React.FC<ComponentProps> = (props) => {
-  // implementation
-};
-
-// index.ts
-export { Component } from './Component';
-export type { ComponentProps } from './Component.types';
-```
 
 # Theming
 - Use theme tokens from `src/styles/themes`
@@ -77,57 +64,23 @@ export type { ComponentProps } from './Component.types';
 - Follow responsive-first approach
 - Use Tailwind theme configuration
 
-# Component Documentation
-- Add JSDoc comments for complex components
-- Document all props with descriptions
-- Provide usage examples in comments
-- Note any special behaviors or constraints
+# Key Patterns (AI: READ THIS)
 
-# Testing Considerations
-- Design components to be easily testable
-- Avoid side effects
-- Keep logic minimal and pure
-- Support test IDs via props if needed
+**Enums:**
+- Define in `[category]/types.ts`
+- Export from component files
+- ALWAYS use enums, NEVER string literals
 
-# Examples
-```typescript
-// Button component example
-export interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'ghost';
-  size?: 'sm' | 'md' | 'lg';
-  disabled?: boolean;
-  loading?: boolean;
-  children: React.ReactNode;
-  onClick?: () => void;
-  className?: string;
-}
+**Component Structure:**
+- Extend shadcn interface: `extends ShadcnButtonProps`
+- Use `React.forwardRef` for ref forwarding
+- Customize with `Omit` when needed: `Omit<ShadcnButtonProps, 'size'>`
+- Export component + types + enums from index
 
-export const Button: React.FC<ButtonProps> = ({
-  variant = 'primary',
-  size = 'md',
-  disabled = false,
-  loading = false,
-  children,
-  onClick,
-  className,
-}) => {
-  return (
-    <button
-      className={cn(
-        'rounded font-medium transition-colors',
-        variantStyles[variant],
-        sizeStyles[size],
-        disabled && 'opacity-50 cursor-not-allowed',
-        className
-      )}
-      disabled={disabled || loading}
-      onClick={onClick}
-    >
-      {loading ? <Spinner /> : children}
-    </button>
-  );
-};
-```
+**File Organization:**
+- `types.ts` = enums
+- `Component.tsx` = component implementation
+- `index.ts` = public exports
 
 # Reference Documents
 - **docs/MANIFEST.md** - Core philosophy, principles, and vision

@@ -10,4 +10,5 @@ export { Sidebar, type SidebarProps } from './layout/Sidebar';
 export { Popup, type PopupProps } from './layout/Popup';
 export { Overlay, type OverlayProps } from './layout/Overlay';
 
-export { Button, type ButtonProps } from './buttons/Button';
+export { Button, type ButtonProps, ButtonVariant, ButtonSize } from './buttons/Button';
+export { IconButton, type IconButtonProps, IconButtonSize } from './buttons/IconButton';
