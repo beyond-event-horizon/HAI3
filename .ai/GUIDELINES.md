@@ -32,48 +32,9 @@
 
 ---
 
-## Contribution Guidelines by Area
+## Routing (AI: READ THIS)
 
-**Determine your contribution target and use the appropriate guidelines:**
-
-## Contributing to UI Core
-Working on: `src/core`
-
-**USE:** `.ai/CORE.md`
-
-Core includes: Layout system, Redux store, state management, hooks
-
----
-
-## Contributing to UI Kit
-Working on: `src/uikit`
-
-**USE:** `.ai/UIKIT.md`
-
-UI Kit includes: Reusable business-logic-free components
-
----
-
-## Contributing to Themes
-Working on: `src/styles/themes`
-
-**USE:** `.ai/THEMES.md`
-
-Themes include: Visual appearance, colors, typography, spacing
-
----
-
-## Contributing to Screensets
-Working on: `src/screensets/[name]`
-
-**USE:** `.ai/SCREENSETS.md`
-
-Screensets include: Application screens, business logic, screen-specific state
-
-**Note:** When working on screensets, you can ADD new UI Kit components and themes (see respective guidelines), but CANNOT modify existing ones unless explicitly prompted.
-
----
-
-## Additional Context
-- **docs/MANIFEST.md** - Core philosophy and vision
-- **docs/MODEL.md** - Domain models and glossary
+**Target `src/core` -> USE: .ai/CORE.md**
+**Target `src/uikit` -> USE: .ai/UIKIT.md**
+**Target `src/styles/themes` -> USE: .ai/THEMES.md**
+**Target `src/screensets` -> USE: .ai/SCREENSETS.md**
