@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button as ShadcnButton, type ButtonProps as ShadcnButtonProps } from '@/uikit/_shadcn/button';
+import { Button as ShadcnButton, type ButtonProps as ShadcnButtonProps } from '@/uikit/base/_shadcn/button';
 import { ButtonVariant, ButtonSize } from './types';
 
 /**
