@@ -1,6 +1,6 @@
 /**
- * HAI3 UI-Core Layout Components
- * Exports all layout components for easy importing
+ * HAI3 UI-Core Components
+ * Exports all UI Kit components for easy importing
  */
 
 export { Header, type HeaderProps } from './layout/Header';
@@ -9,3 +9,5 @@ export { Menu, type MenuProps, type MenuItem } from './layout/Menu';
 export { Sidebar, type SidebarProps } from './layout/Sidebar';
 export { Popup, type PopupProps } from './layout/Popup';
 export { Overlay, type OverlayProps } from './layout/Overlay';
+
+export { Button, type ButtonProps } from './buttons/Button';
