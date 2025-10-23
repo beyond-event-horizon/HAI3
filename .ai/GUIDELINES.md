@@ -29,30 +29,20 @@
 
 ---
 
-## Contributing to .ai Guidelines
+## Self-Improvement Rule
 
-**Rules for .ai/*.md files:**
-- Optimize for AI consumption, NOT humans
-- Remove examples unless critical for understanding
-- Remove structure diagrams (AI can explore codebase)
-- No redundant explanations
-- Use "AI: READ THIS" markers for critical sections
-- Keep files under 100 lines when possible
-- No duplications across files - reference instead
-- Each file = one concern only
-
-**Self-Improvement Rule:**
 - Made a mistake during contribution? Check if guidelines caused it
 - If guidelines have gap -> add decision rule to prevent future mistakes
-- Always verify your .ai edits follow the rules above
+- Always verify your .ai edits follow .ai/targets/AI.md rules
 - Examples are OK if they prevent mistakes
 
 ---
 
 ## Routing (AI: READ THIS)
 
-**Target `src/core` -> USE: .ai/CORE.md**
-**Target `src/uikit` -> USE: .ai/UIKIT.md**
-**Target `src/styles/themes` -> USE: .ai/THEMES.md**
-**Target `src/screensets` -> USE: .ai/SCREENSETS.md**
-**Styling questions -> USE: .ai/STYLING.md**
+**Target `src/core` -> USE: .ai/targets/UICORE.md**
+**Target `src/uikit` -> USE: .ai/targets/UIKIT.md**
+**Target `src/styles/themes` -> USE: .ai/targets/THEMES.md**
+**Target `src/screensets` -> USE: .ai/targets/SCREENSETS.md**
+**Styling questions -> USE: .ai/targets/STYLING.md**
+**Contributing to .ai docs -> USE: .ai/targets/AI.md**

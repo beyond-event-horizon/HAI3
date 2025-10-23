@@ -43,7 +43,6 @@
 - Handle loading/error states
 
 **Draft Screenset:**
-- Wireframes, NOT pixel-perfect
 - Stickers: GREEN=behavior, YELLOW=hints, ORANGE=add
 - Multiple mockups = different states
 - New screen = generate 5 versions
