@@ -34,6 +34,7 @@
 - ALWAYS use UI Kit components
 - Use UI Core Layout (Header, Footer, Menu, Sidebar)
 - Screen = UI Kit + business logic + screenset state
+- Styling: ONLY layout (flex, grid, gap) - NO visual styles (see .ai/STYLING.md)
 
 **Data Simulation:**
 - Mock data in `data.ts`
@@ -46,7 +47,3 @@
 - Stickers: GREEN=behavior, YELLOW=hints, ORANGE=add
 - Multiple mockups = different states
 - New screen = generate 5 versions
-
-**Reference:**
-- **.ai/UIKIT.md** - For adding components
-- **.ai/CORE.md** - For using layout

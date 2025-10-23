@@ -14,6 +14,7 @@
 3. Orchestrators ONLY accept `children` - NO domain props
 4. Domains wrap UI Kit components
 5. Domains self-hide via `visible: boolean` in slice
+6. Styling: ONLY layout (flex, grid, gap) - NO visual styles (see .ai/STYLING.md)
 
 **Files:**
 - `domains/[name]/Component.tsx` = useAppSelector, if (!visible) return null
@@ -27,14 +28,10 @@
 - Actions MUST have: setDomainConfig, setDomainVisible
 - Init: `useEffect(() => dispatch(setDomainConfig({...config, visible:true})), [])`
 
-**Type Location:**
+**Types & Enums:**
 - Domain types -> export from `domainSlice.ts`
 - Global types -> `src/core/types.ts`
-
-**Enums:**
-- MUST use enums from slice files
-- Export from `[domain]Slice.ts`
-- BAD: `'menu'` GOOD: `LayoutDomains.Menu`
+- Enums -> see GUIDELINES.md (vertical slice approach)
 
 **Anti-Patterns:**
 - BAD: `<Layout logo={x}/>` GOOD: `<Layout>{children}</Layout>`

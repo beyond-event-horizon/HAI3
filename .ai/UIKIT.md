@@ -20,19 +20,17 @@
 - MUST use enums for variants (NEVER string unions)
 - MUST support theming via Tailwind theme tokens
 - MUST be accessible (ARIA, keyboard nav)
+- Styling: base handles ALL visual styles, composite ONLY layout (see .ai/STYLING.md)
 
 **TypeScript:**
 - Base: `extends ShadcnButtonProps` (full compatibility)
 - Composite: `Omit<BaseProps, 'prop'>` when customizing
 - Use `React.forwardRef` for ref forwarding
-- Define enums in `[category]/types.ts`
-- Export: component + types + enums from base
+- Enums in `base/[category]/types.ts` (see GUIDELINES.md)
+- Export: component + types + enums
 
 **Files:**
 - `base/[category]/types.ts` = enums
 - `base/[category]/Component.tsx` = implementation
 - `composite/[category]/Component.tsx` = composition
 - `uikit/index.ts` = public exports
-
-# Reference Documents
-- **.ai/THEMES.md** - Theming guidelines
