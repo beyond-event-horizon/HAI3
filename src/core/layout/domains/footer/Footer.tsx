@@ -2,7 +2,7 @@ import React from 'react';
 import { Footer as UIKitFooter, ThemeSelector } from '@/uikit';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { setTheme } from '@/core/layout/layoutSlice';
-import type { ThemeName } from '@/styles/themes';
+import type { ThemeName } from '@/styles/themeRegistry';
 
 /**
  * Core Footer component

@@ -2,7 +2,7 @@
  * Dark theme for HAI3
  */
 
-import type { Theme } from './types';
+import type { Theme } from '../themeTypes';
 
 export const darkTheme: Theme = {
   name: 'dark',

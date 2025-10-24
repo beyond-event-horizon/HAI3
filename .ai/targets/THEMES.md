@@ -4,31 +4,27 @@
 
 # CRITICAL RULES (AI: READ THIS)
 
-**System:**
-- CSS variables for runtime switching
-- Tailwind configured to use theme tokens
-- Components reference tokens, NOT hardcoded values
+**System (AI: READ THIS):**
+- Theme objects = SINGLE source of truth (TypeScript)
+- CSS variables generated dynamically via `applyTheme()`
+- NO duplication between theme objects and CSS
+- Tailwind/shadcn use generated CSS variables
 
 **Files:**
-- `styles/themes/[name].ts` = theme definition
-- `styles/themes/types.ts` = Theme interface
-- `styles/globals.css` = CSS variable definitions
-- Implement Theme interface completely
+- `styles/themes/[name].ts` = theme definitions ONLY (SOURCE OF TRUTH)
+- `styles/themeTypes.ts` = Theme interface
+- `styles/applyTheme.ts` = dynamic CSS var generator
+- `styles/themeRegistry.ts` = theme exports + themes object
+- `styles/globals.css` = only default values for SSR
 
-**Token Structure:**
-- Semantic names: primary, secondary, accent, background, foreground, muted, border
-- State colors: error, warning, success, info
-- Typography: fontFamily, fontSize, fontWeight
-- Spacing: xs, sm, md, lg, xl (use rem)
-- Border radius: none, sm, md, lg, full
-- Shadows: sm, md, lg
+**Folder Structure:**
+- `themes/` = theme definition files ONLY
+- Supporting files (types, utils, registry) at `styles/` level
 
-**Adding Themes:**
-1. Create `[name].ts` in `src/styles/themes`
-2. Implement Theme interface
-3. Export from `src/styles/themes/index.ts`
-4. Add CSS variables in `globals.css`
-5. Test with all UI Kit components
+**Adding Themes (2 STEPS ONLY):**
+1. Create `[name].ts` in `src/styles/themes/` (implement Theme interface from themeTypes.ts)
+2. Import in `src/styles/themeRegistry.ts` and add to `themes` object + exports
+DONE - applyTheme automatically uses new theme from registry
 
 **Modifying Themes:**
 - Screensets: CANNOT modify existing themes

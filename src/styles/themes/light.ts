@@ -2,7 +2,7 @@
  * Light theme for HAI3
  */
 
-import type { Theme } from './types';
+import type { Theme } from '../themeTypes';
 
 export const lightTheme: Theme = {
   name: 'light',

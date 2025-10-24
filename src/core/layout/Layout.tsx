@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAppSelector } from '@/core/hooks/useRedux';
+import { applyTheme } from '@/styles/applyTheme';
 import { Header } from './domains/header';
 import { Footer } from './domains/footer';
 import { Menu } from './domains/menu';
@@ -21,9 +22,9 @@ export interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { theme } = useAppSelector((state) => state.layout);
 
-  // Apply theme to document
+  // Apply theme dynamically - generates CSS variables from theme objects
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    applyTheme(theme);
   }, [theme]);
 
   return (

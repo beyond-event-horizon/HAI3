@@ -6,8 +6,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/uikit/base/_shadcn/select';
-import type { ThemeName } from '@/styles/themes';
-import { themes } from '@/styles/themes';
+import type { ThemeName } from '@/styles/themeRegistry';
+import { themes } from '@/styles/themeRegistry';
 
 /**
  * ThemeSelector component for HAI3 UI-Core
@@ -29,7 +29,10 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   const themeNames = Object.keys(themes) as ThemeName[];
   
   const getThemeLabel = (theme: ThemeName): string => {
-    return theme.charAt(0).toUpperCase() + theme.slice(1);
+    return theme
+      .split('-')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
   };
 
   return (

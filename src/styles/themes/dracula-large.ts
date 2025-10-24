@@ -1,12 +1,12 @@
 /**
- * Dracula theme for HAI3
- * Based on the classic Dracula color scheme
+ * Dracula Large theme for HAI3
+ * Based on Dracula theme with larger spacing and typography
  */
 
 import type { Theme } from '../themeTypes';
 
-export const draculaTheme: Theme = {
-  name: 'dracula',
+export const draculaLargeTheme: Theme = {
+  name: 'dracula-large',
   colors: {
     primary: 'hsl(265 89% 78%)',      // Purple #bd93f9
     secondary: 'hsl(225 27% 51%)',    // Gray-blue #6272a4
@@ -21,13 +21,13 @@ export const draculaTheme: Theme = {
     info: 'hsl(191 97% 77%)',         // Cyan #8be9fd
   },
   spacing: {
-    xs: '0.25rem',
-    sm: '0.5rem',
-    md: '1rem',
-    lg: '1.5rem',
-    xl: '2rem',
-    '2xl': '3rem',
-    '3xl': '4rem',
+    xs: '0.375rem',   // 1.5x
+    sm: '0.75rem',    // 1.5x
+    md: '1.5rem',     // 1.5x
+    lg: '2.25rem',    // 1.5x
+    xl: '3rem',       // 1.5x
+    '2xl': '4.5rem',  // 1.5x
+    '3xl': '6rem',    // 1.5x
   },
   typography: {
     fontFamily: {
@@ -35,15 +35,15 @@ export const draculaTheme: Theme = {
       mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'monospace'],
     },
     fontSize: {
-      xs: '0.75rem',
-      sm: '0.875rem',
-      base: '1rem',
-      lg: '1.125rem',
-      xl: '1.25rem',
-      '2xl': '1.5rem',
-      '3xl': '1.875rem',
-      '4xl': '2.25rem',
-      '5xl': '3rem',
+      xs: '0.9375rem',   // 1.25x
+      sm: '1.09375rem',  // 1.25x
+      base: '1.25rem',   // 1.25x
+      lg: '1.40625rem',  // 1.25x
+      xl: '1.5625rem',   // 1.25x
+      '2xl': '1.875rem', // 1.25x
+      '3xl': '2.34375rem', // 1.25x
+      '4xl': '2.8125rem',  // 1.25x
+      '5xl': '3.75rem',    // 1.25x
     },
     fontWeight: {
       normal: '400',
@@ -59,10 +59,10 @@ export const draculaTheme: Theme = {
   },
   borderRadius: {
     none: '0',
-    sm: '0.125rem',
-    md: '0.25rem',
-    lg: '0.5rem',
-    xl: '1rem',
+    sm: '0.1875rem',  // Slightly larger
+    md: '0.375rem',   // Slightly larger
+    lg: '0.75rem',    // Slightly larger
+    xl: '1.5rem',     // Slightly larger
     full: '9999px',
   },
   shadows: {

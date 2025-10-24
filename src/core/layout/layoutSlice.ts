@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { ThemeName } from '@/styles/themes';
+import type { ThemeName } from '@/styles/themeRegistry';
 
 /**
  * Layout slice for managing layout state
