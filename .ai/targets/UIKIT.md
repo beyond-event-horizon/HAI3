@@ -4,6 +4,11 @@
 
 # CRITICAL RULES (AI: READ THIS)
 
+**Scope:**
+- These rules apply to GLOBAL UI Kit at `src/uikit/`
+- Screensets can have LOCAL UI Kits at `screensets/[name]/uikit/`
+- Local UI Kits: ONLY composite components (see .ai/targets/SCREENSETS.md)
+
 **Folders:**
 - `base/` = wrap shadcn from `@/uikit/base/_shadcn`, export with HAI3 API
 - `composite/` = compose from `@/uikit/base/[category]`
@@ -27,7 +32,7 @@
 - MUST use enums for variants (NEVER string unions)
 - MUST support theming via Tailwind theme tokens
 - MUST be accessible (ARIA, keyboard nav)
-- Styling: base handles ALL visual styles, composite ONLY layout (see .ai/STYLING.md)
+- Styling: base handles ALL visual styles, composite ONLY layout (see .ai/targets/STYLING.md)
 
 **TypeScript:**
 - Base: `extends ShadcnButtonProps` (full compatibility)

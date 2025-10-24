@@ -6,7 +6,7 @@
 
 **Stack:**
 - Redux Toolkit for state management
-- Uses UI Kit from `@/uikit` (see .ai/UIKIT.md)
+- Uses UI Kit from `@/uikit` (see .ai/targets/UIKIT.md)
 
 **Domain Pattern - STRICT:**
 1. NO prop drilling - Redux ONLY
@@ -14,7 +14,7 @@
 3. Orchestrators ONLY accept `children` - NO domain props
 4. Domains wrap UI Kit components
 5. Domains self-hide via `visible: boolean` in slice
-6. Styling: ONLY layout (flex, grid, gap) - NO visual styles (see .ai/STYLING.md)
+6. Styling: ONLY layout (flex, grid, gap) - NO visual styles (see .ai/targets/STYLING.md)
 
 **Files:**
 - `domains/[name]/Component.tsx` = useAppSelector, if (!visible) return null
