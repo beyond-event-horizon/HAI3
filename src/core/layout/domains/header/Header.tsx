@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header as UIKitHeader } from '@/uikit';
+import { Header as UIKitHeader, IconButton, ButtonVariant, IconButtonSize } from '@/uikit';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { toggleMenu } from '../menu/menuSlice';
 
@@ -23,9 +23,10 @@ export const Header: React.FC<HeaderProps> = () => {
   return (
     <UIKitHeader logo={logo} actions={actions}>
       {showMenuToggle && (
-        <button
+        <IconButton
+          variant={ButtonVariant.Ghost}
+          size={IconButtonSize.Small}
           onClick={handleMenuToggle}
-          className="p-2 rounded hover:bg-accent transition-colors"
           aria-label="Toggle menu"
         >
           <svg
@@ -42,7 +43,7 @@ export const Header: React.FC<HeaderProps> = () => {
             <line x1="3" y1="6" x2="21" y2="6" />
             <line x1="3" y1="18" x2="21" y2="18" />
           </svg>
-        </button>
+        </IconButton>
       )}
     </UIKitHeader>
   );

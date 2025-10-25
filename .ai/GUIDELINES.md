@@ -2,78 +2,47 @@
 
 ## Common Rules for All Contributions
 
-### Programming
-- TypeScript with strict typing - NEVER `any`, use `unknown`
-- Explicit types for ALL variables, params, returns
+### Stack
+- React 18 + TypeScript + Tailwind CSS + Vite
+
+### TypeScript - STRICT
+- Types for ALL variables, params, returns
+- NEVER `any`, use `unknown`
 - Explicit generics when possible
+- `type` for objects, `interface` for props
+- Export types with component
 - Follow SOLID and DRY principles
 
-### Stack
-- React 18
-- TypeScript
-- Tailwind CSS for styling
-- Vite for build tooling
-
-### TypeScript
-- Types for ALL variables, params, returns
-- Export types with component
-- `type` for objects, `interface` for props
-- NEVER `any`, use `unknown`
-- Use enums for string constants - NO hardcoded strings
-  - Define in slice file (vertical slice approach)
-  - BAD:  `status: 'active' | 'inactive'` -> GOOD: `status: Status.Active`
-  - Export enums from slice files
+### Enums & Types - NO Hardcoded Strings
+- Use enums OR derived types for string constants - NO hardcoded strings
+- Enums: Define in slice file when slice owns the values
+- Types: Use `keyof typeof` when source of truth exists elsewhere
+- BAD: `theme: 'light'` GOOD: `theme: ThemeName` (derived from themes object)
+- GOOD: `domain: LayoutDomains.Menu` (enum in layoutSlice)
+- Prefer types over duplicate enums (DRY principle)
 
 ### Documentation
-- NO emoji in documentation files (*.md)
-- Use ASCII characters only (no Unicode symbols)
-- Use ASCII alternatives: -> for arrows, BAD:/GOOD: for indicators
-- Clear, professional, technical language
+- NO emoji in .md files
+- ASCII only (no Unicode)
+- Use -> for arrows, BAD:/GOOD: for indicators
+- Technical, concise language
 
 ---
 
-## Contribution Guidelines by Area
+## Self-Improvement Rule
 
-**Determine your contribution target and use the appropriate guidelines:**
-
-## Contributing to UI Core
-Working on: `src/core`
-
-**USE:** `.ai/CORE.md`
-
-Core includes: Layout system, Redux store, state management, hooks
+- Made a mistake during contribution? Check if guidelines caused it
+- If guidelines have gap -> add decision rule to prevent future mistakes
+- Always verify your .ai edits follow .ai/targets/AI.md rules
+- Examples are OK if they prevent mistakes
 
 ---
 
-## Contributing to UI Kit
-Working on: `src/uikit`
+## Routing (AI: READ THIS)
 
-**USE:** `.ai/UIKIT.md`
-
-UI Kit includes: Reusable business-logic-free components
-
----
-
-## Contributing to Themes
-Working on: `src/styles/themes`
-
-**USE:** `.ai/THEMES.md`
-
-Themes include: Visual appearance, colors, typography, spacing
-
----
-
-## Contributing to Screensets
-Working on: `src/screensets/[name]`
-
-**USE:** `.ai/SCREENSETS.md`
-
-Screensets include: Application screens, business logic, screen-specific state
-
-**Note:** When working on screensets, you can ADD new UI Kit components and themes (see respective guidelines), but CANNOT modify existing ones unless explicitly prompted.
-
----
-
-## Additional Context
-- **docs/MANIFEST.md** - Core philosophy and vision
-- **docs/MODEL.md** - Domain models and glossary
+**Target `src/core` -> USE: .ai/targets/UICORE.md**
+**Target `src/uikit` -> USE: .ai/targets/UIKIT.md**
+**Target `src/styles/themes` -> USE: .ai/targets/THEMES.md**
+**Target `src/screensets` -> USE: .ai/targets/SCREENSETS.md**
+**Styling questions -> USE: .ai/targets/STYLING.md**
+**Contributing to .ai docs -> USE: .ai/targets/AI.md**
