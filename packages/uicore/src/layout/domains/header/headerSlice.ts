@@ -7,13 +7,13 @@ import { LayoutDomains } from '@/core/layout/layoutSlice';
  */
 
 export interface HeaderState {
-  logo: ReactNode;
-  actions: ReactNode;
+  logo: string; // Logo text (serializable)
+  actions: ReactNode; // Keep ReactNode for flexibility, but avoid storing in Redux
   showMenuToggle: boolean;
 }
 
 const initialState: HeaderState = {
-  logo: null,
+  logo: '',
   actions: null,
   showMenuToggle: true,
 };
@@ -22,7 +22,7 @@ const headerSlice = createSlice({
   name: LayoutDomains.Header,
   initialState,
   reducers: {
-    setHeaderLogo: (state, action: PayloadAction<ReactNode>) => {
+    setHeaderLogo: (state, action: PayloadAction<string>) => {
       state.logo = action.payload;
     },
     setHeaderActions: (state, action: PayloadAction<ReactNode>) => {

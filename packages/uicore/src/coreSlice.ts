@@ -8,14 +8,14 @@ import type { User, Tenant } from './types';
 
 const CORE_SLICE_NAME = 'core';
 
-export interface CoreSliceState {
+export interface CoreState {
   user: User | null;
   tenant: Tenant | null;
   loading: boolean;
   error: string | null;
 }
 
-const initialState: CoreSliceState = {
+const initialState: CoreState = {
   user: null,
   tenant: null,
   loading: false,
@@ -44,7 +44,6 @@ const coreSlice = createSlice({
   },
 });
 
-export const { setUser, setTenant, setLoading, setError, clearError } =
-  coreSlice.actions;
+export const { setUser, setTenant, setLoading, setError, clearError } = coreSlice.actions;
 
 export default coreSlice.reducer;

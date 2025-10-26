@@ -1,24 +1,21 @@
 /**
- * Theme exports for HAI3 Demo App
- * Each platform defines its own themes and registry
+ * Theme Registry for HAI3 Demo App
+ * Self-registers themes with UI Core on import
+ * App just needs to import this file
  */
 
+import { themeService } from '@hai3/uicore';
+import { applyTheme } from '@hai3/uikit';
 import { lightTheme } from './light';
 import { darkTheme } from './dark';
 import { draculaTheme } from './dracula';
 import { draculaLargeTheme } from './dracula-large';
 
-export { lightTheme } from './light';
-export { darkTheme } from './dark';
-export { draculaTheme } from './dracula';
-export { draculaLargeTheme } from './dracula-large';
-export type { Theme } from '@hai3/uikit';
+// Set the apply function from UI Kit
+themeService.setApplyFunction(applyTheme);
 
-export const themes = {
-  light: lightTheme,
-  dark: darkTheme,
-  dracula: draculaTheme,
-  'dracula-large': draculaLargeTheme,
-};
-
-export type ThemeName = keyof typeof themes;
+// Register all themes (auto-registers on import)
+themeService.register('light', lightTheme);
+themeService.register('dark', darkTheme);
+themeService.register('dracula', draculaTheme);
+themeService.register('dracula-large', draculaLargeTheme);

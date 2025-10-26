@@ -19,10 +19,14 @@ const LAYOUT_SLICE_NAME = 'layout';
 
 export interface LayoutState {
   theme: string;
+  currentScreenset: string; // Format: "category:screensetId"
+  selectedScreen: string | null; // Currently selected screen ID
 }
 
 const initialState: LayoutState = {
-  theme: 'light',
+  theme: '', // Set by app
+  currentScreenset: '', // Set by app
+  selectedScreen: null,
 };
 
 const layoutSlice = createSlice({
@@ -32,8 +36,14 @@ const layoutSlice = createSlice({
     setTheme: (state, action: PayloadAction<string>) => {
       state.theme = action.payload;
     },
+    setCurrentScreenset: (state, action: PayloadAction<string>) => {
+      state.currentScreenset = action.payload;
+    },
+    setSelectedScreen: (state, action: PayloadAction<string | null>) => {
+      state.selectedScreen = action.payload;
+    },
   },
 });
 
-export const { setTheme } = layoutSlice.actions;
+export const { setTheme, setCurrentScreenset, setSelectedScreen } = layoutSlice.actions;
 export default layoutSlice.reducer;

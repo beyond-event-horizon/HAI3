@@ -20,8 +20,6 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   const dispatch = useAppDispatch();
   const currentTheme = useAppSelector((state) => state.layout.theme);
 
-  if (availableThemes.length === 0) return null;
-
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     dispatch(setTheme(event.target.value));
   };

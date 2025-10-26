@@ -5,17 +5,20 @@ import { LayoutDomains } from '@/core/layout/layoutSlice';
  * Footer slice for managing footer configuration
  */
 
+export interface ScreensetOption {
+  category: string;
+  screensets: Array<{ id: string; name: string }>;
+}
+
 export interface FooterState {
-  copyright: string | null;
-  links: Array<{ label: string; href: string }>;
   availableThemes: string[];
+  screensetOptions: ScreensetOption[];
   visible: boolean;
 }
 
 const initialState: FooterState = {
-  copyright: null,
-  links: [],
   availableThemes: [],
+  screensetOptions: [],
   visible: true,
 };
 
@@ -23,12 +26,6 @@ const footerSlice = createSlice({
   name: LayoutDomains.Footer,
   initialState,
   reducers: {
-    setFooterCopyright: (state, action: PayloadAction<string | null>) => {
-      state.copyright = action.payload;
-    },
-    setFooterLinks: (state, action: PayloadAction<Array<{ label: string; href: string }>>) => {
-      state.links = action.payload;
-    },
     setFooterVisible: (state, action: PayloadAction<boolean>) => {
       state.visible = action.payload;
     },
@@ -38,5 +35,5 @@ const footerSlice = createSlice({
   },
 });
 
-export const { setFooterCopyright, setFooterLinks, setFooterVisible, setFooterConfig } = footerSlice.actions;
+export const { setFooterVisible, setFooterConfig } = footerSlice.actions;
 export default footerSlice.reducer;

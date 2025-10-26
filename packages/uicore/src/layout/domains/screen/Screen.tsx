@@ -1,9 +1,12 @@
 import React from 'react';
+import { useAppSelector } from '@/core/hooks/useRedux';
+import { screensetService } from '@/core/screensets/screensetService';
 
 /**
  * Core Screen component
  * Main content area for rendering application screens
- * Does not wrap UI Kit components - provides the container for screenset content
+ * Watches menu.selectedScreen and renders component from screenset registry
+ * Falls back to children if provided (for apps not using screensets)
  */
 
 export interface ScreenProps {
@@ -12,9 +15,34 @@ export interface ScreenProps {
 }
 
 export const Screen: React.FC<ScreenProps> = ({ children, className = '' }) => {
+  const currentScreensetValue = useAppSelector((state) => state.layout.currentScreenset);
+  const selectedScreen = useAppSelector((state) => state.layout.selectedScreen);
+
+  // If children provided, use them (legacy/non-screenset apps)
+  if (children) {
+    return (
+      <main className={`flex-1 overflow-auto bg-muted/30 ${className}`.trim()}>
+        {children}
+      </main>
+    );
+  }
+
+  // Get screenset and screen component
+  const screenset = screensetService.get(currentScreensetValue);
+  const screenId = selectedScreen || screenset?.defaultScreen || '';
+  const ScreenComponent = screenset?.screens[screenId];
+
   return (
     <main className={`flex-1 overflow-auto bg-muted/30 ${className}`.trim()}>
-      {children}
+      {ScreenComponent ? (
+        <ScreenComponent />
+      ) : (
+        <div className="flex items-center justify-center h-full">
+          <p className="text-muted-foreground">
+            {screenset ? `Screen not found: ${screenId}` : 'No screenset configured'}
+          </p>
+        </div>
+      )}
     </main>
   );
 };

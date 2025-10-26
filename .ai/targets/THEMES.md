@@ -1,28 +1,34 @@
-# Themes Development Guidelines
+# Themes Guidelines
 
-> Read .ai/GUIDELINES.md for common rules
+> Common rules: .ai/GUIDELINES.md
 
-# CRITICAL RULES (AI: READ THIS)
+# CRITICAL (AI: READ THIS)
 
 **System:**
-- Theme objects = SINGLE source of truth (TypeScript)
-- CSS variables generated dynamically via `applyTheme(theme, themeName)`
-- NO duplication between theme objects and CSS
-- Each app defines its own themes in `src/themes/`
-- Theme interface from @hai3/uikit, applyTheme from @hai3/uikit
+- Theme objects = source of truth (TypeScript)
+- CSS variables via `applyTheme(theme, name)`
+- NO duplication
+- Apps define themes in `src/themes/`
+- themeService from @hai3/uicore
 
-**Adding Themes (3 STEPS):**
-1. Create `[name].ts` in `src/themes/` (implement Theme interface from @hai3/uikit)
-2. Import in `src/themes/themeRegistry.ts` and add to `themes` object + exports
-3. Apply in app: `applyTheme(themes[themeName], themeName)` (applyTheme from @hai3/uikit)
+**Registry (AI: READ THIS):**
+- Self-registers on import
+- Set function: `themeService.setApplyFunction(applyTheme)`
+- Register: `themeService.register('light', lightTheme)`
+- App imports: `import '@/themes/themeRegistry'`
+- NO registration in App.tsx
+- Footer orchestrates: theme -> themeService.apply()
 
-**Modifying Themes:**
-- Screensets: CANNOT modify existing themes
-- Core: CAN modify themes
-- Breaking changes need version update
+**Adding (2 steps):**
+1. Create `[name].ts` (implement Theme)
+2. Register in `themeRegistry.ts`
+
+**Modifying:**
+- Screensets: CANNOT
+- Core: CAN (version bump if breaking)
 
 **Requirements:**
-- Support light/dark mode minimum
-- Use relative units (rem, em) NOT pixels
-- WCAG contrast 4.5:1 minimum
-- NO hardcoded colors in components
+- Light/dark minimum
+- Relative units (rem, em)
+- WCAG 4.5:1
+- NO hardcoded colors

@@ -30,9 +30,19 @@ export { Overlay, type OverlayProps } from './layout/domains/overlay';
 
 // Components (Redux-aware reusable widgets)
 export { ThemeSelector, type ThemeSelectorProps } from './components/ThemeSelector';
+export { ScreensetSelector, type ScreensetSelectorProps, type ScreensetOption } from './components/ScreensetSelector';
 
 // Re-export MenuItem from UI Kit for convenience
 export type { MenuItem } from '@hai3/uikit';
 
+// Screenset management (Footer domain handles watching)
+export { screensetService, type ScreensetConfig } from './screensets/screensetService';
+
+// Theme management (Footer domain handles watching)
+export { themeService } from './theme/themeService';
+
+// Icon management (screensets register icons)
+export { iconService } from './icons/iconService';
+
 // Layout slice
-export { setTheme } from './layout/layoutSlice';
+export { setTheme, setCurrentScreenset, setSelectedScreen } from './layout/layoutSlice';

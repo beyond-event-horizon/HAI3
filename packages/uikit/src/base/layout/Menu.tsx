@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 export interface MenuItem {
   id: string;
   label: string;
-  icon?: React.ReactNode;
+  icon?: string; // Icon identifier (e.g., 'home', 'settings') - map to actual icon in rendering component
   href?: string;
   onClick?: () => void;
   children?: MenuItem[];
@@ -22,6 +22,7 @@ export interface MenuProps {
   collapsed?: boolean;
   onItemClick?: (item: MenuItem) => void;
   activeItemId?: string;
+  getIcon?: (id: string) => React.ReactNode | undefined; // Function to get icon by ID (from iconService)
 }
 
 const MenuItemComponent: React.FC<{
@@ -30,7 +31,8 @@ const MenuItemComponent: React.FC<{
   active?: boolean;
   onClick?: (item: MenuItem) => void;
   level?: number;
-}> = ({ item, collapsed, active, onClick, level = 0 }) => {
+  getIcon?: (id: string) => React.ReactNode | undefined;
+}> = ({ item, collapsed, active, onClick, level = 0, getIcon }) => {
   const handleClick = (): void => {
     if (onClick) {
       onClick(item);
@@ -54,8 +56,8 @@ const MenuItemComponent: React.FC<{
         )}
         title={collapsed ? item.label : undefined}
       >
-        {item.icon && (
-          <span className="flex-shrink-0 w-5 h-5">{item.icon}</span>
+        {item.icon && getIcon && (
+          <span className="flex-shrink-0 w-5 h-5">{getIcon(item.icon)}</span>
         )}
         {!collapsed && (
           <>
@@ -78,6 +80,7 @@ const MenuItemComponent: React.FC<{
               active={child.id === item.id}
               onClick={onClick}
               level={level + 1}
+              getIcon={getIcon}
             />
           ))}
         </div>
@@ -92,6 +95,7 @@ export const Menu: React.FC<MenuProps> = ({
   collapsed = false,
   onItemClick,
   activeItemId,
+  getIcon,
 }) => {
   return (
     <nav
@@ -110,6 +114,7 @@ export const Menu: React.FC<MenuProps> = ({
           collapsed={collapsed}
           active={item.id === activeItemId}
           onClick={onItemClick}
+          getIcon={getIcon}
         />
       ))}
     </nav>
