@@ -8,9 +8,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@/screensets': path.resolve(__dirname, './src/screensets'),
-      '@/themes': path.resolve(__dirname, './src/themes'),
-      '@/components': path.resolve(__dirname, './src/components'),
     },
   },
 });
