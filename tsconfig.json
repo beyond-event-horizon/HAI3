@@ -32,10 +32,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/uikit/*": ["./src/uikit/*"],
-      "@/core/*": ["./src/core/*"],
       "@/screensets/*": ["./src/screensets/*"],
-      "@/styles/*": ["./src/styles/*"]
+      "@/themes/*": ["./src/themes/*"],
+      "@/components/*": ["./src/components/*"]
     }
   },
   "include": ["src"],

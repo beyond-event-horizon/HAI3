@@ -1,60 +1,57 @@
-# UI Screensets Development Guidelines
+# Screensets Guidelines
 
-> Read .ai/GUIDELINES.md for common rules
+> Common rules: .ai/GUIDELINES.md | Styling: .ai/targets/STYLING.md
 
-# CRITICAL RULES (AI: READ THIS)
+# CRITICAL (AI: READ THIS)
 
-**Stack:**
-- Redux Toolkit (screenset-specific slices)
-- Uses UI Kit from `@/uikit`
-- Uses UI Core from `@/core`
-
-**Files:**
-- `screensets/[name]/screens/[screen]/ScreenComponent.tsx` = screen component
-- `screensets/[name]/screens/[screen]/screenSlice.ts` = screen state
-- `screensets/[name]/data.ts` = mock data
-- `screensets/[name]/api.ts` = API simulation
-- Export slices with "Slice" suffix (userListSlice)
-
-**Screenset Rules - STRICT:**
-- Screensets are ISOLATED - no data sharing between screensets
-- READ core state, CANNOT MODIFY core state
+**Rules:**
+- ISOLATED - no data sharing between screensets
+- READ core state, CANNOT MODIFY core
 - NO hardcoded screenset names in shared code
 - NO `if screenset ==` conditionals
-- Build from UI Kit + UI Core only
+- Build from UI Kit + UI Core
 
-**UI Kit & Themes:**
-- Use existing global UI Kit components from `@/uikit`
-- CANNOT modify existing global UI Kit components
-- CANNOT add NEW global UI Kit components (only by explicit human request)
-- CAN create LOCAL UI Kit in `screensets/[name]/uikit/` (AI: READ THIS)
-- CAN add NEW themes (follow .ai/targets/THEMES.md)
-- CANNOT modify existing themes
-- NO hardcoded colors - use theme tokens
+**Structure (AI: READ THIS):**
+- Registry: only imports screensets, NOT individual screens
+- Screenset file: self-contained config + screens + icons
+- Pattern prevents merge conflicts when multiple devs work on different screensets
+- BAD: screensetRegistry.tsx imports all screens
+- GOOD: screensetRegistry.tsx imports demoScreenset only
 
-**Local UI Kit (AI: READ THIS):**
-- Location: `screensets/[name]/uikit/[component]/Component.tsx`
-- ONLY composite components allowed (wrap/combine global base/composite)
-- NO new base components in screenset
-- Use when component missing from global UI Kit
-- KEEP local by default - NEVER promote to global without explicit human request
-- Only human can decide if component should be global
-- Follow same structure as global UI Kit composite components
+**Registry (AI: READ THIS):**
+- Self-registers on import: `screensetService.register(config)`
+- App imports: `import '@/screensets/screensetRegistry'`
+- NO registration in App.tsx
+- Define + register at module level
 
-**Building Screens:**
-- Use global UI Kit components from `@/uikit`
-- Use local UI Kit components from `./uikit` (if needed)
-- Use UI Core Layout (Header, Footer, Menu, Sidebar)
-- Screen = UI Kit + business logic + screenset state
-- Styling: ONLY layout (flex, grid, gap) - NO visual styles (see .ai/targets/STYLING.md)
+**IDs Pattern (AI: READ THIS):**
+- Screenset ID: const in screenset file (e.g., DEMO_SCREENSET_ID)
+- Screen IDs: const in screen files (e.g., HELLO_WORLD_SCREEN_ID)
+- Icon IDs: const in icon files (e.g., WORLD_ICON_ID)
+- Prevents circular imports, follows vertical slice
+- See GUIDELINES.md for details
 
-**Data Simulation:**
-- Mock data in `data.ts`
-- API simulation in `api.ts`
-- Simulate async with setTimeout
-- Handle loading/error states
+**Navigation:**
+- Menu items in screenset config
+- MenuItem type from `@hai3/uikit`
+- Footer orchestrates: currentScreenset -> Menu
+- Screen renders: selectedScreen -> component
 
-**Draft Screenset:**
-- Stickers: GREEN=behavior, YELLOW=hints, ORANGE=add
-- Multiple mockups = different states
-- New screen = generate 5 versions
+**UI Kit:**
+- Use existing `@hai3/uikit` components
+- CANNOT modify existing
+- CAN create LOCAL in `screensets/[name]/uikit/` (composites only)
+- KEEP local - NEVER promote without request
+
+**Themes:**
+- CAN add new (see THEMES.md)
+- CANNOT modify existing
+- NO hardcoded colors
+
+**Building:**
+- Global UI Kit + local uikit + logic + state
+- Styling: ONLY layout
+
+**Data:**
+- Mock + setTimeout simulation
+- Handle loading/error

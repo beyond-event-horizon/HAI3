@@ -1,48 +1,37 @@
-# UI Kit Development Guidelines
+# UI Kit Guidelines
 
-> Read .ai/GUIDELINES.md for common rules
+> Common rules: .ai/GUIDELINES.md | Styling: .ai/targets/STYLING.md
 
-# CRITICAL RULES (AI: READ THIS)
+# CRITICAL (AI: READ THIS)
 
 **Scope:**
-- These rules apply to GLOBAL UI Kit at `src/uikit/`
-- Screensets can have LOCAL UI Kits at `screensets/[name]/uikit/`
-- Local UI Kits: ONLY composite components (see .ai/targets/SCREENSETS.md)
+- Pure presentational React
+- Theme utilities (applyTheme, Theme)
+- NO Redux, NO business logic
 
-**Folders:**
-- `base/` = wrap shadcn from `@/uikit/base/_shadcn`, export with HAI3 API
-- `composite/` = compose from `@/uikit/base/[category]`
-- `base/_shadcn/` = shadcn components (DO NOT MODIFY)
+**Hierarchy:** shadcn -> base -> composite
+- NEVER skip layers
 
-**Hierarchy:**
-- shadcn -> base -> composite
-- NEVER skip layers - composite imports from base, NOT shadcn
+**Component Placement:**
+- Imports `@/uikit/base/_shadcn/*` -> PUT IN `base/`
+- Imports `@/uikit/base/*` -> PUT IN `composite/`
 
-**Decision Rule (AI: READ THIS):**
-- Creating new component? Check imports:
-  - Imports from `@/uikit/base/_shadcn/*` -> PUT IN `base/`
-  - Imports from `@/uikit/base/*` -> PUT IN `composite/`
-  - Example: Button imports shadcn -> `base/buttons/Button.tsx`
-  - Example: ThemeToggle imports Button -> `composite/buttons/ThemeToggle.tsx`
+**CRITICAL - Layer Skipping (AI: READ THIS):**
+- BAD: Composite imports from `_shadcn/dropdown-menu`
+- GOOD: Create `base/dropdowns/DropdownMenu` (wraps shadcn), composite imports base
+- BAD: Any component importing from shadcn AND base
+- GOOD: base wraps shadcn, composite uses base only
+- Rule: If you need shadcn in composite, create base wrapper FIRST
 
 **Component Rules:**
-- NO Redux, NO business logic, NO API calls
 - Pure presentational only
-- Props: data in, React event handlers out
-- MUST use enums for variants (NEVER string unions)
-- MUST support theming via Tailwind theme tokens
-- MUST be accessible (ARIA, keyboard nav)
-- Styling: base handles ALL visual styles, composite ONLY layout (see .ai/targets/STYLING.md)
+- Props in, events out
+- Enums for variants (NEVER string unions)
+- Tailwind theme tokens, styling per STYLING.md
+- Accessible (ARIA, keyboard)
 
-**TypeScript:**
-- Base: `extends ShadcnButtonProps` (full compatibility)
-- Composite: `Omit<BaseProps, 'prop'>` when customizing
-- Use `React.forwardRef` for ref forwarding
-- Enums in `base/[category]/types.ts` (see GUIDELINES.md)
-- Export: component + types + enums
-
-**Files:**
-- `base/[category]/types.ts` = enums
-- `base/[category]/Component.tsx` = implementation
-- `composite/[category]/Component.tsx` = composition
-- `uikit/index.ts` = public exports
+**Types:**
+- Presentational types exported with component
+- MenuItem, ButtonVariant, etc.
+- UI Core imports these (not reverse)
+- Enums defined in component file, not separate files

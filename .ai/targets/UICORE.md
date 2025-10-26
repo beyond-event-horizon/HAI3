@@ -1,40 +1,55 @@
-# UI Core Development Guidelines
+#UI Core Guidelines
 
-> Read .ai/GUIDELINES.md for common rules
+> Common rules: .ai/GUIDELINES.md | Styling: .ai/targets/STYLING.md
 
-# CRITICAL RULES (AI: READ THIS)
+# CRITICAL (AI: READ THIS)
 
-**Stack:**
-- Redux Toolkit for state management
-- Uses UI Kit from `@/uikit` (see .ai/targets/UIKIT.md)
-
-**Domain Pattern - STRICT:**
+**Domain Pattern:**
 1. NO prop drilling - Redux ONLY
-2. Domains self-contained: Component + slice + config
-3. Orchestrators ONLY accept `children` - NO domain props
-4. Domains wrap UI Kit components
-5. Domains self-hide via `visible: boolean` in slice
-6. Styling: ONLY layout (flex, grid, gap) - NO visual styles (see .ai/targets/STYLING.md)
+2. Self-contained: Component + slice
+3. Orchestrators accept ONLY `children`
+4. Wrap UI Kit components
+5. Self-hide via `visible: boolean`
+6. Styling: ONLY layout classes
 
-**Files:**
-- `domains/[name]/Component.tsx` = useAppSelector, if (!visible) return null
-- `domains/[name]/domainSlice.ts` = types + state + actions
-- `domains/[name]/index.ts` = exports
-- `coreSlice.ts` = global state (user, tenant, loading, error)
-- `types.ts` = shared types
+**Domains:** Header, Footer, Menu, Sidebar, Screen, Popup, Overlay
 
-**Required Slice:**
-- State MUST have `visible: boolean`
-- Actions MUST have: setDomainConfig, setDomainVisible
-- Init: `useEffect(() => dispatch(setDomainConfig({...config, visible:true})), [])`
+**Domain vs Component:**
+- Domain = Major layout section, own slice, one instance
+- Component = Reusable widget, props config, reads/writes Redux
 
-**Types & Enums:**
-- Domain types -> export from `domainSlice.ts`
-- Global types -> `src/core/types.ts`
-- Enums -> see GUIDELINES.md (vertical slice approach)
+**Domain Slice Requirements:**
+- State: `visible: boolean`
+- Actions: `setDomainConfig`, `setDomainVisible`
+- MenuItem type from `@hai3/uikit`
+
+---
+
+## Domain Orchestration (AI: READ THIS)
+
+**Pattern:**
+- Domain with UI controls orchestrates related state
+- Footer has selectors -> orchestrates themes + screensets
+- Footer watches layout.theme -> applies via themeService
+- Footer watches layout.currentScreenset -> updates Menu
+- Screen watches menu.selectedScreen -> renders from screensetService
+
+**CRITICAL: Data Provider vs Behavior Controller**
+- Orchestration = providing DATA, NOT controlling BEHAVIOR
+- BAD: Footer sets Menu.visible, onClick, selectedScreen
+- GOOD: Footer sets Menu.items (data only)
+- BAD: Domain A creates handlers for Domain B
+- GOOD: Domain B handles its own interactions
+- Rule: Provide data to other domains, NOT control their behavior
+
+**Services:**
+- themeService, screensetService = registry management
+- Apps register on import (self-registering)
+- Domains consume services
+- NO service calls in App
 
 **Anti-Patterns:**
-- BAD: `<Layout logo={x}/>` GOOD: `<Layout>{children}</Layout>`
-- BAD: `{show && <Menu/>}` GOOD: `<Menu/>` (self-hides)
-- BAD: `useState` GOOD: Redux dispatch
-- BAD: props on orchestrator GOOD: children only
+- BAD: `<Layout logo={x}/>` GOOD: `<Layout/>`
+- BAD: `{show && <Menu/>}` GOOD: `<Menu/>`
+- BAD: `useState` GOOD: Redux
+- BAD: App bridging GOOD: Domain orchestration
