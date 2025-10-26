@@ -1,10 +1,15 @@
 import React from 'react';
 import { iconService } from '@hai3/uicore';
-import { DemoIconId } from './IconId';
 
 /**
- * World/Globe Icon
- * Local icon for Demo screenset
+ * World Icon ID
+ * Well-known constant defined where it belongs
+ */
+export const WORLD_ICON_ID = 'world';
+
+/**
+ * World Icon
+ * Local icon for Demo screenset (hello world screen)
  */
 const WorldIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
   return (
@@ -19,11 +24,12 @@ const WorldIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z" />
-      <path d="M12 6v6l4 2" />
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+      <path d="M2 12h20" />
     </svg>
   );
 };
 
 // Self-register icon (runs on import)
-iconService.register(DemoIconId.World, <WorldIcon />);
+iconService.register(WORLD_ICON_ID, <WorldIcon />);

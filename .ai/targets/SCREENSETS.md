@@ -11,11 +11,25 @@
 - NO `if screenset ==` conditionals
 - Build from UI Kit + UI Core
 
+**Structure (AI: READ THIS):**
+- Registry: only imports screensets, NOT individual screens
+- Screenset file: self-contained config + screens + icons
+- Pattern prevents merge conflicts when multiple devs work on different screensets
+- BAD: screensetRegistry.tsx imports all screens
+- GOOD: screensetRegistry.tsx imports demoScreenset only
+
 **Registry (AI: READ THIS):**
 - Self-registers on import: `screensetService.register(config)`
 - App imports: `import '@/screensets/screensetRegistry'`
 - NO registration in App.tsx
 - Define + register at module level
+
+**IDs Pattern (AI: READ THIS):**
+- Screenset ID: const in screenset file (e.g., DEMO_SCREENSET_ID)
+- Screen IDs: const in screen files (e.g., HELLO_WORLD_SCREEN_ID)
+- Icon IDs: const in icon files (e.g., WORLD_ICON_ID)
+- Prevents circular imports, follows vertical slice
+- See GUIDELINES.md for details
 
 **Navigation:**
 - Menu items in screenset config

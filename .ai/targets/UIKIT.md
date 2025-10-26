@@ -27,11 +27,11 @@
 - Pure presentational only
 - Props in, events out
 - Enums for variants (NEVER string unions)
-- Tailwind theme tokens
+- Tailwind theme tokens, styling per STYLING.md
 - Accessible (ARIA, keyboard)
-- Base = ALL visual styles, Composite = ONLY layout
 
 **Types:**
-- Presentational types here (MenuItem, ButtonVariant)
+- Presentational types exported with component
+- MenuItem, ButtonVariant, etc.
 - UI Core imports these (not reverse)
-- Enums in `base/[category]/types.ts`
+- Enums defined in component file, not separate files

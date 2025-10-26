@@ -21,10 +21,7 @@
 **Domain Slice Requirements:**
 - State: `visible: boolean`
 - Actions: `setDomainConfig`, `setDomainVisible`
-
-**Types:**
-- Enums in slice files (vertical slice pattern)
-- MenuItem from `@hai3/uikit`
+- MenuItem type from `@hai3/uikit`
 
 ---
 

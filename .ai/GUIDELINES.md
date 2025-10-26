@@ -22,6 +22,10 @@
 - `packages/uikit` -> Pure React + theme utilities
 - `src/` -> App logic + themes + screensets
 
+**Dependencies:**
+- Each package declares own deps, NO duplication in root
+- npm workspaces hoists automatically
+
 ### NO BRIDGING IN APP
 - App NEVER bridges between domains
 - BAD: App reads menu.selectedScreen -> looks up component -> passes to Screen
@@ -38,14 +42,8 @@
 
 ### DOMAIN ORCHESTRATION
 - Domain with UI controls orchestrates related features
-- Orchestration = providing DATA to other domains, NOT controlling their BEHAVIOR
-- See UICORE.md for domain orchestration rules
-
-### THIN CONTRACTS
-- Domains know minimal information about each other
-- Menu knows: items (MenuItem[]), selectedScreen (string) - NO screensets
-- Screen knows: children (ReactNode) - NO screensets, looks up from registry
-- Footer knows: screensets + themes - orchestrates both
+- Orchestration = providing DATA, NOT controlling BEHAVIOR
+- See UICORE.md for details
 
 ### APP RESPONSIBILITIES (ONLY)
 1. Import self-registering registries
@@ -63,13 +61,14 @@
 - `type` for objects, `interface` for props
 - Export types with component
 
-**Enums & Types (AI: READ THIS - CRITICAL):**
-- ALWAYS use enums for identifiers, NEVER hardcoded strings
-- Enums: in slice file when slice owns values
+**Identifiers (AI: READ THIS - CRITICAL):**
+- NEVER hardcoded strings
+- Constants: IDs defined where they belong (Screen/Screenset/Icon ID in own file)
+- Enums: variants/types in slice files (ButtonVariant, Theme)
 - Types: `keyof typeof` when source exists elsewhere
-- BAD: `icon: 'world'` GOOD: `icon: DemoIconId.World`
-- BAD: `theme: 'light'` GOOD: `theme: ThemeName.Light`
-- Prefer types over duplicate enums (DRY)
+- BAD: `id: 'demo'` GOOD: `id: DEMO_SCREENSET_ID`
+- BAD: `variant: 'primary'` GOOD: `variant: ButtonVariant.Primary`
+- Prevents circular imports, follows vertical slice, prefer types over duplicate enums
 
 **Types Enforce Boundaries (AI: READ THIS):**
 - Use types/enums to reveal architectural violations

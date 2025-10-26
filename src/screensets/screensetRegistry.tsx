@@ -1,40 +1,25 @@
-import { screensetService, type ScreensetConfig } from '@hai3/uicore';
-import { HelloWorldScreen } from './drafts/demo/screens/helloworld/HelloWorldScreen';
-import { DemoIconId } from './drafts/demo/uikit/icons/IconId';
-import './drafts/demo/uikit/icons/WorldIcon'; // Auto-registers on import
+import { screensetService } from '@hai3/uicore';
+import { demoScreenset } from './drafts/demo/demoScreenset';
 
 /**
  * Screenset Registry
- * Self-registers screensets with UI Core on import
- * App just needs to import this file
+ * Project-level registry that only knows about screensets, not individual screens
+ * Each screenset is self-contained and manages its own screens internally
+ * 
+ * All IDs (screenset, screen, icon) are well-known constants defined where they belong:
+ * - Screenset ID: in screenset file (e.g., DEMO_SCREENSET_ID in demoScreenset.ts)
+ * - Screen IDs: in screen files (e.g., HELLO_WORLD_SCREEN_ID in HelloWorldScreen.tsx)
+ * - Icon IDs: in icon files (e.g., WORLD_ICON_ID in WorldIcon.tsx)
+ * 
+ * This pattern prevents circular imports and follows vertical slice architecture
  */
 
 /**
- * Demo Screenset Configuration
- */
-const demoScreenset: ScreensetConfig = {
-  id: 'demo',
-  name: 'Demo',
-  category: 'drafts',
-  defaultScreen: 'helloworld',
-  screens: {
-    helloworld: HelloWorldScreen,
-  },
-  menuItems: [
-    {
-      id: 'helloworld',
-      label: 'Hello World',
-      icon: DemoIconId.World,
-    },
-  ],
-};
-
-/**
- * Register screenset
+ * Register all screensets
  * This runs automatically when the module is imported
- * Icons self-register when their files are imported above
  */
 screensetService.register(demoScreenset);
 
 // Add more screensets here and they'll auto-register
+// import { anotherScreenset } from './production/another/anotherScreenset';
 // screensetService.register(anotherScreenset);
