@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { store } from '@/core/store';
+import { store } from '@hai3/uicore';
 import App from './App';
-import '@/styles/globals.css';
+import '../packages/uicore/src/styles/globals.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

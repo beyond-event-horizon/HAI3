@@ -5,14 +5,9 @@
 # CRITICAL RULES (AI: READ THIS)
 
 **Scope:**
-- These rules apply to GLOBAL UI Kit at `src/uikit/`
-- Screensets can have LOCAL UI Kits at `screensets/[name]/uikit/`
-- Local UI Kits: ONLY composite components (see .ai/targets/SCREENSETS.md)
-
-**Folders:**
-- `base/` = wrap shadcn from `@/uikit/base/_shadcn`, export with HAI3 API
-- `composite/` = compose from `@/uikit/base/[category]`
-- `base/_shadcn/` = shadcn components (DO NOT MODIFY)
+- Pure presentational React components
+- Theme system utilities (applyTheme, Theme interface)
+- NO Redux, NO business logic
 
 **Hierarchy:**
 - shadcn -> base -> composite
@@ -34,15 +29,14 @@
 - MUST be accessible (ARIA, keyboard nav)
 - Styling: base handles ALL visual styles, composite ONLY layout (see .ai/targets/STYLING.md)
 
+**Data Types (AI: READ THIS):**
+- Presentational types defined here (MenuItem, ButtonVariant, etc.)
+- UI Core imports these types (not the other way around)
+- Example: MenuItem defined in Menu.tsx, used by UI Core menuSlice
+
 **TypeScript:**
 - Base: `extends ShadcnButtonProps` (full compatibility)
 - Composite: `Omit<BaseProps, 'prop'>` when customizing
 - Use `React.forwardRef` for ref forwarding
 - Enums in `base/[category]/types.ts` (see GUIDELINES.md)
 - Export: component + types + enums
-
-**Files:**
-- `base/[category]/types.ts` = enums
-- `base/[category]/Component.tsx` = implementation
-- `composite/[category]/Component.tsx` = composition
-- `uikit/index.ts` = public exports

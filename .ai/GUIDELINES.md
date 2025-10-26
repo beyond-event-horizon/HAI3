@@ -36,13 +36,28 @@
 - Always verify your .ai edits follow .ai/targets/AI.md rules
 - Examples are OK if they prevent mistakes
 
+## Documentation Rule (AI: READ THIS)
+
+- DO NOT create markdown report files (*.md) without explicit user request
+- Summarize work in chat response instead
+- Exception: .ai/ directory documentation is OK
+
 ---
 
 ## Routing (AI: READ THIS)
 
-**Target `src/core` -> USE: .ai/targets/UICORE.md**
-**Target `src/uikit` -> USE: .ai/targets/UIKIT.md**
-**Target `src/styles/themes` -> USE: .ai/targets/THEMES.md**
+**ALWAYS read the target guideline BEFORE making changes:**
+
+**Target `packages/uicore` -> USE: .ai/targets/UICORE.md**
+**Target `packages/uikit` -> USE: .ai/targets/UIKIT.md**
+**Target `src/themes` -> USE: .ai/targets/THEMES.md**
 **Target `src/screensets` -> USE: .ai/targets/SCREENSETS.md**
+**Target `.ai/*.md` files -> USE: .ai/targets/AI.md**
 **Styling questions -> USE: .ai/targets/STYLING.md**
-**Contributing to .ai docs -> USE: .ai/targets/AI.md**
+
+## Project Structure (AI: READ THIS)
+
+**Monorepo with npm workspaces:**
+- `packages/uicore` -> @hai3/uicore (Layout domains, Redux state, Redux-aware components)
+- `packages/uikit` -> @hai3/uikit (Pure React components, theme system utilities)
+- `src/` -> Demo app (business logic, themes, screensets)

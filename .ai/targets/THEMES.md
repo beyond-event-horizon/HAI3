@@ -4,27 +4,17 @@
 
 # CRITICAL RULES (AI: READ THIS)
 
-**System (AI: READ THIS):**
+**System:**
 - Theme objects = SINGLE source of truth (TypeScript)
-- CSS variables generated dynamically via `applyTheme()`
+- CSS variables generated dynamically via `applyTheme(theme, themeName)`
 - NO duplication between theme objects and CSS
-- Tailwind/shadcn use generated CSS variables
+- Each app defines its own themes in `src/themes/`
+- Theme interface from @hai3/uikit, applyTheme from @hai3/uikit
 
-**Files:**
-- `styles/themes/[name].ts` = theme definitions ONLY (SOURCE OF TRUTH)
-- `styles/themeTypes.ts` = Theme interface
-- `styles/applyTheme.ts` = dynamic CSS var generator
-- `styles/themeRegistry.ts` = theme exports + themes object
-- `styles/globals.css` = only default values for SSR
-
-**Folder Structure:**
-- `themes/` = theme definition files ONLY
-- Supporting files (types, utils, registry) at `styles/` level
-
-**Adding Themes (2 STEPS ONLY):**
-1. Create `[name].ts` in `src/styles/themes/` (implement Theme interface from themeTypes.ts)
-2. Import in `src/styles/themeRegistry.ts` and add to `themes` object + exports
-DONE - applyTheme automatically uses new theme from registry
+**Adding Themes (3 STEPS):**
+1. Create `[name].ts` in `src/themes/` (implement Theme interface from @hai3/uikit)
+2. Import in `src/themes/themeRegistry.ts` and add to `themes` object + exports
+3. Apply in app: `applyTheme(themes[themeName], themeName)` (applyTheme from @hai3/uikit)
 
 **Modifying Themes:**
 - Screensets: CANNOT modify existing themes

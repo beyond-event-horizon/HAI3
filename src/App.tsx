@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
-import { Layout } from '@/core/layout';
-import { DemoScreen } from '@/screensets/drafts/DemoScreen';
-import { useAppDispatch } from '@/core/hooks/useRedux';
+import { Layout, useAppSelector, useAppDispatch } from '@hai3/uicore';
 import {
   setHeaderConfig,
   setFooterConfig,
   setMenuConfig,
   type MenuItem,
-} from '@/core/store';
+} from '@hai3/uicore';
+import { applyTheme } from '@hai3/uikit';
+import { DemoScreen } from '@/screensets/drafts/DemoScreen';
+import { themes } from '@/themes/themeRegistry';
 
 /**
  * Main HAI3 Application Component
  * Initializes layout domain configurations via Redux
+ * Applies themes from local theme registry
  */
 
 const menuItems: MenuItem[] = [
@@ -99,6 +101,15 @@ const menuItems: MenuItem[] = [
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
+  const currentTheme = useAppSelector((state) => state.layout.theme);
+
+  // Apply theme when it changes
+  useEffect(() => {
+    const theme = themes[currentTheme as keyof typeof themes];
+    if (theme) {
+      applyTheme(theme, currentTheme);
+    }
+  }, [currentTheme]);
 
   // Initialize layout configuration on mount
   useEffect(() => {
@@ -135,7 +146,7 @@ const App: React.FC = () => {
       })
     );
 
-    // Footer configuration
+    // Footer configuration (includes ThemeSelector)
     dispatch(
       setFooterConfig({
         copyright: '© 2025 HAI3 UI-Core',
@@ -144,6 +155,7 @@ const App: React.FC = () => {
           { label: 'GitHub', href: '#' },
           { label: 'Support', href: '#' },
         ],
+        availableThemes: Object.keys(themes),
         visible: true,
       })
     );

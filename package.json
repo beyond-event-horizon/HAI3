@@ -1,12 +1,16 @@
 {
-  "name": "hai3-ui-core",
+  "name": "hai3-monorepo",
   "version": "0.1.0",
-  "description": "HAI3 UI-Core: Human-driven development, AI-assisted, well structured and polished framework for SaaS control panels",
+  "description": "HAI3: Human-driven development, AI-assisted, well structured and polished framework for SaaS control panels",
   "private": true,
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "npm run build:packages && vite build",
+    "build:packages": "npm run build --workspaces --if-present",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "type-check": "tsc --noEmit"
