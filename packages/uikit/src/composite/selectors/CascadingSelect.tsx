@@ -70,8 +70,8 @@ export const CascadingSelect: React.FC<CascadingSelectProps> = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            variant={ButtonVariant.Secondary}
-            className="inline-flex items-center justify-between min-w-[160px]"
+            variant={ButtonVariant.Outline}
+            className="inline-flex items-center justify-between min-w-40"
           >
             <span>{formatName(getCurrentDisplay())}</span>
             <ChevronDown className="ml-2 h-4 w-4" />

@@ -25,6 +25,7 @@ export {
   DropdownMenuSubContent,
 } from './base/dropdowns/DropdownMenu';
 export { CascadingSelect, type CascadingSelectProps, type CascadingOption } from './composite/selectors/CascadingSelect';
+export { SimpleSelect, type SimpleSelectProps, type SimpleSelectOption } from './composite/selectors/SimpleSelect';
 
 // Composite components
 export { IconButton, type IconButtonProps, IconButtonSize } from './composite/buttons/IconButton';

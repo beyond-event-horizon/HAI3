@@ -18,6 +18,13 @@
 - Composite/Core/Screensets ONLY layout
 - States in base only
 
+**Units (AI: READ THIS - CRITICAL):**
+- Use rem-based units for theme responsiveness
+- BAD: `min-w-[160px]` (fixed pixels, doesn't scale with theme)
+- GOOD: `min-w-40` (10rem, scales with root font size)
+- Tailwind spacing classes = rem-based (theme-responsive)
+- Pixels ONLY for borders (1px) or fixed assets
+
 **Tokens:** colors, spacing, typography, radius, shadows, z-index, transitions
 
 **Responsive:** Mobile-first, Tailwind prefixes (`md:`, `lg:`)

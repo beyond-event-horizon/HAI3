@@ -43,7 +43,7 @@ export const Select: React.FC<SelectProps> = ({
 }) => {
   return (
     <ShadcnSelect value={value} onValueChange={onValueChange}>
-      <SelectTrigger className={className}>
+      <SelectTrigger className={`bg-background hover:bg-accent hover:text-accent-foreground ${className}`}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>

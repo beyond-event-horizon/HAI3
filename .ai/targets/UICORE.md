@@ -18,6 +18,14 @@
 - Domain = Major layout section, own slice, one instance
 - Component = Reusable widget, props config, reads/writes Redux
 
+**Component Pattern (AI: READ THIS):**
+- Wrap UI Kit composite components, add Redux awareness
+- NO duplication of UI logic
+- BAD: Component reimplements DropdownMenu + Button
+- GOOD: Component uses SimpleSelect/CascadingSelect from UI Kit
+- Example: ThemeSelector wraps SimpleSelect, adds Redux + formatThemeName
+- Rule: UI Kit = generic UI, UI Core = Redux-aware wrappers
+
 **Domain Slice Requirements:**
 - State: `visible: boolean`
 - Actions: `setDomainConfig`, `setDomainVisible`
