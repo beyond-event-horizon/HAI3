@@ -8,9 +8,14 @@
 1. NO prop drilling - Redux ONLY
 2. Self-contained: Component + slice
 3. Orchestrators accept ONLY `children`
-4. Render own HTML (no UI Kit layout components)
+4. Use UI Kit components (Button, IconButton) - NO raw HTML buttons/inputs
 5. Self-hide via `visible: boolean`
 6. Styling: ONLY layout classes
+
+**CRITICAL RULE (AI: READ THIS):**
+- BAD: `<button>`, `<input>`, `<select>` in domains
+- GOOD: `<Button>`, `<IconButton>` from UI Kit
+- Domains render layout HTML (`<header>`, `<nav>`, `<footer>`), use UI Kit for interactive elements
 
 **Domains:** Header, Footer, Menu, Sidebar, Screen, Popup, Overlay
 

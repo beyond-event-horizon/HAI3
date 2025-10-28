@@ -72,6 +72,7 @@ export { IconButton, type IconButtonProps } from './composite/buttons/IconButton
 
 // Icons (tree-shakeable - app imports and registers only what it needs)
 export { MenuIcon } from './icons/MenuIcon';
+export { CloseIcon } from './icons/CloseIcon';
 
 // Theme system (utilities only - theme definitions in app)
 export { applyTheme } from './styles/applyTheme';

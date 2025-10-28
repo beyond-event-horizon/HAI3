@@ -5,12 +5,13 @@ import {
   setHeaderConfig,
   iconService,
 } from '@hai3/uicore';
-import { MenuIcon } from '@hai3/uikit';
+import { MenuIcon, CloseIcon } from '@hai3/uikit';
 import '@/themes/themeRegistry'; // Auto-registers themes
 import '@/screensets/screensetRegistry'; // Auto-registers screensets + icons
 
 // Register core icons (tree-shakeable - only import what we use)
 iconService.register('menu', <MenuIcon />);
+iconService.register('close', <CloseIcon />);
 
 /**
  * Main HAI3 Application Component

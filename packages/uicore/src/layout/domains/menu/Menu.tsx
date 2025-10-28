@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, ButtonVariant } from '@hai3/uikit';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { setSelectedScreen } from '@/core/layout/layoutSlice';
 import { iconService } from '@/core/icons/iconService';
@@ -16,16 +17,18 @@ export const Menu: React.FC<MenuProps> = () => {
     <nav className={`flex flex-col gap-1 p-3 bg-background transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'}`}>
       {items.map((item) => {
         const icon = iconService.get(item.icon || '');
+        const isSelected = selectedScreen === item.id;
         return (
-          <button
+          <Button
             key={item.id}
+            variant={isSelected ? ButtonVariant.Secondary : ButtonVariant.Ghost}
             onClick={() => dispatch(setSelectedScreen(item.id))}
-            className={`flex items-center gap-3 w-full px-4 py-2.5 rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground ${selectedScreen === item.id ? 'bg-accent text-accent-foreground' : ''} ${collapsed ? 'justify-center px-2' : ''}`}
+            className={`w-full overflow-hidden ${collapsed ? 'justify-center px-2' : 'justify-start'}`}
             title={collapsed ? item.label : undefined}
           >
             {icon && <span className="flex-shrink-0 w-5 h-5">{icon}</span>}
-            {!collapsed && <span className="flex-1 text-left">{item.label}</span>}
-          </button>
+            {!collapsed && <span className="flex-1 text-left whitespace-nowrap">{item.label}</span>}
+          </Button>
         );
       })}
     </nav>
