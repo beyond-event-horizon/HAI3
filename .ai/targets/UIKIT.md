@@ -9,19 +9,22 @@
 - Theme utilities (applyTheme, Theme)
 - NO Redux, NO business logic
 
-**Hierarchy:** shadcn -> base -> composite
-- NEVER skip layers
+**Hierarchy:** base -> composite
+- Base = shadcn components (flat structure) + layout components
+- Composite = combinations of base
 
 **shadcn Components (AI: READ THIS - CRITICAL):**
-- NEVER modify files in `base/_shadcn/`
-- Keep pristine for upstream updates
-- Apply customizations in `base/` wrappers only
-- BAD: Modify `_shadcn/select.tsx` styling
-- GOOD: Add styling to `base/selectors/Select.tsx` wrapper
+- shadcn files at base root: `base/button.tsx`, `base/select.tsx`, `base/dropdown-menu.tsx`
+- Enums in same file as component (ButtonVariant in button.tsx)
+- You own this code - modify as needed
+- Mark customizations with comments: `// HAI3 customization: ...`
+- When updating shadcn: `npx shadcn add` works out of the box ✅
+- Manual merge required for existing customizations
 
 **Component Placement:**
-- Imports `@/uikit/base/_shadcn/*` -> PUT IN `base/`
-- Imports `@/uikit/base/*` -> PUT IN `composite/`
+- shadcn component -> PUT IN `base/` (flat, at root)
+- HAI3 layout component -> PUT IN `base/layout/`
+- Combines base components -> PUT IN `composite/`
 
 **Composite Pattern (AI: READ THIS):**
 - Combine base components into reusable patterns
@@ -30,13 +33,6 @@
 - BAD: Composite has Redux, theme registry, screenset logic
 - GOOD: Composite takes value/onChange props, formats display
 - If UI Core duplicates composite logic -> extract to UI Kit composite
-
-**CRITICAL - Layer Skipping (AI: READ THIS):**
-- BAD: Composite imports from `_shadcn/dropdown-menu`
-- GOOD: Create `base/dropdowns/DropdownMenu` (wraps shadcn), composite imports base
-- BAD: Any component importing from shadcn AND base
-- GOOD: base wraps shadcn, composite uses base only
-- Rule: If you need shadcn in composite, create base wrapper FIRST
 
 **Component Rules:**
 - Pure presentational only

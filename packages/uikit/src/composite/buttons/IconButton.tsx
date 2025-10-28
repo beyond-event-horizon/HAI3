@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, type ButtonProps } from '@/uikit/base/buttons/Button';
+import { Button, type ButtonProps } from '@/uikit/base/button';
 import { cn } from '@/lib/utils';
-import { ButtonVariant, IconButtonSize } from '@/uikit/base/buttons/types';
+import { ButtonVariant, IconButtonSize } from '@/uikit/base/button';
 
 /**
  * IconButton component for HAI3 UI-Core

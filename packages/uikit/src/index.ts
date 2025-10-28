@@ -11,10 +11,9 @@ export { Sidebar, type SidebarProps } from './base/layout/Sidebar';
 export { Popup, type PopupProps } from './base/layout/Popup';
 export { Overlay, type OverlayProps } from './base/layout/Overlay';
 
-export { Button, type ButtonProps, ButtonVariant, ButtonSize } from './base/buttons/Button';
-export { Select, type SelectProps, type SelectOption, type SelectOptionGroup } from './base/selectors/Select';
+export { Button, type ButtonProps, ButtonVariant, ButtonSize, IconButtonSize } from './base/button';
 
-// Base dropdowns (wraps shadcn)
+// Base dropdowns
 export {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -23,12 +22,20 @@ export {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
-} from './base/dropdowns/DropdownMenu';
+  DropdownMenuGroup,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+} from './base/dropdown-menu';
 export { CascadingSelect, type CascadingSelectProps, type CascadingOption } from './composite/selectors/CascadingSelect';
 export { SimpleSelect, type SimpleSelectProps, type SimpleSelectOption } from './composite/selectors/SimpleSelect';
 
 // Composite components
-export { IconButton, type IconButtonProps, IconButtonSize } from './composite/buttons/IconButton';
+export { IconButton, type IconButtonProps } from './composite/buttons/IconButton';
 
 // Theme system (utilities only - theme definitions in app)
 export { applyTheme } from './styles/applyTheme';

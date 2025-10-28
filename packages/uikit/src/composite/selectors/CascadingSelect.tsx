@@ -7,8 +7,8 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '@/uikit/base/dropdowns/DropdownMenu';
-import { Button, ButtonVariant } from '@/uikit/base/buttons/Button';
+} from '@/uikit/base/dropdown-menu';
+import { Button, ButtonVariant } from '@/uikit/base/button';
 import { ChevronDown } from 'lucide-react';
 
 /**
