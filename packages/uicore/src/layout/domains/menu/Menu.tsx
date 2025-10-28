@@ -1,52 +1,34 @@
-import React, { useEffect } from 'react';
-import { Menu as UIKitMenu } from '@/uikit';
+import React from 'react';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { setSelectedScreen } from '@/core/layout/layoutSlice';
 import { iconService } from '@/core/icons/iconService';
 
-/**
- * Core Menu component
- * Wraps UI Kit Menu and manages its own configuration via Redux
- * 
- * Responsibilities:
- * - Receives menu items from Footer (screenset orchestration)
- * - Selects first item by default when items change
- * - Highlights currently selected screen
- * - Provides icon lookup from iconService
- */
-
-export interface MenuProps {
-  // All configuration is managed via Redux
-}
+export interface MenuProps {}
 
 export const Menu: React.FC<MenuProps> = () => {
-  const dispatch = useAppDispatch();
-  const { collapsed, items, visible } = useAppSelector((state) => state.menu);
+  const { items, collapsed, visible } = useAppSelector((state) => state.menu);
   const selectedScreen = useAppSelector((state) => state.layout.selectedScreen);
-
-  // Select first item by default when items change and nothing is selected
-  useEffect(() => {
-    if (items.length > 0 && !selectedScreen) {
-      dispatch(setSelectedScreen(items[0].id));
-    }
-  }, [items, selectedScreen, dispatch]);
-
-  // Handle menu item clicks
-  const handleItemClick = (item: { id: string }): void => {
-    dispatch(setSelectedScreen(item.id));
-  };
+  const dispatch = useAppDispatch();
 
   if (!visible) return null;
 
   return (
-    <UIKitMenu
-      items={items}
-      collapsed={collapsed}
-      activeItemId={selectedScreen || undefined}
-      onItemClick={handleItemClick}
-      getIcon={(id: string) => iconService.get(id)}
-      className="border-r border-border overflow-y-auto"
-    />
+    <nav className={`flex flex-col gap-1 p-3 bg-background transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'}`}>
+      {items.map((item) => {
+        const icon = iconService.get(item.icon || '');
+        return (
+          <button
+            key={item.id}
+            onClick={() => dispatch(setSelectedScreen(item.id))}
+            className={`flex items-center gap-3 w-full px-4 py-2.5 rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground ${selectedScreen === item.id ? 'bg-accent text-accent-foreground' : ''} ${collapsed ? 'justify-center px-2' : ''}`}
+            title={collapsed ? item.label : undefined}
+          >
+            {icon && <span className="flex-shrink-0 w-5 h-5">{icon}</span>}
+            {!collapsed && <span className="flex-1 text-left">{item.label}</span>}
+          </button>
+        );
+      })}
+    </nav>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Footer as UIKitFooter } from '@/uikit';
+import { Button, ButtonVariant } from '@hai3/uikit';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { ThemeSelector } from '@/core/components/ThemeSelector';
 import { ScreensetSelector } from '@/core/components/ScreensetSelector';
@@ -91,7 +91,23 @@ export const Footer: React.FC<FooterProps> = () => {
   if (!visible) return null;
 
   return (
-    <UIKitFooter copyright={copyright || undefined} links={links}>
+    <footer className="flex items-center justify-between px-6 py-3 bg-background border-t border-border h-12 w-full text-sm text-muted-foreground">
+      <div className="flex items-center gap-4">
+        {copyright && <span>{copyright}</span>}
+        {links && (
+          <nav className="flex gap-4">
+            {links.map((link) => (
+              <Button
+                key={link.href}
+                variant={ButtonVariant.Link}
+                asChild
+              >
+                <a href={link.href}>{link.label}</a>
+              </Button>
+            ))}
+          </nav>
+        )}
+      </div>
       <div className="flex items-center gap-4">
         {screensetOptions.length > 0 && (
           <ScreensetSelector
@@ -102,7 +118,7 @@ export const Footer: React.FC<FooterProps> = () => {
         )}
         <ThemeSelector availableThemes={availableThemes} />
       </div>
-    </UIKitFooter>
+    </footer>
   );
 };
 

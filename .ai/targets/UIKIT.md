@@ -9,40 +9,30 @@
 - Theme utilities (applyTheme, Theme)
 - NO Redux, NO business logic
 
-**Hierarchy:** base -> composite
-- Base = shadcn components (flat structure) + layout components
+**Hierarchy:** base (shadcn only) -> composite
+- Base = shadcn components ONLY (flat)
 - Composite = combinations of base
+- NO custom base components (always use shadcn first)
 
-**shadcn Components (AI: READ THIS - CRITICAL):**
-- shadcn files at base root: `base/button.tsx`, `base/select.tsx`, `base/dropdown-menu.tsx`
-- Enums in same file as component (ButtonVariant in button.tsx)
-- You own this code - modify as needed
-- Mark customizations with comments: `// HAI3 customization: ...`
-- When updating shadcn: `npx shadcn add` works out of the box ✅
-- Manual merge required for existing customizations
+**shadcn (AI: READ THIS - CRITICAL):**
+- ALL base components are shadcn
+- Enums in same file as component
+- Mark customizations: `// HAI3 customization: ...`
+- Update: `npx shadcn add [component]`
 
-**Component Placement:**
-- shadcn component -> PUT IN `base/` (flat, at root)
-- HAI3 layout component -> PUT IN `base/layout/`
-- Combines base components -> PUT IN `composite/`
+**Rule (AI: READ THIS - CRITICAL):**
+- ALWAYS use shadcn first, only create custom if shadcn lacks it
+- Navigation -> NavigationMenu, Sidebar -> Sheet, Modal -> Dialog
+- BEFORE deleting: grep UI Core for imports
+- Placement: shadcn -> `base/`, combinations -> `composite/`
 
 **Composite Pattern (AI: READ THIS):**
-- Combine base components into reusable patterns
-- Common: SimpleSelect, CascadingSelect, IconButton
-- Generic, no app-specific logic
 - BAD: Composite has Redux, theme registry, screenset logic
-- GOOD: Composite takes value/onChange props, formats display
-- If UI Core duplicates composite logic -> extract to UI Kit composite
+- GOOD: Composite takes value/onChange props only
+- If UI Core duplicates UI logic -> extract to composite
 
-**Component Rules:**
-- Pure presentational only
-- Props in, events out
+**Rules:**
+- Pure presentational, props in/events out
 - Enums for variants (NEVER string unions)
-- Tailwind theme tokens, styling per STYLING.md
-- Accessible (ARIA, keyboard)
-
-**Types:**
-- Presentational types exported with component
-- MenuItem, ButtonVariant, etc.
-- UI Core imports these (not reverse)
-- Enums defined in component file, not separate files
+- Styling per STYLING.md
+- Export types with component, enums in same file

@@ -1,26 +1,20 @@
 import React from 'react';
-import { Overlay as UIKitOverlay } from '@/uikit';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { hideOverlay } from './overlaySlice';
 
-/**
- * Core Overlay component
- * Wraps UI Kit Overlay and provides business logic integration
- */
-
-export interface OverlayProps {
-  // visible state and onClick handler are managed internally via Redux
-}
+export interface OverlayProps {}
 
 export const Overlay: React.FC<OverlayProps> = () => {
+  const { content, visible } = useAppSelector((state) => state.overlay);
   const dispatch = useAppDispatch();
-  const visible = useAppSelector((state) => state.overlay.visible);
 
-  const handleClick = () => {
-    dispatch(hideOverlay());
-  };
+  if (!visible) return null;
 
-  return <UIKitOverlay visible={visible} onClick={handleClick} />;
+  return (
+    <div className="fixed inset-0 transition-opacity duration-300 bg-black/50 backdrop-blur-sm z-40" onClick={() => dispatch(hideOverlay())}>
+      {content}
+    </div>
+  );
 };
 
 Overlay.displayName = 'Overlay';

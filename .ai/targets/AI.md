@@ -18,3 +18,6 @@
 - Examples OK if they prevent mistakes
 - Use minimal code snippets
 - Focus on decision rules, not explanations
+
+**Validation (AI: READ THIS):**
+Apply rules above per line, not per file. Grep to find duplications.

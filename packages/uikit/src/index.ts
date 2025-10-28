@@ -3,15 +3,48 @@
  * Exports all UI Kit components for easy importing
  */
 
-// Base components
-export { Header, type HeaderProps } from './base/layout/Header';
-export { Footer, type FooterProps } from './base/layout/Footer';
-export { Menu, type MenuProps, type MenuItem } from './base/layout/Menu';
-export { Sidebar, type SidebarProps } from './base/layout/Sidebar';
-export { Popup, type PopupProps } from './base/layout/Popup';
-export { Overlay, type OverlayProps } from './base/layout/Overlay';
-
+// Base shadcn components
 export { Button, type ButtonProps, ButtonVariant, ButtonSize, IconButtonSize } from './base/button';
+
+// shadcn navigation
+export {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuContent,
+  NavigationMenuTrigger,
+  NavigationMenuLink,
+  NavigationMenuIndicator,
+  NavigationMenuViewport,
+} from './base/navigation-menu';
+
+// shadcn sheet (sidebar)
+export {
+  Sheet,
+  SheetPortal,
+  SheetOverlay,
+  SheetTrigger,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetFooter,
+  SheetTitle,
+  SheetDescription,
+} from './base/sheet';
+
+// shadcn dialog (popup/modal)
+export {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from './base/dialog';
 
 // Base dropdowns
 export {

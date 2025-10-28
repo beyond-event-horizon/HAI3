@@ -22,31 +22,19 @@
 - Self-registers on import: `screensetService.register(config)`
 - App imports: `import '@/screensets/screensetRegistry'`
 - NO registration in App.tsx
-- Define + register at module level
 
-**IDs Pattern (AI: READ THIS):**
-- Screenset ID: const in screenset file (e.g., DEMO_SCREENSET_ID)
-- Screen IDs: const in screen files (e.g., HELLO_WORLD_SCREEN_ID)
-- Icon IDs: const in icon files (e.g., WORLD_ICON_ID)
-- Prevents circular imports, follows vertical slice
-- See GUIDELINES.md for details
+**IDs:** See GUIDELINES.md Identifiers section
 
 **Navigation:**
 - Menu items in screenset config
-- MenuItem type from `@hai3/uikit`
-- Footer orchestrates: currentScreenset -> Menu
-- Screen renders: selectedScreen -> component
+- MenuItem type from `@hai3/uicore`
 
 **UI Kit:**
-- Use existing `@hai3/uikit` components
-- CANNOT modify existing
+- Use existing `@hai3/uikit`
 - CAN create LOCAL in `screensets/[name]/uikit/` (composites only)
-- KEEP local - NEVER promote without request
+- NEVER promote without request
 
-**Themes:**
-- CAN add new (see THEMES.md)
-- CANNOT modify existing
-- NO hardcoded colors
+**Themes:** See THEMES.md
 
 **Building:**
 - Global UI Kit + local uikit + logic + state
