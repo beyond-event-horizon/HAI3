@@ -70,6 +70,9 @@ export { SimpleSelect, type SimpleSelectProps, type SimpleSelectOption } from '.
 // Composite components
 export { IconButton, type IconButtonProps } from './composite/buttons/IconButton';
 
+// Icons (tree-shakeable - app imports and registers only what it needs)
+export { MenuIcon } from './icons/MenuIcon';
+
 // Theme system (utilities only - theme definitions in app)
 export { applyTheme } from './styles/applyTheme';
 export type { Theme } from './styles/themeTypes';

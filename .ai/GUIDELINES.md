@@ -46,10 +46,11 @@
 - See UICORE.md for details
 
 ### APP RESPONSIBILITIES (ONLY)
-1. Import self-registering registries
-2. Configure domain initial state
-3. Render Layout
-- NO watching state, NO bridging, NO registration
+1. Import self-registering registries (themes, screensets)
+2. Register tree-shakeable icons from UI Kit
+3. Configure domain initial state
+4. Render Layout
+- NO watching state, NO bridging domains
 
 ---
 
