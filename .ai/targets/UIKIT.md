@@ -29,12 +29,10 @@
 **Composite Pattern (AI: READ THIS):**
 - BAD: Composite has Redux, theme registry, screenset logic
 - GOOD: Composite takes value/onChange props only
-- If UI Core duplicates UI logic -> extract to composite
 
-**Icons (AI: READ THIS):**
+**Icons:**
 - Location: `icons/` directory
 - Tree-shakeable: exported, NOT self-registered
-- App imports and registers: `iconService.register('id', <Icon />)`
 - Props: className only
 
 **Rules:**

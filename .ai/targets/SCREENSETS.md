@@ -14,14 +14,10 @@
 **Structure (AI: READ THIS):**
 - Registry: only imports screensets, NOT individual screens
 - Screenset file: self-contained config + screens + icons
-- Pattern prevents merge conflicts when multiple devs work on different screensets
 - BAD: screensetRegistry.tsx imports all screens
 - GOOD: screensetRegistry.tsx imports demoScreenset only
 
-**Registry (AI: READ THIS):**
-- Self-registers on import: `screensetService.register(config)`
-- App imports: `import '@/screensets/screensetRegistry'`
-- NO registration in App.tsx
+**Registry:** See GUIDELINES.md Self-Registering Registries
 
 **IDs:** See GUIDELINES.md Identifiers section
 

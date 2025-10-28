@@ -27,6 +27,7 @@
 - Wrap UI Kit composites, add Redux
 - BAD: Component reimplements DropdownMenu + Button
 - GOOD: Component uses SimpleSelect/CascadingSelect
+- If duplicating UI logic -> extract to UI Kit composite first
 
 **Domain Slice:**
 - State: `visible: boolean`, Actions: `setDomainConfig`, `setDomainVisible`
@@ -49,9 +50,8 @@
 - GOOD: Domain B handles its own interactions
 - Rule: Provide data to other domains, NOT control their behavior
 
-**Services:**
-- Registry management (themeService, screensetService)
-- Self-registering on import, domains consume, NO App calls
+**Services:** See GUIDELINES.md Self-Registering Registries
+- Domains consume, NO App calls
 
 **Anti-Patterns:**
 - BAD: `<Layout logo={x}/>` GOOD: `<Layout/>`
