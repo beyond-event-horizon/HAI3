@@ -10,6 +10,7 @@
 - `src/screensets` -> .ai/targets/SCREENSETS.md
 - `.ai/*.md` files -> .ai/targets/AI.md
 - Styling questions -> .ai/targets/STYLING.md
+- Event-driven architecture -> .ai/targets/EVENTS.md
 
 ---
 
@@ -40,10 +41,10 @@
 - BAD: App calls themeService.register() with themes object
 - GOOD: themeRegistry.ts registers each theme on import
 
-### DOMAIN ORCHESTRATION
-- Domain with UI controls orchestrates related features
-- Orchestration = providing DATA, NOT controlling BEHAVIOR
-- See UICORE.md for details
+### EVENT-DRIVEN ARCHITECTURE
+- Domains communicate via events, NOT direct imports
+- Actions emit events → Effects subscribe → Update slices
+- See EVENTS.md for full pattern
 
 ### APP RESPONSIBILITIES (ONLY)
 1. Import self-registering registries (themes, screensets)

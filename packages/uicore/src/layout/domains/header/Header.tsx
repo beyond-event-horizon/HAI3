@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconButton, ButtonVariant, IconButtonSize } from '@/uikit';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
-import { toggleMenu } from '../menu/menuSlice';
+import { toggleMenu } from '../../../core/actions';
 import { iconService } from '@/core/icons/iconService';
 
 /**

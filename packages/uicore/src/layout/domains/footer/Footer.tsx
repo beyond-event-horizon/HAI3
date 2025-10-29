@@ -3,9 +3,7 @@ import { Button, ButtonVariant } from '@hai3/uikit';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { ThemeSelector } from '@/core/components/ThemeSelector';
 import { ScreensetSelector } from '@/core/components/ScreensetSelector';
-import { setCurrentScreenset, setTheme } from '@/core/layout/layoutSlice';
-import { setMenuConfig } from '@/core/layout/domains/menu';
-import { screensetService } from '@/core/screensets/screensetService';
+import { setCurrentScreenset, setTheme } from '../../../core/actions';
 import { themeService } from '@/core/theme/themeService';
 import { setFooterConfig } from './footerSlice';
 import { buildScreensetOptions } from './footerHelpers';
@@ -15,12 +13,12 @@ import { buildScreensetOptions } from './footerHelpers';
  * Wraps UI Kit Footer and manages its own configuration via Redux
  * Includes ThemeSelector and ScreensetSelector as built-in children
  * 
- * IMPORTANT: Footer orchestrates screensets AND themes
+ * IMPORTANT: Footer reports screenset AND theme changes
  * - Discovers registered themes/screensets at runtime from services
  * - Sets initial theme (first registered) and screenset (first in first category)
- * - Builds screenset options internally
- * - Watches screenset changes → provides Menu with items (Menu handles default selection)
- * - Watches theme changes → applies theme
+ * - Dispatches actions that emit events (event-driven architecture)
+ * - Effects handle side effects (menu updates, theme application)
+ * - Footer has NO knowledge of Menu or other domains
  */
 
 export interface FooterProps {
@@ -67,25 +65,7 @@ export const Footer: React.FC<FooterProps> = () => {
     }));
   }, [dispatch, theme, currentScreenset]);
 
-  // Watch screenset changes and update Menu (Footer owns screenset knowledge)
-  useEffect(() => {
-    const screenset = screensetService.get(currentScreenset);
-    if (!screenset) return;
-
-    // Provide Menu with items (Menu handles its own default selection)
-    dispatch(
-      setMenuConfig({
-        items: screenset.menuItems, // Icons are now string identifiers (serializable)
-      })
-    );
-  }, [currentScreenset, dispatch]);
-
-  // Watch theme changes and apply theme (Footer owns theme orchestration)
-  useEffect(() => {
-    if (theme) {
-      themeService.apply(theme);
-    }
-  }, [theme]);
+  // No side effects here - actions emit events, effects handle them
 
   if (!visible) return null;
 

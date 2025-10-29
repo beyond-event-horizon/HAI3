@@ -9,7 +9,7 @@ import {
 } from '@/uikit';
 import { ChevronDown } from 'lucide-react';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
-import { setTheme } from '@/core/layout/layoutSlice';
+import { setTheme } from '../core/actions';
 
 /**
  * ThemeSelector Component

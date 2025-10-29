@@ -6,7 +6,10 @@
 
 **Rules:**
 - ISOLATED - no data sharing between screensets
-- READ core state, CANNOT MODIFY core
+- READ core state via `useAppSelector`
+- MODIFY core via actions from `@/core/actions` (event-driven)
+- BAD: `import { setTheme } from '@/core/layout/layoutSlice'`
+- GOOD: `import { setTheme } from '@hai3/uicore'` (re-exported from @/core/actions)
 - NO hardcoded screenset names in shared code
 - NO `if screenset ==` conditionals
 - Build from UI Kit + UI Core

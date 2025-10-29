@@ -35,20 +35,14 @@
 
 ---
 
-## Domain Orchestration (AI: READ THIS)
+## Event-Driven Architecture (AI: READ THIS - CRITICAL)
 
-**Pattern:**
-- Domain with UI controls orchestrates related state
-- Footer: watches theme -> applies, watches screenset -> updates Menu
-- Screen: watches selectedScreen -> renders
+**See EVENTS.md** - Domains communicate via events, NOT direct imports
 
-**CRITICAL: Data Provider vs Behavior Controller**
-- Orchestration = providing DATA, NOT controlling BEHAVIOR
-- BAD: Footer sets Menu.visible, onClick, selectedScreen
-- GOOD: Footer sets Menu.items (data only)
-- BAD: Domain A creates handlers for Domain B
-- GOOD: Domain B handles its own interactions
-- Rule: Provide data to other domains, NOT control their behavior
+**Quick Rules:**
+- Dispatch actions from `@/core/actions`
+- BAD: `import { setMenuItems } from '@/core/layout/domains/menu'`
+- GOOD: Actions emit events → Effects subscribe → Update slices
 
 **Services:** See GUIDELINES.md Self-Registering Registries
 - Domains consume, NO App calls
@@ -57,4 +51,4 @@
 - BAD: `<Layout logo={x}/>` GOOD: `<Layout/>`
 - BAD: `{show && <Menu/>}` GOOD: `<Menu/>`
 - BAD: `useState` GOOD: Redux
-- BAD: App bridging GOOD: Domain orchestration
+- BAD: Direct cross-domain dispatch GOOD: Event-driven actions

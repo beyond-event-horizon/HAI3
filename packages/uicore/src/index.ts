@@ -44,5 +44,6 @@ export { themeService } from './theme/themeService';
 // Icon management (screensets register icons)
 export { iconService } from './icons/iconService';
 
-// Layout slice
-export { setTheme, setCurrentScreenset, setSelectedScreen } from './layout/layoutSlice';
+// Event-driven actions (AI: READ THIS - use these, NOT slice actions)
+export { setTheme, setCurrentScreenset, toggleMenu } from './core/actions';
+export { setSelectedScreen } from './layout/layoutSlice'; // Direct action (Menu internal use)
