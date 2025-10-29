@@ -32,8 +32,8 @@ export { Overlay, type OverlayProps } from './layout/domains/overlay';
 export { ThemeSelector, type ThemeSelectorProps } from './components/ThemeSelector';
 export { ScreensetSelector, type ScreensetSelectorProps, type ScreensetOption } from './components/ScreensetSelector';
 
-// Re-export MenuItem from UI Kit for convenience
-export type { MenuItem } from '@hai3/uikit';
+// Re-export MenuItem from menu domain (vertical slice approach)
+export type { MenuItem } from './layout/domains/menu';
 
 // Screenset management (Footer domain handles watching)
 export { screensetService, type ScreensetConfig } from './screensets/screensetService';
@@ -44,5 +44,6 @@ export { themeService } from './theme/themeService';
 // Icon management (screensets register icons)
 export { iconService } from './icons/iconService';
 
-// Layout slice
-export { setTheme, setCurrentScreenset, setSelectedScreen } from './layout/layoutSlice';
+// Event-driven actions (AI: READ THIS - use these, NOT slice actions)
+export { setTheme, setCurrentScreenset, toggleMenu } from './core/actions';
+export { setSelectedScreen } from './layout/layoutSlice'; // Direct action (Menu internal use)

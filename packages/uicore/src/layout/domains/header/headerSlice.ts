@@ -10,12 +10,14 @@ export interface HeaderState {
   logo: string; // Logo text (serializable)
   actions: ReactNode; // Keep ReactNode for flexibility, but avoid storing in Redux
   showMenuToggle: boolean;
+  menuToggleIcon: string; // Icon ID - resolved via iconService
 }
 
 const initialState: HeaderState = {
   logo: '',
   actions: null,
   showMenuToggle: true,
+  menuToggleIcon: 'menu',
 };
 
 const headerSlice = createSlice({

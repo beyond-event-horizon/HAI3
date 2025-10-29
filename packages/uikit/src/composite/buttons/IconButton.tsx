@@ -1,7 +1,15 @@
 import React from 'react';
-import { Button, type ButtonProps } from '@/uikit/base/buttons/Button';
+import { Button, type ButtonProps, ButtonVariant } from '@/uikit/base/button';
 import { cn } from '@/lib/utils';
-import { ButtonVariant, IconButtonSize } from '@/uikit/base/buttons/types';
+
+/**
+ * IconButton Size Enum
+ */
+export enum IconButtonSize {
+  Default = 'default',
+  Small = 'sm',
+  Large = 'lg',
+}
 
 /**
  * IconButton component for HAI3 UI-Core
@@ -37,5 +45,5 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
 
 IconButton.displayName = 'IconButton';
 
-// Export enums for consumers
-export { ButtonVariant, IconButtonSize };
+// Re-export ButtonVariant for convenience
+export { ButtonVariant };

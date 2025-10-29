@@ -1,37 +1,17 @@
 import React from 'react';
-import { Sidebar as UIKitSidebar } from '@/uikit';
-import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
-import { toggleSidebar } from './sidebarSlice';
+import { useAppSelector } from '@/core/hooks/useRedux';
 
-/**
- * Core Sidebar component
- * Wraps UI Kit Sidebar and manages its own configuration via Redux
- */
-
-export interface SidebarProps {
-  // All configuration is managed via Redux
-}
+export interface SidebarProps {}
 
 export const Sidebar: React.FC<SidebarProps> = () => {
-  const dispatch = useAppDispatch();
-  const { collapsed, position, title, content, visible } = useAppSelector((state) => state.sidebar);
+  const { content, position, collapsed, visible } = useAppSelector((state) => state.sidebar);
 
   if (!visible) return null;
 
-  const handleToggle = (): void => {
-    dispatch(toggleSidebar());
-  };
-
   return (
-    <UIKitSidebar
-      collapsed={collapsed}
-      position={position}
-      title={title || undefined}
-      onToggle={handleToggle}
-      className="overflow-y-auto"
-    >
+    <aside className={`flex flex-col bg-background border-border transition-all duration-300 ${position === 'left' ? 'border-r' : 'border-l'} ${collapsed ? 'w-16' : 'w-64'}`}>
       {content}
-    </UIKitSidebar>
+    </aside>
   );
 };
 

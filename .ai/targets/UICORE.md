@@ -1,4 +1,4 @@
-#UI Core Guidelines
+# UI Core Guidelines
 
 > Common rules: .ai/GUIDELINES.md | Styling: .ai/targets/STYLING.md
 
@@ -8,9 +8,14 @@
 1. NO prop drilling - Redux ONLY
 2. Self-contained: Component + slice
 3. Orchestrators accept ONLY `children`
-4. Wrap UI Kit components
+4. Use UI Kit components (Button, IconButton) - NO raw HTML buttons/inputs
 5. Self-hide via `visible: boolean`
 6. Styling: ONLY layout classes
+
+**CRITICAL RULE (AI: READ THIS):**
+- BAD: `<button>`, `<input>`, `<select>` in domains
+- GOOD: `<Button>`, `<IconButton>` from UI Kit
+- Domains render layout HTML (`<header>`, `<nav>`, `<footer>`), use UI Kit for interactive elements
 
 **Domains:** Header, Footer, Menu, Sidebar, Screen, Popup, Overlay
 
@@ -18,38 +23,32 @@
 - Domain = Major layout section, own slice, one instance
 - Component = Reusable widget, props config, reads/writes Redux
 
-**Domain Slice Requirements:**
-- State: `visible: boolean`
-- Actions: `setDomainConfig`, `setDomainVisible`
-- MenuItem type from `@hai3/uikit`
+**Component Pattern (AI: READ THIS):**
+- Wrap UI Kit components, add Redux
+- BAD: Component reimplements DropdownMenu + Button
+- GOOD: Component uses DropdownMenu/CascadingDropdown from UI Kit
+- If duplicating UI logic -> extract to UI Kit composite first
+
+**Domain Slice:**
+- State: `visible: boolean`, Actions: `setDomainConfig`, `setDomainVisible`
+- Types in slice (vertical slice: MenuItem in menuSlice)
 
 ---
 
-## Domain Orchestration (AI: READ THIS)
+## Event-Driven Architecture (AI: READ THIS - CRITICAL)
 
-**Pattern:**
-- Domain with UI controls orchestrates related state
-- Footer has selectors -> orchestrates themes + screensets
-- Footer watches layout.theme -> applies via themeService
-- Footer watches layout.currentScreenset -> updates Menu
-- Screen watches menu.selectedScreen -> renders from screensetService
+**See EVENTS.md** - Domains communicate via events, NOT direct imports
 
-**CRITICAL: Data Provider vs Behavior Controller**
-- Orchestration = providing DATA, NOT controlling BEHAVIOR
-- BAD: Footer sets Menu.visible, onClick, selectedScreen
-- GOOD: Footer sets Menu.items (data only)
-- BAD: Domain A creates handlers for Domain B
-- GOOD: Domain B handles its own interactions
-- Rule: Provide data to other domains, NOT control their behavior
+**Quick Rules:**
+- Dispatch actions from `@/core/actions`
+- BAD: `import { setMenuItems } from '@/core/layout/domains/menu'`
+- GOOD: Actions emit events → Effects subscribe → Update slices
 
-**Services:**
-- themeService, screensetService = registry management
-- Apps register on import (self-registering)
-- Domains consume services
-- NO service calls in App
+**Services:** See GUIDELINES.md Self-Registering Registries
+- Domains consume, NO App calls
 
 **Anti-Patterns:**
 - BAD: `<Layout logo={x}/>` GOOD: `<Layout/>`
 - BAD: `{show && <Menu/>}` GOOD: `<Menu/>`
 - BAD: `useState` GOOD: Redux
-- BAD: App bridging GOOD: Domain orchestration
+- BAD: Direct cross-domain dispatch GOOD: Event-driven actions

@@ -9,29 +9,34 @@
 - Theme utilities (applyTheme, Theme)
 - NO Redux, NO business logic
 
-**Hierarchy:** shadcn -> base -> composite
-- NEVER skip layers
+**Hierarchy:** base (shadcn only) -> composite
+- Base = shadcn components ONLY (flat)
+- Composite = combinations of base
+- NO custom base components (always use shadcn first)
 
-**Component Placement:**
-- Imports `@/uikit/base/_shadcn/*` -> PUT IN `base/`
-- Imports `@/uikit/base/*` -> PUT IN `composite/`
+**shadcn (AI: READ THIS - CRITICAL):**
+- ALL base components are shadcn
+- Enums in same file as component
+- Mark customizations: `// HAI3 customization: ...`
+- Update: `npx shadcn add [component]`
 
-**CRITICAL - Layer Skipping (AI: READ THIS):**
-- BAD: Composite imports from `_shadcn/dropdown-menu`
-- GOOD: Create `base/dropdowns/DropdownMenu` (wraps shadcn), composite imports base
-- BAD: Any component importing from shadcn AND base
-- GOOD: base wraps shadcn, composite uses base only
-- Rule: If you need shadcn in composite, create base wrapper FIRST
+**Rule (AI: READ THIS - CRITICAL):**
+- ALWAYS use shadcn first, only create custom if shadcn lacks it
+- Navigation -> NavigationMenu, Sidebar -> Sheet, Modal -> Dialog
+- BEFORE deleting: grep UI Core for imports
+- Placement: shadcn -> `base/`, combinations -> `composite/`
 
-**Component Rules:**
-- Pure presentational only
-- Props in, events out
+**Composite Pattern (AI: READ THIS):**
+- BAD: Composite has Redux, theme registry, screenset logic
+- GOOD: Composite takes value/onChange props only
+
+**Icons:**
+- Location: `icons/` directory
+- Tree-shakeable: exported, NOT self-registered
+- Props: className only
+
+**Rules:**
+- Pure presentational, props in/events out
 - Enums for variants (NEVER string unions)
-- Tailwind theme tokens, styling per STYLING.md
-- Accessible (ARIA, keyboard)
-
-**Types:**
-- Presentational types exported with component
-- MenuItem, ButtonVariant, etc.
-- UI Core imports these (not reverse)
-- Enums defined in component file, not separate files
+- Styling per STYLING.md
+- Export types with component, enums in same file

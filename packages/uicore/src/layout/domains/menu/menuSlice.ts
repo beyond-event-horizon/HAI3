@@ -1,11 +1,20 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { LayoutDomains } from '@/core/layout/layoutSlice';
-import type { MenuItem } from '@hai3/uikit';
 
 /**
  * Menu slice for managing menu state and configuration
- * MenuItem type is defined in UI Kit (presentational concern)
+ * MenuItem type is defined here (vertical slice approach)
  */
+
+export interface MenuItem {
+  id: string;
+  label: string;
+  icon?: string; // Icon identifier - resolved via iconService
+  href?: string;
+  onClick?: () => void;
+  children?: MenuItem[];
+  badge?: string | number;
+}
 
 export interface MenuState {
   collapsed: boolean;

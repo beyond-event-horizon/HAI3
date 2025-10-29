@@ -1,4 +1,4 @@
-import type { MenuItem } from '@hai3/uikit';
+import type { MenuItem } from '@/core/layout/domains/menu';
 
 /**
  * Screenset Configuration

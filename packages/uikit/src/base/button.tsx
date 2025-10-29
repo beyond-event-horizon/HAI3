@@ -4,6 +4,25 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Button Enums
+ */
+export enum ButtonVariant {
+  Default = 'default',
+  Destructive = 'destructive',
+  Outline = 'outline',
+  Secondary = 'secondary',
+  Ghost = 'ghost',
+  Link = 'link',
+}
+
+export enum ButtonSize {
+  Default = 'default',
+  Small = 'sm',
+  Large = 'lg',
+  Icon = 'icon',
+}
+
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {

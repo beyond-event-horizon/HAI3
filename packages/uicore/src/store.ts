@@ -8,11 +8,14 @@ import { sidebarReducer } from './layout/domains/sidebar';
 import { screenReducer } from './layout/domains/screen';
 import { popupReducer } from './layout/domains/popup';
 import { overlayReducer } from './layout/domains/overlay';
+import { initEffects } from './core/effects';
 
 /**
  * HAI3 Redux store configuration
- * Implements the Flux pattern with shared global state
- * Screensets will add their own reducers dynamically
+ * Implements event-driven Flux architecture
+ * - Actions emit events via Event Bus
+ * - Effects subscribe to events and update slices
+ * - Loose coupling between domains
  */
 
 export const store = configureStore({
@@ -36,6 +39,9 @@ export const store = configureStore({
       },
     }),
 });
+
+// Initialize effects - sets up event subscriptions
+initEffects(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

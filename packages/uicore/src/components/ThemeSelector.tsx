@@ -1,10 +1,19 @@
 import React from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  Button,
+  ButtonVariant,
+} from '@/uikit';
+import { ChevronDown } from 'lucide-react';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
-import { setTheme } from '@/core/layout/layoutSlice';
+import { setTheme } from '../core/actions';
 
 /**
  * ThemeSelector Component
- * Redux-aware reusable component for theme selection
+ * Redux-aware component for theme selection using DropdownMenu
  * Can be used in Footer, Header, Sidebar, or anywhere else
  */
 
@@ -20,10 +29,6 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   const dispatch = useAppDispatch();
   const currentTheme = useAppSelector((state) => state.layout.theme);
 
-  const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-    dispatch(setTheme(event.target.value));
-  };
-
   const formatThemeName = (themeName: string): string => {
     return themeName
       .split('-')
@@ -32,22 +37,31 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   };
 
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <label htmlFor="theme-select" className="text-sm text-muted-foreground">
+    <div className={`inline-flex items-center gap-2 ${className}`}>
+      <label className="text-sm text-muted-foreground whitespace-nowrap">
         Theme:
       </label>
-      <select
-        id="theme-select"
-        value={currentTheme}
-        onChange={handleThemeChange}
-        className="px-2 py-1 text-sm bg-background border border-border rounded hover:bg-accent transition-colors cursor-pointer"
-      >
-        {availableThemes.map((themeName) => (
-          <option key={themeName} value={themeName}>
-            {formatThemeName(themeName)}
-          </option>
-        ))}
-      </select>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant={ButtonVariant.Outline}
+            className="inline-flex items-center justify-between min-w-40"
+          >
+            <span>{formatThemeName(currentTheme)}</span>
+            <ChevronDown className="ml-2 h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          {availableThemes.map((themeName) => (
+            <DropdownMenuItem
+              key={themeName}
+              onClick={() => dispatch(setTheme(themeName))}
+            >
+              {formatThemeName(themeName)}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 };

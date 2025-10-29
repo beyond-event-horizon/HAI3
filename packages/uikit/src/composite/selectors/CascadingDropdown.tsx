@@ -7,31 +7,30 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '@/uikit/base/dropdowns/DropdownMenu';
-import { Button, ButtonVariant } from '@/uikit/base/buttons/Button';
+} from '@/uikit/base/dropdown-menu';
+import { Button, ButtonVariant } from '@/uikit/base/button';
 import { ChevronDown } from 'lucide-react';
 
 /**
- * CascadingSelect Component (Composite)
- * Two-level selection using base DropdownMenu with cascading submenus
- * Imports from base layer only (never skips to shadcn)
+ * CascadingDropdown Component (Composite)
+ * Two-level dropdown using DropdownMenuSub for nested selection
  * First level: Categories, Second level: Items
  */
 
-export interface CascadingOption {
+export interface CascadingDropdownOption {
   category: string;
   items: Array<{ id: string; name: string }>;
 }
 
-export interface CascadingSelectProps {
-  options: CascadingOption[];
+export interface CascadingDropdownProps {
+  options: CascadingDropdownOption[];
   currentValue: string; // Format: "category:itemId"
   onChange: (value: string) => void;
   label?: string;
   className?: string;
 }
 
-export const CascadingSelect: React.FC<CascadingSelectProps> = ({
+export const CascadingDropdown: React.FC<CascadingDropdownProps> = ({
   options,
   currentValue,
   onChange,
@@ -70,8 +69,8 @@ export const CascadingSelect: React.FC<CascadingSelectProps> = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            variant={ButtonVariant.Secondary}
-            className="inline-flex items-center justify-between min-w-[160px]"
+            variant={ButtonVariant.Outline}
+            className="inline-flex items-center justify-between min-w-40"
           >
             <span>{formatName(getCurrentDisplay())}</span>
             <ChevronDown className="ml-2 h-4 w-4" />
@@ -101,4 +100,4 @@ export const CascadingSelect: React.FC<CascadingSelectProps> = ({
   );
 };
 
-CascadingSelect.displayName = 'CascadingSelect';
+CascadingDropdown.displayName = 'CascadingDropdown';
