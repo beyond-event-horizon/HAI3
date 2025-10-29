@@ -85,6 +85,17 @@ export { CascadingDropdown, type CascadingDropdownProps, type CascadingDropdownO
 // Composite components
 export { IconButton, type IconButtonProps, IconButtonSize } from './composite/buttons/IconButton';
 
+// Composite navigation (tailored from shadcn sidebar)
+export {
+  Sidebar,
+  SidebarContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarMenuLabel,
+  SidebarMenuIcon,
+} from './composite/navigation/Sidebar';
+
 // Icons (tree-shakeable - app imports and registers only what it needs)
 export { MenuIcon } from './icons/MenuIcon';
 export { CloseIcon } from './icons/CloseIcon';
