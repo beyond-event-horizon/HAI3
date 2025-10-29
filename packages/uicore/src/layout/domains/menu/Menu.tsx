@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, ButtonVariant } from '@hai3/uikit';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { setSelectedScreen } from '@/core/layout/layoutSlice';
@@ -10,6 +10,13 @@ export const Menu: React.FC<MenuProps> = () => {
   const { items, collapsed, visible } = useAppSelector((state) => state.menu);
   const selectedScreen = useAppSelector((state) => state.layout.selectedScreen);
   const dispatch = useAppDispatch();
+
+  // Select first item as default when items change (Menu handles its own behavior)
+  useEffect(() => {
+    if (items.length > 0 && !selectedScreen) {
+      dispatch(setSelectedScreen(items[0].id));
+    }
+  }, [items, selectedScreen, dispatch]);
 
   if (!visible) return null;
 

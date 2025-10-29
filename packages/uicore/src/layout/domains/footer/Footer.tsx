@@ -19,8 +19,7 @@ import { buildScreensetOptions } from './footerHelpers';
  * - Discovers registered themes/screensets at runtime from services
  * - Sets initial theme (first registered) and screenset (first in first category)
  * - Builds screenset options internally
- * - Watches screenset changes → updates Menu with new items
- * - Menu handles default screen selection when items change
+ * - Watches screenset changes → provides Menu with items (Menu handles default selection)
  * - Watches theme changes → applies theme
  */
 
@@ -73,7 +72,7 @@ export const Footer: React.FC<FooterProps> = () => {
     const screenset = screensetService.get(currentScreenset);
     if (!screenset) return;
 
-    // Update menu items (Menu handles clicks and default selection)
+    // Provide Menu with items (Menu handles its own default selection)
     dispatch(
       setMenuConfig({
         items: screenset.menuItems, // Icons are now string identifiers (serializable)
