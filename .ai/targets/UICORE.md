@@ -24,9 +24,9 @@
 - Component = Reusable widget, props config, reads/writes Redux
 
 **Component Pattern (AI: READ THIS):**
-- Wrap UI Kit composites, add Redux
+- Wrap UI Kit components, add Redux
 - BAD: Component reimplements DropdownMenu + Button
-- GOOD: Component uses SimpleSelect/CascadingSelect
+- GOOD: Component uses DropdownMenu/CascadingDropdown from UI Kit
 - If duplicating UI logic -> extract to UI Kit composite first
 
 **Domain Slice:**

@@ -1,12 +1,19 @@
 import React from 'react';
-import { SimpleSelect, type SimpleSelectOption } from '@/uikit';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  Button,
+  ButtonVariant,
+} from '@/uikit';
+import { ChevronDown } from 'lucide-react';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { setTheme } from '@/core/layout/layoutSlice';
 
 /**
  * ThemeSelector Component
- * Redux-aware reusable component for theme selection
- * Uses SimpleSelect composite component from UI Kit
+ * Redux-aware component for theme selection using DropdownMenu
  * Can be used in Footer, Header, Sidebar, or anywhere else
  */
 
@@ -22,10 +29,6 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   const dispatch = useAppDispatch();
   const currentTheme = useAppSelector((state) => state.layout.theme);
 
-  const handleThemeChange = (themeName: string): void => {
-    dispatch(setTheme(themeName));
-  };
-
   const formatThemeName = (themeName: string): string => {
     return themeName
       .split('-')
@@ -33,19 +36,33 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
       .join(' ');
   };
 
-  const options: SimpleSelectOption[] = availableThemes.map((themeName) => ({
-    value: themeName,
-    label: formatThemeName(themeName),
-  }));
-
   return (
-    <SimpleSelect
-      options={options}
-      value={currentTheme}
-      onChange={handleThemeChange}
-      label="Theme"
-      className={className}
-    />
+    <div className={`inline-flex items-center gap-2 ${className}`}>
+      <label className="text-sm text-muted-foreground whitespace-nowrap">
+        Theme:
+      </label>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant={ButtonVariant.Outline}
+            className="inline-flex items-center justify-between min-w-40"
+          >
+            <span>{formatThemeName(currentTheme)}</span>
+            <ChevronDown className="ml-2 h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          {availableThemes.map((themeName) => (
+            <DropdownMenuItem
+              key={themeName}
+              onClick={() => dispatch(setTheme(themeName))}
+            >
+              {formatThemeName(themeName)}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 };
 

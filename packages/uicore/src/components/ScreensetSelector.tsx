@@ -1,10 +1,10 @@
 import React from 'react';
-import { CascadingSelect, type CascadingOption } from '@/uikit';
+import { CascadingDropdown, type CascadingDropdownOption } from '@/uikit';
 
 /**
  * ScreensetSelector Component
  * Redux-aware component for 2-level screenset selection
- * Uses CascadingSelect with hover-triggered cascading menu
+ * Uses CascadingDropdown with nested DropdownMenuSub
  */
 
 export interface ScreensetOption {
@@ -25,14 +25,14 @@ export const ScreensetSelector: React.FC<ScreensetSelectorProps> = ({
   onChange,
   className = '',
 }) => {
-  // Convert ScreensetOption[] to CascadingOption[]
-  const cascadingOptions: CascadingOption[] = options.map((opt) => ({
+  // Convert ScreensetOption[] to CascadingDropdownOption[]
+  const cascadingOptions: CascadingDropdownOption[] = options.map((opt) => ({
     category: opt.category,
     items: opt.screensets,
   }));
 
   return (
-    <CascadingSelect
+    <CascadingDropdown
       options={cascadingOptions}
       currentValue={currentValue}
       onChange={onChange}

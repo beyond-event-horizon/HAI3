@@ -4,7 +4,7 @@
  */
 
 // Base shadcn components
-export { Button, type ButtonProps, ButtonVariant, ButtonSize, IconButtonSize } from './base/button';
+export { Button, type ButtonProps, ButtonVariant, ButtonSize } from './base/button';
 
 // shadcn navigation
 export {
@@ -46,6 +46,20 @@ export {
   DialogDescription,
 } from './base/dialog';
 
+// shadcn select (native-style)
+export {
+  Select,
+  SelectGroup,
+  SelectValue,
+  SelectTrigger,
+  SelectContent,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+  SelectScrollUpButton,
+  SelectScrollDownButton,
+} from './base/select';
+
 // Base dropdowns
 export {
   DropdownMenu,
@@ -64,11 +78,12 @@ export {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
 } from './base/dropdown-menu';
-export { CascadingSelect, type CascadingSelectProps, type CascadingOption } from './composite/selectors/CascadingSelect';
-export { SimpleSelect, type SimpleSelectProps, type SimpleSelectOption } from './composite/selectors/SimpleSelect';
+
+// Composite selectors
+export { CascadingDropdown, type CascadingDropdownProps, type CascadingDropdownOption } from './composite/selectors/CascadingDropdown';
 
 // Composite components
-export { IconButton, type IconButtonProps } from './composite/buttons/IconButton';
+export { IconButton, type IconButtonProps, IconButtonSize } from './composite/buttons/IconButton';
 
 // Icons (tree-shakeable - app imports and registers only what it needs)
 export { MenuIcon } from './icons/MenuIcon';
