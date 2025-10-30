@@ -16,12 +16,7 @@
 
 ## HAI3 Architecture (AI: READ THIS)
 
-**Stack:** React 18 + TypeScript + Tailwind CSS + Vite + Redux Toolkit
-
-**Monorepo:**
-- `packages/uicore` -> Redux domains + state + orchestration
-- `packages/uikit` -> Pure React + theme utilities
-- `src/` -> App logic + themes + screensets
+**Monorepo:** `packages/uicore` (Redux domains), `packages/uikit` (React components), `src/` (app + themes + screensets)
 
 **Dependencies (AI: READ THIS):**
 - Apps: ONLY `@hai3/uicore`, `@hai3/uikit`, `react`, `react-dom`
@@ -29,72 +24,65 @@
 - GOOD: UI packages own dependencies (transitive via npm workspaces)
 
 ### NO BRIDGING IN APP
-- App NEVER bridges between domains
-- BAD: App reads menu.selectedScreen -> looks up component -> passes to Screen
-- GOOD: Screen reads menu.selectedScreen -> looks up component internally
-- BAD: App watches theme -> calls applyTheme
-- GOOD: Footer watches theme -> applies internally
+- BAD: App bridges domains (reads state -> passes props between domains)
+- GOOD: Domains read own Redux state, actions emit events, effects update state
 
 ### SELF-REGISTERING REGISTRIES
-- Registries self-register on import, NOT registered by App
-- BAD: App calls screensetService.register() in useEffect
-- GOOD: screensetRegistry.tsx calls screensetService.register() at module level
-- BAD: App calls themeService.register() with themes object
-- GOOD: themeRegistry.ts registers each theme on import
+- BAD: App calls service.register() in useEffect
+- GOOD: Registry file calls service.register() at module level
 
-### EVENT-DRIVEN ARCHITECTURE
-- Domains communicate via events, NOT direct imports
-- Actions emit events → Effects subscribe → Update slices
-- See EVENTS.md for full pattern
+### EVENT-DRIVEN
+- Actions emit events -> Effects subscribe -> Update slices (See EVENTS.md)
 
-### APP RESPONSIBILITIES (ONLY)
-1. Import self-registering registries (themes, screensets)
-2. Register tree-shakeable icons from UI Kit
-3. Configure domain initial state
-4. Render Layout
-- NO watching state, NO bridging domains
+### APP RESPONSIBILITIES
+1. Import registries (auto-register) 2. Register icons 3. Configure domains 4. Render
+- NO watching state, NO bridging
 
 ---
 
-## Common TypeScript Rules
+## Import Path Rules (AI: READ THIS - CRITICAL)
 
-**STRICT:**
-- Types for ALL variables, params, returns
-- NEVER `any`, use `unknown`
-- `type` for objects, `interface` for props
-- Export types with component
+**Relative vs Alias:**
+- Sibling files (same parent): Relative (`../sibling`)
+- Within package: Relative OK even `../../../`
+- Cross-branch in app: Alias (`@/other/branch`)
+- Cross-package: `@hai3/uicore`, `@hai3/uikit`
 
-**Identifiers (AI: READ THIS - CRITICAL):**
-- NEVER hardcoded strings
-- Constants: IDs defined where they belong (Screen/Screenset/Icon ID in own file)
-- Enums: variants/types in slice files (ButtonVariant, Theme)
-- Types: `keyof typeof` when source exists elsewhere
+**BAD:**
+- App: `@/screensets/.../screens/theme` (siblings via alias)
+- App: `@/App` (same dir via alias)
+
+**GOOD:**
+- App siblings: `../theme/Screen`
+- Package: `../../../core/actions`
+- Cross-branch: `@/core/services/thing`
+
+---
+
+## TypeScript Rules
+
+**STRICT:** Types for all, NEVER `any`, `type` for objects, `interface` for props
+
+**Identifiers (AI: READ THIS):**
+- NEVER hardcoded strings, use constants/enums
+- IDs in own file, enums in slice files
 - BAD: `id: 'demo'` GOOD: `id: DEMO_SCREENSET_ID`
 - BAD: `variant: 'primary'` GOOD: `variant: ButtonVariant.Primary`
-- Prevents circular imports, follows vertical slice, prefer types over duplicate enums
 
-**Types Enforce Boundaries (AI: READ THIS):**
-- Use types/enums to reveal architectural violations
-- BAD: `theme: string` with value 'light' (hides UI Core knowing app value)
-- GOOD: `theme: ThemeName` (forces import, reveals bad dependency)
-- If framework knows app values -> type import will fail -> boundary violation visible
-- Rule: String types hide coupling, proper types reveal it
+**Types Enforce Boundaries:**
+- BAD: `theme: string` (hides coupling) GOOD: `theme: ThemeName` (reveals dependency)
+- String types hide violations, proper types reveal them
 
 ---
 
-## Documentation Rules
+## Documentation
 
-- NO emoji, ASCII only
-- Use -> for arrows, BAD:/GOOD: for examples
-- Technical, concise language
-- NO markdown reports without user request
-- .ai/ documentation is exception
+- NO emoji, use -> for arrows, BAD:/GOOD: examples
+- Technical, concise, NO markdown reports (unless user asks)
 
 ---
 
 ## Self-Improvement
 
-- Mistake made? Check if guidelines caused it
-- Add decision rule to prevent future mistakes
-- Verify .ai edits follow .ai/targets/AI.md
-- Examples OK if they prevent mistakes
+- Mistake -> add decision rule to prevent recurrence
+- Verify .ai edits follow AI.md (under 100 lines, decision rules only)
