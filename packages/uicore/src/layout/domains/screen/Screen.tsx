@@ -5,7 +5,7 @@ import { screensetService } from '@/core/screensets/screensetService';
 /**
  * Core Screen component
  * Main content area for rendering application screens
- * Watches menu.selectedScreen and renders component from screenset registry
+ * Reads layout.selectedScreen from Redux and renders component from screenset registry
  * Falls back to children if provided (for apps not using screensets)
  */
 

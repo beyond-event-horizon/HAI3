@@ -6,6 +6,12 @@
 
 ## Rules (AI: READ THIS - CRITICAL)
 
+**Event Naming:**
+- Events = past-tense (what happened)
+- BAD: `NavigateToScreen`, `UpdateMenu`, `ChangeTheme` (imperative)
+- GOOD: `ScreenNavigated`, `MenuUpdated`, `ThemeChanged` (past-tense)
+- Actions can be imperative, events must be past-tense
+
 **Actions:**
 - BAD: `dispatch(setMenuItems(...))` (direct cross-domain update)
 - GOOD: `eventBus.emit(MenuEvents.ItemsChanged, {...})` (emit event)

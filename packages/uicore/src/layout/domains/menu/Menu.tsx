@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Sidebar,
   SidebarContent,
@@ -8,8 +8,8 @@ import {
   SidebarMenuIcon,
   SidebarMenuLabel,
 } from '@hai3/uikit';
-import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
-import { setSelectedScreen } from '@/core/layout/layoutSlice';
+import { useAppSelector } from '@/core/hooks/useRedux';
+import { navigateToScreen } from '../../../core/actions';
 import { iconService } from '@/core/icons/iconService';
 
 export interface MenuProps {}
@@ -17,18 +17,12 @@ export interface MenuProps {}
 /**
  * Menu Domain - Uses tailored shadcn sidebar components
  * Composes shadcn primitives with Redux state management
+ * Purely presentational - responds to user clicks only
+ * Initial navigation handled by AppRouter (default route)
  */
 export const Menu: React.FC<MenuProps> = () => {
   const { items, collapsed, visible } = useAppSelector((state) => state.menu);
   const selectedScreen = useAppSelector((state) => state.layout.selectedScreen);
-  const dispatch = useAppDispatch();
-
-  // Select first item as default when items change (Menu handles its own behavior)
-  useEffect(() => {
-    if (items.length > 0 && !selectedScreen) {
-      dispatch(setSelectedScreen(items[0].id));
-    }
-  }, [items, selectedScreen, dispatch]);
 
   if (!visible) return null;
 
@@ -45,7 +39,7 @@ export const Menu: React.FC<MenuProps> = () => {
                 <SidebarMenuButton
                   isActive={isActive}
                   tooltip={item.label}
-                  onClick={() => dispatch(setSelectedScreen(item.id))}
+                  onClick={() => navigateToScreen(item.id)}
                 >
                   {icon && <SidebarMenuIcon>{icon}</SidebarMenuIcon>}
                   <SidebarMenuLabel>{item.label}</SidebarMenuLabel>

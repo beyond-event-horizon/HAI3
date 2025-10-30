@@ -1,0 +1,32 @@
+/**
+ * Navigation Actions - Async actions that emit events
+ * These actions handle navigation logic and emit events
+ * Following Flux architecture pattern (see EVENTS.md)
+ */
+
+import { eventBus } from '../events/eventBus';
+import { 
+  NavigationEvents,
+  type NavigateToScreenPayload
+} from '../events/eventTypes';
+import { routeService } from '../routing/routeService';
+
+/**
+ * Navigate to a screen by ID
+ * Auto-switches to the screenset that contains this screen
+ * Emits event for effects to handle state updates
+ * 
+ * @param screenId Screen ID to navigate to
+ */
+export const navigateToScreen = (screenId: string): void => {
+  // Validate screen exists
+  if (!routeService.hasScreen(screenId)) {
+    console.warn(`Navigation failed: Screen "${screenId}" not found in route registry`);
+    return;
+  }
+
+  // Emit navigation event for effects to handle
+  eventBus.emit<NavigateToScreenPayload>(NavigationEvents.ScreenNavigated, { 
+    screenId 
+  });
+};

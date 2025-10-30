@@ -1,6 +1,17 @@
 # UI Core Guidelines
 
-> Common rules: .ai/GUIDELINES.md | Styling: .ai/targets/STYLING.md
+> Common rules: .ai/GUIDELINES.md | Styling: .ai/targets/STYLING.md | Events: .ai/targets/EVENTS.md
+
+**Entry Point (AI: READ THIS):**
+- `<HAI3Provider>` wraps app (includes Redux Provider + AppRouter)
+- BAD: Manual Provider/Router setup GOOD: `<HAI3Provider><App /></HAI3Provider>`
+
+**Routing (AI: READ THIS - CRITICAL):**
+- URL: `/:screenId` (screenset auto-detected)
+- Routes auto-generate from registered screensets (lazy init prevents race)
+- BAD: Direct dispatch `dispatch(setSelectedScreen())` GOOD: `navigateToScreen()`
+- BAD: Hardcoded routes GOOD: Routes auto-generate
+- BAD: RouterSync outside route GOOD: RouterSync inside route element (useParams requirement)
 
 # CRITICAL (AI: READ THIS)
 
@@ -52,3 +63,6 @@
 - BAD: `{show && <Menu/>}` GOOD: `<Menu/>`
 - BAD: `useState` GOOD: Redux
 - BAD: Direct cross-domain dispatch GOOD: Event-driven actions
+- BAD: Eager init in `useEffect` GOOD: Lazy init with cache + empty-check (see routeService)
+- BAD: Domain makes navigation decisions GOOD: AppRouter handles routing, domains respond to events
+- BAD: `useParams()` outside route GOOD: Component using `useParams()` must be inside route element
