@@ -6,7 +6,7 @@
 - [x] ~~Implement basic data flow and state management~~
 - [x] ~~Move UI Core and UI Kit to separate packages~~
 - [x] ~~Migrate to flux architecture~~
-- [ ] Navigation (application routing)
+- [x] ~~Navigation (application routing)~~
 - [ ] Basic interaction with API
 - [ ] Localization
 - [ ] Role based access control

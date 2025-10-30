@@ -44,6 +44,13 @@ export { themeService } from './theme/themeService';
 // Icon management (screensets register icons)
 export { iconService } from './icons/iconService';
 
+// HAI3Provider - Main entry point for apps
+export { HAI3Provider, type HAI3ProviderProps } from './core/HAI3Provider';
+
+// Routing
+export { AppRouter } from './core/routing/AppRouter';
+export { routeService, type RouteInfo } from './core/routing/routeService';
+
 // Event-driven actions (AI: READ THIS - use these, NOT slice actions)
-export { setTheme, setCurrentScreenset, toggleMenu } from './core/actions';
+export { setTheme, setCurrentScreenset, toggleMenu, navigateToScreen } from './core/actions';
 export { setSelectedScreen } from './layout/layoutSlice'; // Direct action (Menu internal use)

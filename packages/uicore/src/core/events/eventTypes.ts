@@ -26,6 +26,13 @@ export enum ThemeEvents {
 }
 
 /**
+ * Navigation Events
+ */
+export enum NavigationEvents {
+  ScreenNavigated = 'navigation/screenNavigated',
+}
+
+/**
  * Event Payload Types
  */
 
@@ -45,4 +52,8 @@ export interface MenuItemsChangedPayload {
 
 export interface ThemeChangedPayload {
   themeName: string;
+}
+
+export interface NavigateToScreenPayload {
+  screenId: string;
 }

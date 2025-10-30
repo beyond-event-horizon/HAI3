@@ -4,7 +4,7 @@
 
 **ALWAYS read the target guideline BEFORE making changes:**
 
-- `packages/uicore` -> .ai/targets/UICORE.md
+- `packages/uicore` -> .ai/targets/UICORE.md (includes routing)
 - `packages/uikit` -> .ai/targets/UIKIT.md
 - `src/themes` -> .ai/targets/THEMES.md
 - `src/screensets` -> .ai/targets/SCREENSETS.md
@@ -23,9 +23,10 @@
 - `packages/uikit` -> Pure React + theme utilities
 - `src/` -> App logic + themes + screensets
 
-**Dependencies:**
-- Each package declares own deps, NO duplication in root
-- npm workspaces hoists automatically
+**Dependencies (AI: READ THIS):**
+- Apps: ONLY `@hai3/uicore`, `@hai3/uikit`, `react`, `react-dom`
+- BAD: Apps declaring `@radix-ui/*`, `react-router-dom`, `@reduxjs/toolkit`
+- GOOD: UI packages own dependencies (transitive via npm workspaces)
 
 ### NO BRIDGING IN APP
 - App NEVER bridges between domains

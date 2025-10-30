@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import {
-  Layout,
   useAppDispatch,
   setHeaderConfig,
   iconService,
@@ -19,13 +18,17 @@ iconService.register('close', <CloseIcon />);
  * Responsibilities:
  * 1. Import registries (auto-register themes & screensets)
  * 2. Register core icons (tree-shakeable from UI Kit)
- * 3. Configure UI Core domains (Header)
+ * 3. Configure UI Core domains (Header, etc.)
+ * 
+ * HAI3Provider (in main.tsx) handles:
+ * - Redux Provider setup
+ * - AppRouter with dynamic routing
+ * - RouterSync (URL ↔ Redux)
  * 
  * Framework handles everything else:
- * - Footer discovers registered themes/screensets and sets initial values
- * - Footer watches theme changes -> applies theme
- * - Footer watches screenset changes -> updates Menu
- * - Screen watches menu.selectedScreen -> renders component
+ * - Footer discovers registered themes/screensets
+ * - Navigation events switch screensets automatically
+ * - Routes sync lazily from registered screensets
  */
 
 export const App: React.FC = () => {
@@ -40,5 +43,5 @@ export const App: React.FC = () => {
     );
   }, [dispatch]);
 
-  return <Layout />;
+  return null; // HAI3Provider renders AppRouter
 };
