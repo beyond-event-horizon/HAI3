@@ -9,7 +9,7 @@ export const lightTheme: Theme = {
   colors: {
     primary: 'hsl(0 0% 9%)',
     secondary: 'hsl(0 0% 96.1%)',
-    accent: 'hsl(0 0% 96.1%)',
+    accent: 'hsl(0 0% 40.1%)',
     background: 'hsl(0 0% 100%)',
     foreground: 'hsl(0 0% 3.9%)',
     muted: 'hsl(0 0% 96.1%)',
