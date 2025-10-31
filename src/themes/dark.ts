@@ -9,7 +9,7 @@ export const darkTheme: Theme = {
   colors: {
     primary: 'hsl(0 0% 98%)',
     secondary: 'hsl(0 0% 14.9%)',
-    accent: 'hsl(0 0% 14.9%)',
+    accent: 'hsl(0 0% 64.9%)',
     background: 'hsl(0 0% 3.9%)',
     foreground: 'hsl(0 0% 98%)',
     muted: 'hsl(0 0% 14.9%)',
