@@ -6,10 +6,7 @@
 
 import type { AppDispatch } from '@/core/store';
 import { eventBus } from '../events/eventBus';
-import { 
-  ThemeEvents,
-  type ThemeChangedPayload
-} from '../events/eventTypes';
+import { ThemeEvents } from '../events/eventTypes';
 import { setTheme as setThemeReducer } from '@/core/layout/layoutSlice';
 
 /**
@@ -22,7 +19,7 @@ export const setTheme = (themeName: string) => {
     dispatch(setThemeReducer(themeName));
 
     // Emit event for theme application
-    eventBus.emit<ThemeChangedPayload>(ThemeEvents.Changed, { 
+    eventBus.emit(ThemeEvents.Changed, { 
       themeName 
     });
   };

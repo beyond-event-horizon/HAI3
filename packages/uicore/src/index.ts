@@ -7,11 +7,10 @@
 export { store } from './store';
 export type { RootState, AppDispatch } from './store';
 
-// Core slice
-export * from './coreSlice';
-
-// Types
-export * from './types';
+// App slice (application-level state)
+export * from './app/types';
+export * from './app/appSlice';
+export { initAppEffects } from './app/appEffects';
 
 // Hooks
 export { useAppDispatch, useAppSelector } from './hooks/useRedux';
@@ -20,20 +19,22 @@ export { useAppDispatch, useAppSelector } from './hooks/useRedux';
 export { Layout } from './layout';
 
 // Layout domains
-export { Header, type HeaderProps, setHeaderConfig } from './layout/domains/header';
-export { Footer, type FooterProps, setFooterConfig } from './layout/domains/footer';
-export { Menu, type MenuProps, setMenuConfig } from './layout/domains/menu';
-export { Sidebar, type SidebarProps, setSidebarConfig } from './layout/domains/sidebar';
-export { Screen, type ScreenProps } from './layout/domains/screen';
-export { Popup, type PopupProps, openPopup, closePopup, closeAllPopups } from './layout/domains/popup';
-export { Overlay, type OverlayProps } from './layout/domains/overlay';
+export { Header, type HeaderProps } from './layout/domains/header/Header';
+export { setHeaderConfig } from './layout/domains/header/headerSlice';
+export { Footer, type FooterProps } from './layout/domains/footer/Footer';
+export { setFooterConfig } from './layout/domains/footer/footerSlice';
+export { Menu, type MenuProps } from './layout/domains/menu/Menu';
+export { setMenuConfig, type MenuItem } from './layout/domains/menu/menuSlice';
+export { Sidebar, type SidebarProps } from './layout/domains/sidebar/Sidebar';
+export { setSidebarConfig } from './layout/domains/sidebar/sidebarSlice';
+export { Screen, type ScreenProps } from './layout/domains/screen/Screen';
+export { Popup, type PopupProps } from './layout/domains/popup/Popup';
+export { openPopup, closePopup, closeAllPopups } from './layout/domains/popup/popupSlice';
+export { Overlay, type OverlayProps } from './layout/domains/overlay/Overlay';
 
 // Components (Redux-aware reusable widgets)
 export { ThemeSelector, type ThemeSelectorProps } from './components/ThemeSelector';
 export { ScreensetSelector, type ScreensetSelectorProps, type ScreensetOption } from './components/ScreensetSelector';
-
-// Re-export MenuItem from menu domain (vertical slice approach)
-export type { MenuItem } from './layout/domains/menu';
 
 // Screenset management (Footer domain handles watching)
 export { screensetService, type ScreensetConfig } from './screensets/screensetService';
@@ -52,5 +53,11 @@ export { AppRouter } from './core/routing/AppRouter';
 export { routeService, type RouteInfo } from './core/routing/routeService';
 
 // Event-driven actions (AI: READ THIS - use these, NOT slice actions)
-export { setTheme, setCurrentScreenset, toggleMenu, navigateToScreen } from './core/actions';
+export { setTheme, setCurrentScreenset, toggleMenu, navigateToScreen, fetchCurrentUser, setApiMode } from './core/actions';
 export { setSelectedScreen } from './layout/layoutSlice'; // Direct action (Menu internal use)
+
+// API (SOLID architecture with domain-driven, self-registering services)
+export { apiServices, type ApiServicesConfig } from './api/apiServices';
+export { BaseApiService, type BaseApiServiceConfig } from './api/BaseApiService';
+export { AccountsApiService } from './api/accounts/AccountsApiService'; // Triggers self-registration
+export * from './api/accounts/api';

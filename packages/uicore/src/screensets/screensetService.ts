@@ -1,17 +1,23 @@
-import type { MenuItem } from '@/core/layout/domains/menu';
+import type { MenuItem } from '@/core/layout/domains/menu/menuSlice';
+
+/**
+ * Menu screen item combines menu item with its screen component
+ */
+export interface MenuScreenItem {
+  menuItem: MenuItem;
+  screen: React.ComponentType;
+}
 
 /**
  * Screenset Configuration
  * Apps register their screensets with this structure
+ * Menu array contains both menu item config and screen component
  */
 export interface ScreensetConfig {
   id: string;
   name: string;
   category: string;
-  screens: {
-    [key: string]: React.ComponentType;
-  };
-  menuItems: MenuItem[];
+  menu: MenuScreenItem[];
   defaultScreen: string;
 }
 
@@ -44,6 +50,24 @@ class ScreensetService {
    */
   get(key: string): ScreensetConfig | undefined {
     return this.screensets.get(key);
+  }
+
+  /**
+   * Get screens map for a screenset
+   */
+  getScreens(key: string): { [key: string]: React.ComponentType } {
+    const screenset = this.screensets.get(key);
+    if (!screenset) return {};
+    return this.buildScreensFromMenu(screenset.menu);
+  }
+
+  /**
+   * Get menu items for a screenset
+   */
+  getMenuItems(key: string): MenuItem[] {
+    const screenset = this.screensets.get(key);
+    if (!screenset) return [];
+    return this.extractMenuItems(screenset.menu);
   }
 
   /**
@@ -84,6 +108,24 @@ class ScreensetService {
    */
   clear(): void {
     this.screensets.clear();
+  }
+
+  /**
+   * Extract menu items from menu screen items
+   */
+  private extractMenuItems(menu: MenuScreenItem[]): MenuItem[] {
+    return menu.map((item) => item.menuItem);
+  }
+
+  /**
+   * Build screens map from menu screen items
+   */
+  private buildScreensFromMenu(menu: MenuScreenItem[]): { [key: string]: React.ComponentType } {
+    const screens: { [key: string]: React.ComponentType } = {};
+    menu.forEach((item) => {
+      screens[item.menuItem.id] = item.screen;
+    });
+    return screens;
   }
 }
 

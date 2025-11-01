@@ -2,19 +2,19 @@
 
 > Common rules: .ai/GUIDELINES.md
 
-# CRITICAL (AI: READ THIS)
+## CRITICAL (AI: READ THIS FIRST)
 
 **System:**
-- Theme objects = source of truth (TypeScript)
+- Theme objects = source of truth
 - CSS variables via `applyTheme(theme, name)`
-- Apps define in `src/themes/`, service from @hai3/uicore
+- Apps define in `src/themes/`
 
-**Registry:** See GUIDELINES.md Self-Registering Registries
+**Registry:** See GUIDELINES.md
 - Set function: `themeService.setApplyFunction(applyTheme)`
 - Register: `themeService.register(name, theme)`
 
-**Adding:** Create theme file, register in themeRegistry
-
-**Modifying:** Screensets CANNOT, Core CAN (version bump)
+**Modifying:**
+- Screensets: FORBIDDEN
+- Core: Allowed with version bump
 
 **Requirements:** Light/dark, rem units, WCAG 4.5:1, no hardcoded colors

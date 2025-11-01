@@ -30,7 +30,8 @@ export const Screen: React.FC<ScreenProps> = ({ children, className = '' }) => {
   // Get screenset and screen component
   const screenset = screensetService.get(currentScreensetValue);
   const screenId = selectedScreen || screenset?.defaultScreen || '';
-  const ScreenComponent = screenset?.screens[screenId];
+  const screens = screensetService.getScreens(currentScreensetValue);
+  const ScreenComponent = screens[screenId];
 
   return (
     <main className={`flex-1 overflow-auto bg-muted/30 ${className}`.trim()}>

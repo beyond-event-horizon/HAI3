@@ -1,14 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import coreReducer from './coreSlice';
+import appReducer from './app/appSlice';
 import layoutReducer from './layout/layoutSlice';
-import { headerReducer } from './layout/domains/header';
-import { footerReducer } from './layout/domains/footer';
-import { menuReducer } from './layout/domains/menu';
-import { sidebarReducer } from './layout/domains/sidebar';
-import { screenReducer } from './layout/domains/screen';
-import { popupReducer } from './layout/domains/popup';
-import { overlayReducer } from './layout/domains/overlay';
-import { initEffects } from './core/effects';
+import headerReducer from './layout/domains/header/headerSlice';
+import footerReducer from './layout/domains/footer/footerSlice';
+import menuReducer from './layout/domains/menu/menuSlice';
+import sidebarReducer from './layout/domains/sidebar/sidebarSlice';
+import screenReducer from './layout/domains/screen/screenSlice';
+import popupReducer from './layout/domains/popup/popupSlice';
+import overlayReducer from './layout/domains/overlay/overlaySlice';
+import { initAppEffects } from './app/appEffects';
+import { initLayoutEffects } from './layout/layoutEffects';
+import { initNavigationEffects } from './layout/navigationEffects';
+import { initMenuEffects } from './layout/domains/menu/menuEffects';
 
 /**
  * HAI3 Redux store configuration
@@ -20,7 +23,7 @@ import { initEffects } from './core/effects';
 
 export const store = configureStore({
   reducer: {
-    core: coreReducer,
+    app: appReducer,
     layout: layoutReducer,
     header: headerReducer,
     footer: footerReducer,
@@ -41,18 +44,22 @@ export const store = configureStore({
 });
 
 // Initialize effects - sets up event subscriptions
-initEffects(store);
+// Pattern: Each slice has its own effects file co-located with it
+initAppEffects(store);
+initLayoutEffects(store);
+initNavigationEffects(store);
+initMenuEffects(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-export * from './types';
-export * from './coreSlice';
+export * from './app/types';
+export * from './app/appSlice';
 export * from './layout/layoutSlice';
-export * from './layout/domains/header';
-export * from './layout/domains/footer';
-export * from './layout/domains/menu';
-export * from './layout/domains/sidebar';
-export * from './layout/domains/screen';
-export * from './layout/domains/popup';
-export * from './layout/domains/overlay';
+export * from './layout/domains/header/headerSlice';
+export * from './layout/domains/footer/footerSlice';
+export * from './layout/domains/menu/menuSlice';
+export * from './layout/domains/sidebar/sidebarSlice';
+export * from './layout/domains/screen/screenSlice';
+export * from './layout/domains/popup/popupSlice';
+export * from './layout/domains/overlay/overlaySlice';

@@ -5,6 +5,8 @@
 
 // Base shadcn components
 export { Button, type ButtonProps, ButtonVariant, ButtonSize } from './base/button';
+export { Switch } from './base/switch';
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './base/card';
 
 // shadcn navigation
 export {

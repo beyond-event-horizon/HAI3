@@ -1,13 +1,15 @@
 /**
  * Menu Effects - Side effects for Menu domain
- * Subscribes to events and updates Menu slice
- * Implements Redux-Saga/NgRx Effects pattern
+ * Subscribes to menu events and updates menu slice
+ * Implements Flux pattern: Event -> Effect -> Slice Update
+ * 
+ * Pattern: 1 slice = 1 effects file (co-located)
  */
 
 import type { Store } from '@reduxjs/toolkit';
-import { eventBus } from '../events/eventBus';
-import { MenuEvents, type MenuItemsChangedPayload } from '../events/eventTypes';
-import { setMenuItems, setMenuCollapsed } from '@/core/layout/domains/menu/menuSlice';
+import { eventBus } from '../../../core/events/eventBus';
+import { MenuEvents } from '../../../core/events/eventTypes';
+import { setMenuItems, setMenuCollapsed } from './menuSlice';
 
 /**
  * Initialize menu effects
@@ -15,7 +17,7 @@ import { setMenuItems, setMenuCollapsed } from '@/core/layout/domains/menu/menuS
  */
 export function initMenuEffects(store: Store): void {
   // When menu items change, update menu slice
-  eventBus.on<MenuItemsChangedPayload>(MenuEvents.ItemsChanged, ({ items }) => {
+  eventBus.on(MenuEvents.ItemsChanged, ({ items }) => {
     store.dispatch(setMenuItems(items));
   });
 

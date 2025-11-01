@@ -1,6 +1,6 @@
 # @hai3/uicore
 
-> **⚠️ Pre-release (0.x.x)**: This package is in early development. APIs may change without notice. Not recommended for production use.
+> **WARNING - Pre-release (0.x.x)**: This package is in early development. APIs may change without notice. Not recommended for production use.
 
 HAI3 UI Core package provides the foundational layout system and Redux architecture for building SaaS control panels.
 
@@ -45,7 +45,7 @@ HAI3 UI Core follows a domain-driven architecture where:
 
 ## API Status
 
-⚠️ **Unstable**: Breaking changes may occur in any 0.x release.
+**WARNING - Unstable**: Breaking changes may occur in any 0.x release.
 
 ## Documentation
 

@@ -8,9 +8,7 @@ import type { AppDispatch } from '@/core/store';
 import { eventBus } from '../events/eventBus';
 import { 
   ScreensetEvents,
-  MenuEvents,
-  type ScreensetChangedPayload,
-  type MenuItemsChangedPayload 
+  MenuEvents
 } from '../events/eventTypes';
 import { setCurrentScreenset as setCurrentScreensetReducer } from '@/core/layout/layoutSlice';
 import { screensetService } from '@/core/screensets/screensetService';
@@ -33,12 +31,12 @@ export const setCurrentScreenset = (screensetId: string) => {
     dispatch(setCurrentScreensetReducer(screensetId));
 
     // Emit events for other domains (Menu, etc.)
-    eventBus.emit<ScreensetChangedPayload>(ScreensetEvents.Changed, { 
+    eventBus.emit(ScreensetEvents.Changed, { 
       screensetId 
     });
 
-    eventBus.emit<MenuItemsChangedPayload>(MenuEvents.ItemsChanged, { 
-      items: screenset.menuItems 
+    eventBus.emit(MenuEvents.ItemsChanged, { 
+      items: screensetService.getMenuItems(screensetId)
     });
   };
 };

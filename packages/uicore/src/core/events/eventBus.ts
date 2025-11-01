@@ -2,7 +2,11 @@
  * Event Bus - Central event emitter for domain communication
  * Implements Observable pattern for loose coupling between domains
  * Based on RxJS Subject pattern but lightweight
+ * 
+ * Type Safety: EventPayloadMap ensures emit/on use correct payload per event
  */
+
+import type { EventPayloadMap } from './eventTypes/eventMap';
 
 type EventHandler<T = unknown> = (payload: T) => void;
 
@@ -15,19 +19,29 @@ class EventBus {
 
   /**
    * Emit an event with payload
+   * Type-safe: payload must match event type in EventPayloadMap
+   * Payload is optional for void events
    */
-  emit<T = unknown>(eventType: string, payload: T): void {
+  emit<K extends keyof EventPayloadMap>(
+    eventType: K,
+    ...args: EventPayloadMap[K] extends void ? [] : [EventPayloadMap[K]]
+  ): void {
     const handlers = this.handlers.get(eventType);
     if (handlers) {
+      const payload = args[0];
       handlers.forEach(handler => handler(payload));
     }
   }
 
   /**
    * Subscribe to an event
+   * Type-safe: handler receives correct payload type for event
    * Returns subscription object with unsubscribe method
    */
-  on<T = unknown>(eventType: string, handler: EventHandler<T>): Subscription {
+  on<K extends keyof EventPayloadMap>(
+    eventType: K,
+    handler: EventHandler<EventPayloadMap[K]>
+  ): Subscription {
     if (!this.handlers.has(eventType)) {
       this.handlers.set(eventType, new Set());
     }
@@ -50,9 +64,13 @@ class EventBus {
 
   /**
    * Subscribe to event, but only fire once then auto-unsubscribe
+   * Type-safe: handler receives correct payload type for event
    */
-  once<T = unknown>(eventType: string, handler: EventHandler<T>): Subscription {
-    const wrappedHandler = (payload: T): void => {
+  once<K extends keyof EventPayloadMap>(
+    eventType: K,
+    handler: EventHandler<EventPayloadMap[K]>
+  ): Subscription {
+    const wrappedHandler = (payload: EventPayloadMap[K]): void => {
       handler(payload);
       subscription.unsubscribe();
     };
