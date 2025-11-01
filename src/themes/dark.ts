@@ -3,21 +3,23 @@
  */
 
 import type { Theme } from '@hai3/uikit';
+import { tailwindColors as colors } from '@hai3/uikit';
 
 export const darkTheme: Theme = {
   name: 'dark',
   colors: {
-    primary: 'hsl(0 0% 98%)',
-    secondary: 'hsl(0 0% 14.9%)',
-    accent: 'hsl(0 0% 64.9%)',
-    background: 'hsl(0 0% 3.9%)',
-    foreground: 'hsl(0 0% 98%)',
-    muted: 'hsl(0 0% 14.9%)',
-    border: 'hsl(0 0% 14.9%)',
-    error: 'hsl(0 62.8% 30.6%)',
-    warning: 'hsl(38 92% 50%)',
-    success: 'hsl(142 71% 45%)',
-    info: 'hsl(199 89% 48%)',
+    // Dark theme - using Tailwind colors directly
+    primary: colors.zinc[50],
+    secondary: colors.zinc[800],
+    accent: colors.zinc[400],
+    background: colors.zinc[950],
+    foreground: colors.zinc[50],
+    muted: colors.zinc[800],
+    border: colors.zinc[800],
+    error: colors.red[900],
+    warning: colors.orange[500],
+    success: colors.green[500],
+    info: colors.sky[500],
   },
   spacing: {
     xs: '0.25rem',

@@ -3,21 +3,23 @@
  */
 
 import type { Theme } from '@hai3/uikit';
+import { tailwindColors as colors } from '@hai3/uikit';
 
 export const lightTheme: Theme = {
   name: 'light',
   colors: {
-    primary: 'hsl(0 0% 9%)',
-    secondary: 'hsl(0 0% 96.1%)',
-    accent: 'hsl(0 0% 40.1%)',
-    background: 'hsl(0 0% 100%)',
-    foreground: 'hsl(0 0% 3.9%)',
-    muted: 'hsl(0 0% 96.1%)',
-    border: 'hsl(0 0% 89.8%)',
-    error: 'hsl(0 84.2% 60.2%)',
-    warning: 'hsl(38 92% 50%)',
-    success: 'hsl(142 76% 36%)',
-    info: 'hsl(199 89% 48%)',
+    // Light theme - using Tailwind colors directly
+    primary: colors.zinc[900],
+    secondary: colors.zinc[100],
+    accent: colors.zinc[400],
+    background: colors.white,
+    foreground: colors.zinc[950],
+    muted: colors.zinc[100],
+    border: colors.zinc[200],
+    error: colors.red[500],
+    warning: colors.orange[500],
+    success: colors.green[600],
+    info: colors.sky[500],
   },
   spacing: {
     xs: '0.25rem',
