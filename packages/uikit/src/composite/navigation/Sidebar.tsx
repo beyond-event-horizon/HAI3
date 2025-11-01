@@ -22,8 +22,8 @@ const Sidebar = React.forwardRef<
       data-state={collapsed ? "collapsed" : "expanded"}
       data-collapsible={collapsed ? "icon" : ""}
       className={cn(
-        "group flex flex-col bg-background border-r transition-[width] duration-200 ease-linear",
-        // HAI3 customization: Use Tailwind classes for theme-responsive sizing
+        "group flex flex-col border-r transition-[width] duration-200 ease-linear",
+        "bg-leftMenu text-leftMenu-foreground",
         collapsed ? "w-16" : "w-64",
         className
       )}
@@ -81,13 +81,13 @@ SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
   // HAI3 customization: All sizing uses rem-based Tailwind classes for theme responsiveness
-  "peer/menu-button flex w-full items-center gap-2 rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 active:bg-accent active:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-accent data-[active=true]:font-medium data-[active=true]:text-accent-foreground group-data-[collapsible=icon]:!size-10 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>span:last-child]:overflow-hidden [&>svg]:size-5 [&>svg]:shrink-0",
+  "peer/menu-button flex w-full items-center gap-2 rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 group-data-[collapsible=icon]:!size-10 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>span:last-child]:overflow-hidden [&>svg]:size-5 [&>svg]:shrink-0 text-leftMenu-foreground hover:bg-leftMenu-hover data-[active=true]:bg-leftMenu-selected data-[active=true]:text-white data-[active=true]:font-medium",
   {
     variants: {
       variant: {
-        default: "hover:bg-accent hover:text-accent-foreground",
+        default: "",
         outline:
-          "bg-background shadow-[0_0_0_1px_hsl(var(--border))] hover:bg-accent hover:text-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--accent))]",
+          "bg-background shadow-[0_0_0_1px_hsl(var(--border))] hover:bg-leftMenu-hover",
       },
       size: {
         // HAI3 customization: All heights use rem-based Tailwind classes (h-10=2.5rem, h-7=1.75rem, h-12=3rem)

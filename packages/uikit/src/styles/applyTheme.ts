@@ -68,6 +68,12 @@ export const applyTheme = (theme: Theme, themeName?: string): void => {
   root.style.setProperty('--success', hslToVar(theme.colors.success));
   root.style.setProperty('--info', hslToVar(theme.colors.info));
 
+  // Apply left menu colors
+  root.style.setProperty('--left-menu', hslToVar(theme.colors.leftMenu.DEFAULT));
+  root.style.setProperty('--left-menu-foreground', hslToVar(theme.colors.leftMenu.foreground));
+  root.style.setProperty('--left-menu-hover', hslToVar(theme.colors.leftMenu.hover));
+  root.style.setProperty('--left-menu-selected', hslToVar(theme.colors.leftMenu.selected));
+
   // Apply spacing
   Object.entries(theme.spacing).forEach(([key, value]) => {
     root.style.setProperty(`--spacing-${key}`, value);

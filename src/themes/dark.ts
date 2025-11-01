@@ -20,6 +20,12 @@ export const darkTheme: Theme = {
     warning: colors.orange[500],
     success: colors.green[500],
     info: colors.sky[500],
+    leftMenu: {
+      DEFAULT: colors.black,
+      foreground: colors.zinc[400],
+      hover: colors.zinc[900],
+      selected: colors.zinc[500],
+    },
   },
   spacing: {
     xs: '0.25rem',

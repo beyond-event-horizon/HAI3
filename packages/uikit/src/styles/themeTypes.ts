@@ -16,6 +16,13 @@ export interface Theme {
     warning: string;
     success: string;
     info: string;
+    // Left menu colors - nested structure matching Tailwind conventions
+    leftMenu: {
+      DEFAULT: string;
+      foreground: string;
+      hover: string;
+      selected: string;
+    };
   };
   spacing: {
     xs: string;

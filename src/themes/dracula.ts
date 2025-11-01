@@ -19,6 +19,12 @@ export const draculaTheme: Theme = {
     warning: 'hsl(65 92% 76%)',       // Yellow #f1fa8c
     success: 'hsl(135 94% 65%)',      // Green #50fa7b
     info: 'hsl(191 97% 77%)',         // Cyan #8be9fd
+    leftMenu: {
+      DEFAULT: 'hsl(231 15% 14%)',      // darker variant
+      foreground: 'hsl(225 27% 51%)',   // #6272a4 - comment
+      hover: 'hsl(232 14% 31%)',        // #44475a - current-line
+      selected: 'hsl(265 89% 78%)',     // #bd93f9 - purple
+    },
   },
   spacing: {
     xs: '0.25rem',
