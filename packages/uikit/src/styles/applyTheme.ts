@@ -8,11 +8,23 @@
 import type { Theme } from './themeTypes';
 
 /**
- * Convert HSL string to space-separated format for shadcn
- * "hsl(265 89% 78%)" -> "265 89% 78%"
+ * Normalize color value for CSS variable
+ * - HSL format (hsl(221 83% 53%)) → strip hsl() wrapper for shadcn
+ * - Special values (transparent) → used as-is
  */
-const hslToVar = (hsl: string): string => {
-  return hsl.replace('hsl(', '').replace(')', '');
+const hslToVar = (color: string): string => {
+  // Handle special cases
+  if (color === 'transparent') {
+    return 'transparent';
+  }
+
+  // HSL format - strip wrapper for shadcn compatibility
+  if (color.startsWith('hsl(')) {
+    return color.replace('hsl(', '').replace(')', '');
+  }
+
+  // Return as-is (shouldn't happen with HSL-only system)
+  return color;
 };
 
 /**
