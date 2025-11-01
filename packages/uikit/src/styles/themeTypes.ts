@@ -16,8 +16,7 @@ export interface Theme {
     warning: string;
     success: string;
     info: string;
-    // Left menu colors - nested structure matching Tailwind conventions
-    leftMenu: {
+    mainMenu: {
       DEFAULT: string;
       foreground: string;
       hover: string;

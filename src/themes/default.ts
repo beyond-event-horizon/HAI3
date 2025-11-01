@@ -21,7 +21,7 @@ export const defaultTheme: Theme = {
     warning: colors.orange[500],
     success: colors.green[600],
     info: colors.sky[500],
-    leftMenu: {
+    mainMenu: {
       DEFAULT: colors.gray[900],
       foreground: colors.gray[400],
       hover: colors.gray[700],

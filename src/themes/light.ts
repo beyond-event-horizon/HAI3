@@ -20,7 +20,7 @@ export const lightTheme: Theme = {
     warning: colors.orange[500],
     success: colors.green[600],
     info: colors.sky[500],
-    leftMenu: {
+    mainMenu: {
       DEFAULT: colors.zinc[100],
       foreground: colors.zinc[500],
       hover: colors.zinc[200],

@@ -69,10 +69,10 @@ export const applyTheme = (theme: Theme, themeName?: string): void => {
   root.style.setProperty('--info', hslToVar(theme.colors.info));
 
   // Apply left menu colors
-  root.style.setProperty('--left-menu', hslToVar(theme.colors.leftMenu.DEFAULT));
-  root.style.setProperty('--left-menu-foreground', hslToVar(theme.colors.leftMenu.foreground));
-  root.style.setProperty('--left-menu-hover', hslToVar(theme.colors.leftMenu.hover));
-  root.style.setProperty('--left-menu-selected', hslToVar(theme.colors.leftMenu.selected));
+  root.style.setProperty('--left-menu', hslToVar(theme.colors.mainMenu.DEFAULT));
+  root.style.setProperty('--left-menu-foreground', hslToVar(theme.colors.mainMenu.foreground));
+  root.style.setProperty('--left-menu-hover', hslToVar(theme.colors.mainMenu.hover));
+  root.style.setProperty('--left-menu-selected', hslToVar(theme.colors.mainMenu.selected));
 
   // Apply spacing
   Object.entries(theme.spacing).forEach(([key, value]) => {

@@ -48,7 +48,7 @@ export default {
         warning: 'hsl(var(--warning))',
         success: 'hsl(var(--success))',
         info: 'hsl(var(--info))',
-        leftMenu: {
+        mainMenu: {
           DEFAULT: 'hsl(var(--left-menu))',
           foreground: 'hsl(var(--left-menu-foreground))',
           hover: 'hsl(var(--left-menu-hover))',
