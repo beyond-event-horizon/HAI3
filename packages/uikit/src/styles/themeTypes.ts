@@ -16,6 +16,12 @@ export interface Theme {
     warning: string;
     success: string;
     info: string;
+    mainMenu: {
+      DEFAULT: string;
+      foreground: string;
+      hover: string;
+      selected: string;
+    };
   };
   spacing: {
     xs: string;

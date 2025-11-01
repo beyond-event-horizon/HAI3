@@ -48,6 +48,12 @@ export default {
         warning: 'hsl(var(--warning))',
         success: 'hsl(var(--success))',
         info: 'hsl(var(--info))',
+        mainMenu: {
+          DEFAULT: 'hsl(var(--left-menu))',
+          foreground: 'hsl(var(--left-menu-foreground))',
+          hover: 'hsl(var(--left-menu-hover))',
+          selected: 'hsl(var(--left-menu-selected))',
+        },
       },
       spacing: {
         xs: 'var(--spacing-xs)',

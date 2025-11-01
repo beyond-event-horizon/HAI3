@@ -1,29 +1,30 @@
 /**
- * Light theme for HAI3
+ * Default theme for HAI3
+ * Based on original PoC design with light color scheme
  */
 
 import type { Theme } from '@hai3/uikit';
 import { tailwindColors as colors } from '@hai3/uikit';
 
-export const lightTheme: Theme = {
-  name: 'light',
+export const defaultTheme: Theme = {
+  name: 'default',
   colors: {
-    // Light theme - using Tailwind colors directly
-    primary: colors.zinc[900],
-    secondary: colors.zinc[100],
-    accent: colors.zinc[400],
+    // Main colors from PoC - using Tailwind colors directly (readable + no runtime mapping!)
+    primary: colors.blue[600],
+    secondary: colors.gray[50],
+    accent: colors.blue[100],
     background: colors.white,
-    foreground: colors.zinc[950],
-    muted: colors.zinc[100],
-    border: colors.zinc[200],
+    foreground: colors.gray[900],
+    muted: colors.gray[100],
+    border: colors.gray[200],
     error: colors.red[500],
     warning: colors.orange[500],
     success: colors.green[600],
     info: colors.sky[500],
     mainMenu: {
-      DEFAULT: colors.zinc[100],
-      foreground: colors.zinc[500],
-      hover: colors.zinc[200],
+      DEFAULT: colors.gray[900],
+      foreground: colors.gray[400],
+      hover: colors.gray[700],
       selected: colors.blue[600],
     },
   },

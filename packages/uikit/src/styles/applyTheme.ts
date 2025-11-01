@@ -8,11 +8,23 @@
 import type { Theme } from './themeTypes';
 
 /**
- * Convert HSL string to space-separated format for shadcn
- * "hsl(265 89% 78%)" -> "265 89% 78%"
+ * Normalize color value for CSS variable
+ * - HSL format (hsl(221 83% 53%)) → strip hsl() wrapper for shadcn
+ * - Special values (transparent) → used as-is
  */
-const hslToVar = (hsl: string): string => {
-  return hsl.replace('hsl(', '').replace(')', '');
+const hslToVar = (color: string): string => {
+  // Handle special cases
+  if (color === 'transparent') {
+    return 'transparent';
+  }
+
+  // HSL format - strip wrapper for shadcn compatibility
+  if (color.startsWith('hsl(')) {
+    return color.replace('hsl(', '').replace(')', '');
+  }
+
+  // Return as-is (shouldn't happen with HSL-only system)
+  return color;
 };
 
 /**
@@ -55,6 +67,12 @@ export const applyTheme = (theme: Theme, themeName?: string): void => {
   root.style.setProperty('--warning', hslToVar(theme.colors.warning));
   root.style.setProperty('--success', hslToVar(theme.colors.success));
   root.style.setProperty('--info', hslToVar(theme.colors.info));
+
+  // Apply left menu colors
+  root.style.setProperty('--left-menu', hslToVar(theme.colors.mainMenu.DEFAULT));
+  root.style.setProperty('--left-menu-foreground', hslToVar(theme.colors.mainMenu.foreground));
+  root.style.setProperty('--left-menu-hover', hslToVar(theme.colors.mainMenu.hover));
+  root.style.setProperty('--left-menu-selected', hslToVar(theme.colors.mainMenu.selected));
 
   // Apply spacing
   Object.entries(theme.spacing).forEach(([key, value]) => {

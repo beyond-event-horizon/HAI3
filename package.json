@@ -9,8 +9,9 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:packages && vite build",
+    "build": "npm run generate:colors && npm run build:packages && vite build",
     "build:packages": "npm run build --workspaces --if-present",
+    "generate:colors": "node scripts/generate-colors.cjs 2>&1 | grep -v 'warn -' | grep -v 'has been renamed' | grep -v 'Update your configuration' || true",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "type-check": "tsc --noEmit"
