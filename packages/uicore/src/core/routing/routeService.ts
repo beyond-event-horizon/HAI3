@@ -31,7 +31,9 @@ class RouteService {
     screensets.forEach((screenset) => {
       const screensetKey = `${screenset.category}:${screenset.id}`;
 
-      Object.keys(screenset.screens).forEach((screenId) => {
+      // Extract screen IDs from menu items
+      screenset.menu.forEach((menuScreenItem) => {
+        const screenId = menuScreenItem.menuItem.id;
         const path = `/${screenId}`;
         this.routes.set(screenId, {
           screenId,

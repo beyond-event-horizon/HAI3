@@ -13,7 +13,7 @@ import { MenuEvents } from '../events/eventTypes';
  */
 export const toggleMenu = () => {
   return (): void => {
-    // Emit event for menu to handle its own toggle
-    eventBus.emit(MenuEvents.Toggled, {});
+    // Emit event for menu to handle its own toggle (no payload for void events)
+    eventBus.emit(MenuEvents.Toggled);
   };
 };

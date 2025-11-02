@@ -2,22 +2,32 @@
 
 > Read .ai/GUIDELINES.md for common rules
 
-## Rules for .ai/*.md Files (AI: READ THIS)
+## Rules for .ai/*.md Files (AI: READ THIS FIRST)
 
-**Optimization:**
-- Optimize for AI consumption, NOT humans
-- Remove examples unless critical for understanding
-- Remove structure diagrams (AI can explore codebase)
-- No redundant explanations
-- Use "AI: READ THIS" markers for critical sections
-- Keep files under 100 lines when possible
-- No duplications across files - reference instead
+**Structure:**
+- Frontload critical info: `## CRITICAL (AI: READ THIS FIRST)` at top
+- Keep files under 100 lines
 - Each file = one concern only
+- Reference, don't duplicate
+- ASCII only: NO -> use ->, NO emoji, NO unicode bullets
 
-**When to Create Examples:**
-- Examples OK if they prevent mistakes
-- Use minimal code snippets
-- Focus on decision rules, not explanations
+**Keywords (grep-friendly):**
+- NEVER/FORBIDDEN: Anti-patterns
+- MUST/REQUIRED/ALWAYS: Requirements
+- BAD/GOOD: Minimal examples
+- Detect: grep patterns for violations
 
-**Validation (AI: READ THIS):**
-Apply rules above per line, not per file. Grep to find duplications.
+**Patterns:**
+```markdown
+- FORBIDDEN: `code pattern`
+- REQUIRED: `correct pattern`
+- Detect: grep for `regex pattern`
+```
+
+**Decision Trees:**
+Numbered steps for complex decisions
+
+**Validation:**
+- Check existing rules before adding new ones
+- Grep to find duplications
+- Apply per line, not per file

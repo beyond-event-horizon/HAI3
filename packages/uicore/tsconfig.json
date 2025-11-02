@@ -24,7 +24,7 @@
     "paths": {
       "@/core/*": ["src/*"],
       "@/styles/*": ["src/styles/*"],
-      "@/uikit": ["../../node_modules/@hai3/uikit/dist/index.d.ts"]
+      "@/uikit": ["../uikit/src/index.ts"]
     }
   },
   "include": ["src"],

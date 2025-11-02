@@ -7,10 +7,10 @@
 - [x] ~~Move UI Core and UI Kit to separate packages~~
 - [x] ~~Migrate to flux architecture~~
 - [x] ~~Navigation (application routing)~~
-- [ ] Basic interaction with API
+- [x] ~~Basic interaction with API~~
 - [ ] Localization
 - [ ] Role based access control
 - [ ] Electron build
 - [ ] Tests
 - [ ] Remove dependency of UI Core on UI Kit. Abstract UI Kit components. Implement UI Kit components registry.
-
+- [ ] Add all shadcn components to UI Kit

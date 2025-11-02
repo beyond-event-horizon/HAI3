@@ -1,11 +1,11 @@
 import React from 'react';
-import { Header } from './domains/header';
-import { Footer } from './domains/footer';
-import { Menu } from './domains/menu';
-import { Sidebar } from './domains/sidebar';
-import { Screen } from './domains/screen';
-import { Popup } from './domains/popup';
-import { Overlay } from './domains/overlay';
+import { Header } from './domains/header/Header';
+import { Footer } from './domains/footer/Footer';
+import { Menu } from './domains/menu/Menu';
+import { Sidebar } from './domains/sidebar/Sidebar';
+import { Screen } from './domains/screen/Screen';
+import { Popup } from './domains/popup/Popup';
+import { Overlay } from './domains/overlay/Overlay';
 
 /**
  * Layout component for HAI3 UI-Core

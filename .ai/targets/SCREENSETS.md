@@ -1,20 +1,25 @@
 # Screensets Guidelines
 
-> Common rules: .ai/GUIDELINES.md | Styling: .ai/targets/STYLING.md
+> Common: .ai/GUIDELINES.md | Styling: STYLING.md
 
-# CRITICAL (AI: READ THIS)
+## CRITICAL (AI: READ THIS FIRST)
+
+**NEVER manual styling:**
+- FORBIDDEN: `<div className="border rounded bg-card">`
+- REQUIRED: Use `@hai3/uikit` components
+- Detect: grep for `className=".*border.*rounded` in screensets
+
+**NEVER slice actions:**
+- FORBIDDEN: `import { setTheme } from '@/layout/layoutSlice'`
+- REQUIRED: `import { setTheme } from '@hai3/uicore'`
 
 **Rules:**
-- ISOLATED - no data sharing between screensets
-- READ core state via `useAppSelector`
-- MODIFY core via actions from `@/core/actions` (event-driven)
-- BAD: `import { setTheme } from '@/core/layout/layoutSlice'`
-- GOOD: `import { setTheme } from '@hai3/uicore'` (re-exported from @/core/actions)
-- NO hardcoded screenset names in shared code
-- NO `if screenset ==` conditionals
-- Build from UI Kit + UI Core
+- MUST: Isolated screensets
+- MUST: READ via `useAppSelector`, MODIFY via actions
+- NEVER: Hardcoded screenset names in shared code
+- NEVER: `if screenset ==` conditionals
 
-**Structure (AI: READ THIS):**
+**Structure:**
 - Registry: only imports screensets, NOT individual screens
 - Screenset file: self-contained config + screens + icons
 - BAD: screensetRegistry.tsx imports all screens
@@ -28,10 +33,12 @@
 - Menu items in screenset config
 - MenuItem type from `@hai3/uicore`
 
-**UI Kit:**
-- Use existing `@hai3/uikit`
-- CAN create LOCAL in `screensets/[name]/uikit/` (composites only)
-- NEVER promote without request
+**UI Kit Decision Tree:**
+1. Check `@hai3/uikit` -> Use it
+2. Check shadcn catalog -> `npx shadcn add [component]` -> move to uikit
+3. Need composite? Check `@hai3/uikit` composite/ -> create if missing
+4. Local uikit -> ONLY screenset-specific composites
+5. Manual styling -> FORBIDDEN
 
 **Themes:** See THEMES.md
 

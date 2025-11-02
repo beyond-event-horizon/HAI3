@@ -1,60 +1,63 @@
 # Event-Driven Architecture
 
-> Common rules: .ai/GUIDELINES.md
+> Common: .ai/GUIDELINES.md
 
-**Pattern:** Component → Action (emits events) → Effect (updates slice) → Store → Component
+## CRITICAL (AI: READ THIS FIRST)
 
-## Rules (AI: READ THIS - CRITICAL)
+**NEVER dispatch slice actions directly:**
+- FORBIDDEN: `dispatch(setUseMockApi(value))`
+- FORBIDDEN: `setUseMockApi(value)` 
+- REQUIRED: `setApiMode(value)` from `@/core/actions`
+- Pattern: Component -> Action -> Event -> Effect -> Slice -> Store
+
+**Violations break architecture** - grep for: `dispatch(set[A-Z])`
 
 **Event Naming:**
-- Events = past-tense (what happened)
-- BAD: `NavigateToScreen`, `UpdateMenu`, `ChangeTheme` (imperative)
-- GOOD: `ScreenNavigated`, `MenuUpdated`, `ThemeChanged` (past-tense)
-- Actions can be imperative, events must be past-tense
+- MUST: Past-tense `ScreenNavigated`, `ThemeChanged`
+- NEVER: Imperative `NavigateToScreen`, `ChangeTheme`
+- Format: `'namespace/eventName'`
+- Actions = imperative, Events = past-tense
 
 **Actions:**
-- BAD: `dispatch(setMenuItems(...))` (direct cross-domain update)
-- GOOD: `eventBus.emit(MenuEvents.ItemsChanged, {...})` (emit event)
-- Actions update ONLY their own slice + emit events
+- NEVER: `dispatch(setMenuItems(...))`
+- ALWAYS: `eventBus.emit(MenuEvents.ItemsChanged, {...})`
+- Update own slice only + emit events
 
 **Effects:**
-- Subscribe to events, NOT actions
-- Update ONLY their own slice
-- No business logic - just slice updates
-
-**Components:**
-- Dispatch actions from `@/core/actions`, NOT slice reducers
-- BAD: `dispatch(layoutSlice.actions.setTheme(...))`
-- GOOD: `dispatch(setTheme(...))`
+- MUST: Subscribe to events
+- MUST: Update own slice only
+- NEVER: Business logic
 
 **Cross-Domain:**
-- BAD: `import { setMenuItems } from '@/core/layout/domains/menu'`
-- GOOD: Actions emit events, effects subscribe
+- FORBIDDEN: `import { setMenuItems } from '@/layout/domains/menu'`
+- REQUIRED: Event-driven communication
 
 **Location (Vertical Slice):**
-- Event enums: `core/events/eventTypes.ts` (grouped by domain)
-- Actions: `core/actions/[domain]Actions.ts`
-- Effects: `core/effects/[domain]Effects.ts`
+- Event enums: `core/events/eventTypes/[namespace]Events.ts`
+- Type maps: Same file as enum + payload
+- Actions: `core/actions/[namespace]Actions.ts`
+- Effects: Co-located with slices
 - Init effects: `store.ts` calls `initEffects(store)`
 
-## Adding New Event (AI: READ THIS)
+## Type Safety (AI: READ THIS)
 
-**1. Add enum to `eventTypes.ts`:**
+**BAD:**
+- `eventBus.emit<PayloadType>(event, payload)`
+- Payload type mismatch caught at runtime
+
+**GOOD:**
+- `eventBus.emit(event, payload)`
+- NO explicit type parameters
+- Compile-time errors for mismatches
+- Add to eventMap.ts: `'namespace/eventName': PayloadType`
+
+## Screenset Events (AI: READ THIS)
+
+**Module augmentation in screenset code:**
 ```ts
-export enum MyDomainEvents {
-  SomethingChanged = 'myDomain/somethingChanged',
+declare module '@hai3/uicore' {
+  interface EventPayloadMap {
+    'myScreenset/event': { data: Type };
+  }
 }
-export interface SomethingChangedPayload { data: string }
-```
-
-**2. Emit in action:**
-```ts
-eventBus.emit<SomethingChangedPayload>(MyDomainEvents.SomethingChanged, { data: '...' });
-```
-
-**3. Subscribe in effect:**
-```ts
-eventBus.on<SomethingChangedPayload>(MyDomainEvents.SomethingChanged, ({ data }) => {
-  store.dispatch(updateMySlice(data));
-});
 ```

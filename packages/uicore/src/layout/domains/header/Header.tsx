@@ -16,6 +16,7 @@ export interface HeaderProps {
 export const Header: React.FC<HeaderProps> = () => {
   const dispatch = useAppDispatch();
   const { logo, actions, showMenuToggle, menuToggleIcon } = useAppSelector((state) => state.header);
+  const { user } = useAppSelector((state) => state.app);
 
   const handleMenuToggle = (): void => {
     dispatch(toggleMenu());
@@ -38,7 +39,21 @@ export const Header: React.FC<HeaderProps> = () => {
           </IconButton>
         )}
       </div>
-      {actions && <div className="flex items-center gap-2">{actions}</div>}
+      <div className="flex items-center gap-4">
+        {user && (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            {user.avatarUrl && (
+              <img
+                src={user.avatarUrl}
+                alt={`${user.firstName} ${user.lastName}`}
+                className="w-8 h-8 rounded-full"
+              />
+            )}
+            <span>{user.firstName} {user.lastName}</span>
+          </div>
+        )}
+        {actions && <div className="flex items-center gap-2">{actions}</div>}
+      </div>
     </header>
   );
 };

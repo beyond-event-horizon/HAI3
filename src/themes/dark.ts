@@ -5,8 +5,13 @@
 import type { Theme } from '@hai3/uikit';
 import { tailwindColors as colors } from '@hai3/uikit';
 
+/**
+ * Dark theme ID
+ */
+export const DARK_THEME_ID = 'dark' as const;
+
 export const darkTheme: Theme = {
-  name: 'dark',
+  name: DARK_THEME_ID,
   colors: {
     // Dark theme - using Tailwind colors directly
     primary: colors.zinc[50],

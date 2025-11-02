@@ -4,10 +4,10 @@
 
 export { Layout, type LayoutProps } from './Layout';
 export * from './layoutSlice';
-export * from './domains/header';
-export * from './domains/footer';
-export * from './domains/menu';
-export * from './domains/sidebar';
-export * from './domains/screen';
-export * from './domains/popup';
-export * from './domains/overlay';
+export * from './domains/header/headerSlice';
+export * from './domains/footer/footerSlice';
+export * from './domains/menu/menuSlice';
+export * from './domains/sidebar/sidebarSlice';
+export * from './domains/screen/screenSlice';
+export * from './domains/popup/popupSlice';
+export * from './domains/overlay/overlaySlice';

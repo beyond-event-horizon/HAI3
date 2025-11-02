@@ -5,7 +5,6 @@ import { CURRENT_THEME_SCREEN_ID } from '../theme/CurrentThemeScreen';
 
 /**
  * Hello World Screen ID
- * Well-known constant defined where it belongs
  */
 export const HELLO_WORLD_SCREEN_ID = 'helloworld';
 

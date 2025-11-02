@@ -6,8 +6,13 @@
 import type { Theme } from '@hai3/uikit';
 import { tailwindColors as colors } from '@hai3/uikit';
 
+/**
+ * Default theme ID
+ */
+export const DEFAULT_THEME_ID = 'default' as const;
+
 export const defaultTheme: Theme = {
-  name: 'default',
+  name: DEFAULT_THEME_ID,
   colors: {
     // Main colors from PoC - using Tailwind colors directly (readable + no runtime mapping!)
     primary: colors.blue[600],

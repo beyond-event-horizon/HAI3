@@ -5,10 +5,7 @@
  */
 
 import { eventBus } from '../events/eventBus';
-import { 
-  NavigationEvents,
-  type NavigateToScreenPayload
-} from '../events/eventTypes';
+import { NavigationEvents } from '../events/eventTypes';
 import { routeService } from '../routing/routeService';
 
 /**
@@ -26,7 +23,7 @@ export const navigateToScreen = (screenId: string): void => {
   }
 
   // Emit navigation event for effects to handle
-  eventBus.emit<NavigateToScreenPayload>(NavigationEvents.ScreenNavigated, { 
+  eventBus.emit(NavigationEvents.ScreenNavigated, { 
     screenId 
   });
 };

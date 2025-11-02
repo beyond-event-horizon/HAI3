@@ -3,7 +3,6 @@ import { useAppSelector } from '@hai3/uicore';
 
 /**
  * Current Theme Screen ID
- * Well-known constant defined where it belongs
  */
 export const CURRENT_THEME_SCREEN_ID = 'theme';
 

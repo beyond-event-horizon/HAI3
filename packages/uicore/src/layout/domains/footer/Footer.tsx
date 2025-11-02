@@ -3,7 +3,8 @@ import { Button, ButtonVariant } from '@hai3/uikit';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { ThemeSelector } from '@/core/components/ThemeSelector';
 import { ScreensetSelector } from '@/core/components/ScreensetSelector';
-import { setCurrentScreenset, setTheme } from '../../../core/actions';
+import { ApiModeToggle } from '@/core/components/ApiModeToggle';
+import { setCurrentScreenset, setTheme, setApiMode } from '../../../core/actions';
 import { themeService } from '@/core/theme/themeService';
 import { setFooterConfig } from './footerSlice';
 import { buildScreensetOptions } from './footerHelpers';
@@ -65,6 +66,15 @@ export const Footer: React.FC<FooterProps> = () => {
     }));
   }, [dispatch, theme, currentScreenset]);
 
+  // Set useMockApi based on screenset category (drafts = mock, production = real)
+  useEffect(() => {
+    if (currentScreenset) {
+      const [category] = currentScreenset.split(':');
+      const shouldUseMock = category === 'drafts';
+      setApiMode(shouldUseMock);
+    }
+  }, [currentScreenset]);
+
   // No side effects here - actions emit events, effects handle them
 
   if (!visible) return null;
@@ -88,6 +98,7 @@ export const Footer: React.FC<FooterProps> = () => {
         )}
       </div>
       <div className="flex items-center gap-4">
+        <ApiModeToggle />
         {screensetOptions.length > 0 && (
           <ScreensetSelector
             options={screensetOptions}

@@ -1,6 +1,6 @@
 # @hai3/uikit
 
-> **⚠️ Pre-release (0.x.x)**: This package is in early development. APIs may change without notice. Not recommended for production use.
+> **WARNING - Pre-release (0.x.x)**: This package is in early development. APIs may change without notice. Not recommended for production use.
 
 HAI3 UI Kit provides reusable React components built on shadcn/ui with Tailwind CSS.
 
@@ -62,7 +62,7 @@ Composite Components (combinations)
 
 ## API Status
 
-⚠️ **Unstable**: Breaking changes may occur in any 0.x release.
+**WARNING - Unstable**: Breaking changes may occur in any 0.x release.
 
 ## Documentation
 

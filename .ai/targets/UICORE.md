@@ -1,32 +1,33 @@
 # UI Core Guidelines
 
-> Common rules: .ai/GUIDELINES.md | Styling: .ai/targets/STYLING.md | Events: .ai/targets/EVENTS.md
+> Common: .ai/GUIDELINES.md | Styling: STYLING.md | Events: EVENTS.md
 
-**Entry Point (AI: READ THIS):**
-- `<HAI3Provider>` wraps app (includes Redux Provider + AppRouter)
-- BAD: Manual Provider/Router setup GOOD: `<HAI3Provider><App /></HAI3Provider>`
+## CRITICAL (AI: READ THIS FIRST)
 
-**Routing (AI: READ THIS - CRITICAL):**
-- URL: `/:screenId` (screenset auto-detected)
-- Routes auto-generate from registered screensets (lazy init prevents race)
-- BAD: Direct dispatch `dispatch(setSelectedScreen())` GOOD: `navigateToScreen()`
-- BAD: Hardcoded routes GOOD: Routes auto-generate
-- BAD: RouterSync outside route GOOD: RouterSync inside route element (useParams requirement)
+**NEVER use raw HTML interactive elements:**
+- FORBIDDEN: `<button>`, `<input>`, `<select>` in domains
+- REQUIRED: `<Button>`, `<IconButton>` from `@hai3/uikit`
+- Detect: grep for `<button|<input|<select` in `packages/uicore/`
 
-# CRITICAL (AI: READ THIS)
+**NEVER dispatch slice actions:**
+- FORBIDDEN: `dispatch(setSelectedScreen())`
+- REQUIRED: `navigateToScreen()` from `@/core/actions`
 
-**Domain Pattern:**
-1. NO prop drilling - Redux ONLY
-2. Self-contained: Component + slice
-3. Orchestrators accept ONLY `children`
-4. Use UI Kit components (Button, IconButton) - NO raw HTML buttons/inputs
-5. Self-hide via `visible: boolean`
-6. Styling: ONLY layout classes
+**Entry:**
+- MUST: `<HAI3Provider>` wraps app
+- Includes Redux Provider + AppRouter
 
-**CRITICAL RULE (AI: READ THIS):**
-- BAD: `<button>`, `<input>`, `<select>` in domains
-- GOOD: `<Button>`, `<IconButton>` from UI Kit
-- Domains render layout HTML (`<header>`, `<nav>`, `<footer>`), use UI Kit for interactive elements
+**Routing:**
+- URL: `/:screenId`
+- Routes auto-generate from registered screensets
+- NEVER: Hardcoded routes, manual sync
+
+**Domain Rules:**
+- NEVER: Prop drilling
+- MUST: Self-contained component + slice
+- MUST: Orchestrators accept only `children`
+- MUST: Self-hide via `visible: boolean`
+- Styling: Layout only (See STYLING.md)
 
 **Domains:** Header, Footer, Menu, Sidebar, Screen, Popup, Overlay
 
@@ -34,35 +35,21 @@
 - Domain = Major layout section, own slice, one instance
 - Component = Reusable widget, props config, reads/writes Redux
 
-**Component Pattern (AI: READ THIS):**
-- Wrap UI Kit components, add Redux
-- BAD: Component reimplements DropdownMenu + Button
-- GOOD: Component uses DropdownMenu/CascadingDropdown from UI Kit
-- If duplicating UI logic -> extract to UI Kit composite first
+**Component Pattern:**
+- MUST: Wrap UI Kit components + Redux
+- NEVER: Reimplement UI Kit logic
+- If duplicating -> extract to UI Kit composite
 
 **Domain Slice:**
 - State: `visible: boolean`, Actions: `setDomainConfig`, `setDomainVisible`
 - Types in slice (vertical slice: MenuItem in menuSlice)
 
----
-
-## Event-Driven Architecture (AI: READ THIS - CRITICAL)
-
-**See EVENTS.md** - Domains communicate via events, NOT direct imports
-
-**Quick Rules:**
-- Dispatch actions from `@/core/actions`
-- BAD: `import { setMenuItems } from '@/core/layout/domains/menu'`
-- GOOD: Actions emit events → Effects subscribe → Update slices
-
 **Services:** See GUIDELINES.md Self-Registering Registries
-- Domains consume, NO App calls
 
-**Anti-Patterns:**
-- BAD: `<Layout logo={x}/>` GOOD: `<Layout/>`
-- BAD: `{show && <Menu/>}` GOOD: `<Menu/>`
-- BAD: `useState` GOOD: Redux
-- BAD: Direct cross-domain dispatch GOOD: Event-driven actions
-- BAD: Eager init in `useEffect` GOOD: Lazy init with cache + empty-check (see routeService)
-- BAD: Domain makes navigation decisions GOOD: AppRouter handles routing, domains respond to events
-- BAD: `useParams()` outside route GOOD: Component using `useParams()` must be inside route element
+**Anti-Patterns (grep for violations):**
+- FORBIDDEN: `<Layout logo={x}/>` -> `<Layout/>`
+- FORBIDDEN: `{show && <Menu/>}` -> `<Menu/>`
+- FORBIDDEN: `useState` -> Redux
+- FORBIDDEN: Direct cross-domain dispatch -> Event-driven
+- FORBIDDEN: Eager init in `useEffect` -> Lazy init with cache
+- FORBIDDEN: `useParams()` outside route -> Inside route element
