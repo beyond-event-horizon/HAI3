@@ -3,7 +3,7 @@
  * Events related to user data and authentication
  */
 
-import type { ApiUser } from '@/core/api/contracts';
+import type { ApiUser } from '../../../api/accounts/api';
 
 export enum UserEvents {
   UserFetched = 'user/userFetched',

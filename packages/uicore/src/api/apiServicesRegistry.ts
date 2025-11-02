@@ -61,8 +61,21 @@ type ServiceConstructor<T extends BaseApiService = BaseApiService> = new (config
 class ApiServicesRegistry {
   private services: Map<string, BaseApiService> = new Map();
   private serviceClasses: Map<string, ServiceConstructor> = new Map();
+  private mockMaps: Map<string, Readonly<Record<string, any>>> = new Map();
   private config: ApiServicesConfig | null = null;
   private initialized: boolean = false;
+
+  /**
+   * Register mock data for a service
+   * Type-safe: domain must be in ApiServicesMap
+   * Called by app at startup to provide mock responses
+   */
+  registerMocks<K extends string & keyof ApiServicesMap>(
+    domain: K,
+    mockMap: Readonly<Record<string, any>>
+  ): void {
+    this.mockMaps.set(domain, mockMap);
+  }
 
   /**
    * Register an API service
@@ -81,6 +94,7 @@ class ApiServicesRegistry {
       const service = new serviceClass({
         useMockApi: this.config.useMockApi,
         mockDelay: this.config.mockDelay,
+        mockMap: this.mockMaps.get(domain),
       });
       this.services.set(domain, service);
     }
@@ -100,6 +114,7 @@ class ApiServicesRegistry {
       const service = new ServiceClass({
         useMockApi: config.useMockApi,
         mockDelay: config.mockDelay,
+        mockMap: this.mockMaps.get(domain),
       });
       this.services.set(domain, service);
     });
@@ -148,10 +163,30 @@ class ApiServicesRegistry {
   getConfig(): Readonly<ApiServicesConfig> | null {
     return this.config ? Object.freeze({ ...this.config }) : null;
   }
+
+  /**
+   * Update mock API mode without re-initialization
+   * Faster than re-initializing - just updates config
+   */
+  setMockMode(useMockApi: boolean): void {
+    if (!this.initialized || !this.config) {
+      throw new Error('API services not initialized. Call initialize() first.');
+    }
+    
+    this.config.useMockApi = useMockApi;
+    
+    // Update all service configs
+    this.services.forEach((service) => {
+      (service as any).config.useMockApi = useMockApi;
+    });
+  }
 }
 
 /**
  * Export singleton instance
  * Single point of access for all API services
  */
-export const apiServices = new ApiServicesRegistry();
+export const apiServicesRegistry = new ApiServicesRegistry();
+
+// Legacy export for backward compatibility
+export const apiServices = apiServicesRegistry;

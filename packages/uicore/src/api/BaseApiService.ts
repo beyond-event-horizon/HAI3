@@ -25,6 +25,7 @@ export interface BaseApiServiceConfig {
   headers?: Record<string, string>;
   useMockApi?: boolean;
   mockDelay?: number;
+  mockMap?: Readonly<Record<string, any>>;
 }
 
 /**
@@ -51,10 +52,12 @@ export abstract class BaseApiService {
 
   /**
    * Get mock response map
-   * Each derived service implements its own mock data
-   * Maps endpoint patterns to mock responses
+   * Returns mockMap from config if provided, otherwise empty
+   * Apps provide mocks via config, not hardcoded in services
    */
-  protected abstract getMockMap(): Record<string, unknown>;
+  protected getMockMap(): Record<string, unknown> {
+    return this.config.mockMap ?? {};
+  }
 
   /**
    * Make GET request

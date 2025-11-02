@@ -8,6 +8,15 @@
  */
 
 /**
+ * User Extra Properties
+ * Applications extend this via module augmentation for platform-specific fields
+ */
+export interface UserExtra {
+  // Applications add their types via module augmentation
+  // Empty by default
+}
+
+/**
  * User entity from API
  */
 export interface ApiUser {
@@ -19,6 +28,7 @@ export interface ApiUser {
   avatarUrl?: string;
   createdAt: string;
   updatedAt: string;
+  extra?: UserExtra;
 }
 
 /**

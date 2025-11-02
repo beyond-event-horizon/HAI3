@@ -77,6 +77,12 @@ export const ProfileScreen: React.FC = () => {
                 <span className="font-medium">Role:</span>{' '}
                 <span className="capitalize">{user.role}</span>
               </p>
+              {user.extra?.department && (
+                <p className="text-sm">
+                  <span className="font-medium">Department:</span>{' '}
+                  {user.extra.department}
+                </p>
+              )}
               <p className="text-sm text-muted-foreground">
                 ID: {user.id}
               </p>

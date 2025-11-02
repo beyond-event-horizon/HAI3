@@ -14,28 +14,13 @@ import {
   ApiEvents,
 } from '../core/events/eventTypes';
 import { setUser, setError, setLoading, setUseMockApi } from './appSlice';
-import { apiServices } from '../api/apiServices';
-
-/**
- * Initialize API services with current configuration
- * Initializes all service instances in the registry
- */
-function initializeApiServices(useMockApi: boolean): void {
-  apiServices.initialize({
-    useMockApi,
-    mockDelay: 500,
-  });
-}
+import { apiServices } from '../api/apiServicesRegistry';
 
 /**
  * Initialize app effects
  * Call this once during app setup
  */
 export function initAppEffects(store: Store): void {
-  // Initialize API services on startup
-  const initialUseMockApi = store.getState().app.useMockApi;
-  initializeApiServices(initialUseMockApi);
-
   // User events
   eventBus.on(UserEvents.UserFetched, ({ user }) => {
     store.dispatch(setUser(user));
@@ -50,7 +35,6 @@ export function initAppEffects(store: Store): void {
   // API configuration events
   eventBus.on(ApiEvents.ApiModeChanged, ({ useMockApi }) => {
     store.dispatch(setUseMockApi(useMockApi));
-    // Re-initialize API services with new mock mode
-    initializeApiServices(useMockApi);
+    apiServices.setMockMode(useMockApi);
   });
 }

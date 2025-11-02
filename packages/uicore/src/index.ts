@@ -57,7 +57,7 @@ export { setTheme, setCurrentScreenset, toggleMenu, navigateToScreen, fetchCurre
 export { setSelectedScreen } from './layout/layoutSlice'; // Direct action (Menu internal use)
 
 // API (SOLID architecture with domain-driven, self-registering services)
-export { apiServices, type ApiServicesConfig, type ApiServicesMap } from './api/apiServices';
+export { apiServicesRegistry, apiServices, type ApiServicesConfig, type ApiServicesMap } from './api/apiServicesRegistry';
 export { BaseApiService, type BaseApiServiceConfig } from './api/BaseApiService';
 export { AccountsApiService, ACCOUNTS_DOMAIN } from './api/accounts/AccountsApiService'; // Triggers self-registration
 export * from './api/accounts/api';
