@@ -19,7 +19,7 @@
 
 **Monorepo:** `packages/uicore`, `packages/uikit`, `src/`
 
-**Dependencies (AI: READ THIS):**
+**Dependencies:**
 - Apps: ONLY `@hai3/uicore`, `@hai3/uikit`, `react`, `react-dom`
 - BAD: Apps declaring `@radix-ui/*`, `react-router-dom`, `@reduxjs/toolkit`
 - GOOD: UI packages own dependencies
@@ -28,11 +28,10 @@
 - NO bridging: Domains read Redux, emit events
 - Self-registering: `service.register()` at module level
 - Event-driven: Actions emit -> Effects update (See EVENTS.md)
-- App: Import registries, register icons, render
 
 ---
 
-## Import Path Rules (AI: READ THIS - CRITICAL)
+## Import Path Rules
 
 **Relative vs Alias:**
 - Sibling files: Relative `../sibling`
@@ -44,11 +43,8 @@
 - BAD: `@/screensets/.../screens/theme`
 - GOOD: `../theme/Screen`
 
-**Index Files (AI: READ THIS):**
+**Index Files:**
 - Create ONLY when aggregating 3+ files
-- BAD: `domain/index.ts` for 1-2 files
-- GOOD: `actions/index.ts` for 6+ files
-- BAD: `app/index.ts` re-exported by parent
 - Import directly from slices: `from './menu/menuSlice'`
 
 ---
@@ -58,21 +54,28 @@
 **STRICT:** Types for all, NEVER `any`, `type` for objects, `interface` for props
 
 **Identifiers (AI: READ THIS):**
-- NEVER hardcoded strings, use constants/enums
-- IDs with many entries -> own file
-- Screen IDs 3-5 -> define in screen file, export
+- NEVER hardcoded strings, use constants
+- 1-3 constants -> define where used
+- 4-9 constants -> consider context
+- 10+ constants -> own file
 - BAD: `id: 'demo'`, `variant: 'primary'`
 - GOOD: `id: DEMO_SCREENSET_ID`, `variant: ButtonVariant.Primary`
 
+**Registry Pattern (AI: READ THIS - CRITICAL):**
+- Registry file NEVER modified when adding items
+- Items self-register, define own constants locally
+- BAD: Central constants in registry file
+- GOOD: Each item exports own constant
+- If adding item requires modifying registry -> pattern is WRONG
+
 **Types Enforce Boundaries:**
-- BAD: `theme: string`
-- GOOD: `theme: ThemeName`
+- BAD: `theme: string`, `as SomeType` casts
+- GOOD: `theme: ThemeName`, proper type constraints
+- Type casts hide problems, fix root cause instead
 - String types hide violations, proper types reveal them
 
-**Class Member Ordering (AI: READ THIS):**
-- Properties: public, protected, private
-- Constructor
-- Methods: public, protected, private
+**Class Member Ordering:**
+Properties, Constructor, Methods (public, protected, private)
 
 ---
 
@@ -83,7 +86,13 @@
 
 ---
 
-## Self-Improvement
+## Self-Improvement (AI: READ THIS - CRITICAL)
 
-- Mistake -> add decision rule to prevent recurrence
-- Verify .ai edits follow AI.md (under 100 lines, decision rules only)
+**After mistake:**
+1. Update GUIDELINES.md with decision rule
+2. Update target .ai file
+3. Create memory
+4. Verify .ai edits follow AI.md
+
+**Before creating files:**
+- Check pattern, count items, verify Open/Closed

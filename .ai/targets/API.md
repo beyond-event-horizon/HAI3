@@ -9,7 +9,7 @@
 - BAD: UserService, InvoiceService
 - GOOD: AccountsService, BillingService
 - Extend BaseApiService, implement `getMockMap()`
-- Self-register: `apiServices.register('domain', Class)` at end of file
+- Each service defines own domain constant locally
 
 **Mocking:**
 - Handled by BaseApiService interceptor
@@ -17,16 +17,19 @@
 - Mock data in domain's `mocks.ts`
 
 **Usage:**
-- BAD: `apiService.get('/endpoint')`
-- GOOD: `apiServices.getService<AccountsApiService>('accounts').getCurrentUser()`
+- BAD: `apiService.get('/endpoint')`, `getService('accounts')`
+- GOOD: `apiServices.getService(ACCOUNTS_DOMAIN).getCurrentUser()`
+- Type inferred from ApiServicesMap
 - Init in `appEffects.ts`: `apiServices.initialize({ useMockApi })`
 
 **Adding Service:**
 1. Create `api/[domain]/` folder: `*ApiService.ts`, `api.ts`, `mocks.ts`
-2. Extend BaseApiService, set baseURL, implement `getMockMap()`
-3. Add type-safe methods: `async getX(): Promise<Response> { return this.get<Response>('/path'); }`
-4. Self-register at end: `apiServices.register('domain', ServiceClass);`
-5. Import in screenset to trigger registration
+2. Define domain constant: `export const MY_DOMAIN = 'mydomain' as const;`
+3. Extend BaseApiService, set baseURL, implement `getMockMap()`
+4. Module augmentation: `declare module '../apiServices' { interface ApiServicesMap { [MY_DOMAIN]: MyService; } }`
+5. Self-register: `apiServices.register(MY_DOMAIN, MyService);`
+6. Import in screenset to trigger registration
+7. NO modification to apiServices.ts (Open/Closed principle)
 
 **Anti-Patterns:**
 - BAD: API calls in components, Redux dispatch in actions

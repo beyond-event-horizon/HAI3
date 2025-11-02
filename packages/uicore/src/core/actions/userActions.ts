@@ -7,14 +7,14 @@ import type { AppDispatch } from '../../store';
 import { eventBus } from '../events/eventBus';
 import { UserEvents } from '../events/eventTypes';
 import { apiServices } from '../../api/apiServices';
-import type { AccountsApiService } from '../../api/accounts/AccountsApiService';
+import { ACCOUNTS_DOMAIN } from '../../api/accounts/AccountsApiService';
 import { setLoading } from '../../app/appSlice';
 import type { ApiError } from '../../api/accounts/api';
 
 /**
  * Fetch current user
  * Uses AccountsApiService (accounts domain: users, tenants, auth)
- * Type-safe access via getService<T>() method
+ * Type-safe access via getService() - type inferred from ApiServicesMap
  * Mock handling is transparent - managed by BaseApiService interceptor
  * Emits events for success/failure
  */
@@ -22,7 +22,7 @@ export const fetchCurrentUser = () => async (dispatch: AppDispatch): Promise<voi
   try {
     dispatch(setLoading(true));
     
-    const accountsService = apiServices.getService<AccountsApiService>('accounts');
+    const accountsService = apiServices.getService(ACCOUNTS_DOMAIN);
     const response = await accountsService.getCurrentUser();
 
     // Emit success event

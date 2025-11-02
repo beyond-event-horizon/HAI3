@@ -14,6 +14,12 @@ import type { GetCurrentUserResponse } from './api';
 import { mockDemoUser } from './mocks';
 
 /**
+ * Accounts domain identifier
+ * Per GUIDELINES.md: Define constants where used, not in central file
+ */
+export const ACCOUNTS_DOMAIN = 'accounts' as const;
+
+/**
  * Accounts API Service
  * Manages accounts domain endpoints:
  * - User management (current user, profile, preferences)
@@ -57,6 +63,13 @@ export class AccountsApiService extends BaseApiService {
   // async inviteUser(email: string): Promise<InviteUserResponse>
 }
 
+// Register service type in ApiServicesMap via module augmentation
+declare module '../apiServices' {
+  interface ApiServicesMap {
+    [ACCOUNTS_DOMAIN]: AccountsApiService;
+  }
+}
+
 // Self-register with API services registry
 import { apiServices } from '../apiServices';
-apiServices.register('accounts', AccountsApiService);
+apiServices.register(ACCOUNTS_DOMAIN, AccountsApiService);

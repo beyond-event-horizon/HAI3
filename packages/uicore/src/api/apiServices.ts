@@ -6,7 +6,10 @@
  * Pattern:
  * 1. Services self-register at module level
  * 2. Registry stores services by domain name
- * 3. Type-safe access via getService<T>(domain) method
+ * 3. Type-safe access via getService(domain) - type inferred from ApiServicesMap
+ * 
+ * Type Safety: ApiServicesMap ensures domain name matches service type at compile time
+ * Services use module augmentation to add their types to the map
  * 
  * Services organized by backend domain/bounded context:
  * - accounts: Users, tenants, authentication, permissions
@@ -15,6 +18,26 @@
  */
 
 import type { BaseApiService } from './BaseApiService';
+
+/**
+ * API Services Map
+ * Maps domain string constants to service types
+ * Services extend this interface via module augmentation
+ * Keys must be string literals, not numbers
+ * 
+ * @example
+ * declare module '@hai3/uicore' {
+ *   interface ApiServicesMap {
+ *     [BILLING_DOMAIN]: BillingApiService;
+ *   }
+ * }
+ */
+export interface ApiServicesMap {
+  // Services add their types via module augmentation
+  // Core services are defined in their respective files
+  // Keys are string literals only
+  [key: string]: BaseApiService;
+}
 
 /**
  * API Services Configuration
@@ -28,7 +51,7 @@ export interface ApiServicesConfig {
  * Service Constructor Type
  * Defines the shape of service class constructors
  */
-type ServiceConstructor = new (config: Omit<import('./BaseApiService').BaseApiServiceConfig, 'baseURL'>) => BaseApiService;
+type ServiceConstructor<T extends BaseApiService = BaseApiService> = new (config: Omit<import('./BaseApiService').BaseApiServiceConfig, 'baseURL'>) => T;
 
 /**
  * API Services Registry
@@ -43,10 +66,14 @@ class ApiServicesRegistry {
 
   /**
    * Register an API service
+   * Type-safe: domain must be in ApiServicesMap and serviceClass must match
    * Called by service modules at import time
    * Services are instantiated when initialize() is called
    */
-  register(domain: string, serviceClass: ServiceConstructor): void {
+  register<K extends string & keyof ApiServicesMap>(
+    domain: K,
+    serviceClass: ServiceConstructor<ApiServicesMap[K]>
+  ): void {
     this.serviceClasses.set(domain, serviceClass);
     
     // If already initialized, instantiate immediately
@@ -80,13 +107,13 @@ class ApiServicesRegistry {
 
   /**
    * Get service by domain with type safety
-   * Use type parameter to get full autocomplete
+   * Type is automatically inferred from ApiServicesMap
    * 
    * @example
-   * const accounts = apiServices.getService<AccountsApiService>('accounts');
-   * const user = await accounts.getCurrentUser();
+   * const accounts = apiServices.getService(ACCOUNTS_DOMAIN);
+   * const user = await accounts.getCurrentUser(); // Full type safety!
    */
-  getService<T extends BaseApiService>(domain: string): T {
+  getService<K extends string & keyof ApiServicesMap>(domain: K): ApiServicesMap[K] {
     if (!this.initialized) {
       throw new Error('API services not initialized. Call initialize() first.');
     }
@@ -98,13 +125,13 @@ class ApiServicesRegistry {
       );
     }
     
-    return service as T;
+    return service as ApiServicesMap[K];
   }
 
   /**
    * Check if service is registered
    */
-  has(domain: string): boolean {
+  has<K extends string & keyof ApiServicesMap>(domain: K): boolean {
     return this.services.has(domain) || this.serviceClasses.has(domain);
   }
 
