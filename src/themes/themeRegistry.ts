@@ -6,18 +6,18 @@
 
 import { themeService } from '@hai3/uicore';
 import { applyTheme } from '@hai3/uikit';
-import { defaultTheme } from './default';
-import { lightTheme } from './light';
-import { darkTheme } from './dark';
-import { draculaTheme } from './dracula';
-import { draculaLargeTheme } from './dracula-large';
+import { defaultTheme, DEFAULT_THEME_ID } from './default';
+import { lightTheme, LIGHT_THEME_ID } from './light';
+import { darkTheme, DARK_THEME_ID } from './dark';
+import { draculaTheme, DRACULA_THEME_ID } from './dracula';
+import { draculaLargeTheme, DRACULA_LARGE_THEME_ID } from './dracula-large';
 
 // Set the apply function from UI Kit
 themeService.setApplyFunction(applyTheme);
 
 // Register all themes (default theme first, becomes the default selection)
-themeService.register('default', defaultTheme);
-themeService.register('light', lightTheme);
-themeService.register('dark', darkTheme);
-themeService.register('dracula', draculaTheme);
-themeService.register('dracula-large', draculaLargeTheme);
+themeService.register(DEFAULT_THEME_ID, defaultTheme);
+themeService.register(LIGHT_THEME_ID, lightTheme);
+themeService.register(DARK_THEME_ID, darkTheme);
+themeService.register(DRACULA_THEME_ID, draculaTheme);
+themeService.register(DRACULA_LARGE_THEME_ID, draculaLargeTheme);

@@ -185,8 +185,9 @@ class ApiServicesRegistry {
 /**
  * Export singleton instance
  * Single point of access for all API services
+ * Consistent naming with themeService, iconService, screensetService
  */
-export const apiServicesRegistry = new ApiServicesRegistry();
+export const apiServices = new ApiServicesRegistry();
 
-// Legacy export for backward compatibility
-export const apiServices = apiServicesRegistry;
+// Alias for clarity in some contexts
+export const apiServicesRegistry = apiServices;

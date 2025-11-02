@@ -1,20 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HAI3Provider, iconService, apiServices, store, ACCOUNTS_DOMAIN } from '@hai3/uicore';
-import { MenuIcon, CloseIcon } from '@hai3/uikit';
+import { HAI3Provider, apiServices, store } from '@hai3/uicore';
 import { App } from './App';
 import '../packages/uicore/src/styles/globals.css';
 import '@/themes/themeRegistry'; // Auto-registers themes
 import '@/screensets/screensetRegistry'; // Auto-registers screensets
-import '@/api'; // API extensions (module augmentation)
-import { accountsMockMap } from '@/api';
-
-// Register core icons (tree-shakeable)
-iconService.register('menu', <MenuIcon />);
-iconService.register('close', <CloseIcon />);
-
-// Register mock data for services
-apiServices.registerMocks(ACCOUNTS_DOMAIN, accountsMockMap);
+import '@/icons/iconsRegistry'; // Auto-registers core icons
+import '@/api/apiRegistry'; // Auto-registers API extensions + mocks
 
 // Initialize API services
 const initialUseMockApi = store.getState().app.useMockApi;

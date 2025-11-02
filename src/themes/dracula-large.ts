@@ -5,8 +5,13 @@
 
 import type { Theme } from '@hai3/uikit';
 
+/**
+ * Dracula Large theme ID
+ */
+export const DRACULA_LARGE_THEME_ID = 'dracula-large' as const;
+
 export const draculaLargeTheme: Theme = {
-  name: 'dracula-large',
+  name: DRACULA_LARGE_THEME_ID,
   colors: {
     primary: 'hsl(265 89% 78%)',      // Purple #bd93f9
     secondary: 'hsl(225 27% 51%)',    // Gray-blue #6272a4
