@@ -10,8 +10,13 @@ export default defineConfig({
   external: [
     'react',
     'react-dom',
+    '@radix-ui/react-avatar',
+    '@radix-ui/react-dialog',
+    '@radix-ui/react-dropdown-menu',
+    '@radix-ui/react-navigation-menu',
     '@radix-ui/react-select',
     '@radix-ui/react-slot',
+    '@radix-ui/react-switch',
     'class-variance-authority',
     'clsx',
     'lucide-react',

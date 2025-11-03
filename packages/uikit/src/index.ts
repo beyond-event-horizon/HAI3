@@ -3,10 +3,12 @@
  * Exports all UI Kit components for easy importing
  */
 
-// Base shadcn components
+// Base UI Components (shadcn + HAI3 custom)
+export { Avatar, AvatarImage, AvatarFallback } from './base/avatar';
 export { Button, type ButtonProps, ButtonVariant, ButtonSize } from './base/button';
 export { Switch } from './base/switch';
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './base/card';
+export { Header, type HeaderProps } from './base/header'; // HAI3 custom base component
 
 // shadcn navigation
 export {
@@ -98,6 +100,9 @@ export {
   SidebarMenuIcon,
 } from './composite/navigation/Sidebar';
 export { SidebarHeader, type SidebarHeaderProps } from './composite/navigation/SidebarHeader';
+
+// Composite user components
+export { UserInfo, type UserInfoProps } from './composite/user/UserInfo';
 
 // Icons (tree-shakeable - app imports and registers only what it needs)
 export { MenuIcon, MENU_ICON_ID } from './icons/MenuIcon';
