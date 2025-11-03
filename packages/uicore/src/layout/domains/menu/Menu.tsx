@@ -2,14 +2,16 @@ import React from 'react';
 import {
   Sidebar,
   SidebarContent,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarMenuIcon,
   SidebarMenuLabel,
 } from '@hai3/uikit';
-import { useAppSelector } from '@/core/hooks/useRedux';
+import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { navigateToScreen } from '../../../core/actions';
+import { toggleMenu } from '../../../core/actions';
 import { iconService } from '@/core/icons/iconService';
 
 export interface MenuProps {}
@@ -21,13 +23,27 @@ export interface MenuProps {}
  * Initial navigation handled by AppRouter (default route)
  */
 export const Menu: React.FC<MenuProps> = () => {
+  const dispatch = useAppDispatch();
   const { items, collapsed, visible } = useAppSelector((state) => state.menu);
   const selectedScreen = useAppSelector((state) => state.layout.selectedScreen);
 
   if (!visible) return null;
 
+  const logoIcon = iconService.get('hai3-logo');
+  const logoTextIcon = iconService.get('hai3-logo-text');
+
+  const handleToggle = (): void => {
+    dispatch(toggleMenu());
+  };
+
   return (
     <Sidebar collapsed={collapsed}>
+      <SidebarHeader
+        logo={logoIcon}
+        logoText={logoTextIcon}
+        collapsed={collapsed}
+        onClick={handleToggle}
+      />
       <SidebarContent>
         <SidebarMenu>
           {items.map((item) => {

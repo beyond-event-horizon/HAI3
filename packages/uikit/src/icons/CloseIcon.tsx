@@ -1,6 +1,12 @@
 import React from 'react';
 
 /**
+ * Close Icon ID
+ * Well-known constant defined where it belongs
+ */
+export const CLOSE_ICON_ID = 'close' as const;
+
+/**
  * Close Icon (X)
  * Core icon for closing dialogs/popups
  * Tree-shakeable - imported and registered by app

@@ -1,6 +1,12 @@
 import React from 'react';
 
 /**
+ * Menu Icon ID
+ * Well-known constant defined where it belongs
+ */
+export const MENU_ICON_ID = 'menu' as const;
+
+/**
  * Menu Icon (Hamburger)
  * Core icon for header menu toggle
  * Tree-shakeable - imported and registered by app
