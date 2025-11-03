@@ -97,10 +97,11 @@ export {
   SidebarMenuLabel,
   SidebarMenuIcon,
 } from './composite/navigation/Sidebar';
+export { SidebarHeader, type SidebarHeaderProps } from './composite/navigation/SidebarHeader';
 
 // Icons (tree-shakeable - app imports and registers only what it needs)
-export { MenuIcon } from './icons/MenuIcon';
-export { CloseIcon } from './icons/CloseIcon';
+export { MenuIcon, MENU_ICON_ID } from './icons/MenuIcon';
+export { CloseIcon, CLOSE_ICON_ID } from './icons/CloseIcon';
 
 // Theme system (utilities only - theme definitions in app)
 export { applyTheme } from './styles/applyTheme';

@@ -20,7 +20,6 @@ export { Layout } from './layout';
 
 // Layout domains
 export { Header, type HeaderProps } from './layout/domains/header/Header';
-export { setHeaderConfig } from './layout/domains/header/headerSlice';
 export { Footer, type FooterProps } from './layout/domains/footer/Footer';
 export { setFooterConfig } from './layout/domains/footer/footerSlice';
 export { Menu, type MenuProps } from './layout/domains/menu/Menu';
