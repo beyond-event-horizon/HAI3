@@ -30,6 +30,7 @@ export const lightTheme: Theme = {
       foreground: colors.zinc[500],
       hover: colors.zinc[200],
       selected: colors.blue[600],
+      border: colors.zinc[200],
     },
   },
   spacing: {

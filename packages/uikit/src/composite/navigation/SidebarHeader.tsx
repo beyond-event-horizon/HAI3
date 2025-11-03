@@ -33,19 +33,22 @@ const SidebarHeader = React.forwardRef<HTMLDivElement, SidebarHeaderProps>(
       <div
         ref={ref}
         className={cn(
-          "flex items-center h-16 px-2 border-b border-border",
+          "flex flex-col h-16",
           className
         )}
         {...props}
       >
-        <SidebarMenuButton onClick={onClick} tooltip={collapsed ? "Expand menu" : "Collapse menu"}>
-          {logo && <SidebarMenuIcon>{logo}</SidebarMenuIcon>}
-          {logoText && (
-            <SidebarMenuLabel className="[&>svg]:h-5 [&>svg]:w-auto">
-              {logoText}
-            </SidebarMenuLabel>
-          )}
-        </SidebarMenuButton>
+        <div className="flex items-center flex-1 px-2">
+          <SidebarMenuButton onClick={onClick} tooltip={collapsed ? "Expand menu" : "Collapse menu"}>
+            {logo && <SidebarMenuIcon>{logo}</SidebarMenuIcon>}
+            {logoText && (
+              <SidebarMenuLabel className="[&>svg]:h-5 [&>svg]:w-auto">
+                {logoText}
+              </SidebarMenuLabel>
+            )}
+          </SidebarMenuButton>
+        </div>
+        <div className="border-b border-mainMenu-border mx-4" />
       </div>
     )
   }

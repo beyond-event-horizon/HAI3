@@ -30,6 +30,7 @@ export const darkTheme: Theme = {
       foreground: colors.zinc[400],
       hover: colors.zinc[900],
       selected: colors.zinc[500],
+      border: colors.zinc[800],
     },
   },
   spacing: {
