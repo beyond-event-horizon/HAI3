@@ -29,6 +29,7 @@ export const draculaTheme: Theme = {
       foreground: 'hsl(225 27% 51%)',   // #6272a4 - comment
       hover: 'hsl(232 14% 31%)',        // #44475a - current-line
       selected: 'hsl(265 89% 78%)',     // #bd93f9 - purple
+      border: 'hsl(232 14% 31%)',       // #44475a - same as border
     },
   },
   spacing: {

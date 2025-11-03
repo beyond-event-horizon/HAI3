@@ -31,6 +31,7 @@ export const defaultTheme: Theme = {
       foreground: colors.gray[400],
       hover: colors.gray[700],
       selected: colors.blue[600],
+      border: colors.gray[700],  // Match hover color
     },
   },
   spacing: {
