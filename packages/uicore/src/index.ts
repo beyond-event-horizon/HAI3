@@ -46,8 +46,8 @@ export { themeService } from './theme/themeService';
 
 // UI Kit registry (app registers UI components and icons)
 export { uikitRegistry } from './uikit/uikitRegistry';
-export type { ComponentRegistry, ComponentName, Theme } from './uikit/uikitContracts';
-export { UiKitComponent, UiKitIcon } from './uikit/uikitContracts';
+export type { UiKitComponentMap, ComponentName, Theme } from '@hai3/uikit-contracts';
+export { UiKitComponent, UiKitIcon } from '@hai3/uikit-contracts';
 
 // HAI3Provider - Main entry point for apps
 export { HAI3Provider, type HAI3ProviderProps } from './core/HAI3Provider';

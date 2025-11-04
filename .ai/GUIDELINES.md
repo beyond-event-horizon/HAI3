@@ -5,6 +5,7 @@
 **ALWAYS read the target guideline BEFORE making changes:**
 
 - Data flow questions -> .ai/targets/EVENTS.md (CRITICAL - ONLY allowed pattern)
+- `packages/uikit-contracts` -> .ai/targets/UIKIT-CONTRACTS.md
 - `packages/uicore` -> .ai/targets/UICORE.md (includes routing)
 - `packages/uikit` -> .ai/targets/UIKIT.md
 - `src/screensets` -> .ai/targets/SCREENSETS.md

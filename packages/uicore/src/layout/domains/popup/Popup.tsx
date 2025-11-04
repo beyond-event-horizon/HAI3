@@ -2,7 +2,7 @@ import React from 'react';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { closePopup } from './popupSlice';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
-import { UiKitIcon, UiKitComponent } from '../../../uikit/uikitContracts';
+import { UiKitComponent, UiKitIcon } from '@hai3/uikit-contracts';
 
 export interface PopupProps {}
 

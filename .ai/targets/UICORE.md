@@ -16,17 +16,17 @@
 - Purpose: Decouples UI Core from specific UI Kit
 - Detect: grep for `from '@hai3/uikit'` in `packages/uicore/src/`
 
-**UI Kit Contracts (uikitContracts.ts - AI: CRITICAL):**
-- Contract layer between UI Core and UI Kit implementations
-- UI Core owns contracts, UI Kit implements them
-- ComponentRegistry: Maps component names to types
-- UiKitComponent enum: Component names for registry
-- UiKitIcon enum: Core framework icons (Close, AppLogo, etc)
-- Theme interface: Structure UI Core expects from themes
+**UI Kit Contracts (@hai3/uikit-contracts - AI: CRITICAL):**
+- Separate package: Contract layer preventing circular dependencies
+- See UIKIT-CONTRACTS.md for full details
+- UI Core imports contracts, UI Kit implements them
+- Import from: `@hai3/uikit-contracts` (dependency)
+- Re-exported by UI Core for app convenience
 - Type-safe: getComponent<K> returns exact type for K
-- Icons: Enum for core, exported constants for screenset-specific
+- UiKitComponent enum: Component names for registry
+- UiKitIcon enum: Core framework icon IDs
+- Theme interface in contracts, not UI Core
 - NEVER: Hardcoded strings for component/icon IDs
-- Export: ComponentRegistry, ComponentName, Theme, UiKitComponent, UiKitIcon
 
 **Data Flow (AI: READ THIS - CRITICAL):**
 - ONLY allowed: Event-driven architecture (See EVENTS.md)

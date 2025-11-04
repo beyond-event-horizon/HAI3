@@ -1,7 +1,7 @@
 import React from 'react';
 import { UserInfo } from '../../../app/domains/user/UserInfo';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
-import { UiKitComponent } from '../../../uikit/uikitContracts';
+import { UiKitComponent } from '@hai3/uikit-contracts';
 
 /**
  * Header Domain

@@ -8,7 +8,7 @@ import { themeService } from '@/core/theme/themeService';
 import { setFooterConfig } from './footerSlice';
 import { buildScreensetOptions } from './footerHelpers';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
-import { UiKitComponent } from '../../../uikit/uikitContracts';
+import { UiKitComponent } from '@hai3/uikit-contracts';
 
 /**
  * Core Footer component (dev tool, not for production)

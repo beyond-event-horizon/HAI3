@@ -10,12 +10,13 @@
 - NO Redux, NO business logic
 
 **UI Kit Contracts (AI: READ THIS):**
-- MUST implement interfaces from `@hai3/uicore/uikitContracts`
+- MUST implement interfaces from `@hai3/uikit-contracts`
+- See UIKIT-CONTRACTS.md for full details
 - Component props MUST match contract types exactly
 - FORBIDDEN: Adding required props not in contract
 - GOOD: Optional props beyond contract (className, etc)
-- Theme interface MUST match UI Core's Theme type
-- Components registered via app's uikitRegistry
+- Theme interface MUST match contracts Theme type
+- Use `implements` for compile-time contract enforcement
 - Contract examples: ButtonComponent, SwitchComponent, UserInfoComponent
 
 **shadcn:**

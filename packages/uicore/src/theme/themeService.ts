@@ -1,4 +1,4 @@
-import type { Theme } from '../uikit/uikitContracts';
+import type { Theme } from '@hai3/uikit-contracts';
 
 /**
  * Theme Service

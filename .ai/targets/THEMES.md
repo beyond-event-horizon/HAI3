@@ -6,10 +6,10 @@
 
 **System:**
 - Theme objects = source of truth
-- Theme interface: `@hai3/uicore/uikitContracts` (contract)
+- Theme interface: `@hai3/uikit-contracts` (contract layer)
 - CSS variables via `applyTheme(theme, name)`
 - Apps define in `src/themes/`
-- MUST match Theme interface structure
+- MUST match Theme interface structure from contracts
 
 **Registry:** See GUIDELINES.md
 - Set function: `themeService.setApplyFunction(applyTheme)` from UI Kit

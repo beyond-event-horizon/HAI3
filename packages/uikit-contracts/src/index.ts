@@ -256,45 +256,6 @@ export type DropdownMenuSubTriggerComponent = ComponentType<DropdownMenuSubTrigg
 export type DropdownMenuSubContentComponent = ComponentType<DropdownMenuSubContentProps>;
 
 /**
- * Component Registry Interface
- * Maps component names to their implementations
- */
-export interface ComponentRegistry {
-  // Basic components
-  Button: ButtonComponent;
-  IconButton: IconButtonComponent;
-  Switch: SwitchComponent;
-  
-  // Layout components
-  Header: HeaderComponent;
-  Sidebar: SidebarComponent;
-  SidebarContent: SidebarContentComponent;
-  SidebarHeader: SidebarHeaderComponent;
-  SidebarMenu: SidebarMenuComponent;
-  SidebarMenuItem: SidebarMenuItemComponent;
-  SidebarMenuButton: SidebarMenuButtonComponent;
-  SidebarMenuIcon: SidebarMenuIconComponent;
-  SidebarMenuLabel: SidebarMenuLabelComponent;
-  
-  // Domain components
-  UserInfo: UserInfoComponent;
-  
-  // Dropdown components
-  DropdownMenu: DropdownMenuComponent;
-  DropdownMenuTrigger: DropdownMenuTriggerComponent;
-  DropdownMenuContent: DropdownMenuContentComponent;
-  DropdownMenuItem: DropdownMenuItemComponent;
-  DropdownMenuSub: DropdownMenuSubComponent;
-  DropdownMenuSubTrigger: DropdownMenuSubTriggerComponent;
-  DropdownMenuSubContent: DropdownMenuSubContentComponent;
-}
-
-/**
- * Component Names - for type-safe registration
- */
-export type ComponentName = keyof ComponentRegistry;
-
-/**
  * UI Kit Component Enum
  * Defines components that UI Core requires from UI Kit
  * Part of UI Core's API contract
@@ -321,6 +282,45 @@ export enum UiKitComponent {
   DropdownMenuSubTrigger = 'DropdownMenuSubTrigger',
   DropdownMenuSubContent = 'DropdownMenuSubContent',
 }
+
+/**
+ * UI Kit Component Map
+ * Maps component enum values to their type implementations
+ */
+export interface UiKitComponentMap {
+  // Basic components
+  [UiKitComponent.Button]: ButtonComponent;
+  [UiKitComponent.IconButton]: IconButtonComponent;
+  [UiKitComponent.Switch]: SwitchComponent;
+  
+  // Layout components
+  [UiKitComponent.Header]: HeaderComponent;
+  [UiKitComponent.Sidebar]: SidebarComponent;
+  [UiKitComponent.SidebarContent]: SidebarContentComponent;
+  [UiKitComponent.SidebarHeader]: SidebarHeaderComponent;
+  [UiKitComponent.SidebarMenu]: SidebarMenuComponent;
+  [UiKitComponent.SidebarMenuItem]: SidebarMenuItemComponent;
+  [UiKitComponent.SidebarMenuButton]: SidebarMenuButtonComponent;
+  [UiKitComponent.SidebarMenuIcon]: SidebarMenuIconComponent;
+  [UiKitComponent.SidebarMenuLabel]: SidebarMenuLabelComponent;
+  
+  // Domain components
+  [UiKitComponent.UserInfo]: UserInfoComponent;
+  
+  // Dropdown components
+  [UiKitComponent.DropdownMenu]: DropdownMenuComponent;
+  [UiKitComponent.DropdownMenuTrigger]: DropdownMenuTriggerComponent;
+  [UiKitComponent.DropdownMenuContent]: DropdownMenuContentComponent;
+  [UiKitComponent.DropdownMenuItem]: DropdownMenuItemComponent;
+  [UiKitComponent.DropdownMenuSub]: DropdownMenuSubComponent;
+  [UiKitComponent.DropdownMenuSubTrigger]: DropdownMenuSubTriggerComponent;
+  [UiKitComponent.DropdownMenuSubContent]: DropdownMenuSubContentComponent;
+}
+
+/**
+ * Component Names - for type-safe registration
+ */
+export type ComponentName = keyof UiKitComponentMap;
 
 /**
  * UI Kit Icon Enum
