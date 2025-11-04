@@ -1,18 +1,9 @@
 import React from 'react';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarMenuIcon,
-  SidebarMenuLabel,
-} from '@hai3/uikit';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { navigateToScreen } from '../../../core/actions';
 import { toggleMenu } from '../../../core/actions';
-import { iconService } from '@/core/icons/iconService';
+import { uikitRegistry } from '../../../uikit/uikitRegistry';
+import { UiKitIcon, UiKitComponent } from '../../../uikit/uikitContracts';
 
 export interface MenuProps {}
 
@@ -29,8 +20,18 @@ export const Menu: React.FC<MenuProps> = () => {
 
   if (!visible) return null;
 
-  const logoIcon = iconService.get('hai3-logo');
-  const logoTextIcon = iconService.get('hai3-logo-text');
+  // Get components from registry
+  const Sidebar = uikitRegistry.getComponent(UiKitComponent.Sidebar);
+  const SidebarHeader = uikitRegistry.getComponent(UiKitComponent.SidebarHeader);
+  const SidebarContent = uikitRegistry.getComponent(UiKitComponent.SidebarContent);
+  const SidebarMenu = uikitRegistry.getComponent(UiKitComponent.SidebarMenu);
+  const SidebarMenuItem = uikitRegistry.getComponent(UiKitComponent.SidebarMenuItem);
+  const SidebarMenuButton = uikitRegistry.getComponent(UiKitComponent.SidebarMenuButton);
+  const SidebarMenuIcon = uikitRegistry.getComponent(UiKitComponent.SidebarMenuIcon);
+  const SidebarMenuLabel = uikitRegistry.getComponent(UiKitComponent.SidebarMenuLabel);
+
+  const logoIcon = uikitRegistry.getIcon(UiKitIcon.AppLogo);
+  const logoTextIcon = uikitRegistry.getIcon(UiKitIcon.AppLogoText);
 
   const handleToggle = (): void => {
     dispatch(toggleMenu());
@@ -47,7 +48,7 @@ export const Menu: React.FC<MenuProps> = () => {
       <SidebarContent>
         <SidebarMenu>
           {items.map((item) => {
-            const icon = iconService.get(item.icon || '');
+            const icon = uikitRegistry.getIcon(item.icon || '');
             const isActive = selectedScreen === item.id;
 
             return (

@@ -7,6 +7,7 @@
 export { Avatar, AvatarImage, AvatarFallback } from './base/avatar';
 export { Button, type ButtonProps, ButtonVariant, ButtonSize } from './base/button';
 export { Switch } from './base/switch';
+export { Skeleton } from './base/skeleton';
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './base/card';
 export { Header, type HeaderProps } from './base/header'; // HAI3 custom base component
 

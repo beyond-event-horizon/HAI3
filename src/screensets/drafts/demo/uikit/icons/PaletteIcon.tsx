@@ -1,5 +1,4 @@
 import React from 'react';
-import { iconService } from '@hai3/uicore';
 
 /**
  * Palette Icon ID
@@ -11,7 +10,7 @@ export const PALETTE_ICON_ID = 'palette';
  * Palette Icon
  * Local icon for Demo screenset (theme screen)
  */
-const PaletteIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
+export const PaletteIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
   return (
     <svg
       className={className}
@@ -34,4 +33,3 @@ const PaletteIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
 };
 
 // Self-register icon (runs on import)
-iconService.register(PALETTE_ICON_ID, <PaletteIcon />);

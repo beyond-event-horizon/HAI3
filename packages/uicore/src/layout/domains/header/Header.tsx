@@ -1,6 +1,7 @@
 import React from 'react';
-import { Header as HeaderUI } from '@hai3/uikit'; // Base layout primitive
 import { UserInfo } from '../../../app/domains/user/UserInfo';
+import { uikitRegistry } from '../../../uikit/uikitRegistry';
+import { UiKitComponent } from '../../../uikit/uikitContracts';
 
 /**
  * Header Domain
@@ -13,6 +14,8 @@ export interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = () => {
+  const HeaderUI = uikitRegistry.getComponent(UiKitComponent.Header);
+  
   return (
     <HeaderUI>
       <UserInfo />

@@ -1,12 +1,16 @@
 import React from 'react';
-import { Switch } from '@hai3/uikit';
 import { useAppSelector } from '@/core/hooks/useRedux';
 import { setApiMode } from '../core/actions';
+import { uikitRegistry } from '../uikit/uikitRegistry';
+import { UiKitComponent } from '../uikit/uikitContracts';
 
 /**
  * API Mode Toggle Component
  * Redux-aware component for toggling between mock and real API
  * Follows UI Core component pattern: reads from Redux, calls actions
+ * 
+ * NOTE: Uses UI Kit registry instead of direct import
+ * This allows the app to use any UI Kit implementation
  */
 
 export interface ApiModeToggleProps {
@@ -15,6 +19,7 @@ export interface ApiModeToggleProps {
 
 export const ApiModeToggle: React.FC<ApiModeToggleProps> = ({ className }) => {
   const useMockApi = useAppSelector((state) => state.app.useMockApi);
+  const Switch = uikitRegistry.getComponent(UiKitComponent.Switch);
 
   return (
     <div className={className}>
@@ -28,7 +33,6 @@ export const ApiModeToggle: React.FC<ApiModeToggleProps> = ({ className }) => {
         <Switch
           checked={useMockApi}
           onCheckedChange={(checked: boolean) => setApiMode(checked)}
-          id="api-mode-toggle"
         />
       </div>
     </div>
