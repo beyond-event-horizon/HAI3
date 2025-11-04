@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { navigateToScreen } from '../../../core/actions';
 import { toggleMenu } from '../../../core/actions';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
-import { UiKitIcon, UiKitComponent } from '../../../uikit/uikitContracts';
+import { UiKitComponent, UiKitIcon } from '@hai3/uikit-contracts';
 
 export interface MenuProps {}
 

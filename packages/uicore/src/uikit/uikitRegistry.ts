@@ -9,11 +9,11 @@
  * - UI Core depends on interfaces, not implementations
  */
 
-import type { ComponentRegistry, ComponentName, UiKitIcon } from './uikitContracts';
+import type { UiKitComponentMap, ComponentName, UiKitIcon } from '@hai3/uikit-contracts';
 import type { ReactNode } from 'react';
 
 class UiKitRegistryService {
-  private components: Partial<ComponentRegistry> = {};
+  private components: Partial<UiKitComponentMap> = {};
   private icons: Map<string, ReactNode> = new Map();
 
   // ============================================
@@ -25,7 +25,7 @@ class UiKitRegistryService {
    */
   registerComponent<K extends ComponentName>(
     name: K,
-    component: ComponentRegistry[K]
+    component: UiKitComponentMap[K]
   ): void {
     if (this.components[name]) {
       console.warn(`Component "${name}" is already registered. Overwriting.`);
@@ -35,9 +35,9 @@ class UiKitRegistryService {
 
   /**
    * Register multiple components at once
-   * Type-safe: only accepts components defined in ComponentRegistry
+   * Type-safe: only accepts components defined in UiKitComponentMap
    */
-  registerComponents(components: Partial<ComponentRegistry>): void {
+  registerComponents(components: Partial<UiKitComponentMap>): void {
     (Object.keys(components) as ComponentName[]).forEach((name) => {
       const component = components[name];
       if (component) {
@@ -49,7 +49,7 @@ class UiKitRegistryService {
   /**
    * Get a component by name
    */
-  getComponent<K extends ComponentName>(name: K): ComponentRegistry[K] {
+  getComponent<K extends ComponentName>(name: K): UiKitComponentMap[K] {
     const component = this.components[name];
     if (!component) {
       throw new Error(
@@ -58,7 +58,7 @@ class UiKitRegistryService {
         `Check your UI Kit registration file (e.g., src/uikit/uikitRegistry.ts).`
       );
     }
-    return component as ComponentRegistry[K];
+    return component as UiKitComponentMap[K];
   }
 
   /**
