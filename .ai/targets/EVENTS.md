@@ -9,8 +9,7 @@
 - FORBIDDEN: `setSliceState(value)` 
 - REQUIRED: `actionFunction(value)` from `@/core/actions`
 - Pattern: Component -> Action -> Event -> Effect -> Slice -> Store
-
-**Violations break architecture** - grep for: `dispatch(set[A-Z])`
+- Detect: grep for `dispatch(set[A-Z])`
 
 **Event Naming:**
 - MUST: Past-tense `EntityActioned`, `StateChanged`
@@ -41,11 +40,11 @@
 
 ## Type Safety (AI: READ THIS)
 
-**BAD:**
+**FORBIDDEN:**
 - `eventBus.emit<PayloadType>(event, payload)`
 - Payload type mismatch caught at runtime
 
-**GOOD:**
+**REQUIRED:**
 - `eventBus.emit(event, payload)`
 - NO explicit type parameters
 - Compile-time errors for mismatches

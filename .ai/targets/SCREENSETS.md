@@ -41,10 +41,6 @@
 - BAD: Central icon registry file
 - GOOD: Icons registered in screenset.tsx with exported constants
 
-**Registry:** See GUIDELINES.md Self-Registering Registries
-
-**IDs:** See GUIDELINES.md Identifiers section
-
 **Navigation:**
 - Menu items in screenset config
 - MenuItem type from `@hai3/uicore`
@@ -56,12 +52,11 @@
 4. Local uikit -> ONLY screenset-specific composites
 5. Manual styling -> FORBIDDEN
 
-**Themes:** See THEMES.md
-
-**Building:**
-- Global UI Kit + local uikit + logic + state
-- Styling: ONLY layout
-
 **Data:**
 - Mock + setTimeout simulation
 - Handle loading/error
+
+**References:**
+- Registry: See GUIDELINES.md Self-Registering Registries
+- IDs: See GUIDELINES.md Identifiers section
+- Themes: See THEMES.md

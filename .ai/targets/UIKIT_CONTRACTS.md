@@ -6,35 +6,19 @@
 
 **Package:** `@hai3/uikit-contracts`
 
-**Purpose:**
-- Interface layer between UI Core and UI Kit
-- NO circular dependencies
-- Type-safe contracts only, zero runtime code
-- Single source of truth for component/icon types
-
-**Dependency Graph:**
-```
-uikit-contracts (no deps)
-    ^           ^
-    |           |
-  uicore      uikit
-```
-
-**What Goes Here:**
-- UiKitComponent enum (component names - single source of truth)
-- UiKitComponentMap interface (maps enum values to component types)
-- Component prop interfaces (ButtonProps, SwitchProps, etc)
-- UiKitIcon enum (core framework icon IDs)
-- Theme interface (structure of theme objects)
-- NEVER: React components, implementations, runtime logic
-
-**What Stays Out:**
+**Content Rules:**
+- REQUIRED: UiKitComponent enum (single source of truth)
+- REQUIRED: UiKitComponentMap interface (enum-driven)
+- REQUIRED: Component prop interfaces (ButtonProps, SwitchProps, etc)
+- REQUIRED: UiKitIcon enum (core framework icon IDs)
+- REQUIRED: Theme interface (structure of theme objects)
+- FORBIDDEN: React components, implementations, runtime logic
 - FORBIDDEN: React imports, component implementations
 - FORBIDDEN: Business logic, Redux, state management
 - FORBIDDEN: Styling, Tailwind, CSS
 - GOOD: Pure TypeScript types and enums only
 
-## Rules (AI: READ THIS)
+## Component Contracts (AI: READ THIS)
 
 **Adding Component Contract:**
 1. Add to UiKitComponent enum: `X = 'X',`
@@ -44,33 +28,30 @@ uikit-contracts (no deps)
 5. Enum is single source of truth - no string duplication
 6. NO modification to registry service (Open/Closed)
 
-**Icon IDs:**
-- Core framework icons: Add to UiKitIcon enum
-- Screenset-specific icons: Export constants in screenset
-- NEVER: Hardcoded strings for icon IDs
-
-**Theme Contract:**
-- Defines structure UI Core expects
-- UI Kit MUST implement matching structure
-- Modifying requires version bump
-- Apps MUST match structure
-
 **Type Safety:**
 - All props optional by default UNLESS required for functionality
 - Component types use React.FC<Props> or FunctionComponent<Props>
 - Enums for variants, NOT string unions
 - FORBIDDEN: `any`, loose types
 
+## Icon Contracts
+
+- Core framework icons: Add to UiKitIcon enum
+- Screenset-specific icons: Export constants in screenset
+- NEVER: Hardcoded strings for icon IDs
+
+## Theme Contracts
+
+- UI Kit MUST implement matching structure
+- Modifying requires version bump
+- Apps MUST match structure
+
 ## Dependencies
 
-**ZERO runtime dependencies:**
-- peerDependencies: `react` (types only)
-- devDependencies: TypeScript, tsup
-- NO @radix-ui, NO styling libs, NO utilities
-
-**Consumers:**
-- `@hai3/uicore` depends on contracts
-- `@hai3/uikit` depends on contracts
+- REQUIRED: peerDependencies: `react` (types only)
+- REQUIRED: devDependencies: TypeScript, tsup
+- FORBIDDEN: @radix-ui, styling libs, utilities
+- Consumers: `@hai3/uicore`, `@hai3/uikit` depend on contracts
 - Apps import via `@hai3/uicore` (re-exported)
 
 ## Versioning

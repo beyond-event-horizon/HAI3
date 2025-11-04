@@ -13,20 +13,12 @@
 - FORBIDDEN: Direct import from `@hai3/uikit`
 - REQUIRED: `const Component = uikitRegistry.getComponent(UiKitComponent.Button)`
 - REQUIRED: `const icon = uikitRegistry.getIcon(UiKitIcon.Close)`
-- Purpose: Decouples UI Core from specific UI Kit
 - Detect: grep for `from '@hai3/uikit'` in `packages/uicore/src/`
 
 **UI Kit Contracts (@hai3/uikit-contracts - AI: CRITICAL):**
-- Separate package: Contract layer preventing circular dependencies
-- See UIKIT-CONTRACTS.md for full details
-- UI Core imports contracts, UI Kit implements them
+- See UIKIT_CONTRACTS.md for full details
 - Import from: `@hai3/uikit-contracts` (dependency)
 - Re-exported by UI Core for app convenience
-- Type-safe: getComponent<K> returns exact type for K
-- UiKitComponent enum: Component names for registry
-- UiKitIcon enum: Core framework icon IDs
-- Theme interface in contracts, not UI Core
-- NEVER: Hardcoded strings for component/icon IDs
 
 **Data Flow (AI: READ THIS - CRITICAL):**
 - ONLY allowed: Event-driven architecture (See EVENTS.md)
