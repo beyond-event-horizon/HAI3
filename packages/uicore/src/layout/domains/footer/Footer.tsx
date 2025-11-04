@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Button, ButtonVariant } from '@hai3/uikit';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { ThemeSelector } from '@/core/components/ThemeSelector';
 import { ScreensetSelector } from '@/core/components/ScreensetSelector';
@@ -8,6 +7,8 @@ import { setCurrentScreenset, setTheme, setApiMode } from '../../../core/actions
 import { themeService } from '@/core/theme/themeService';
 import { setFooterConfig } from './footerSlice';
 import { buildScreensetOptions } from './footerHelpers';
+import { uikitRegistry } from '../../../uikit/uikitRegistry';
+import { UiKitComponent } from '../../../uikit/uikitContracts';
 
 /**
  * Core Footer component (dev tool, not for production)
@@ -79,6 +80,8 @@ export const Footer: React.FC<FooterProps> = () => {
 
   if (!visible) return null;
 
+  const Button = uikitRegistry.getComponent(UiKitComponent.Button);
+
   return (
     <footer className="flex items-center justify-between px-6 py-3 bg-background border-t border-border h-12 w-full text-sm text-muted-foreground">
       <div className="flex items-center gap-4">
@@ -88,7 +91,7 @@ export const Footer: React.FC<FooterProps> = () => {
             {links.map((link) => (
               <Button
                 key={link.href}
-                variant={ButtonVariant.Link}
+                variant="link"
                 asChild
               >
                 <a href={link.href}>{link.label}</a>

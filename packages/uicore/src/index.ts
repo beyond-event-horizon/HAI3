@@ -44,8 +44,10 @@ export { screensetService, type ScreensetConfig } from './screensets/screensetSe
 // Theme management (Footer domain handles watching)
 export { themeService } from './theme/themeService';
 
-// Icon management (screensets register icons)
-export { iconService } from './icons/iconService';
+// UI Kit registry (app registers UI components and icons)
+export { uikitRegistry } from './uikit/uikitRegistry';
+export type { ComponentRegistry, ComponentName, Theme } from './uikit/uikitContracts';
+export { UiKitComponent, UiKitIcon } from './uikit/uikitContracts';
 
 // HAI3Provider - Main entry point for apps
 export { HAI3Provider, type HAI3ProviderProps } from './core/HAI3Provider';

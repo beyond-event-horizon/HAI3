@@ -12,6 +12,9 @@ import { demoScreenset } from './drafts/demo/demoScreenset';
  * - Icon IDs: in icon files (e.g., WORLD_ICON_ID in WorldIcon.tsx)
  * 
  * This pattern prevents circular imports and follows vertical slice architecture
+ * 
+ * NOTE: Screensets import UI Kit components/icons directly - no registry needed.
+ * Registry is ONLY for components/icons used by UI Core package.
  */
 
 /**

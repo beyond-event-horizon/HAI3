@@ -1,17 +1,16 @@
 import React from 'react';
-import { iconService } from '@hai3/uicore';
 
 /**
- * HAI3 Logo Icon ID
- * Well-known constant defined where it belongs
+ * App Logo Icon ID
+ * Purpose-based ID for application logo
  */
-export const HAI3_LOGO_ICON_ID = 'hai3-logo';
+export const APP_LOGO_ICON_ID = 'app-logo';
 
 /**
  * HAI3 Logo Icon
  * App-level branding icon used by Menu layout component
  */
-const HAI3LogoIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
+export const HAI3LogoIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
   return (
     <svg 
       className={className}
@@ -33,6 +32,3 @@ const HAI3LogoIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
     </svg>
   );
 };
-
-// Self-register icon (runs on import)
-iconService.register(HAI3_LOGO_ICON_ID, <HAI3LogoIcon />);

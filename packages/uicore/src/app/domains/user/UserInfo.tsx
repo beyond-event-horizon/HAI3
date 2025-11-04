@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../hooks/useRedux';
 import { fetchCurrentUser } from '../../../core/actions';
-import { UserInfo as UserInfoUI } from '@hai3/uikit';
+import { uikitRegistry } from '../../../uikit/uikitRegistry';
+import { UiKitComponent } from '../../../uikit/uikitContracts';
 
 /**
  * UserInfo Domain Component
@@ -14,7 +15,7 @@ export interface UserInfoProps {
 
 export const UserInfo: React.FC<UserInfoProps> = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.app);
+  const { user, loading } = useAppSelector((state) => state.app);
 
   // Fetch user on mount if not already loaded
   useEffect(() => {
@@ -23,16 +24,26 @@ export const UserInfo: React.FC<UserInfoProps> = () => {
     }
   }, [dispatch, user]);
 
-  // Don't render if user not loaded yet
+  const UserInfoUI = uikitRegistry.getComponent(UiKitComponent.UserInfo);
+
+  // Show loading state
+  if (loading && !user) {
+    return <UserInfoUI loading={true} />;
+  }
+
+  // Don't render if no user and not loading
   if (!user) {
     return null;
   }
 
+  const displayName = `${user.firstName || ''} ${user.lastName || ''}`.trim();
+
   return (
     <UserInfoUI
-      firstName={user.firstName}
-      lastName={user.lastName}
+      displayName={displayName || undefined}
+      email={user.email || undefined}
       avatarUrl={user.avatarUrl}
+      loading={false}
     />
   );
 };

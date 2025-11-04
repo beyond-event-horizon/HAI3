@@ -1,5 +1,4 @@
 import React from 'react';
-import { iconService } from '@hai3/uicore';
 
 /**
  * User Icon ID
@@ -10,7 +9,7 @@ export const USER_ICON_ID = 'user';
  * User Icon
  * Local icon for Demo screenset (profile screen)
  */
-const UserIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
+export const UserIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
   return (
     <svg
       className={className}
@@ -30,4 +29,3 @@ const UserIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
 };
 
 // Self-register icon (runs on import)
-iconService.register(USER_ICON_ID, <UserIcon />);
