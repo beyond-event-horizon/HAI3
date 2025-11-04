@@ -4,14 +4,14 @@
 
 **ALWAYS read the target guideline BEFORE making changes:**
 
+- Data flow questions -> .ai/targets/EVENTS.md (CRITICAL - ONLY allowed pattern)
 - `packages/uicore` -> .ai/targets/UICORE.md (includes routing)
 - `packages/uikit` -> .ai/targets/UIKIT.md
-- `src/themes` -> .ai/targets/THEMES.md
 - `src/screensets` -> .ai/targets/SCREENSETS.md
-- `.ai/*.md` files -> .ai/targets/AI.md
+- `src/themes` -> .ai/targets/THEMES.md
 - Styling questions -> .ai/targets/STYLING.md
-- Event-driven architecture -> .ai/targets/EVENTS.md
 - API integration -> .ai/targets/API.md
+- `.ai/*.md` files -> .ai/targets/AI.md
 
 ---
 
@@ -25,9 +25,11 @@
 - GOOD: UI packages own dependencies
 
 **Core Rules:**
-- NO bridging: Domains read Redux, emit events
+- Data flow: ONLY event-driven (See EVENTS.md)
+- Pattern: Component -> Action -> Event -> Effect -> Slice -> Store
+- FORBIDDEN: Direct slice dispatch, prop drilling, callbacks
 - Self-registering: `service.register()` at module level
-- Event-driven: Actions emit -> Effects update (See EVENTS.md)
+- NO bridging: Domains read Redux, emit via actions
 
 ---
 
@@ -58,8 +60,8 @@
 - 1-3 constants -> define where used
 - 4-9 constants -> consider context
 - 10+ constants -> own file
-- BAD: `id: 'demo'`, `variant: 'primary'`
-- GOOD: `id: DEMO_SCREENSET_ID`, `variant: ButtonVariant.Primary`
+- BAD: `id: 'stringLiteral'`, `variant: 'stringLiteral'`
+- GOOD: `id: CONSTANT_ID`, `variant: EnumType.Value`
 
 **Registry Pattern (AI: READ THIS - CRITICAL):**
 - Registry file NEVER modified when adding items
@@ -79,14 +81,11 @@ Properties, Constructor, Methods (public, protected, private)
 
 ---
 
-## Documentation
+## Self-Improvement (AI: READ THIS - CRITICAL)
 
+**Documentation:**
 - NO emoji, use -> for arrows, BAD:/GOOD: examples
 - Technical, concise, NO markdown reports (unless user asks)
-
----
-
-## Self-Improvement (AI: READ THIS - CRITICAL)
 
 **After mistake:**
 1. Update GUIDELINES.md with decision rule
