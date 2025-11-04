@@ -11,7 +11,7 @@
     "dev": "vite",
     "build": "npm run generate:colors && npm run build:packages && vite build",
     "build:packages": "npm run build --workspace=@hai3/uikit-contracts && npm run build --workspace=@hai3/uikit && npm run build --workspace=@hai3/uicore",
-    "generate:colors": "node scripts/generate-colors.cjs 2>&1 | grep -v 'warn -' | grep -v 'has been renamed' | grep -v 'Update your configuration' || true",
+    "generate:colors": "npx tsx scripts/generate-colors.ts 2>&1 | grep -v 'warn -' | grep -v 'has been renamed' | grep -v 'Update your configuration' || true",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "type-check": "tsc --noEmit"
@@ -35,6 +35,7 @@
     "postcss": "^8.4.35",
     "postcss-load-config": "^6.0.1",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.20.6",
     "typescript": "^5.4.2",
     "vite": "^6.4.1"
   }
