@@ -12,7 +12,7 @@
 import type { UiKitComponentMap, ComponentName, UiKitIcon } from '@hai3/uikit-contracts';
 import type { ReactNode } from 'react';
 
-class UiKitRegistryService {
+class UiKitRegistry {
   private components: Partial<UiKitComponentMap> = {};
   private icons: Map<string, ReactNode> = new Map();
 
@@ -139,4 +139,4 @@ class UiKitRegistryService {
 }
 
 // Export singleton instance
-export const uikitRegistry = new UiKitRegistryService();
+export const uikitRegistry = new UiKitRegistry();

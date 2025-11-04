@@ -1,10 +1,10 @@
 import type { Theme } from '@hai3/uikit-contracts';
 
 /**
- * Theme Service
+ * Theme Registry
  * Manages theme registry and application
  */
-class ThemeService {
+class ThemeRegistry {
   private themes: Map<string, Theme> = new Map();
   private applyFunction: ((theme: Theme, name: string) => void) | null = null;
 
@@ -56,7 +56,7 @@ class ThemeService {
     }
 
     if (!this.applyFunction) {
-      console.warn('Theme apply function not set. Call themeService.setApplyFunction() first.');
+      console.warn('Theme apply function not set. Call themeRegistry.setApplyFunction() first.');
       return;
     }
 
@@ -72,4 +72,4 @@ class ThemeService {
 }
 
 // Export singleton instance
-export const themeService = new ThemeService();
+export const themeRegistry = new ThemeRegistry();

@@ -22,10 +22,10 @@ export interface ScreensetConfig {
 }
 
 /**
- * Screenset Registry Service
+ * Screenset Registry
  * Allows apps to register screensets at runtime
  */
-class ScreensetService {
+class ScreensetRegistry {
   private screensets: Map<string, ScreensetConfig> = new Map();
 
   /**
@@ -130,4 +130,4 @@ class ScreensetService {
 }
 
 // Export singleton instance
-export const screensetService = new ScreensetService();
+export const screensetRegistry = new ScreensetRegistry();

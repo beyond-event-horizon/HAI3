@@ -39,10 +39,10 @@ export { ThemeSelector, type ThemeSelectorProps } from './components/ThemeSelect
 export { ScreensetSelector, type ScreensetSelectorProps, type ScreensetOption } from './components/ScreensetSelector';
 
 // Screenset management (Footer domain handles watching)
-export { screensetService, type ScreensetConfig } from './screensets/screensetService';
+export { screensetRegistry, type ScreensetConfig } from './screensets/screensetRegistry';
 
 // Theme management (Footer domain handles watching)
-export { themeService } from './theme/themeService';
+export { themeRegistry } from './theme/themeRegistry';
 
 // UI Kit registry (app registers UI components and icons)
 export { uikitRegistry } from './uikit/uikitRegistry';
@@ -54,14 +54,14 @@ export { HAI3Provider, type HAI3ProviderProps } from './core/HAI3Provider';
 
 // Routing
 export { AppRouter } from './core/routing/AppRouter';
-export { routeService, type RouteInfo } from './core/routing/routeService';
+export { routeRegistry, type RouteInfo } from './core/routing/routeRegistry';
 
 // Event-driven actions (AI: READ THIS - use these, NOT slice actions)
 export { setTheme, setCurrentScreenset, toggleMenu, navigateToScreen, fetchCurrentUser, setApiMode } from './core/actions';
 export { setSelectedScreen } from './layout/layoutSlice'; // Direct action (Menu internal use)
 
 // API (SOLID architecture with domain-driven, self-registering services)
-export { apiServices, apiServicesRegistry, type ApiServicesConfig, type ApiServicesMap } from './api/apiServicesRegistry';
+export { apiRegistry, type ApiServicesConfig, type ApiServicesMap } from './api/apiRegistry';
 export { BaseApiService, type BaseApiServiceConfig } from './api/BaseApiService';
 export { AccountsApiService, ACCOUNTS_DOMAIN } from './api/accounts/AccountsApiService'; // Triggers self-registration
 export * from './api/accounts/api';

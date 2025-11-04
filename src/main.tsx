@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HAI3Provider, apiServices, store } from '@hai3/uicore';
+import { HAI3Provider, apiRegistry, store } from '@hai3/uicore';
 import { App } from './App';
 import '../packages/uicore/src/styles/globals.css';
 import '@/uikit/uikitRegistry'; // Auto-registers UI Kit (components + icons)
@@ -10,7 +10,7 @@ import '@/api/apiRegistry'; // Auto-registers API extensions + mocks
 
 // Initialize API services
 const initialUseMockApi = store.getState().app.useMockApi;
-apiServices.initialize({
+apiRegistry.initialize({
   useMockApi: initialUseMockApi,
   mockDelay: 500,
 });

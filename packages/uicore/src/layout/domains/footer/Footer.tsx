@@ -4,7 +4,7 @@ import { ThemeSelector } from '@/core/components/ThemeSelector';
 import { ScreensetSelector } from '@/core/components/ScreensetSelector';
 import { ApiModeToggle } from '@/core/components/ApiModeToggle';
 import { setCurrentScreenset, setTheme, setApiMode } from '../../../core/actions';
-import { themeService } from '@/core/theme/themeService';
+import { themeRegistry } from '@/core/theme/themeRegistry';
 import { setFooterConfig } from './footerSlice';
 import { buildScreensetOptions } from './footerHelpers';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
@@ -47,7 +47,7 @@ export const Footer: React.FC<FooterProps> = () => {
   // Build screenset options and theme list on mount, set initial values
   useEffect(() => {
     const options = buildScreensetOptions();
-    const themes = themeService.getThemeNames();
+    const themes = themeRegistry.getThemeNames();
     
     // Set initial theme if not set
     if (!theme && themes.length > 0) {

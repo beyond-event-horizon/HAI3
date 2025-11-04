@@ -4,7 +4,7 @@
  * App just needs to import this file
  */
 
-import { themeService } from '@hai3/uicore';
+import { themeRegistry } from '@hai3/uicore';
 import { applyTheme } from '@hai3/uikit';
 import { defaultTheme, DEFAULT_THEME_ID } from './default';
 import { lightTheme, LIGHT_THEME_ID } from './light';
@@ -13,11 +13,11 @@ import { draculaTheme, DRACULA_THEME_ID } from './dracula';
 import { draculaLargeTheme, DRACULA_LARGE_THEME_ID } from './dracula-large';
 
 // Set the apply function from UI Kit
-themeService.setApplyFunction(applyTheme);
+themeRegistry.setApplyFunction(applyTheme);
 
 // Register all themes (default theme first, becomes the default selection)
-themeService.register(DEFAULT_THEME_ID, defaultTheme);
-themeService.register(LIGHT_THEME_ID, lightTheme);
-themeService.register(DARK_THEME_ID, darkTheme);
-themeService.register(DRACULA_THEME_ID, draculaTheme);
-themeService.register(DRACULA_LARGE_THEME_ID, draculaLargeTheme);
+themeRegistry.register(DEFAULT_THEME_ID, defaultTheme);
+themeRegistry.register(LIGHT_THEME_ID, lightTheme);
+themeRegistry.register(DARK_THEME_ID, darkTheme);
+themeRegistry.register(DRACULA_THEME_ID, draculaTheme);
+themeRegistry.register(DRACULA_LARGE_THEME_ID, draculaLargeTheme);
