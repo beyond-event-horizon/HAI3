@@ -9,6 +9,7 @@
 - [x] ~~Navigation (application routing)~~
 - [x] ~~Basic interaction with API~~
 - [ ] Remove dependency of UI Core on UI Kit. Abstract UI Kit components. Implement UI Kit components registry.
+- [ ] Support updating data on backend events
 - [ ] Localization, incl. multi-language dict examples
 - [ ] Role based access control
 - [ ] Define and document data types for interfaces - Tenant, User incl. UI Flags
