@@ -5,22 +5,22 @@
 ## CRITICAL (AI: READ THIS FIRST)
 
 **NEVER dispatch slice actions directly:**
-- FORBIDDEN: `dispatch(setUseMockApi(value))`
-- FORBIDDEN: `setUseMockApi(value)` 
-- REQUIRED: `setApiMode(value)` from `@/core/actions`
+- FORBIDDEN: `dispatch(setSliceState(value))`
+- FORBIDDEN: `setSliceState(value)` 
+- REQUIRED: `actionFunction(value)` from `@/core/actions`
 - Pattern: Component -> Action -> Event -> Effect -> Slice -> Store
 
 **Violations break architecture** - grep for: `dispatch(set[A-Z])`
 
 **Event Naming:**
-- MUST: Past-tense `ScreenNavigated`, `ThemeChanged`
-- NEVER: Imperative `NavigateToScreen`, `ChangeTheme`
+- MUST: Past-tense `EntityActioned`, `StateChanged`
+- NEVER: Imperative `ActionEntity`, `ChangeState`
 - Format: `'namespace/eventName'`
 - Actions = imperative, Events = past-tense
 
 **Actions:**
-- NEVER: `dispatch(setMenuItems(...))`
-- ALWAYS: `eventBus.emit(MenuEvents.ItemsChanged, {...})`
+- NEVER: `dispatch(setSliceData(...))`
+- ALWAYS: `eventBus.emit(NamespaceEvents.EventName, {...})`
 - Update own slice only + emit events
 
 **Effects:**
@@ -29,7 +29,7 @@
 - NEVER: Business logic
 
 **Cross-Domain:**
-- FORBIDDEN: `import { setMenuItems } from '@/layout/domains/menu'`
+- FORBIDDEN: `import { setSliceAction } from '@/layout/domains/domain'`
 - REQUIRED: Event-driven communication
 
 **Location (Vertical Slice):**
@@ -57,7 +57,7 @@
 ```ts
 declare module '@hai3/uicore' {
   interface EventPayloadMap {
-    'myScreenset/event': { data: Type };
+    'namespace/eventName': PayloadType;
   }
 }
 ```

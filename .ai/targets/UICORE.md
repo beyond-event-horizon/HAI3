@@ -1,17 +1,42 @@
 # UI Core Guidelines
 
-> Common: .ai/GUIDELINES.md | Styling: STYLING.md | Events: EVENTS.md
+> Common: .ai/GUIDELINES.md | Data Flow: EVENTS.md | Styling: STYLING.md
 
 ## CRITICAL (AI: READ THIS FIRST)
 
 **NEVER use raw HTML interactive elements:**
-- FORBIDDEN: `<button>`, `<input>`, `<select>` in domains
-- REQUIRED: `<Button>`, `<IconButton>` from `@hai3/uikit`
+- FORBIDDEN: `<button>`, `<input>`, `<select>`
+- REQUIRED: UI Kit components via registry
 - Detect: grep for `<button|<input|<select` in `packages/uicore/`
 
-**NEVER dispatch slice actions:**
-- FORBIDDEN: `dispatch(setSelectedScreen())`
-- REQUIRED: `navigateToScreen()` from `@/core/actions`
+**UI Kit Registry (AI: READ THIS - CRITICAL):**
+- FORBIDDEN: Direct import from `@hai3/uikit`
+- REQUIRED: `const Component = uikitRegistry.getComponent(UiKitComponent.Button)`
+- REQUIRED: `const icon = uikitRegistry.getIcon(UiKitIcon.Close)`
+- Purpose: Decouples UI Core from specific UI Kit
+- Detect: grep for `from '@hai3/uikit'` in `packages/uicore/src/`
+
+**UI Kit Contracts (uikitContracts.ts - AI: CRITICAL):**
+- Contract layer between UI Core and UI Kit implementations
+- UI Core owns contracts, UI Kit implements them
+- ComponentRegistry: Maps component names to types
+- UiKitComponent enum: Component names for registry
+- UiKitIcon enum: Core framework icons (Close, AppLogo, etc)
+- Theme interface: Structure UI Core expects from themes
+- Type-safe: getComponent<K> returns exact type for K
+- Icons: Enum for core, exported constants for screenset-specific
+- NEVER: Hardcoded strings for component/icon IDs
+- Export: ComponentRegistry, ComponentName, Theme, UiKitComponent, UiKitIcon
+
+**Data Flow (AI: READ THIS - CRITICAL):**
+- ONLY allowed: Event-driven architecture (See EVENTS.md)
+- Pattern: Component -> Action -> Event -> Effect -> Slice -> Store
+- FORBIDDEN: Direct slice dispatch, prop drilling, callbacks up
+- REQUIRED: Import actions from `@hai3/uicore` or `@/core/actions`
+- Components read Redux, emit via actions, NEVER dispatch directly
+- Cross-domain: ONLY via events, NEVER via slice imports
+- Example: `dispatch(navigateToScreen(id))` NOT `dispatch(setSelectedScreen(id))`
+- Violations: grep for `dispatch(set[A-Z])` or `import.*Slice.*from`
 
 **Entry:**
 - MUST: `<HAI3Provider>` wraps app

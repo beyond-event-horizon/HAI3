@@ -9,6 +9,15 @@
 - Theme utilities
 - NO Redux, NO business logic
 
+**UI Kit Contracts (AI: READ THIS):**
+- MUST implement interfaces from `@hai3/uicore/uikitContracts`
+- Component props MUST match contract types exactly
+- FORBIDDEN: Adding required props not in contract
+- GOOD: Optional props beyond contract (className, etc)
+- Theme interface MUST match UI Core's Theme type
+- Components registered via app's uikitRegistry
+- Contract examples: ButtonComponent, SwitchComponent, UserInfoComponent
+
 **shadcn:**
 - ALWAYS use shadcn first
 - ALL base components are shadcn
@@ -30,6 +39,13 @@
 - Location: `icons/` directory
 - Tree-shakeable: exported, NOT self-registered
 - Props: className only
+
+**Loading States:**
+- ALWAYS use Skeleton base component
+- FORBIDDEN: Custom skeleton divs with bg-muted animate-pulse
+- Pattern: `loading` prop on composite component
+- Render: `<Skeleton className="h-8 w-24" />` for text/shapes
+- Placement: Matches content layout exactly
 
 **Rules:**
 - Pure presentational, props in/events out
