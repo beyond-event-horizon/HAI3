@@ -7,7 +7,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { RouterSync } from './RouterSync';
-import { routeService } from './routeService';
+import { routeRegistry } from './routeRegistry';
 import { Layout } from '@/core/layout/Layout';
 
 /**
@@ -20,7 +20,7 @@ import { Layout } from '@/core/layout/Layout';
  */
 export const AppRouter: React.FC = () => {
   // Routes sync lazily on first access (prevents race conditions)
-  const screenIds = routeService.getAllScreenIds();
+  const screenIds = routeRegistry.getAllScreenIds();
   const defaultScreenId = screenIds[0]; // First screen as default
   
   return (

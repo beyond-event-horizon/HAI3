@@ -46,7 +46,7 @@ export const store = configureStore({
 // Initialize effects - sets up event subscriptions
 // Pattern: Each slice has its own effects file co-located with it
 initAppEffects(store);
-initLayoutEffects(store);
+initLayoutEffects();
 initNavigationEffects(store);
 initMenuEffects(store);
 

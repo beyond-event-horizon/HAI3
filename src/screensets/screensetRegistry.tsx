@@ -1,4 +1,4 @@
-import { screensetService } from '@hai3/uicore';
+import { screensetRegistry } from '@hai3/uicore';
 import { demoScreenset } from './drafts/demo/demoScreenset';
 
 /**
@@ -21,8 +21,8 @@ import { demoScreenset } from './drafts/demo/demoScreenset';
  * Register all screensets
  * This runs automatically when the module is imported
  */
-screensetService.register(demoScreenset);
+screensetRegistry.register(demoScreenset);
 
 // Add more screensets here and they'll auto-register
 // import { anotherScreenset } from './production/another/anotherScreenset';
-// screensetService.register(anotherScreenset);
+// screensetRegistry.register(anotherScreenset);

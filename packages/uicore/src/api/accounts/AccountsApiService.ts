@@ -48,12 +48,12 @@ export class AccountsApiService extends BaseApiService {
 }
 
 // Register service type in ApiServicesMap via module augmentation
-declare module '../apiServicesRegistry' {
+declare module '../apiRegistry' {
   interface ApiServicesMap {
     [ACCOUNTS_DOMAIN]: AccountsApiService;
   }
 }
 
-// Self-register with API services registry
-import { apiServices } from '../apiServicesRegistry';
-apiServices.register(ACCOUNTS_DOMAIN, AccountsApiService);
+// Self-register with API registry
+import { apiRegistry } from '../apiRegistry';
+apiRegistry.register(ACCOUNTS_DOMAIN, AccountsApiService);

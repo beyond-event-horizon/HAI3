@@ -12,8 +12,8 @@
 - MUST match Theme interface structure from contracts
 
 **Registry:** See GUIDELINES.md
-- Set function: `themeService.setApplyFunction(applyTheme)` from UI Kit
-- Register: `themeService.register(name, theme)`
+- Set function: `themeRegistry.setApplyFunction(applyTheme)` from UI Kit
+- Register: `themeRegistry.register(name, theme)`
 
 **Modifying:**
 - Screensets: FORBIDDEN

@@ -6,7 +6,7 @@
 
 import { eventBus } from '../events/eventBus';
 import { NavigationEvents } from '../events/eventTypes';
-import { routeService } from '../routing/routeService';
+import { routeRegistry } from '../routing/routeRegistry';
 
 /**
  * Navigate to a screen by ID
@@ -17,7 +17,7 @@ import { routeService } from '../routing/routeService';
  */
 export const navigateToScreen = (screenId: string): void => {
   // Validate screen exists
-  if (!routeService.hasScreen(screenId)) {
+  if (!routeRegistry.hasScreen(screenId)) {
     console.warn(`Navigation failed: Screen "${screenId}" not found in route registry`);
     return;
   }

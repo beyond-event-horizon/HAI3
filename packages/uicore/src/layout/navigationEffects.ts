@@ -13,7 +13,7 @@ import {
   ScreensetEvents
 } from '../core/events/eventTypes';
 import { setSelectedScreen, setCurrentScreenset } from './layoutSlice';
-import { routeService } from '../core/routing/routeService';
+import { routeRegistry } from '../core/routing/routeRegistry';
 
 /**
  * Initialize navigation effects
@@ -23,7 +23,7 @@ export function initNavigationEffects(store: Store): void {
   // When screen navigation happens, update Redux state
   eventBus.on(NavigationEvents.ScreenNavigated, ({ screenId }) => {
     // Find which screenset contains this screen
-    const screensetKey = routeService.getScreensetKeyForScreen(screenId);
+    const screensetKey = routeRegistry.getScreensetKeyForScreen(screenId);
     
     if (screensetKey) {
       const currentScreenset = store.getState().layout.currentScreenset;

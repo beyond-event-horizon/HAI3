@@ -1,5 +1,5 @@
 /**
- * API Services Registry
+ * API Registry
  * Central registry for all API service instances
  * Follows Open/Closed Principle: services self-register without modifying registry
  * 
@@ -54,11 +54,11 @@ export interface ApiServicesConfig {
 type ServiceConstructor<T extends BaseApiService = BaseApiService> = new (config: Omit<import('./BaseApiService').BaseApiServiceConfig, 'baseURL'>) => T;
 
 /**
- * API Services Registry
+ * API Registry
  * Singleton registry that manages all service instances
  * Services self-register at module level (like screensets)
  */
-class ApiServicesRegistry {
+class ApiRegistry {
   private services: Map<string, BaseApiService> = new Map();
   private serviceClasses: Map<string, ServiceConstructor> = new Map();
   private mockMaps: Map<string, Readonly<Record<string, any>>> = new Map();
@@ -125,7 +125,7 @@ class ApiServicesRegistry {
    * Type is automatically inferred from ApiServicesMap
    * 
    * @example
-   * const accounts = apiServices.getService(ACCOUNTS_DOMAIN);
+   * const accounts = apiRegistry.getService(ACCOUNTS_DOMAIN);
    * const user = await accounts.getCurrentUser(); // Full type safety!
    */
   getService<K extends string & keyof ApiServicesMap>(domain: K): ApiServicesMap[K] {
@@ -185,9 +185,6 @@ class ApiServicesRegistry {
 /**
  * Export singleton instance
  * Single point of access for all API services
- * Consistent naming with themeService, iconService, screensetService
+ * Consistent naming with themeRegistry, screensetRegistry, uikitRegistry
  */
-export const apiServices = new ApiServicesRegistry();
-
-// Alias for clarity in some contexts
-export const apiServicesRegistry = apiServices;
+export const apiRegistry = new ApiRegistry();

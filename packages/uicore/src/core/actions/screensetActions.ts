@@ -11,7 +11,7 @@ import {
   MenuEvents
 } from '../events/eventTypes';
 import { setCurrentScreenset as setCurrentScreensetReducer } from '@/core/layout/layoutSlice';
-import { screensetService } from '@/core/screensets/screensetService';
+import { screensetRegistry } from '@/core/screensets/screensetRegistry';
 
 /**
  * Change current screenset
@@ -20,7 +20,7 @@ import { screensetService } from '@/core/screensets/screensetService';
 export const setCurrentScreenset = (screensetId: string) => {
   return (dispatch: AppDispatch): void => {
     // Get screenset data
-    const screenset = screensetService.get(screensetId);
+    const screenset = screensetRegistry.get(screensetId);
     
     if (!screenset) {
       console.warn(`Screenset not found: ${screensetId}`);
@@ -36,7 +36,7 @@ export const setCurrentScreenset = (screensetId: string) => {
     });
 
     eventBus.emit(MenuEvents.ItemsChanged, { 
-      items: screensetService.getMenuItems(screensetId)
+      items: screensetRegistry.getMenuItems(screensetId)
     });
   };
 };
