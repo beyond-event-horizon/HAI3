@@ -3,12 +3,12 @@ import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { ThemeSelector } from '@/core/components/ThemeSelector';
 import { ScreensetSelector } from '@/core/components/ScreensetSelector';
 import { ApiModeToggle } from '@/core/components/ApiModeToggle';
-import { setCurrentScreenset, setTheme, setApiMode } from '../../../core/actions';
+import { setCurrentScreenset, setTheme } from '../../../core/actions';
 import { themeRegistry } from '@/core/theme/themeRegistry';
 import { setFooterConfig } from './footerSlice';
 import { buildScreensetOptions } from './footerHelpers';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
-import { UiKitComponent } from '@hai3/uikit-contracts';
+import { UiKitComponent, ButtonVariant } from '@hai3/uikit-contracts';
 
 /**
  * Core Footer component (dev tool, not for production)
@@ -29,16 +29,12 @@ export interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = () => {
   const dispatch = useAppDispatch();
-  const { 
-    availableThemes, 
-    screensetOptions,
-    visible 
-  } = useAppSelector((state) => state.footer);
-  const currentScreenset = useAppSelector((state) => state.layout.currentScreenset);
+  const { visible, screensetOptions } = useAppSelector((state) => state.footer);
   const theme = useAppSelector((state) => state.layout.theme);
+  const currentScreenset = useAppSelector((state) => state.layout.currentScreenset);
 
   // Dev-only footer content (not configurable)
-  const copyright = '© 2025 HAI3 Framework';
+  const copyright = ' 2025 HAI3 Framework';
   const links = [
     { label: 'Documentation', href: '#docs' },
     { label: 'GitHub', href: '#github' },
@@ -49,12 +45,10 @@ export const Footer: React.FC<FooterProps> = () => {
     const options = buildScreensetOptions();
     const themes = themeRegistry.getThemeNames();
     
-    // Set initial theme if not set
     if (!theme && themes.length > 0) {
       dispatch(setTheme(themes[0]));
     }
-    
-    // Set initial screenset if not set
+
     if (!currentScreenset && options.length > 0 && options[0].screensets.length > 0) {
       const firstCategory = options[0].category;
       const firstScreenset = options[0].screensets[0].id;
@@ -63,18 +57,8 @@ export const Footer: React.FC<FooterProps> = () => {
     
     dispatch(setFooterConfig({ 
       screensetOptions: options,
-      availableThemes: themes,
     }));
   }, [dispatch, theme, currentScreenset]);
-
-  // Set useMockApi based on screenset category (drafts = mock, production = real)
-  useEffect(() => {
-    if (currentScreenset) {
-      const [category] = currentScreenset.split(':');
-      const shouldUseMock = category === 'drafts';
-      setApiMode(shouldUseMock);
-    }
-  }, [currentScreenset]);
 
   // No side effects here - actions emit events, effects handle them
 
@@ -91,7 +75,7 @@ export const Footer: React.FC<FooterProps> = () => {
             {links.map((link) => (
               <Button
                 key={link.href}
-                variant="link"
+                variant={ButtonVariant.Link}
                 asChild
               >
                 <a href={link.href}>{link.label}</a>
@@ -109,7 +93,7 @@ export const Footer: React.FC<FooterProps> = () => {
             onChange={(value: string) => dispatch(setCurrentScreenset(value))}
           />
         )}
-        <ThemeSelector availableThemes={availableThemes} />
+        <ThemeSelector />
       </div>
     </footer>
   );

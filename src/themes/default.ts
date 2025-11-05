@@ -3,7 +3,7 @@
  * Based on original PoC design with light color scheme
  */
 
-import type { Theme } from '@hai3/uikit';
+import type { Theme } from '@hai3/uikit-contracts';
 import { tailwindColors as colors } from '@hai3/uikit';
 
 /**

@@ -16,5 +16,5 @@ const headerSlice = createSlice({
   reducers: {},
 });
 
-export const {} = headerSlice.actions;
+// No actions currently exported
 export default headerSlice.reducer;

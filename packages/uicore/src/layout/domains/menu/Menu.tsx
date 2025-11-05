@@ -20,7 +20,6 @@ export const Menu: React.FC<MenuProps> = () => {
 
   if (!visible) return null;
 
-  // Get components from registry
   const Sidebar = uikitRegistry.getComponent(UiKitComponent.Sidebar);
   const SidebarHeader = uikitRegistry.getComponent(UiKitComponent.SidebarHeader);
   const SidebarContent = uikitRegistry.getComponent(UiKitComponent.SidebarContent);

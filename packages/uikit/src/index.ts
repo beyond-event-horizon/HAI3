@@ -5,7 +5,9 @@
 
 // Base UI Components (shadcn + HAI3 custom)
 export { Avatar, AvatarImage, AvatarFallback } from './base/avatar';
-export { Button, type ButtonProps, ButtonVariant, ButtonSize } from './base/button';
+export { Button, type ButtonProps } from './base/button';
+// Re-export contract types to ensure consistency
+export { ButtonVariant, ButtonSize } from '@hai3/uikit-contracts';
 export { Switch } from './base/switch';
 export { Skeleton } from './base/skeleton';
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './base/card';
@@ -85,10 +87,14 @@ export {
 } from './base/dropdown-menu';
 
 // Composite selectors
-export { CascadingDropdown, type CascadingDropdownProps, type CascadingDropdownOption } from './composite/selectors/CascadingDropdown';
+export { CascadingDropdown } from './composite/selectors/CascadingDropdown';
+// Re-export contract types to ensure consistency
+export { type CascadingDropdownProps, type CascadingDropdownOption } from '@hai3/uikit-contracts';
 
 // Composite components
-export { IconButton, type IconButtonProps, IconButtonSize } from './composite/buttons/IconButton';
+export { IconButton, type IconButtonProps } from './composite/buttons/IconButton';
+// Re-export contract types to ensure consistency
+export { IconButtonSize } from '@hai3/uikit-contracts';
 
 // Composite navigation (tailored from shadcn sidebar)
 export {

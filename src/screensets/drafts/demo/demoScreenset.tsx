@@ -1,4 +1,3 @@
-import React from 'react';
 import { type ScreensetConfig, uikitRegistry } from '@hai3/uicore';
 import { HelloWorldScreen, HELLO_WORLD_SCREEN_ID } from './screens/helloworld/HelloWorldScreen';
 import { CurrentThemeScreen, CURRENT_THEME_SCREEN_ID } from './screens/theme/CurrentThemeScreen';

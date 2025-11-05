@@ -15,7 +15,6 @@ import { setTheme as setThemeReducer } from '@/core/layout/layoutSlice';
  */
 export const setTheme = (themeName: string) => {
   return (dispatch: AppDispatch): void => {
-    // Update own slice (layout)
     dispatch(setThemeReducer(themeName));
 
     // Emit event for theme application

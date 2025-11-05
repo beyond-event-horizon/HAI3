@@ -27,7 +27,6 @@ export const Screen: React.FC<ScreenProps> = ({ children, className = '' }) => {
     );
   }
 
-  // Get screenset and screen component
   const screenset = screensetRegistry.get(currentScreensetValue);
   const screenId = selectedScreen || screenset?.defaultScreen || '';
   const screens = screensetRegistry.getScreens(currentScreensetValue);
