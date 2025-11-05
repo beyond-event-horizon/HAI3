@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserInfo } from '../../../app/domains/user/UserInfo';
+import { UserInfo } from '../../../components/UserInfo';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
 import { UiKitComponent } from '@hai3/uikit-contracts';
 
