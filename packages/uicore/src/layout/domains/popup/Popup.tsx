@@ -2,7 +2,7 @@ import React from 'react';
 import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { closePopup } from './popupSlice';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
-import { UiKitComponent, UiKitIcon } from '@hai3/uikit-contracts';
+import { UiKitComponent, UiKitIcon, ButtonVariant, IconButtonSize } from '@hai3/uikit-contracts';
 
 export interface PopupProps {}
 
@@ -26,8 +26,8 @@ export const Popup: React.FC<PopupProps> = () => {
             {closeIcon && (
               <IconButton
                 icon={closeIcon}
-                variant="ghost"
-                size="small"
+                variant={ButtonVariant.Ghost}
+                size={IconButtonSize.Small}
                 onClick={() => dispatch(closePopup(topPopup.id))}
                 aria-label="Close popup"
               />

@@ -11,13 +11,11 @@ export interface ScreensetOption {
 }
 
 export interface FooterState {
-  availableThemes: string[];
   screensetOptions: ScreensetOption[];
   visible: boolean;
 }
 
 const initialState: FooterState = {
-  availableThemes: [],
   screensetOptions: [],
   visible: true,
 };

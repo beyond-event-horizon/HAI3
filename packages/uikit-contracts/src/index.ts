@@ -94,9 +94,25 @@ export interface Theme {
 /**
  * Button Component Contract
  */
+export enum ButtonVariant {
+  Default = 'default',
+  Destructive = 'destructive',
+  Outline = 'outline',
+  Secondary = 'secondary',
+  Ghost = 'ghost',
+  Link = 'link',
+}
+
+export enum ButtonSize {
+  Default = 'default',
+  Sm = 'sm',
+  Lg = 'lg',
+  Icon = 'icon',
+}
+
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: string;
-  size?: string;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   asChild?: boolean;
 }
 
@@ -105,12 +121,18 @@ export type ButtonComponent = ComponentType<ButtonProps>;
 /**
  * IconButton Component Contract
  */
+export enum IconButtonSize {
+  Default = 'default',
+  Small = 'sm',
+  Large = 'lg',
+}
+
 export interface IconButtonProps {
   icon: ReactNode;
-  variant?: string;
-  size?: string;
   onClick?: () => void;
-  'aria-label'?: string;
+  variant?: ButtonVariant;
+  size?: IconButtonSize;
+  'aria-label': string;
   className?: string;
 }
 
@@ -256,6 +278,24 @@ export type DropdownMenuSubTriggerComponent = ComponentType<DropdownMenuSubTrigg
 export type DropdownMenuSubContentComponent = ComponentType<DropdownMenuSubContentProps>;
 
 /**
+ * Cascading Dropdown Component Contract
+ */
+export interface CascadingDropdownOption {
+  category: string;
+  items: Array<{ id: string; name: string }>;
+}
+
+export interface CascadingDropdownProps {
+  options: CascadingDropdownOption[];
+  currentValue: string; // Format: "category:itemId"
+  onChange: (value: string) => void;
+  label?: string;
+  className?: string;
+}
+
+export type CascadingDropdownComponent = ComponentType<CascadingDropdownProps>;
+
+/**
  * UI Kit Component Enum
  * Defines components that UI Core requires from UI Kit
  * Part of UI Core's API contract
@@ -281,6 +321,7 @@ export enum UiKitComponent {
   DropdownMenuSub = 'DropdownMenuSub',
   DropdownMenuSubTrigger = 'DropdownMenuSubTrigger',
   DropdownMenuSubContent = 'DropdownMenuSubContent',
+  CascadingDropdown = 'CascadingDropdown',
 }
 
 /**
@@ -315,6 +356,7 @@ export interface UiKitComponentMap {
   [UiKitComponent.DropdownMenuSub]: DropdownMenuSubComponent;
   [UiKitComponent.DropdownMenuSubTrigger]: DropdownMenuSubTriggerComponent;
   [UiKitComponent.DropdownMenuSubContent]: DropdownMenuSubContentComponent;
+  [UiKitComponent.CascadingDropdown]: CascadingDropdownComponent;
 }
 
 /**

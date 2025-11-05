@@ -30,7 +30,7 @@ export const RouterSync: React.FC = () => {
       // Dispatch action → effects handle screenset switching and state update
       navigateToScreen(urlScreenId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [params.screenId]); // Only re-run when URL changes, not when selectedScreen changes
   
   // Redux → URL: When Redux state changes, update URL

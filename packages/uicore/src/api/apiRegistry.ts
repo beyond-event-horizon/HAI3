@@ -61,7 +61,7 @@ type ServiceConstructor<T extends BaseApiService = BaseApiService> = new (config
 class ApiRegistry {
   private services: Map<string, BaseApiService> = new Map();
   private serviceClasses: Map<string, ServiceConstructor> = new Map();
-  private mockMaps: Map<string, Readonly<Record<string, any>>> = new Map();
+  private mockMaps: Map<string, Readonly<Record<string, unknown>>> = new Map();
   private config: ApiServicesConfig | null = null;
   private initialized: boolean = false;
 
@@ -72,7 +72,7 @@ class ApiRegistry {
    */
   registerMocks<K extends string & keyof ApiServicesMap>(
     domain: K,
-    mockMap: Readonly<Record<string, any>>
+    mockMap: Readonly<Record<string, unknown>>
   ): void {
     this.mockMaps.set(domain, mockMap);
   }
@@ -177,7 +177,7 @@ class ApiRegistry {
     
     // Update all service configs
     this.services.forEach((service) => {
-      (service as any).config.useMockApi = useMockApi;
+      service.setUseMockApi(useMockApi);
     });
   }
 }

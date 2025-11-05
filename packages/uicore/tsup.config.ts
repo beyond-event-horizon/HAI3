@@ -32,7 +32,6 @@ export default defineConfig({
     options.alias = {
       '@/core': path.resolve(__dirname, 'src'),
       '@/styles': path.resolve(__dirname, 'src/styles'),
-      '@/uikit': '@hai3/uikit',
     };
   },
 });

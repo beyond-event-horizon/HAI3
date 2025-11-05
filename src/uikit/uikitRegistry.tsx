@@ -4,7 +4,6 @@
  * Self-registers on import, similar to themeRegistry
  */
 
-import React from 'react';
 import { uikitRegistry, UiKitIcon } from '@hai3/uicore';
 import {
   Button,
@@ -27,6 +26,7 @@ import {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
+  CascadingDropdown,
   CloseIcon,
   CLOSE_ICON_ID,
 } from '@hai3/uikit';
@@ -39,9 +39,9 @@ export { CLOSE_ICON_ID, APP_LOGO_ICON_ID, APP_LOGO_TEXT_ICON_ID };
 // Register all HAI3 UI Kit components
 uikitRegistry.registerComponents({
   // Basic components
-  Button,
-  IconButton,
-  Switch,
+  Button: Button as import('@hai3/uikit-contracts').ButtonComponent, // Type assertion to bridge contract/implementation mismatch
+  IconButton: IconButton as import('@hai3/uikit-contracts').IconButtonComponent,
+  Switch: Switch as import('@hai3/uikit-contracts').SwitchComponent,
   
   // Layout components
   Header,
@@ -49,10 +49,10 @@ uikitRegistry.registerComponents({
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarMenuIcon,
-  SidebarMenuLabel,
+  SidebarMenuItem: SidebarMenuItem as import('@hai3/uikit-contracts').SidebarMenuItemComponent,
+  SidebarMenuButton: SidebarMenuButton as import('@hai3/uikit-contracts').SidebarMenuButtonComponent,
+  SidebarMenuIcon: SidebarMenuIcon as import('@hai3/uikit-contracts').SidebarMenuIconComponent,
+  SidebarMenuLabel: SidebarMenuLabel as import('@hai3/uikit-contracts').SidebarMenuLabelComponent,
   
   // Domain components
   UserInfo,
@@ -61,10 +61,11 @@ uikitRegistry.registerComponents({
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuItem,
+  DropdownMenuItem: DropdownMenuItem as import('@hai3/uikit-contracts').DropdownMenuItemComponent,
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
+  CascadingDropdown: CascadingDropdown as import('@hai3/uikit-contracts').CascadingDropdownComponent,
 });
 
 // Register core framework icons

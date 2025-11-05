@@ -30,16 +30,12 @@ export function initNavigationEffects(store: Store): void {
       
       // Switch screenset if needed (this will emit ScreensetChanged event)
       if (screensetKey !== currentScreenset) {
-        // Emit screenset changed event (screensetActions pattern)
         eventBus.emit(ScreensetEvents.Changed, { 
           screensetId: screensetKey 
         });
-        
-        // Update screenset in layout slice
         store.dispatch(setCurrentScreenset(screensetKey));
       }
       
-      // Update selected screen
       store.dispatch(setSelectedScreen(screenId));
     }
   });

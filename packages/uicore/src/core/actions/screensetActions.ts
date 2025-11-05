@@ -19,7 +19,6 @@ import { screensetRegistry } from '@/core/screensets/screensetRegistry';
  */
 export const setCurrentScreenset = (screensetId: string) => {
   return (dispatch: AppDispatch): void => {
-    // Get screenset data
     const screenset = screensetRegistry.get(screensetId);
     
     if (!screenset) {
@@ -27,10 +26,8 @@ export const setCurrentScreenset = (screensetId: string) => {
       return;
     }
 
-    // Update own slice (layout)
     dispatch(setCurrentScreensetReducer(screensetId));
 
-    // Emit events for other domains (Menu, etc.)
     eventBus.emit(ScreensetEvents.Changed, { 
       screensetId 
     });
