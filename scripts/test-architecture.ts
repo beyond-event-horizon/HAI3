@@ -60,8 +60,8 @@ function validateArchitecture(): ValidationResult {
   const results: boolean[] = [];
   
   // Run architecture checks
-  results.push(runCommand('npm run clean:modules && npm ci', 'Clean dependency installation'));
   results.push(runCommand('npm run lint -- --max-warnings 0', 'ESLint rules'));
+  results.push(runCommand('npm run type-check', 'TypeScript type check'));
   results.push(runCommand('npm run arch:deps', 'Dependency rules'));
   results.push(runCommand('npm run clean:build:packages', 'Clean artifacts build'));
   
