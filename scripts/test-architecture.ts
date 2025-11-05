@@ -37,12 +37,17 @@ function runCommand(command: string, description: string): boolean {
   log(`\ud83d\udd0d ${description}...`, 'blue');
   
   try {
-    execSync(command, { stdio: 'pipe' });
+    execSync(command, { stdio: 'inherit' });
     log(`\u2705 ${description} - PASSED`, 'green');
     return true;
   } catch (error: any) {
     log(`\u274c ${description} - FAILED`, 'red');
-    console.log(error.stdout?.toString() || error.message);
+    if (error.stdout) {
+      console.log(error.stdout.toString());
+    }
+    if (error.stderr) {
+      console.error(error.stderr.toString());
+    }
     return false;
   }
 }
@@ -61,9 +66,11 @@ function validateArchitecture(): ValidationResult {
   
   // Run architecture checks
   results.push(runCommand('npm run lint -- --max-warnings 0', 'ESLint rules'));
+  
+  // Clean artifacts before type-check to ensure fresh validation
+  results.push(runCommand('npm run clean:build:packages', 'Clean artifacts build'));
   results.push(runCommand('npm run type-check', 'TypeScript type check'));
   results.push(runCommand('npm run arch:deps', 'Dependency rules'));
-  results.push(runCommand('npm run clean:build:packages', 'Clean artifacts build'));
   
   // Calculate results
   const passed = results.filter(result => result === true).length;

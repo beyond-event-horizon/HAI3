@@ -4,14 +4,14 @@
  * Following Flux architecture pattern
  */
 
-import type { AppDispatch } from '@/core/store';
+import type { AppDispatch } from '../../store';
 import { eventBus } from '../events/eventBus';
 import { 
   ScreensetEvents,
   MenuEvents
 } from '../events/eventTypes';
-import { setCurrentScreenset as setCurrentScreensetReducer } from '@/core/layout/layoutSlice';
-import { screensetRegistry } from '@/core/screensets/screensetRegistry';
+import { setCurrentScreenset as setCurrentScreensetReducer } from '../../layout/layoutSlice';
+import { screensetRegistry } from '../../screensets/screensetRegistry';
 
 /**
  * Change current screenset

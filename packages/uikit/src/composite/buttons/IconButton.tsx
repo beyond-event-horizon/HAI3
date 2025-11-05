@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, type ButtonProps } from '@/uikit/base/button';
-import { cn } from '@/lib/utils';
+import { Button, type ButtonProps } from '../../base/button';
+import { cn } from '../../lib/utils';
 import { ButtonVariant, ButtonSize, IconButtonSize } from '@hai3/uikit-contracts';
 
 /**

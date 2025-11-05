@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { LayoutDomains } from '@/core/layout/layoutSlice';
+import { LayoutDomains } from '../../layoutSlice';
 
 /**
  * Popup slice for managing popup state

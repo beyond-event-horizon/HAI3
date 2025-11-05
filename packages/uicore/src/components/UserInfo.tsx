@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
+import { useAppSelector, useAppDispatch } from '../hooks/useRedux';
 import { fetchCurrentUser } from '../core/actions';
 import { uikitRegistry } from '../uikit/uikitRegistry';
 import { UiKitComponent } from '@hai3/uikit-contracts';

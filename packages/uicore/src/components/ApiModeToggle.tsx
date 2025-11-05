@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppSelector } from '@/core/hooks/useRedux';
+import { useAppSelector } from '../hooks/useRedux';
 import { setApiMode } from '../core/actions';
 import { uikitRegistry } from '../uikit/uikitRegistry';
 import { UiKitComponent } from '@hai3/uikit-contracts';

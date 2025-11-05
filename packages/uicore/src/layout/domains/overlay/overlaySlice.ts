@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { LayoutDomains } from '@/core/layout/layoutSlice';
+import { LayoutDomains } from '../../layoutSlice';
 
 /**
  * Overlay slice for managing overlay state

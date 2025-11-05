@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
+import { useAppSelector, useAppDispatch } from '../../../hooks/useRedux';
 import { hideOverlay } from './overlaySlice';
 
 export interface OverlayProps {}

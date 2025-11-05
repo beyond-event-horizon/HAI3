@@ -1,4 +1,4 @@
-import type { MenuItem } from '@/core/layout/domains/menu/menuSlice';
+import type { MenuItem } from '../layout/domains/menu/menuSlice';
 
 /**
  * Menu screen item combines menu item with its screen component

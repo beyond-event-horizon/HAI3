@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
+import { useAppSelector, useAppDispatch } from '../../../hooks/useRedux';
 import { closePopup } from './popupSlice';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
 import { UiKitComponent, UiKitIcon, ButtonVariant, IconButtonSize } from '@hai3/uikit-contracts';
