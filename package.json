@@ -20,7 +20,7 @@
     "clean:deps": "npm run clean:modules && npm ci",
     "clean": "npm run clean:artifacts && npm run clean:modules",
     "clean:build": "npm run clean:artifacts && npm run build",
-    "clean:build:packages": "npm run clean:artifacts && npm run build:packages",
+    "clean:build:packages": "npm run clean:artifacts && npm run generate:colors && npm run build:packages",
     "arch:check": "npx tsx scripts/test-architecture.ts",
     "arch:deps": "npx dependency-cruiser src/ packages/ --config .dependency-cruiser.cjs --output-type err-long",
     "arch:graph": "npx dependency-cruiser src/ packages/ --config .dependency-cruiser.cjs --output-type dot | dot -T svg -o dependency-graph.svg",

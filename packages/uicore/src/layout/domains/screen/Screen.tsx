@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAppSelector } from '@/core/hooks/useRedux';
-import { screensetRegistry } from '@/core/screensets/screensetRegistry';
+import { useAppSelector } from '../../../hooks/useRedux';
+import { screensetRegistry } from '../../../screensets/screensetRegistry';
 
 /**
  * Core Screen component

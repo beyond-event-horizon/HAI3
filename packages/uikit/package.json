@@ -5,17 +5,20 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "sideEffects": false,
+  "sideEffects": [
+    "src/styles/**/*.css"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./styles": "./dist/styles.css"
+    "./styles": "./src/styles/globals.css"
   },
   "files": [
     "dist",
+    "src/styles",
     "README.md"
   ],
   "scripts": {

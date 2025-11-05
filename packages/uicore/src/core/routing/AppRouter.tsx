@@ -8,7 +8,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { RouterSync } from './RouterSync';
 import { routeRegistry } from './routeRegistry';
-import { Layout } from '@/core/layout/Layout';
+import { Layout } from '../../layout/Layout';
 
 /**
  * AppRouter Component

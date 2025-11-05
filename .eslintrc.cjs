@@ -36,13 +36,41 @@ module.exports = {
     'no-empty-pattern': 'error',
   },
   overrides: [
+    // Packages: Must use relative imports, no @/ aliases
+    {
+      files: ['packages/**/*'],
+      rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: [{
+              group: ['@/*'],
+              message: 'Use relative imports within packages. @/ aliases are only allowed in app code (src/).',
+            }],
+          },
+        ],
+      },
+    },
+
     // UI Core: Cannot import UI Kit directly (but can import contracts)
     {
       files: ['packages/uicore/**/*'],
       rules: {
         'no-restricted-imports': [
           'error',
-          '@hai3/uikit',
+          {
+            paths: ['@hai3/uikit'],
+            patterns: [
+              {
+                group: ['@/*'],
+                message: 'Use relative imports within packages. @/ aliases are only allowed in app code (src/).',
+              },
+              {
+                group: ['../../uikit/**', '../../../packages/uikit/**'],
+                message: 'UI Core cannot import UI Kit directly. Use uikitRegistry or @hai3/uikit-contracts.',
+              },
+            ],
+          },
         ],
       },
     },
@@ -53,8 +81,19 @@ module.exports = {
       rules: {
         'no-restricted-imports': [
           'error',
-          '@hai3/uicore',
-          'src/**',
+          {
+            paths: ['@hai3/uicore', 'src/**'],
+            patterns: [
+              {
+                group: ['@/*'],
+                message: 'Use relative imports within packages. @/ aliases are only allowed in app code (src/).',
+              },
+              {
+                group: ['../../uicore/**', '../../../packages/uicore/**', '../../../src/**'],
+                message: 'UI Kit cannot import UI Core or app code. UI Kit must remain pure presentational components.',
+              },
+            ],
+          },
         ],
       },
     },
@@ -65,9 +104,19 @@ module.exports = {
       rules: {
         'no-restricted-imports': [
           'error',
-          '@hai3/uicore',
-          '@hai3/uikit',
-          'src/**',
+          {
+            paths: ['@hai3/uicore', '@hai3/uikit', 'src/**'],
+            patterns: [
+              {
+                group: ['@/*'],
+                message: 'Use relative imports within packages. @/ aliases are only allowed in app code (src/).',
+              },
+              {
+                group: ['../../uicore/**', '../../../packages/uicore/**', '../../uikit/**', '../../../packages/uikit/**', '../../../src/**'],
+                message: 'Contracts cannot import from other packages. Must remain pure types/enums only.',
+              },
+            ],
+          },
         ],
       },
     },
@@ -78,7 +127,13 @@ module.exports = {
       rules: {
         'no-restricted-imports': [
           'error',
-          'packages/*/src/**',
+          {
+            paths: ['packages/*/src/**'],
+            patterns: [{
+              group: ['**/packages/*/src/**', '../packages/**'],
+              message: 'App cannot import package internals. Use @hai3/uicore, @hai3/uikit, @hai3/uikit-contracts.',
+            }],
+          },
         ],
       },
     },

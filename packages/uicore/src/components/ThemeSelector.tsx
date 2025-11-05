@@ -1,10 +1,10 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
+import { useAppSelector, useAppDispatch } from '../hooks/useRedux';
 import { uikitRegistry } from '../uikit/uikitRegistry';
 import { UiKitComponent, ButtonVariant } from '@hai3/uikit-contracts';
 import { ChevronDown } from 'lucide-react';
 import { setTheme } from '../core/actions';
-import { themeRegistry } from '@/core/theme/themeRegistry';
+import { themeRegistry } from '../theme/themeRegistry';
 
 /**
  * ThemeSelector Component

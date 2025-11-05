@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { LayoutDomains } from '@/core/layout/layoutSlice';
+import { LayoutDomains } from '../../layoutSlice';
 
 /**
  * Header slice for managing header configuration

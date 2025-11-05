@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HAI3Provider, apiRegistry, store } from '@hai3/uicore';
+import '@hai3/uikit/styles'; // Tailwind CSS
 import { App } from './App';
 import '@/uikit/uikitRegistry'; // Auto-registers UI Kit (components + icons)
 import '@/themes/themeRegistry'; // Auto-registers themes

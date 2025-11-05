@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
-import { ThemeSelector } from '@/core/components/ThemeSelector';
-import { ScreensetSelector } from '@/core/components/ScreensetSelector';
-import { ApiModeToggle } from '@/core/components/ApiModeToggle';
+import { useAppSelector, useAppDispatch } from '../../../hooks/useRedux';
+import { ThemeSelector } from '../../../components/ThemeSelector';
+import { ScreensetSelector } from '../../../components/ScreensetSelector';
+import { ApiModeToggle } from '../../../components/ApiModeToggle';
 import { setCurrentScreenset, setTheme } from '../../../core/actions';
-import { themeRegistry } from '@/core/theme/themeRegistry';
+import { themeRegistry } from '../../../theme/themeRegistry';
 import { setFooterConfig } from './footerSlice';
 import { buildScreensetOptions } from './footerHelpers';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
+import { useAppSelector, useAppDispatch } from '../../../hooks/useRedux';
 import { navigateToScreen } from '../../../core/actions';
 import { toggleMenu } from '../../../core/actions';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';

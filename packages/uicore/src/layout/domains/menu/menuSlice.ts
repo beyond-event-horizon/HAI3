@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { LayoutDomains } from '@/core/layout/layoutSlice';
+import { LayoutDomains } from '../../layoutSlice';
 
 /**
  * Menu slice for managing menu state and configuration

@@ -6,7 +6,7 @@
 
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppSelector } from '@/core/hooks/useRedux';
+import { useAppSelector } from '../../hooks/useRedux';
 import { navigateToScreen } from '../actions';
 import { routeRegistry } from './routeRegistry';
 

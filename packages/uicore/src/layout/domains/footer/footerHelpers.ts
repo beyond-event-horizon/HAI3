@@ -1,4 +1,4 @@
-import { screensetRegistry } from '@/core/screensets/screensetRegistry';
+import { screensetRegistry } from '../../../screensets/screensetRegistry';
 import type { ScreensetOption } from './footerSlice';
 
 /**
