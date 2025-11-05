@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '../../../hooks/useRedux';
-import { fetchCurrentUser } from '../../../core/actions';
-import { uikitRegistry } from '../../../uikit/uikitRegistry';
+import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
+import { fetchCurrentUser } from '../core/actions';
+import { uikitRegistry } from '../uikit/uikitRegistry';
 import { UiKitComponent } from '@hai3/uikit-contracts';
 
 /**
- * UserInfo Domain Component
+ * UserInfo Component
  * Business logic layer - manages user data fetching and state
  * No styling - all presentation in uikit
  */

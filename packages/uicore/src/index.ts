@@ -31,10 +31,8 @@ export { Popup, type PopupProps } from './layout/domains/popup/Popup';
 export { openPopup, closePopup, closeAllPopups } from './layout/domains/popup/popupSlice';
 export { Overlay, type OverlayProps } from './layout/domains/overlay/Overlay';
 
-// App domains
-export { UserInfo } from './app/domains/user/UserInfo';
-
 // Components (Redux-aware reusable widgets)
+export { UserInfo } from './components/UserInfo';
 export { ThemeSelector, type ThemeSelectorProps } from './components/ThemeSelector';
 export { ScreensetSelector, type ScreensetSelectorProps, type ScreensetOption } from './components/ScreensetSelector';
 
