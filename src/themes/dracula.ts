@@ -3,32 +3,51 @@
  * Based on the classic Dracula color scheme
  */
 
-import type { Theme } from '@hai3/uikit';
+import type { Theme } from '@hai3/uikit-contracts';
 
 /**
  * Dracula theme ID
  */
 export const DRACULA_THEME_ID = 'dracula' as const;
 
+/**
+ * Dracula color palette
+ * Official Dracula colors: https://draculatheme.com/contribute
+ */
+const dracula = {
+  purple: 'hsl(265 89% 78%)',       // #bd93f9
+  comment: 'hsl(225 27% 51%)',      // #6272a4  
+  pink: 'hsl(326 100% 74%)',        // #ff79c6
+  background: 'hsl(231 15% 18%)',   // #282a36
+  foreground: 'hsl(60 30% 96%)',    // #f8f8f2
+  currentLine: 'hsl(232 14% 31%)',  // #44475a
+  red: 'hsl(0 100% 67%)',           // #ff5555
+  yellow: 'hsl(65 92% 76%)',        // #f1fa8c
+  green: 'hsl(135 94% 65%)',        // #50fa7b
+  cyan: 'hsl(191 97% 77%)',         // #8be9fd
+  backgroundDark: 'hsl(231 15% 14%)', // darker variant
+};
+
 export const draculaTheme: Theme = {
   name: DRACULA_THEME_ID,
   colors: {
-    primary: 'hsl(265 89% 78%)',      // Purple #bd93f9
-    secondary: 'hsl(225 27% 51%)',    // Gray-blue #6272a4
-    accent: 'hsl(326 100% 74%)',      // Pink #ff79c6
-    background: 'hsl(231 15% 18%)',   // Background #282a36
-    foreground: 'hsl(60 30% 96%)',    // Foreground #f8f8f2
-    muted: 'hsl(232 14% 31%)',        // Muted #44475a
-    border: 'hsl(232 14% 31%)',       // Border #44475a
-    error: 'hsl(0 100% 67%)',         // Red #ff5555
-    warning: 'hsl(65 92% 76%)',       // Yellow #f1fa8c
-    success: 'hsl(135 94% 65%)',      // Green #50fa7b
-    info: 'hsl(191 97% 77%)',         // Cyan #8be9fd
+    primary: dracula.purple,
+    secondary: dracula.comment,
+    accent: dracula.pink,
+    background: dracula.background,
+    foreground: dracula.foreground,
+    muted: dracula.currentLine,
+    border: dracula.currentLine,
+    error: dracula.red,
+    warning: dracula.yellow,
+    success: dracula.green,
+    info: dracula.cyan,
     mainMenu: {
-      DEFAULT: 'hsl(231 15% 14%)',      // darker variant
-      foreground: 'hsl(225 27% 51%)',   // #6272a4 - comment
-      hover: 'hsl(232 14% 31%)',        // #44475a - current-line
-      selected: 'hsl(265 89% 78%)',     // #bd93f9 - purple
+      DEFAULT: dracula.backgroundDark,
+      foreground: dracula.comment,
+      hover: dracula.currentLine,
+      selected: dracula.purple,
+      border: dracula.currentLine,
     },
   },
   spacing: {

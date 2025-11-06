@@ -7,28 +7,17 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '@/uikit/base/dropdown-menu';
-import { Button, ButtonVariant } from '@/uikit/base/button';
+} from '../../base/dropdown-menu';
+import { Button } from '../../base/button';
+import { ButtonVariant } from '@hai3/uikit-contracts';
 import { ChevronDown } from 'lucide-react';
+import { type CascadingDropdownProps } from '@hai3/uikit-contracts';
 
 /**
  * CascadingDropdown Component (Composite)
  * Two-level dropdown using DropdownMenuSub for nested selection
  * First level: Categories, Second level: Items
  */
-
-export interface CascadingDropdownOption {
-  category: string;
-  items: Array<{ id: string; name: string }>;
-}
-
-export interface CascadingDropdownProps {
-  options: CascadingDropdownOption[];
-  currentValue: string; // Format: "category:itemId"
-  onChange: (value: string) => void;
-  label?: string;
-  className?: string;
-}
 
 export const CascadingDropdown: React.FC<CascadingDropdownProps> = ({
   options,

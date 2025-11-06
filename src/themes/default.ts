@@ -3,7 +3,7 @@
  * Based on original PoC design with light color scheme
  */
 
-import type { Theme } from '@hai3/uikit';
+import type { Theme } from '@hai3/uikit-contracts';
 import { tailwindColors as colors } from '@hai3/uikit';
 
 /**
@@ -31,6 +31,7 @@ export const defaultTheme: Theme = {
       foreground: colors.gray[400],
       hover: colors.gray[700],
       selected: colors.blue[600],
+      border: colors.gray[700],  // Match hover color
     },
   },
   spacing: {

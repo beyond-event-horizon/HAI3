@@ -1,15 +1,10 @@
 import React from 'react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Button,
-  ButtonVariant,
-} from '@/uikit';
+import { useAppSelector, useAppDispatch } from '../hooks/useRedux';
+import { uikitRegistry } from '../uikit/uikitRegistry';
+import { UiKitComponent, ButtonVariant } from '@hai3/uikit-contracts';
 import { ChevronDown } from 'lucide-react';
-import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
 import { setTheme } from '../core/actions';
+import { themeRegistry } from '../theme/themeRegistry';
 
 /**
  * ThemeSelector Component
@@ -18,16 +13,20 @@ import { setTheme } from '../core/actions';
  */
 
 export interface ThemeSelectorProps {
-  availableThemes: string[];
   className?: string;
 }
 
-export const ThemeSelector: React.FC<ThemeSelectorProps> = ({ 
-  availableThemes,
+export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   className = '',
 }) => {
   const dispatch = useAppDispatch();
   const currentTheme = useAppSelector((state) => state.layout.theme);
+
+  const DropdownMenu = uikitRegistry.getComponent(UiKitComponent.DropdownMenu);
+  const DropdownMenuTrigger = uikitRegistry.getComponent(UiKitComponent.DropdownMenuTrigger);
+  const DropdownMenuContent = uikitRegistry.getComponent(UiKitComponent.DropdownMenuContent);
+  const DropdownMenuItem = uikitRegistry.getComponent(UiKitComponent.DropdownMenuItem);
+  const Button = uikitRegistry.getComponent(UiKitComponent.Button);
 
   const formatThemeName = (themeName: string): string => {
     return themeName
@@ -35,6 +34,9 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   };
+
+  // Get themes directly from registry
+  const availableThemes = themeRegistry.getThemeNames();
 
   return (
     <div className={`inline-flex items-center gap-2 ${className}`}>

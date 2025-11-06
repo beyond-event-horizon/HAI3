@@ -6,9 +6,9 @@
 
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppSelector } from '@/core/hooks/useRedux';
+import { useAppSelector } from '../../hooks/useRedux';
 import { navigateToScreen } from '../actions';
-import { routeService } from './routeService';
+import { routeRegistry } from './routeRegistry';
 
 /**
  * RouterSync Component
@@ -26,11 +26,11 @@ export const RouterSync: React.FC = () => {
   useEffect(() => {
     const urlScreenId = params.screenId;
     
-    if (urlScreenId && routeService.hasScreen(urlScreenId)) {
+    if (urlScreenId && routeRegistry.hasScreen(urlScreenId)) {
       // Dispatch action → effects handle screenset switching and state update
       navigateToScreen(urlScreenId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [params.screenId]); // Only re-run when URL changes, not when selectedScreen changes
   
   // Redux → URL: When Redux state changes, update URL

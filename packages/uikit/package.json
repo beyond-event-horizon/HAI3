@@ -5,17 +5,20 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "sideEffects": false,
+  "sideEffects": [
+    "src/styles/**/*.css"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./styles": "./dist/styles.css"
+    "./styles": "./src/styles/globals.css"
   },
   "files": [
     "dist",
+    "src/styles",
     "README.md"
   ],
   "scripts": {
@@ -38,6 +41,8 @@
     "directory": "packages/uikit"
   },
   "dependencies": {
+    "@hai3/uikit-contracts": "^0.1.0",
+    "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-navigation-menu": "^1.2.14",

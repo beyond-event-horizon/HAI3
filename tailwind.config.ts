@@ -7,6 +7,7 @@ export default {
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
     './packages/*/src/**/*.{js,ts,jsx,tsx}',
+    './packages/*/dist/**/*.{js,mjs}',  // Scan built package files for classes
   ],
   theme: {
     extend: {
@@ -53,6 +54,7 @@ export default {
           foreground: 'hsl(var(--left-menu-foreground))',
           hover: 'hsl(var(--left-menu-hover))',
           selected: 'hsl(var(--left-menu-selected))',
+          border: 'hsl(var(--left-menu-border))',
         },
       },
       spacing: {

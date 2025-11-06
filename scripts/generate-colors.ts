@@ -2,23 +2,35 @@
  * Build-time script to generate Tailwind colors in HSL format
  * Converts Tailwind's hex colors to HSL once at build time
  * Output: src/themes/tailwindColors.ts (generated file)
- * @file This is a CommonJS Node.js script, not TypeScript
+ * @file This is a TypeScript Node.js script
  */
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const fs = require('fs');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require('path');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const allColors = require('tailwindcss/colors');
+import fs from 'fs';
+import path from 'path';
+import allColors from 'tailwindcss/colors';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface ColorScale {
+  50: string;
+  100: string;
+  200: string;
+  300: string;
+  400: string;
+  500: string;
+  600: string;
+  700: string;
+  800: string;
+  900: string;
+  950: string;
+}
 
 /**
  * Convert hex color to HSL format
  * #2563eb -> hsl(221 83% 53%)
- * @param {string} hex - Hex color string
- * @returns {string} HSL color string
+ * @param hex - Hex color string
+ * @returns HSL color string
  */
-function hexToHsl(hex) {
+function hexToHsl(hex: string): string {
   // Handle special cases
   if (hex === 'inherit' || hex === 'currentColor' || hex === 'transparent') {
     return hex;
@@ -72,7 +84,7 @@ function hexToHsl(hex) {
 }
 
 // Remove deprecated color names (intentionally unused - we're filtering them out)
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const {
   lightBlue,
   warmGray,
@@ -81,19 +93,22 @@ const {
   blueGray,
   ...tailwindColors
 } = allColors;
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
 // Convert all colors to HSL
-const colors = {};
+const colors: Record<string, unknown> = {};
 
 for (const [colorName, colorValue] of Object.entries(tailwindColors)) {
   if (typeof colorValue === 'string') {
     // Simple color (inherit, currentColor, transparent, black, white)
     colors[colorName] = hexToHsl(colorValue);
-  } else if (typeof colorValue === 'object') {
+  } else if (typeof colorValue === 'object' && colorValue !== null) {
     // Color scale (slate, gray, etc.)
     colors[colorName] = {};
     for (const [shade, hex] of Object.entries(colorValue)) {
-      colors[colorName][shade] = hexToHsl(hex);
+      if (typeof hex === 'string') {
+        (colors[colorName] as Record<string, string>)[shade] = hexToHsl(hex);
+      }
     }
   }
 }
@@ -155,7 +170,8 @@ export default colors;
 `;
 
 // Write to packages/uikit/src/styles/tailwindColors.ts
-// eslint-disable-next-line no-undef
+const __filename = new URL(import.meta.url).pathname;
+const __dirname = path.dirname(__filename);
 const outputPath = path.join(__dirname, '../packages/uikit/src/styles/tailwindColors.ts');
 fs.writeFileSync(outputPath, output, 'utf8');
 

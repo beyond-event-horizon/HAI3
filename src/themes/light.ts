@@ -2,7 +2,7 @@
  * Light theme for HAI3
  */
 
-import type { Theme } from '@hai3/uikit';
+import type { Theme } from '@hai3/uikit-contracts';
 import { tailwindColors as colors } from '@hai3/uikit';
 
 /**
@@ -30,6 +30,7 @@ export const lightTheme: Theme = {
       foreground: colors.zinc[500],
       hover: colors.zinc[200],
       selected: colors.blue[600],
+      border: colors.zinc[200],
     },
   },
   spacing: {

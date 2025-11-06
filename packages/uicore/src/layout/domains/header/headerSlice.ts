@@ -1,43 +1,20 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { ReactNode } from 'react';
-import { LayoutDomains } from '@/core/layout/layoutSlice';
+import { createSlice } from '@reduxjs/toolkit';
+import { LayoutDomains } from '../../layoutSlice';
 
 /**
  * Header slice for managing header configuration
+ * Note: Header currently has no state - purely presentational
  */
 
-export interface HeaderState {
-  logo: string; // Logo text (serializable)
-  actions: ReactNode; // Keep ReactNode for flexibility, but avoid storing in Redux
-  showMenuToggle: boolean;
-  menuToggleIcon: string; // Icon ID - resolved via iconService
-}
+export interface HeaderState {}
 
-const initialState: HeaderState = {
-  logo: '',
-  actions: null,
-  showMenuToggle: true,
-  menuToggleIcon: 'menu',
-};
+const initialState: HeaderState = {};
 
 const headerSlice = createSlice({
   name: LayoutDomains.Header,
   initialState,
-  reducers: {
-    setHeaderLogo: (state, action: PayloadAction<string>) => {
-      state.logo = action.payload;
-    },
-    setHeaderActions: (state, action: PayloadAction<ReactNode>) => {
-      state.actions = action.payload;
-    },
-    setShowMenuToggle: (state, action: PayloadAction<boolean>) => {
-      state.showMenuToggle = action.payload;
-    },
-    setHeaderConfig: (state, action: PayloadAction<Partial<HeaderState>>) => {
-      return { ...state, ...action.payload };
-    },
-  },
+  reducers: {},
 });
 
-export const { setHeaderLogo, setHeaderActions, setShowMenuToggle, setHeaderConfig } = headerSlice.actions;
+// No actions currently exported
 export default headerSlice.reducer;

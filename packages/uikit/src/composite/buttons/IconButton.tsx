@@ -1,15 +1,7 @@
 import React from 'react';
-import { Button, type ButtonProps, ButtonVariant } from '@/uikit/base/button';
-import { cn } from '@/lib/utils';
-
-/**
- * IconButton Size Enum
- */
-export enum IconButtonSize {
-  Default = 'default',
-  Small = 'sm',
-  Large = 'lg',
-}
+import { Button, type ButtonProps } from '../../base/button';
+import { cn } from '../../lib/utils';
+import { ButtonVariant, ButtonSize, IconButtonSize } from '@hai3/uikit-contracts';
 
 /**
  * IconButton component for HAI3 UI-Core
@@ -35,7 +27,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
       <Button
         ref={ref}
         variant={variant}
-        size="icon"
+        size={ButtonSize.Icon}
         className={cn(sizeStyles[size], className)}
         {...props}
       />

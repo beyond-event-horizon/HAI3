@@ -8,7 +8,7 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 
 const Sidebar = React.forwardRef<
   HTMLElement,
@@ -22,7 +22,7 @@ const Sidebar = React.forwardRef<
       data-state={collapsed ? "collapsed" : "expanded"}
       data-collapsible={collapsed ? "icon" : ""}
       className={cn(
-        "group flex flex-col border-r transition-[width] duration-200 ease-linear",
+        "group flex flex-col border-r border-mainMenu-border transition-[width] duration-200 ease-linear",
         "bg-mainMenu text-mainMenu-foreground",
         collapsed ? "w-16" : "w-64",
         className

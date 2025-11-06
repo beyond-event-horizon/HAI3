@@ -3,10 +3,15 @@
  * Exports all UI Kit components for easy importing
  */
 
-// Base shadcn components
-export { Button, type ButtonProps, ButtonVariant, ButtonSize } from './base/button';
+// Base UI Components (shadcn + HAI3 custom)
+export { Avatar, AvatarImage, AvatarFallback } from './base/avatar';
+export { Button, type ButtonProps } from './base/button';
+// Re-export contract types to ensure consistency
+export { ButtonVariant, ButtonSize } from '@hai3/uikit-contracts';
 export { Switch } from './base/switch';
+export { Skeleton } from './base/skeleton';
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './base/card';
+export { Header, type HeaderProps } from './base/header'; // HAI3 custom base component
 
 // shadcn navigation
 export {
@@ -82,10 +87,14 @@ export {
 } from './base/dropdown-menu';
 
 // Composite selectors
-export { CascadingDropdown, type CascadingDropdownProps, type CascadingDropdownOption } from './composite/selectors/CascadingDropdown';
+export { CascadingDropdown } from './composite/selectors/CascadingDropdown';
+// Re-export contract types to ensure consistency
+export { type CascadingDropdownProps, type CascadingDropdownOption } from '@hai3/uikit-contracts';
 
 // Composite components
-export { IconButton, type IconButtonProps, IconButtonSize } from './composite/buttons/IconButton';
+export { IconButton, type IconButtonProps } from './composite/buttons/IconButton';
+// Re-export contract types to ensure consistency
+export { IconButtonSize } from '@hai3/uikit-contracts';
 
 // Composite navigation (tailored from shadcn sidebar)
 export {
@@ -97,10 +106,14 @@ export {
   SidebarMenuLabel,
   SidebarMenuIcon,
 } from './composite/navigation/Sidebar';
+export { SidebarHeader, type SidebarHeaderProps } from './composite/navigation/SidebarHeader';
+
+// Composite user components
+export { UserInfo, type UserInfoProps } from './composite/user/UserInfo';
 
 // Icons (tree-shakeable - app imports and registers only what it needs)
-export { MenuIcon } from './icons/MenuIcon';
-export { CloseIcon } from './icons/CloseIcon';
+export { MenuIcon, MENU_ICON_ID } from './icons/MenuIcon';
+export { CloseIcon, CLOSE_ICON_ID } from './icons/CloseIcon';
 
 // Theme system (utilities only - theme definitions in app)
 export { applyTheme } from './styles/applyTheme';

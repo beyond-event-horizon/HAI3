@@ -14,7 +14,7 @@ import {
   ApiEvents,
 } from '../core/events/eventTypes';
 import { setUser, setError, setLoading, setUseMockApi } from './appSlice';
-import { apiServices } from '../api/apiServicesRegistry';
+import { apiRegistry } from '../api/apiRegistry';
 
 /**
  * Initialize app effects
@@ -35,6 +35,6 @@ export function initAppEffects(store: Store): void {
   // API configuration events
   eventBus.on(ApiEvents.ApiModeChanged, ({ useMockApi }) => {
     store.dispatch(setUseMockApi(useMockApi));
-    apiServices.setMockMode(useMockApi);
+    apiRegistry.setMockMode(useMockApi);
   });
 }

@@ -6,12 +6,14 @@
 
 **System:**
 - Theme objects = source of truth
+- Theme interface: `@hai3/uikit-contracts` (contract layer)
 - CSS variables via `applyTheme(theme, name)`
 - Apps define in `src/themes/`
+- MUST match Theme interface structure from contracts
 
 **Registry:** See GUIDELINES.md
-- Set function: `themeService.setApplyFunction(applyTheme)`
-- Register: `themeService.register(name, theme)`
+- Set function: `themeRegistry.setApplyFunction(applyTheme)` from UI Kit
+- Register: `themeRegistry.register(name, theme)`
 
 **Modifying:**
 - Screensets: FORBIDDEN

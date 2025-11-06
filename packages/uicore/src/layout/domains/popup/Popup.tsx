@@ -1,19 +1,20 @@
 import React from 'react';
-import { IconButton, ButtonVariant, IconButtonSize } from '@hai3/uikit';
-import { useAppSelector, useAppDispatch } from '@/core/hooks/useRedux';
+import { useAppSelector, useAppDispatch } from '../../../hooks/useRedux';
 import { closePopup } from './popupSlice';
-import { iconService } from '@/core/icons/iconService';
+import { uikitRegistry } from '../../../uikit/uikitRegistry';
+import { UiKitComponent, UiKitIcon, ButtonVariant, IconButtonSize } from '@hai3/uikit-contracts';
 
 export interface PopupProps {}
 
 export const Popup: React.FC<PopupProps> = () => {
-  const { stack } = useAppSelector((state) => state.popup);
   const dispatch = useAppDispatch();
+  const stack = useAppSelector((state) => state.popup.stack);
 
   if (stack.length === 0) return null;
 
   const topPopup = stack[stack.length - 1];
-  const closeIcon = iconService.get('close');
+  const IconButton = uikitRegistry.getComponent(UiKitComponent.IconButton);
+  const closeIcon = uikitRegistry.getIcon(UiKitIcon.Close);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center" style={{ zIndex: topPopup.zIndex }}>
@@ -24,13 +25,12 @@ export const Popup: React.FC<PopupProps> = () => {
             <h2 className="text-lg font-semibold">{topPopup.title}</h2>
             {closeIcon && (
               <IconButton
+                icon={closeIcon}
                 variant={ButtonVariant.Ghost}
                 size={IconButtonSize.Small}
                 onClick={() => dispatch(closePopup(topPopup.id))}
                 aria-label="Close popup"
-              >
-                {closeIcon}
-              </IconButton>
+              />
             )}
           </div>
         )}

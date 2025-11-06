@@ -2,7 +2,7 @@
  * Dark theme for HAI3
  */
 
-import type { Theme } from '@hai3/uikit';
+import type { Theme } from '@hai3/uikit-contracts';
 import { tailwindColors as colors } from '@hai3/uikit';
 
 /**
@@ -30,6 +30,7 @@ export const darkTheme: Theme = {
       foreground: colors.zinc[400],
       hover: colors.zinc[900],
       selected: colors.zinc[500],
+      border: colors.zinc[800],
     },
   },
   spacing: {

@@ -4,10 +4,10 @@
  * Following Flux architecture pattern
  */
 
-import type { AppDispatch } from '@/core/store';
+import type { AppDispatch } from '../../store';
 import { eventBus } from '../events/eventBus';
 import { ThemeEvents } from '../events/eventTypes';
-import { setTheme as setThemeReducer } from '@/core/layout/layoutSlice';
+import { setTheme as setThemeReducer } from '../../layout/layoutSlice';
 
 /**
  * Change current theme
@@ -15,7 +15,6 @@ import { setTheme as setThemeReducer } from '@/core/layout/layoutSlice';
  */
 export const setTheme = (themeName: string) => {
   return (dispatch: AppDispatch): void => {
-    // Update own slice (layout)
     dispatch(setThemeReducer(themeName));
 
     // Emit event for theme application

@@ -20,7 +20,6 @@ export { Layout } from './layout';
 
 // Layout domains
 export { Header, type HeaderProps } from './layout/domains/header/Header';
-export { setHeaderConfig } from './layout/domains/header/headerSlice';
 export { Footer, type FooterProps } from './layout/domains/footer/Footer';
 export { setFooterConfig } from './layout/domains/footer/footerSlice';
 export { Menu, type MenuProps } from './layout/domains/menu/Menu';
@@ -33,31 +32,34 @@ export { openPopup, closePopup, closeAllPopups } from './layout/domains/popup/po
 export { Overlay, type OverlayProps } from './layout/domains/overlay/Overlay';
 
 // Components (Redux-aware reusable widgets)
+export { UserInfo } from './components/UserInfo';
 export { ThemeSelector, type ThemeSelectorProps } from './components/ThemeSelector';
 export { ScreensetSelector, type ScreensetSelectorProps, type ScreensetOption } from './components/ScreensetSelector';
 
 // Screenset management (Footer domain handles watching)
-export { screensetService, type ScreensetConfig } from './screensets/screensetService';
+export { screensetRegistry, type ScreensetConfig } from './screensets/screensetRegistry';
 
 // Theme management (Footer domain handles watching)
-export { themeService } from './theme/themeService';
+export { themeRegistry } from './theme/themeRegistry';
 
-// Icon management (screensets register icons)
-export { iconService } from './icons/iconService';
+// UI Kit registry (app registers UI components and icons)
+export { uikitRegistry } from './uikit/uikitRegistry';
+export type { UiKitComponentMap, ComponentName, Theme } from '@hai3/uikit-contracts';
+export { UiKitComponent, UiKitIcon } from '@hai3/uikit-contracts';
 
 // HAI3Provider - Main entry point for apps
 export { HAI3Provider, type HAI3ProviderProps } from './core/HAI3Provider';
 
 // Routing
 export { AppRouter } from './core/routing/AppRouter';
-export { routeService, type RouteInfo } from './core/routing/routeService';
+export { routeRegistry, type RouteInfo } from './core/routing/routeRegistry';
 
 // Event-driven actions (AI: READ THIS - use these, NOT slice actions)
 export { setTheme, setCurrentScreenset, toggleMenu, navigateToScreen, fetchCurrentUser, setApiMode } from './core/actions';
 export { setSelectedScreen } from './layout/layoutSlice'; // Direct action (Menu internal use)
 
 // API (SOLID architecture with domain-driven, self-registering services)
-export { apiServices, apiServicesRegistry, type ApiServicesConfig, type ApiServicesMap } from './api/apiServicesRegistry';
+export { apiRegistry, type ApiServicesConfig, type ApiServicesMap } from './api/apiRegistry';
 export { BaseApiService, type BaseApiServiceConfig } from './api/BaseApiService';
 export { AccountsApiService, ACCOUNTS_DOMAIN } from './api/accounts/AccountsApiService'; // Triggers self-registration
 export * from './api/accounts/api';

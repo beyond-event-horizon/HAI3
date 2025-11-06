@@ -73,6 +73,7 @@ export const applyTheme = (theme: Theme, themeName?: string): void => {
   root.style.setProperty('--left-menu-foreground', hslToVar(theme.colors.mainMenu.foreground));
   root.style.setProperty('--left-menu-hover', hslToVar(theme.colors.mainMenu.hover));
   root.style.setProperty('--left-menu-selected', hslToVar(theme.colors.mainMenu.selected));
+  root.style.setProperty('--left-menu-border', hslToVar(theme.colors.mainMenu.border));
 
   // Apply spacing
   Object.entries(theme.spacing).forEach(([key, value]) => {

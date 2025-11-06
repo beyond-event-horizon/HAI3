@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch, setHeaderConfig } from '@hai3/uicore';
+import React from 'react';
 
 /**
  * Main HAI3 Application Component
- * 
- * Responsibilities:
- * 1. Configure UI Core domains (Header, Footer, etc.)
  * 
  * HAI3Provider (in main.tsx) handles:
  * - Redux Provider setup
@@ -16,19 +12,9 @@ import { useAppDispatch, setHeaderConfig } from '@hai3/uicore';
  * - Footer discovers registered themes/screensets
  * - Navigation events switch screensets automatically
  * - Routes sync lazily from registered screensets
+ * - Menu displays logo and handles expand/collapse
  */
 
 export const App: React.FC = () => {
-  const dispatch = useAppDispatch();
-
-  // Configure header
-  useEffect(() => {
-    dispatch(
-      setHeaderConfig({
-        logo: 'HAI3',
-      })
-    );
-  }, [dispatch]);
-
   return null; // HAI3Provider renders AppRouter
 };

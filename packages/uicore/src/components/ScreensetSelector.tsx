@@ -1,5 +1,6 @@
 import React from 'react';
-import { CascadingDropdown, type CascadingDropdownOption } from '@/uikit';
+import { uikitRegistry } from '../uikit/uikitRegistry';
+import { UiKitComponent, type CascadingDropdownOption } from '@hai3/uikit-contracts';
 
 /**
  * ScreensetSelector Component
@@ -25,6 +26,8 @@ export const ScreensetSelector: React.FC<ScreensetSelectorProps> = ({
   onChange,
   className = '',
 }) => {
+  const CascadingDropdown = uikitRegistry.getComponent(UiKitComponent.CascadingDropdown);
+
   // Convert ScreensetOption[] to CascadingDropdownOption[]
   const cascadingOptions: CascadingDropdownOption[] = options.map((opt) => ({
     category: opt.category,

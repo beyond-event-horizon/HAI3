@@ -14,17 +14,24 @@ export default defineConfig({
   external: [
     'react',
     'react-dom',
-    '@reduxjs/toolkit',
+    'react/jsx-runtime',
     'react-redux',
+    'react-router-dom',
+    '@reduxjs/toolkit',
+    'axios',
     '@hai3/uikit',
+    'use-sync-external-store',
+    'use-sync-external-store/shim',
+    'use-sync-external-store/shim/index.js',
+    'use-sync-external-store/shim/with-selector',
   ],
+  noExternal: [],
   treeshake: true,
   splitting: false,
   esbuildOptions(options) {
     options.alias = {
       '@/core': path.resolve(__dirname, 'src'),
       '@/styles': path.resolve(__dirname, 'src/styles'),
-      '@/uikit': '@hai3/uikit',
     };
   },
 });

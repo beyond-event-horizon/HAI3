@@ -21,6 +21,7 @@ export interface Theme {
       foreground: string;
       hover: string;
       selected: string;
+      border: string;
     };
   };
   spacing: {

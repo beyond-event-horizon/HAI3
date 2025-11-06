@@ -1,4 +1,4 @@
-import { screensetService } from '@/core/screensets/screensetService';
+import { screensetRegistry } from '../../../screensets/screensetRegistry';
 import type { ScreensetOption } from './footerSlice';
 
 /**
@@ -13,6 +13,6 @@ const ALL_CATEGORIES = ['drafts', 'mockups', 'production'];
 export const buildScreensetOptions = (): ScreensetOption[] => {
   return ALL_CATEGORIES.map((category) => ({
     category,
-    screensets: screensetService.getMetadataByCategory(category),
+    screensets: screensetRegistry.getMetadataByCategory(category),
   }));
 };

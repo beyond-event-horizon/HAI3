@@ -1,4 +1,4 @@
-import { screensetService } from '@/core/screensets/screensetService';
+import { screensetRegistry } from '../../screensets/screensetRegistry';
 
 /**
  * Route information for a screen
@@ -10,12 +10,12 @@ export interface RouteInfo {
 }
 
 /**
- * Route Service
+ * Route Registry
  * Dynamically generates routes from registered screensets
  * Following self-registering registry pattern (see GUIDELINES.md)
  * Uses lazy initialization to prevent race conditions
  */
-class RouteService {
+class RouteRegistry {
   private routes: Map<string, RouteInfo> = new Map();
   private synced: boolean = false;
 
@@ -26,7 +26,7 @@ class RouteService {
   syncFromScreensets(): void {
     this.routes.clear();
 
-    const screensets = screensetService.getAll();
+    const screensets = screensetRegistry.getAll();
 
     screensets.forEach((screenset) => {
       const screensetKey = `${screenset.category}:${screenset.id}`;
@@ -114,4 +114,4 @@ class RouteService {
 }
 
 // Export singleton instance
-export const routeService = new RouteService();
+export const routeRegistry = new RouteRegistry();

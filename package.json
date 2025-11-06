@@ -10,11 +10,21 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run generate:colors && npm run build:packages && vite build",
-    "build:packages": "npm run build --workspaces --if-present",
-    "generate:colors": "node scripts/generate-colors.cjs 2>&1 | grep -v 'warn -' | grep -v 'has been renamed' | grep -v 'Update your configuration' || true",
+    "build:packages": "npm run build --workspace=@hai3/uikit-contracts && npm run build --workspace=@hai3/uikit && npm run build --workspace=@hai3/uicore",
+    "generate:colors": "npx tsx scripts/generate-colors.ts 2>&1 | grep -v 'warn -' | grep -v 'has been renamed' | grep -v 'Update your configuration' || true",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "clean:artifacts": "rm -rf packages/*/dist dist .nyc_output coverage .eslintcache",
+    "clean:modules": "rm -rf node_modules",
+    "clean:deps": "npm run clean:modules && npm ci",
+    "clean": "npm run clean:artifacts && npm run clean:modules",
+    "clean:build": "npm run clean:artifacts && npm run build",
+    "clean:build:packages": "npm run clean:artifacts && npm run generate:colors && npm run build:packages",
+    "arch:check": "npx tsx scripts/test-architecture.ts",
+    "arch:deps": "npx dependency-cruiser src/ packages/ --config .dependency-cruiser.cjs --output-type err-long",
+    "arch:graph": "npx dependency-cruiser src/ packages/ --config .dependency-cruiser.cjs --output-type dot | dot -T svg -o dependency-graph.svg",
+    "arch:dot": "npx dependency-cruiser src/ packages/ --config .dependency-cruiser.cjs --output-type dot > dependency-graph.dot && echo '✅ DOT file saved to dependency-graph.dot (view with any DOT viewer or online tools)'"
   },
   "dependencies": {
     "@hai3/uicore": "^0.1.0",
@@ -25,7 +35,7 @@
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.0.0",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.18",
@@ -35,6 +45,7 @@
     "postcss": "^8.4.35",
     "postcss-load-config": "^6.0.1",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.20.6",
     "typescript": "^5.4.2",
     "vite": "^6.4.1"
   }

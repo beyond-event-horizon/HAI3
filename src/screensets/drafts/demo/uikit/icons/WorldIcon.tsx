@@ -1,5 +1,4 @@
 import React from 'react';
-import { iconService } from '@hai3/uicore';
 
 /**
  * World Icon ID
@@ -11,7 +10,7 @@ export const WORLD_ICON_ID = 'world';
  * World Icon
  * Local icon for Demo screenset (hello world screen)
  */
-const WorldIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
+export const WorldIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
   return (
     <svg
       className={className}
@@ -30,6 +29,3 @@ const WorldIcon: React.FC<{ className?: string }> = ({ className = '' }) => {
     </svg>
   );
 };
-
-// Self-register icon (runs on import)
-iconService.register(WORLD_ICON_ID, <WorldIcon />);

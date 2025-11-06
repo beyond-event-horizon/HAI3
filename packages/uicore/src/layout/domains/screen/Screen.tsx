@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAppSelector } from '@/core/hooks/useRedux';
-import { screensetService } from '@/core/screensets/screensetService';
+import { useAppSelector } from '../../../hooks/useRedux';
+import { screensetRegistry } from '../../../screensets/screensetRegistry';
 
 /**
  * Core Screen component
@@ -27,10 +27,9 @@ export const Screen: React.FC<ScreenProps> = ({ children, className = '' }) => {
     );
   }
 
-  // Get screenset and screen component
-  const screenset = screensetService.get(currentScreensetValue);
+  const screenset = screensetRegistry.get(currentScreensetValue);
   const screenId = selectedScreen || screenset?.defaultScreen || '';
-  const screens = screensetService.getScreens(currentScreensetValue);
+  const screens = screensetRegistry.getScreens(currentScreensetValue);
   const ScreenComponent = screens[screenId];
 
   return (

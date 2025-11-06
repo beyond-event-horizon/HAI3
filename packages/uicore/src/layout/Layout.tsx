@@ -23,22 +23,28 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden">
-      {/* Header */}
-      <Header />
-
-      {/* Main content area */}
+      {/* Top row: Menu + Header + Content + Sidebar */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Menu */}
+        {/* Menu - full height on left */}
         <Menu />
 
-        {/* Main content */}
-        <Screen>{children}</Screen>
+        {/* Right side: Header + Content */}
+        <div className="flex flex-col flex-1 overflow-hidden">
+          {/* Header */}
+          <Header />
 
-        {/* Sidebar */}
-        <Sidebar />
+          {/* Main content area */}
+          <div className="flex flex-1 overflow-hidden">
+            {/* Main content */}
+            <Screen>{children}</Screen>
+
+            {/* Sidebar */}
+            <Sidebar />
+          </div>
+        </div>
       </div>
 
-      {/* Footer */}
+      {/* Footer - full width */}
       <Footer />
 
       {/* Popups */}

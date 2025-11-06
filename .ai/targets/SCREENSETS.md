@@ -1,6 +1,6 @@
 # Screensets Guidelines
 
-> Common: .ai/GUIDELINES.md | Styling: STYLING.md
+> Common: .ai/GUIDELINES.md | Data Flow: EVENTS.md | Styling: STYLING.md
 
 ## CRITICAL (AI: READ THIS FIRST)
 
@@ -9,13 +9,17 @@
 - REQUIRED: Use `@hai3/uikit` components
 - Detect: grep for `className=".*border.*rounded` in screensets
 
-**NEVER slice actions:**
+**Data Flow (AI: READ THIS - CRITICAL):**
+- ONLY allowed: Event-driven via `@hai3/uicore` actions (See EVENTS.md)
 - FORBIDDEN: `import { setTheme } from '@/layout/layoutSlice'`
 - REQUIRED: `import { setTheme } from '@hai3/uicore'`
+- Pattern: Component -> Action -> Event -> Effect -> Slice
+- READ: `useAppSelector((state) => state.app.user)`
+- MODIFY: `dispatch(setTheme('dark'))` from imported action
+- NEVER: Direct slice imports, prop drilling, manual state sync
 
 **Rules:**
 - MUST: Isolated screensets
-- MUST: READ via `useAppSelector`, MODIFY via actions
 - NEVER: Hardcoded screenset names in shared code
 - NEVER: `if screenset ==` conditionals
 
@@ -25,9 +29,17 @@
 - BAD: screensetRegistry.tsx imports all screens
 - GOOD: screensetRegistry.tsx imports demoScreenset only
 
-**Registry:** See GUIDELINES.md Self-Registering Registries
-
-**IDs:** See GUIDELINES.md Identifiers section
+**Icon Registration (AI: READ THIS):**
+- REQUIRED: Self-register icons in screenset file
+- REQUIRED: Export string constants for icon IDs
+- Pattern: `export const WORLD_ICON_ID = 'world' as const;`
+- Pattern: `uikitRegistry.registerIcons({ [WORLD_ICON_ID]: <WorldIcon /> })`
+- UiKitIcon enum is for CORE framework icons only
+- Screenset icons use exported constants, NOT enum, NOT inline strings
+- Icons used by Menu domain need registry lookup
+- BAD: `registerIcon('world', ...)` (hardcoded string)
+- BAD: Central icon registry file
+- GOOD: Icons registered in screenset.tsx with exported constants
 
 **Navigation:**
 - Menu items in screenset config
@@ -40,12 +52,11 @@
 4. Local uikit -> ONLY screenset-specific composites
 5. Manual styling -> FORBIDDEN
 
-**Themes:** See THEMES.md
-
-**Building:**
-- Global UI Kit + local uikit + logic + state
-- Styling: ONLY layout
-
 **Data:**
 - Mock + setTimeout simulation
 - Handle loading/error
+
+**References:**
+- Registry: See GUIDELINES.md Self-Registering Registries
+- IDs: See GUIDELINES.md Identifiers section
+- Themes: See THEMES.md

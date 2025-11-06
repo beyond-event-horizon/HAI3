@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { LayoutDomains } from '@/core/layout/layoutSlice';
+import { LayoutDomains } from '../../layoutSlice';
 
 /**
  * Footer slice for managing footer configuration
@@ -11,13 +11,11 @@ export interface ScreensetOption {
 }
 
 export interface FooterState {
-  availableThemes: string[];
   screensetOptions: ScreensetOption[];
   visible: boolean;
 }
 
 const initialState: FooterState = {
-  availableThemes: [],
   screensetOptions: [],
   visible: true,
 };

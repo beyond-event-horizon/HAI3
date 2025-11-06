@@ -6,7 +6,7 @@
 import type { AppDispatch } from '../../store';
 import { eventBus } from '../events/eventBus';
 import { UserEvents } from '../events/eventTypes';
-import { apiServices } from '../../api/apiServicesRegistry';
+import { apiRegistry } from '../../api/apiRegistry';
 import { ACCOUNTS_DOMAIN } from '../../api/accounts/AccountsApiService';
 import { setLoading } from '../../app/appSlice';
 import type { ApiError } from '../../api/accounts/api';
@@ -22,7 +22,7 @@ export const fetchCurrentUser = () => async (dispatch: AppDispatch): Promise<voi
   try {
     dispatch(setLoading(true));
     
-    const accountsService = apiServices.getService(ACCOUNTS_DOMAIN);
+    const accountsService = apiRegistry.getService(ACCOUNTS_DOMAIN);
     const response = await accountsService.getCurrentUser();
 
     // Emit success event

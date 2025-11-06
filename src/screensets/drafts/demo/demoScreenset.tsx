@@ -1,19 +1,26 @@
-import { type ScreensetConfig } from '@hai3/uicore';
+import { type ScreensetConfig, uikitRegistry } from '@hai3/uicore';
 import { HelloWorldScreen, HELLO_WORLD_SCREEN_ID } from './screens/helloworld/HelloWorldScreen';
 import { CurrentThemeScreen, CURRENT_THEME_SCREEN_ID } from './screens/theme/CurrentThemeScreen';
 import { ProfileScreen, PROFILE_SCREEN_ID } from './screens/profile/ProfileScreen';
-import { WORLD_ICON_ID } from './uikit/icons/WorldIcon';
-import { PALETTE_ICON_ID } from './uikit/icons/PaletteIcon';
-import { USER_ICON_ID } from './uikit/icons/UserIcon';
-import './uikit/icons/WorldIcon'; // Auto-registers on import
-import './uikit/icons/PaletteIcon'; // Auto-registers on import
-import './uikit/icons/UserIcon'; // Auto-registers on import
+import { WorldIcon, WORLD_ICON_ID } from './uikit/icons/WorldIcon';
+import { PaletteIcon, PALETTE_ICON_ID } from './uikit/icons/PaletteIcon';
+import { UserIcon, USER_ICON_ID } from './uikit/icons/UserIcon';
 
 /**
  * Demo Screenset ID
  * Well-known constant defined where it belongs
  */
 export const DEMO_SCREENSET_ID = 'demo';
+
+/**
+ * Register screenset-specific icons
+ * Screenset is responsible for registering its own icons
+ */
+uikitRegistry.registerIcons({
+  [WORLD_ICON_ID]: <WorldIcon />,
+  [PALETTE_ICON_ID]: <PaletteIcon />,
+  [USER_ICON_ID]: <UserIcon />,
+});
 
 /**
  * Demo Screenset Configuration

@@ -4,14 +4,14 @@
  * Following Flux architecture pattern
  */
 
-import type { AppDispatch } from '@/core/store';
+import type { AppDispatch } from '../../store';
 import { eventBus } from '../events/eventBus';
 import { 
   ScreensetEvents,
   MenuEvents
 } from '../events/eventTypes';
-import { setCurrentScreenset as setCurrentScreensetReducer } from '@/core/layout/layoutSlice';
-import { screensetService } from '@/core/screensets/screensetService';
+import { setCurrentScreenset as setCurrentScreensetReducer } from '../../layout/layoutSlice';
+import { screensetRegistry } from '../../screensets/screensetRegistry';
 
 /**
  * Change current screenset
@@ -19,24 +19,21 @@ import { screensetService } from '@/core/screensets/screensetService';
  */
 export const setCurrentScreenset = (screensetId: string) => {
   return (dispatch: AppDispatch): void => {
-    // Get screenset data
-    const screenset = screensetService.get(screensetId);
+    const screenset = screensetRegistry.get(screensetId);
     
     if (!screenset) {
       console.warn(`Screenset not found: ${screensetId}`);
       return;
     }
 
-    // Update own slice (layout)
     dispatch(setCurrentScreensetReducer(screensetId));
 
-    // Emit events for other domains (Menu, etc.)
     eventBus.emit(ScreensetEvents.Changed, { 
       screensetId 
     });
 
     eventBus.emit(MenuEvents.ItemsChanged, { 
-      items: screensetService.getMenuItems(screensetId)
+      items: screensetRegistry.getMenuItems(screensetId)
     });
   };
 };

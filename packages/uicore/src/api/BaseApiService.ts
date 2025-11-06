@@ -25,7 +25,7 @@ export interface BaseApiServiceConfig {
   headers?: Record<string, string>;
   useMockApi?: boolean;
   mockDelay?: number;
-  mockMap?: Readonly<Record<string, any>>;
+  mockMap?: Readonly<Record<string, unknown>>;
 }
 
 /**
@@ -187,6 +187,13 @@ export abstract class BaseApiService {
   /**
    * Simulate network delay for mocks
    */
+  /**
+   * Update mock API setting
+   */
+  setUseMockApi(useMockApi: boolean): void {
+    this.config.useMockApi = useMockApi;
+  }
+
   private async simulateDelay(): Promise<void> {
     const delay = this.config.mockDelay ?? 500;
     return new Promise((resolve) => setTimeout(resolve, delay));
