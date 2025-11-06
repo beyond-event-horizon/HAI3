@@ -24,7 +24,7 @@ const Sidebar = React.forwardRef<
       className={cn(
         "group flex flex-col border-r border-mainMenu-border transition-[width] duration-200 ease-linear",
         "bg-mainMenu text-mainMenu-foreground",
-        collapsed ? "w-16" : "w-64",
+        collapsed ? "w-14" : "w-64",
         className
       )}
       {...props}
@@ -81,7 +81,7 @@ SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
   // HAI3 customization: All sizing uses rem-based Tailwind classes for theme responsiveness
-  "peer/menu-button flex w-full items-center gap-2 rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 group-data-[collapsible=icon]:!size-10 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>span:last-child]:overflow-hidden [&>svg]:size-5 [&>svg]:shrink-0 text-mainMenu-foreground hover:bg-mainMenu-hover data-[active=true]:bg-mainMenu-selected data-[active=true]:text-white data-[active=true]:font-medium",
+  "peer/menu-button flex w-full items-center gap-2 rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>span:last-child]:overflow-hidden [&>svg]:size-5 [&>svg]:shrink-0 text-mainMenu-foreground hover:bg-mainMenu-hover data-[active=true]:bg-mainMenu-selected data-[active=true]:text-white data-[active=true]:font-medium",
   {
     variants: {
       variant: {
@@ -148,7 +148,7 @@ const SidebarMenuIcon = React.forwardRef<
     ref={ref}
     // HAI3 customization: size-5 (1.25rem) scales with theme root font size
     // Force SVG children to fill container and inherit the rem-based size
-    className={cn("size-5 flex-shrink-0 [&>svg]:w-full [&>svg]:h-full", className)}
+    className={cn("size-5 min-w-[22px] flex-shrink-0 [&>svg]:w-full [&>svg]:h-full", className)}
     {...props}
   />
 ))
