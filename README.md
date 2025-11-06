@@ -1,3 +1,5 @@
+> VERSION: 0.1.0, early preview, do not use in production, overall scope completion ~30%
+
 # HAI3 - AI-Optimized UI Development Kit for Modern SaaS Applications
 
 **HAI3** is a **UI development kit** for modern SaaS applications - heavily optimized for **AI-driven UI generation** with minimal human assistance.
@@ -164,6 +166,8 @@ HAI3 defines a **three-stage development workflow** that maximizes AI efficiency
 
 ### Quick Start
 
+> NOTE: At this stage, HAI3 can only be explored within this repository. Future releases will include distributable `HAI3` npm packages.
+
 ```bash
 # Clone the repository
 git clone https://github.com/HAI3org/HAI3.git
@@ -171,6 +175,9 @@ cd HAI3
 
 # Install dependencies
 npm install
+
+# Build UI Core and UI Kit
+npm run build
 
 # Run the development server
 npm run dev
@@ -210,10 +217,12 @@ HAI3/                               # Repository root
 
 ### Creating a New Screen-Set
 
-1. Create a new folder in `src/components/screensets/`
-2. Add screens in `screens/` subfolder (each screen = one folder)
-3. Register the screen-set in `screensetConfig.ts`
-4. Switch to the new screen-set via the UI selector
+> NOTE: At this stage, HAI3 can only be explored within this repository. Future releases will include distributable `HAI3` npm packages.
+
+1. Create a new folder in `src/components/screensets/<screenset-name>`
+2. Add new screens by using your favorite AI agent / IDE just typing what you want to achieve in the prompt and asking it to put the code in your new `<screenset-name>` screenset folder
+3. AI will register the screen-set in `src/screensets/screensetRegistry.tsx` for you
+4. Run the app (`npm run build && npm run dev`) and switch to the new screen-set via the UI selector
 
 See [GUIDELINES.md](docs/GUIDELINES.md) for detailed development guidelines.
 
