@@ -219,7 +219,7 @@ HAI3/                               # Repository root
 
 > NOTE: At this stage, HAI3 can only be explored within this repository. Future releases will include distributable `HAI3` npm packages.
 
-1. Create a new folder in `src/components/screensets/<screenset-name>`
+1. Create a new folder in `src/screensets/<screenset-name>`
 2. Add new screens by using your favorite AI agent / IDE just typing what you want to achieve in the prompt and asking it to put the code in your new `<screenset-name>` screenset folder
 3. AI will register the screen-set in `src/screensets/screensetRegistry.tsx` for you
 4. Run the app (`npm run build && npm run dev`) and switch to the new screen-set via the UI selector
