@@ -148,7 +148,7 @@ const SidebarMenuIcon = React.forwardRef<
     ref={ref}
     // HAI3 customization: size-5 (1.25rem) scales with theme root font size
     // Force SVG children to fill container and inherit the rem-based size
-    className={cn("size-5 min-w-[22px] flex-shrink-0 [&>svg]:w-full [&>svg]:h-full", className)}
+    className={cn("size-5 min-w-[1.5rem] flex-shrink-0 [&>svg]:w-full [&>svg]:h-full", className)}
     {...props}
   />
 ))
