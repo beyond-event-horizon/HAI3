@@ -174,7 +174,7 @@ git clone https://github.com/HAI3org/HAI3.git
 cd HAI3
 
 # Install dependencies
-npm install
+npm ci
 
 # Build UI Core and UI Kit
 npm run build
