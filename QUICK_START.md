@@ -1,6 +1,6 @@
 # HAI3 UI-Core Quick Start Guide
 
-> **TARGET AUDIENCE:** Humans  
+> **TARGET AUDIENCE:** Humans
 > **PURPOSE:** Quick start guide for developers
 
 This guide will help you get started with HAI3 UI-Core development.
@@ -9,7 +9,7 @@ This guide will help you get started with HAI3 UI-Core development.
 
 1. **Install dependencies**
    ```bash
-   npm install
+   npm ci
    ```
 
 2. **Start development server**
@@ -70,7 +70,7 @@ src/
 
 ### Header
 ```typescript
-<Header 
+<Header
   logo={<Logo />}
   actions={<UserMenu />}
 />
@@ -91,7 +91,7 @@ const menuItems: MenuItem[] = [
 
 ### Sidebar
 ```typescript
-<Sidebar 
+<Sidebar
   position="left"
   title="Sidebar Title"
   collapsed={false}
@@ -122,7 +122,7 @@ import { useAppSelector } from '@/core/hooks/useRedux';
 const MyComponent = () => {
   const layout = useAppSelector(state => state.layout);
   const user = useAppSelector(state => state.core.user);
-  
+
   return <div>Menu collapsed: {layout.menuCollapsed}</div>;
 };
 ```
@@ -134,11 +134,11 @@ import { toggleMenu, setUser } from '@/core/store';
 
 const MyComponent = () => {
   const dispatch = useAppDispatch();
-  
+
   const handleToggle = () => {
     dispatch(toggleMenu());
   };
-  
+
   return <button onClick={handleToggle}>Toggle Menu</button>;
 };
 ```
@@ -226,7 +226,7 @@ Screensets are vertical slices of your application. Each screenset follows the v
    touch src/screensets/my-screenset/screens/home/HomeScreen.tsx
    touch src/screensets/my-screenset/screens/home/homeSlice.ts
    touch src/screensets/my-screenset/screens/home/index.ts
-   
+
    # Settings screen
    touch src/screensets/my-screenset/screens/settings/SettingsScreen.tsx
    touch src/screensets/my-screenset/screens/settings/settingsSlice.ts
