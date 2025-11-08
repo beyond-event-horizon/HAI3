@@ -33,14 +33,6 @@ export const store = configureStore({
     popup: popupReducer,
     overlay: overlayReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        // Ignore popup props which may contain non-serializable values
-        ignoredActions: ['popup/openPopup'],
-        ignoredPaths: ['popup.stack'],
-      },
-    }),
 });
 
 // Initialize effects - sets up event subscriptions
