@@ -1,70 +1,42 @@
-# Event-Driven Architecture
+# Event-Driven Architecture (Canonical)
 
-> Common: .ai/GUIDELINES.md
+## AI WORKFLOW (REQUIRED)
+1) Summarize 3–6 rules from this file before making changes.
+2) STOP if you introduce direct slice dispatch, prop drilling, or callback-based state mutation.
 
-## CRITICAL (AI: READ THIS FIRST)
+## CRITICAL RULES
+- Data flow pattern is fixed: Component → Action → Event → Effect → Slice → Store
+- Actions emit events; effects react to events and update their own slice only
+- Cross-domain communication is allowed **only via events**
+- Direct slice dispatch, prop drilling, and callback state mutation are **FORBIDDEN**
 
-**NEVER dispatch slice actions directly:**
-- FORBIDDEN: `dispatch(setSliceState(value))`
-- FORBIDDEN: `setSliceState(value)` 
-- REQUIRED: `actionFunction(value)` from `@/core/actions`
-- Pattern: Component -> Action -> Event -> Effect -> Slice -> Store
-- Detect: grep for `dispatch(set[A-Z])`
+## ACTIONS
+- Fire events through the event bus
+- May compose other actions
+- Must return `void` (no async Promise-returning thunks)
+- Cannot directly dispatch to slices
 
-**Event Naming:**
-- MUST: Past-tense `EntityActioned`, `StateChanged`
-- NEVER: Imperative `ActionEntity`, `ChangeState`
-- Format: `'namespace/eventName'`
-- Actions = imperative, Events = past-tense
+## EFFECTS
+- Subscribe to events
+- Update only their own slice
+- Contain no business logic
+- May not call actions
 
-**Actions:**
-- NEVER: `dispatch(setSliceData(...))`
-- ALWAYS: `eventBus.emit(NamespaceEvents.EventName, {...})`
-- Update own slice only + emit events
-- CAN: Call other actions (composition allowed)
-- PATTERN: Action -> Action is valid (e.g., fetchUser calls changeLanguage)
-- MUST: Return void (never Promise<void>)
-- FORBIDDEN: `async (dispatch) => Promise<void>`
-- REQUIRED: `(dispatch) => void` with fire-and-forget promises
+## EVENT NAMING
+- Past-tense names
+- Format: `namespace/eventName`
+- Actions use imperative names; events use past-tense names
 
-**Effects:**
-- MUST: Subscribe to events
-- MUST: Update own slice only
-- NEVER: Business logic
-- NEVER: Call actions (prevents cycles)
-- FORBIDDEN: `changeLanguage()`, `fetchUser()` etc in effects
-- WHY: Effect -> Action -> Event -> Effect = infinite loop potential
+## TYPE SAFETY
+- No explicit generic parameters when emitting
+- Every event key must exist in `EventPayloadMap`
+- Each event key maps to exactly one payload type
 
-**Cross-Domain:**
-- FORBIDDEN: `import { setSliceAction } from '@/layout/domains/domain'`
-- REQUIRED: Event-driven communication
+## FILE LOCATION RULES
+- Events, actions, slices, and effects belong to the **owning feature/slice** (package or app)
+- No global “core events” unless the feature truly spans multiple packages/apps
+- Each owner initializes its own effects in its own store/bootstrap file
 
-**Location (Vertical Slice):**
-- Event enums: `core/events/eventTypes/[namespace]Events.ts`
-- Type maps: Same file as enum + payload
-- Actions: `core/actions/[namespace]Actions.ts`
-- Effects: Co-located with slices
-- Init effects: `store.ts` calls `initEffects(store)`
-
-## Type Safety (AI: READ THIS)
-
-**FORBIDDEN:**
-- `eventBus.emit<PayloadType>(event, payload)`
-- Payload type mismatch caught at runtime
-
-**REQUIRED:**
-- `eventBus.emit(event, payload)`
-- NO explicit type parameters
-- Compile-time errors for mismatches
-- Add to eventMap.ts: `'namespace/eventName': PayloadType`
-
-## Screenset Events (AI: READ THIS)
-
-**Module augmentation in screenset code:**
-```ts
-declare module '@hai3/uicore' {
-  interface EventPayloadMap {
-    'namespace/eventName': PayloadType;
-  }
-}
-```
+## DETECTION RULES
+- Direct slice dispatch: `dispatch(set[A-Z])`
+- Cross-domain slice import: `import .*Slice .* from`

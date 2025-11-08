@@ -1,69 +1,40 @@
 # UI Kit Contracts Guidelines
 
-> Common: .ai/GUIDELINES.md
+## AI WORKFLOW (REQUIRED)
+1) Summarize 3–5 rules from this file before proposing changes.
+2) STOP if you add React code, styling, runtime logic, or string literals instead of enums.
 
-## CRITICAL (AI: READ THIS FIRST)
+## SCOPE
+- All code under `packages/uikit-contracts/**`
+- This package defines **types only** — no React, no runtime, no CSS
 
-**Package:** `@hai3/uikit-contracts`
+## CRITICAL RULES
+- `UiKitComponent` enum is the single source of truth for component IDs
+- Each component contract consists of:
+  1) Enum entry  
+  2) `XProps` interface  
+  3) `XComponent` type alias  
+  4) `UiKitComponentMap` entry  
+- `UiKitIcon` enum defines **core** icon IDs (screenset-level icons never belong here)
+- `Theme` interface defines the full structure all themes must follow
+- No React imports, no JSX, no runtime logic, no Tailwind, no CSS
 
-**Content Rules:**
-- REQUIRED: UiKitComponent enum (single source of truth)
-- REQUIRED: UiKitComponentMap interface (enum-driven)
-- REQUIRED: Component prop interfaces (ButtonProps, SwitchProps, etc)
-- REQUIRED: UiKitIcon enum (core framework icon IDs)
-- REQUIRED: Theme interface (structure of theme objects)
-- FORBIDDEN: React components, implementations, runtime logic
-- FORBIDDEN: React imports, component implementations
-- FORBIDDEN: Business logic, Redux, state management
-- FORBIDDEN: Styling, Tailwind, CSS
-- GOOD: Pure TypeScript types and enums only
+## STOP CONDITIONS
+- Adding `import React` or any JSX
+- Declaring string literals instead of enum values
+- Adding runtime helpers, functions, or styling
+- Modifying registry/service logic (Open/Closed violation)
 
-## Component Contracts (AI: READ THIS)
+## ADDING A COMPONENT CONTRACT
+1) Add enum entry to `UiKitComponent`
+2) Add `export interface XProps {}`
+3) Add `export type XComponent = React.FC<XProps>`
+4) Add map entry in `UiKitComponentMap`
+5) No duplicated strings — enum value must be the source of truth
 
-**Adding Component Contract:**
-1. Add to UiKitComponent enum: `X = 'X',`
-2. Add prop interface: `export interface XProps { ... }`
-3. Add component type: `export type XComponent = React.FC<XProps>;`
-4. Add to UiKitComponentMap: `[UiKitComponent.X]: XComponent;`
-5. Enum is single source of truth - no string duplication
-6. NO modification to registry service (Open/Closed)
-
-**Type Safety:**
-- All props optional by default UNLESS required for functionality
-- Component types use React.FC<Props> or FunctionComponent<Props>
-- Enums for variants, NOT string unions
-- FORBIDDEN: `any`, loose types
-
-## Icon Contracts
-
-- Core framework icons: Add to UiKitIcon enum
-- Screenset-specific icons: Export constants in screenset
-- NEVER: Hardcoded strings for icon IDs
-
-## Theme Contracts
-
-- UI Kit MUST implement matching structure
-- Modifying requires version bump
-- Apps MUST match structure
-
-## Dependencies
-
-- REQUIRED: peerDependencies: `react` (types only)
-- REQUIRED: devDependencies: TypeScript, tsup
-- FORBIDDEN: @radix-ui, styling libs, utilities
-- Consumers: `@hai3/uicore`, `@hai3/uikit` depend on contracts
-- Apps import via `@hai3/uicore` (re-exported)
-
-## Versioning
-
-**Breaking changes:**
-- Adding required props to existing interfaces
-- Removing props from interfaces
-- Changing Theme structure
-- Removing enum values
-
-**Non-breaking:**
-- Adding optional props
-- Adding new component contracts
-- Adding new enum values
-- Documentation updates
+## PRE-DIFF CHECKLIST
+- [ ] Enum entry added
+- [ ] Props interface added
+- [ ] Component type alias added
+- [ ] `UiKitComponentMap` updated
+- [ ] No React/JSX/CSS/styling or runtime code added
