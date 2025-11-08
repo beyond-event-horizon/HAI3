@@ -5,6 +5,7 @@ import { toggleMenu } from '../../../core/actions';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
 import { UiKitComponent, UiKitIcon } from '@hai3/uikit-contracts';
 import { useTranslation } from '../../../i18n/useTranslation';
+import { TextLoader } from '../../../i18n/TextLoader';
 
 export interface MenuProps {}
 
@@ -61,7 +62,11 @@ export const Menu: React.FC<MenuProps> = () => {
                   onClick={() => navigateToScreen(item.id)}
                 >
                   {icon && <SidebarMenuIcon>{icon}</SidebarMenuIcon>}
-                  <SidebarMenuLabel>{translatedLabel}</SidebarMenuLabel>
+                  <SidebarMenuLabel>
+                    <TextLoader skeletonClassName="h-4 w-20" inheritColor>
+                      {translatedLabel}
+                    </TextLoader>
+                  </SidebarMenuLabel>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             );

@@ -188,6 +188,21 @@ export interface SwitchProps {
 export type SwitchComponent = ComponentType<SwitchProps>;
 
 /**
+ * Skeleton Component Contract
+ * Used for loading states
+ */
+export interface SkeletonProps {
+  className?: string;
+  /**
+   * If true, skeleton inherits text color instead of using bg-muted
+   * Useful for buttons, menu items, and colored text
+   */
+  inheritColor?: boolean;
+}
+
+export type SkeletonComponent = ComponentType<SkeletonProps>;
+
+/**
  * Sidebar Components Contract
  */
 export interface SidebarProps {
@@ -341,6 +356,7 @@ export enum UiKitComponent {
   Button = 'Button',
   IconButton = 'IconButton',
   Switch = 'Switch',
+  Skeleton = 'Skeleton',
   Header = 'Header',
   Sidebar = 'Sidebar',
   SidebarContent = 'SidebarContent',
@@ -370,6 +386,7 @@ export interface UiKitComponentMap {
   [UiKitComponent.Button]: ButtonComponent;
   [UiKitComponent.IconButton]: IconButtonComponent;
   [UiKitComponent.Switch]: SwitchComponent;
+  [UiKitComponent.Skeleton]: SkeletonComponent;
   
   // Layout components
   [UiKitComponent.Header]: HeaderComponent;

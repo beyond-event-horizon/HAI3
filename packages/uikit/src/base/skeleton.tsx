@@ -1,12 +1,25 @@
 import { cn } from "../lib/utils"
 
+export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
+  /**
+   * If true, skeleton inherits text color instead of using bg-muted
+   * Useful for buttons, menu items, and colored text
+   */
+  inheritColor?: boolean;
+}
+
 function Skeleton({
   className,
+  inheritColor = false,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+}: SkeletonProps) {
   return (
     <div
-      className={cn("animate-pulse rounded-md bg-muted", className)}
+      className={cn(
+        "animate-pulse rounded-md",
+        inheritColor ? "bg-current opacity-20" : "bg-muted",
+        className
+      )}
       {...props}
     />
   )
