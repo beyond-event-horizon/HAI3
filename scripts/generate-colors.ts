@@ -7,6 +7,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import allColors from 'tailwindcss/colors';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -170,7 +171,7 @@ export default colors;
 `;
 
 // Write to packages/uikit/src/styles/tailwindColors.ts
-const __filename = new URL(import.meta.url).pathname;
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const outputPath = path.join(__dirname, '../packages/uikit/src/styles/tailwindColors.ts');
 fs.writeFileSync(outputPath, output, 'utf8');
