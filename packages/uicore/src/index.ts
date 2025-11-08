@@ -70,6 +70,7 @@ export * from './api/accounts/api';
 // i18n (Internationalization system)
 export { i18nRegistry } from './i18n/i18nRegistry';
 export { useTranslation } from './i18n/useTranslation';
+export { TextLoader, type TextLoaderProps } from './i18n/TextLoader';
 export { changeLanguage } from './core/actions/i18nActions';
 export { Language, TextDirection, LanguageDisplayMode, SUPPORTED_LANGUAGES, type LanguageMetadata, type TranslationDictionary, type TranslationLoader, type I18nConfig } from './i18n/types';
 export { I18nEvents, type LanguageChangedPayload } from './core/events/eventTypes/i18nEvents';

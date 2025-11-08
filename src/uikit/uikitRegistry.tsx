@@ -9,6 +9,7 @@ import {
   Button,
   IconButton,
   Switch,
+  Skeleton,
   Header,
   Sidebar,
   SidebarContent,
@@ -42,6 +43,7 @@ uikitRegistry.registerComponents({
   Button: Button as import('@hai3/uikit-contracts').ButtonComponent, // Type assertion to bridge contract/implementation mismatch
   IconButton: IconButton as import('@hai3/uikit-contracts').IconButtonComponent,
   Switch: Switch as import('@hai3/uikit-contracts').SwitchComponent,
+  Skeleton: Skeleton as import('@hai3/uikit-contracts').SkeletonComponent,
   
   // Layout components
   Header,
