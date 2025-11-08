@@ -30,7 +30,9 @@
     "@hai3/uicore": "^0.1.0",
     "@hai3/uikit": "^0.1.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

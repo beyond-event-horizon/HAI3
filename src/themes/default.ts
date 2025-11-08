@@ -33,6 +33,43 @@ export const defaultTheme: Theme = {
       selected: colors.blue[600],
       border: colors.gray[700],  // Match hover color
     },
+    chat: {
+      leftMenu: {
+        DEFAULT: colors.gray[800],
+        foreground: colors.white,
+        hover: colors.gray[700],
+        selected: colors.blue[600],
+        border: colors.gray[700],
+      },
+      message: {
+        user: {
+          background: colors.blue[500],
+          foreground: colors.white,
+        },
+        assistant: {
+          background: colors.green[500],
+          foreground: colors.white,
+        },
+      },
+      input: {
+        background: colors.white,
+        foreground: colors.gray[900],
+        border: colors.gray[300],
+      },
+      codeBlock: {
+        background: colors.gray[800],
+        foreground: colors.gray[200],
+        border: colors.gray[700],
+        headerBackground: colors.gray[700],
+      },
+    },
+    inScreenMenu: {
+      DEFAULT: colors.gray[50],
+      foreground: colors.gray[900],
+      hover: colors.gray[100],
+      selected: colors.blue[50],
+      border: colors.gray[200],
+    },
   },
   spacing: {
     xs: '0.25rem',

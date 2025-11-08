@@ -31,6 +31,43 @@ export interface Theme {
       selected: string;
       border: string;
     };
+    chat: {
+      leftMenu: {
+        DEFAULT: string;
+        foreground: string;
+        hover: string;
+        selected: string;
+        border: string;
+      };
+      message: {
+        user: {
+          background: string;
+          foreground: string;
+        };
+        assistant: {
+          background: string;
+          foreground: string;
+        };
+      };
+      input: {
+        background: string;
+        foreground: string;
+        border: string;
+      };
+      codeBlock: {
+        background: string;
+        foreground: string;
+        border: string;
+        headerBackground: string;
+      };
+    };
+    inScreenMenu: {
+      DEFAULT: string;
+      foreground: string;
+      hover: string;
+      selected: string;
+      border: string;
+    };
   };
   spacing: {
     xs: string;

@@ -32,6 +32,36 @@ export const lightTheme: Theme = {
       selected: colors.blue[600],
       border: colors.zinc[200],
     },
+    chat: {
+      leftMenu: {
+        DEFAULT: colors.zinc[100],
+        foreground: colors.zinc[900],
+        hover: colors.zinc[200],
+        selected: colors.blue[600],
+        border: colors.zinc[200],
+      },
+      message: {
+        user: {
+          background: colors.blue[500],
+          foreground: colors.white,
+        },
+        assistant: {
+          background: colors.green[500],
+          foreground: colors.white,
+        },
+      },
+      input: {
+        background: colors.white,
+        foreground: colors.zinc[900],
+        border: colors.zinc[300],
+      },
+      codeBlock: {
+        background: colors.zinc[100],
+        foreground: colors.zinc[900],
+        border: colors.zinc[300],
+        headerBackground: colors.zinc[200],
+      },
+    },
   },
   spacing: {
     xs: '0.25rem',

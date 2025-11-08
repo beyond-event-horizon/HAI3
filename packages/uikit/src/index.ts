@@ -111,6 +111,11 @@ export { SidebarHeader, type SidebarHeaderProps } from './composite/navigation/S
 // Composite user components
 export { UserInfo, type UserInfoProps } from './composite/user/UserInfo';
 
+// Composite chat components
+export { MessageBubble, MessageType, type MessageBubbleProps } from './composite/chat/MessageBubble';
+export { ChatInput, type ChatInputProps } from './composite/chat/ChatInput';
+export { ThreadList, type ThreadListProps, type ChatThread } from './composite/chat/ThreadList';
+
 // Icons (tree-shakeable - app imports and registers only what it needs)
 export { MenuIcon, MENU_ICON_ID } from './icons/MenuIcon';
 export { CloseIcon, CLOSE_ICON_ID } from './icons/CloseIcon';

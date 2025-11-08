@@ -1,5 +1,6 @@
 import { screensetRegistry } from '@hai3/uicore';
 import { demoScreenset } from './drafts/demo/demoScreenset';
+import { chatScreenset } from './drafts/chat/chatScreenset';
 
 /**
  * Screenset Registry
@@ -22,6 +23,7 @@ import { demoScreenset } from './drafts/demo/demoScreenset';
  * This runs automatically when the module is imported
  */
 screensetRegistry.register(demoScreenset);
+screensetRegistry.register(chatScreenset);
 
 // Add more screensets here and they'll auto-register
 // import { anotherScreenset } from './production/another/anotherScreenset';

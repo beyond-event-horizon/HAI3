@@ -32,6 +32,36 @@ export const darkTheme: Theme = {
       selected: colors.zinc[500],
       border: colors.zinc[800],
     },
+    chat: {
+      leftMenu: {
+        DEFAULT: colors.zinc[900],
+        foreground: colors.zinc[100],
+        hover: colors.zinc[800],
+        selected: colors.zinc[700],
+        border: colors.zinc[800],
+      },
+      message: {
+        user: {
+          background: colors.blue[600],
+          foreground: colors.white,
+        },
+        assistant: {
+          background: colors.green[600],
+          foreground: colors.white,
+        },
+      },
+      input: {
+        background: colors.zinc[900],
+        foreground: colors.zinc[100],
+        border: colors.zinc[700],
+      },
+      codeBlock: {
+        background: colors.zinc[900],
+        foreground: colors.zinc[200],
+        border: colors.zinc[800],
+        headerBackground: colors.zinc[800],
+      },
+    },
   },
   spacing: {
     xs: '0.25rem',
