@@ -2,9 +2,11 @@ import { type ScreensetConfig, uikitRegistry } from '@hai3/uicore';
 import { HelloWorldScreen, HELLO_WORLD_SCREEN_ID } from './screens/helloworld/HelloWorldScreen';
 import { CurrentThemeScreen, CURRENT_THEME_SCREEN_ID } from './screens/theme/CurrentThemeScreen';
 import { ProfileScreen, PROFILE_SCREEN_ID } from './screens/profile/ProfileScreen';
+import { UIKitElementsScreen, UI_KIT_ELEMENTS_SCREEN_ID } from './screens/uikit/UIKitElementsScreen';
 import { WorldIcon, WORLD_ICON_ID } from './uikit/icons/WorldIcon';
 import { PaletteIcon, PALETTE_ICON_ID } from './uikit/icons/PaletteIcon';
 import { UserIcon, USER_ICON_ID } from './uikit/icons/UserIcon';
+import { ShadcnIcon, SHADCN_ICON_ID } from './uikit/icons/ShadcnIcon';
 
 /**
  * Demo Screenset ID
@@ -20,6 +22,7 @@ uikitRegistry.registerIcons({
   [WORLD_ICON_ID]: <WorldIcon />,
   [PALETTE_ICON_ID]: <PaletteIcon />,
   [USER_ICON_ID]: <UserIcon />,
+  [SHADCN_ICON_ID]: <ShadcnIcon />,
 });
 
 /**
@@ -55,6 +58,14 @@ export const demoScreenset: ScreensetConfig = {
         icon: USER_ICON_ID,
       },
       screen: ProfileScreen,
+    },
+    {
+      menuItem: {
+        id: UI_KIT_ELEMENTS_SCREEN_ID,
+        label: 'UI Kit Elements',
+        icon: SHADCN_ICON_ID,
+      },
+      screen: UIKitElementsScreen,
     },
   ],
 };
