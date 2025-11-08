@@ -1,10 +1,7 @@
 ## TODO
-- Get rid of serializableCheck exclusions.
 - Generic approach to text loaders (directive?).
 - Toggles and dropdowns are broken for RTL languages.
 - Rename Menu to MainMenu. Update file names, variables names, etc. everywhere.
-- Main menu collapsed state misalignment.
-- Add loaders while user info is being loaded.
 - Chat: fix color schemas
 - Chat: review and cleanup the generated chat code
 - Chat: ensure chat logic works well with Store and API
