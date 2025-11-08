@@ -79,6 +79,13 @@ export const draculaLargeTheme: Theme = {
         headerBackground: dracula.currentLine,
       },
     },
+    inScreenMenu: {
+      DEFAULT: dracula.backgroundDark,
+      foreground: dracula.foreground,
+      hover: dracula.currentLine,
+      selected: dracula.purple,
+      border: dracula.currentLine,
+    },
   },
   spacing: {
     xs: '0.375rem',   // 1.5x

@@ -62,6 +62,13 @@ export const darkTheme: Theme = {
         headerBackground: colors.zinc[800],
       },
     },
+    inScreenMenu: {
+      DEFAULT: colors.zinc[900],
+      foreground: colors.zinc[100],
+      hover: colors.zinc[800],
+      selected: colors.zinc[700],
+      border: colors.zinc[800],
+    },
   },
   spacing: {
     xs: '0.25rem',

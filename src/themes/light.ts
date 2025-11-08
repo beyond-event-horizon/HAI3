@@ -62,6 +62,13 @@ export const lightTheme: Theme = {
         headerBackground: colors.zinc[200],
       },
     },
+    inScreenMenu: {
+      DEFAULT: colors.zinc[50],
+      foreground: colors.zinc[900],
+      hover: colors.zinc[100],
+      selected: colors.blue[50],
+      border: colors.zinc[200],
+    },
   },
   spacing: {
     xs: '0.25rem',

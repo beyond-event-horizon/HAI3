@@ -8,6 +8,21 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Copy } from 'lucide-react';
 
+// Type helpers for react-markdown components
+interface CodeProps extends React.ComponentProps<'code'> {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+interface OlProps extends React.ComponentProps<'ol'> {
+  children?: React.ReactNode;
+  start?: number;
+}
+
+interface LiProps extends React.ComponentProps<'li'> {
+  children?: React.ReactNode;
+}
+
 export interface MarkdownRendererProps {
   content: string;
   className?: string;
@@ -41,7 +56,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
         remarkPlugins={[remarkGfm]}
         skipHtml={false}
         components={{
-          code({ className, children, ...props }: any) {
+          code({ className, children, ...props }: CodeProps) {
             const match = /language-(\w+)/.exec(className || '');
             const language = match ? match[1] : '';
             const codeString = String(children).replace(/\n$/, '');
@@ -83,7 +98,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           ul({ children }) {
             return <ul className="list-disc list-inside mb-4 space-y-1">{children}</ul>;
           },
-          ol({ children, start }: any) {
+          ol({ children, start }: OlProps) {
             // Preserve the start attribute from markdown
             const startNum = start || 1;
             return (
@@ -96,7 +111,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
               </ol>
             );
           },
-          li({ children }: any) {
+          li({ children }: LiProps) {
             return <li className="leading-relaxed pl-2">{children}</li>;
           },
           h1({ children }) {
