@@ -12,9 +12,11 @@ import { eventBus } from '../core/events/eventBus';
 import {
   UserEvents,
   ApiEvents,
+  I18nEvents,
 } from '../core/events/eventTypes';
-import { setUser, setError, setLoading, setUseMockApi } from './appSlice';
+import { setUser, setError, setLoading, setUseMockApi, setLanguage } from './appSlice';
 import { apiRegistry } from '../api/apiRegistry';
+import { i18nRegistry } from '../i18n/i18nRegistry';
 
 /**
  * Initialize app effects
@@ -36,5 +38,14 @@ export function initAppEffects(store: Store): void {
   eventBus.on(ApiEvents.ApiModeChanged, ({ useMockApi }) => {
     store.dispatch(setUseMockApi(useMockApi));
     apiRegistry.setMockMode(useMockApi);
+  });
+
+  // i18n events
+  eventBus.on(I18nEvents.LanguageChanged, async ({ language }) => {
+    // Update Redux store
+    store.dispatch(setLanguage(language));
+    
+    // Update i18nRegistry (sets HTML attributes, loads translations)
+    await i18nRegistry.setLanguage(language);
   });
 }

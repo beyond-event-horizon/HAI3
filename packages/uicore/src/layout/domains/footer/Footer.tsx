@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../../hooks/useRedux';
 import { ThemeSelector } from '../../../components/ThemeSelector';
 import { ScreensetSelector } from '../../../components/ScreensetSelector';
 import { ApiModeToggle } from '../../../components/ApiModeToggle';
+import { LanguageSelector } from '../../../components/LanguageSelector';
 import { setCurrentScreenset, setTheme } from '../../../core/actions';
 import { themeRegistry } from '../../../theme/themeRegistry';
 import { setFooterConfig } from './footerSlice';
@@ -86,6 +87,7 @@ export const Footer: React.FC<FooterProps> = () => {
       </div>
       <div className="flex items-center gap-4">
         <ApiModeToggle />
+        <LanguageSelector />
         {screensetOptions.length > 0 && (
           <ScreensetSelector
             options={screensetOptions}

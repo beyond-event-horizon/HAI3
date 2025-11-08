@@ -1,4 +1,4 @@
-import { type ScreensetConfig, uikitRegistry } from '@hai3/uicore';
+import { type ScreensetConfig, uikitRegistry, i18nRegistry, Language, type TranslationDictionary } from '@hai3/uicore';
 import { HelloWorldScreen, HELLO_WORLD_SCREEN_ID } from './screens/helloworld/HelloWorldScreen';
 import { CurrentThemeScreen, CURRENT_THEME_SCREEN_ID } from './screens/theme/CurrentThemeScreen';
 import { ProfileScreen, PROFILE_SCREEN_ID } from './screens/profile/ProfileScreen';
@@ -15,6 +15,51 @@ import { ShadcnIcon, SHADCN_ICON_ID } from './uikit/icons/ShadcnIcon';
 export const DEMO_SCREENSET_ID = 'demo';
 
 /**
+ * Register translations
+ * All screenset configuration in one place
+ * Record<Language, ...> enforces ALL languages at compile time
+ */
+const TRANSLATIONS: Record<Language, () => Promise<{ default: TranslationDictionary }>> = {
+  [Language.English]: () => import('./i18n/en.json'),
+  [Language.Arabic]: () => import('./i18n/ar.json'),
+  [Language.Spanish]: () => import('./i18n/en.json'), // TODO: Create es.json
+  [Language.French]: () => import('./i18n/en.json'), // TODO: Create fr.json
+  [Language.German]: () => import('./i18n/en.json'), // TODO: Create de.json
+  [Language.Italian]: () => import('./i18n/en.json'), // TODO: Create it.json
+  [Language.Portuguese]: () => import('./i18n/en.json'), // TODO: Create pt.json
+  [Language.Dutch]: () => import('./i18n/en.json'), // TODO: Create nl.json
+  [Language.Russian]: () => import('./i18n/en.json'), // TODO: Create ru.json
+  [Language.Polish]: () => import('./i18n/en.json'), // TODO: Create pl.json
+  [Language.Ukrainian]: () => import('./i18n/en.json'), // TODO: Create uk.json
+  [Language.Czech]: () => import('./i18n/en.json'), // TODO: Create cs.json
+  [Language.Hebrew]: () => import('./i18n/en.json'), // TODO: Create he.json
+  [Language.Persian]: () => import('./i18n/en.json'), // TODO: Create fa.json
+  [Language.Urdu]: () => import('./i18n/en.json'), // TODO: Create ur.json
+  [Language.Turkish]: () => import('./i18n/en.json'), // TODO: Create tr.json
+  [Language.ChineseSimplified]: () => import('./i18n/en.json'), // TODO: Create zh-CN.json
+  [Language.ChineseTraditional]: () => import('./i18n/en.json'), // TODO: Create zh-TW.json
+  [Language.Japanese]: () => import('./i18n/en.json'), // TODO: Create ja.json
+  [Language.Korean]: () => import('./i18n/en.json'), // TODO: Create ko.json
+  [Language.Vietnamese]: () => import('./i18n/en.json'), // TODO: Create vi.json
+  [Language.Thai]: () => import('./i18n/en.json'), // TODO: Create th.json
+  [Language.Indonesian]: () => import('./i18n/en.json'), // TODO: Create id.json
+  [Language.Hindi]: () => import('./i18n/en.json'), // TODO: Create hi.json
+  [Language.Bengali]: () => import('./i18n/en.json'), // TODO: Create bn.json
+  [Language.Swedish]: () => import('./i18n/en.json'), // TODO: Create sv.json
+  [Language.Danish]: () => import('./i18n/en.json'), // TODO: Create da.json
+  [Language.Norwegian]: () => import('./i18n/en.json'), // TODO: Create no.json
+  [Language.Finnish]: () => import('./i18n/en.json'), // TODO: Create fi.json
+  [Language.Greek]: () => import('./i18n/en.json'), // TODO: Create el.json
+  [Language.Romanian]: () => import('./i18n/en.json'), // TODO: Create ro.json
+  [Language.Hungarian]: () => import('./i18n/en.json'), // TODO: Create hu.json
+};
+
+i18nRegistry.registerLoader(`screenset.${DEMO_SCREENSET_ID}`, async (language: Language): Promise<TranslationDictionary> => {
+  const module = await TRANSLATIONS[language]();
+  return module.default;
+});
+
+/**
  * Register screenset-specific icons
  * Screenset is responsible for registering its own icons
  */
@@ -27,7 +72,7 @@ uikitRegistry.registerIcons({
 
 /**
  * Demo Screenset Configuration
- * Self-contained - knows about its own screens, icons, and structure
+ * Self-contained - knows about its own screens, icons, translations, and structure
  */
 export const demoScreenset: ScreensetConfig = {
   id: DEMO_SCREENSET_ID,
@@ -38,7 +83,7 @@ export const demoScreenset: ScreensetConfig = {
     {
       menuItem: {
         id: HELLO_WORLD_SCREEN_ID,
-        label: 'Hello World',
+        label: `screenset.${DEMO_SCREENSET_ID}:screens.${HELLO_WORLD_SCREEN_ID}.title`,
         icon: WORLD_ICON_ID,
       },
       screen: HelloWorldScreen,
@@ -46,7 +91,7 @@ export const demoScreenset: ScreensetConfig = {
     {
       menuItem: {
         id: CURRENT_THEME_SCREEN_ID,
-        label: 'Current Theme',
+        label: `screenset.${DEMO_SCREENSET_ID}:screens.${CURRENT_THEME_SCREEN_ID}.title`,
         icon: PALETTE_ICON_ID,
       },
       screen: CurrentThemeScreen,
@@ -54,7 +99,7 @@ export const demoScreenset: ScreensetConfig = {
     {
       menuItem: {
         id: PROFILE_SCREEN_ID,
-        label: 'User Profile',
+        label: `screenset.${DEMO_SCREENSET_ID}:screens.${PROFILE_SCREEN_ID}.title`,
         icon: USER_ICON_ID,
       },
       screen: ProfileScreen,
@@ -62,7 +107,7 @@ export const demoScreenset: ScreensetConfig = {
     {
       menuItem: {
         id: UI_KIT_ELEMENTS_SCREEN_ID,
-        label: 'UI Kit Elements',
+        label: `screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.title`,
         icon: SHADCN_ICON_ID,
       },
       screen: UIKitElementsScreen,

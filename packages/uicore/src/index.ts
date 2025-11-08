@@ -35,6 +35,8 @@ export { Overlay, type OverlayProps } from './layout/domains/overlay/Overlay';
 export { UserInfo } from './components/UserInfo';
 export { ThemeSelector, type ThemeSelectorProps } from './components/ThemeSelector';
 export { ScreensetSelector, type ScreensetSelectorProps, type ScreensetOption } from './components/ScreensetSelector';
+// TODO: Uncomment when Select components are registered in UI Kit
+// export { LanguageSelector, type LanguageSelectorProps } from './components/LanguageSelector';
 
 // Screenset management (Footer domain handles watching)
 export { screensetRegistry, type ScreensetConfig } from './screensets/screensetRegistry';
@@ -63,3 +65,13 @@ export { apiRegistry, type ApiServicesConfig, type ApiServicesMap } from './api/
 export { BaseApiService, type BaseApiServiceConfig } from './api/BaseApiService';
 export { AccountsApiService, ACCOUNTS_DOMAIN } from './api/accounts/AccountsApiService'; // Triggers self-registration
 export * from './api/accounts/api';
+
+// i18n (Internationalization system)
+export { i18nRegistry } from './i18n/i18nRegistry';
+export { useTranslation } from './i18n/useTranslation';
+export { changeLanguage } from './core/actions/i18nActions';
+export { Language, TextDirection, LanguageDisplayMode, SUPPORTED_LANGUAGES, type LanguageMetadata, type TranslationDictionary, type TranslationLoader, type I18nConfig } from './i18n/types';
+export { I18nEvents, type LanguageChangedPayload } from './core/events/eventTypes/i18nEvents';
+
+// Event Bus (for i18n lazy loading and custom screenset events)
+export { eventBus } from './core/events/eventBus';
