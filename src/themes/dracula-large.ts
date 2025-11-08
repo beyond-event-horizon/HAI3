@@ -49,6 +49,36 @@ export const draculaLargeTheme: Theme = {
       selected: dracula.purple,
       border: dracula.currentLine,
     },
+    chat: {
+      leftMenu: {
+        DEFAULT: dracula.backgroundDark,
+        foreground: dracula.foreground,
+        hover: dracula.currentLine,
+        selected: dracula.purple,
+        border: dracula.currentLine,
+      },
+      message: {
+        user: {
+          background: dracula.purple,
+          foreground: dracula.background,
+        },
+        assistant: {
+          background: dracula.green,
+          foreground: dracula.background,
+        },
+      },
+      input: {
+        background: dracula.background,
+        foreground: dracula.foreground,
+        border: dracula.currentLine,
+      },
+      codeBlock: {
+        background: dracula.backgroundDark,
+        foreground: dracula.foreground,
+        border: dracula.currentLine,
+        headerBackground: dracula.currentLine,
+      },
+    },
   },
   spacing: {
     xs: '0.375rem',   // 1.5x

@@ -3,3 +3,12 @@
 - Rename Menu to MainMenu. Update file names, variables names, etc. everywhere.
 - Main menu collapsed state misalignment.
 - Add loaders while user info is being loaded.
+- Chat: fix color schemas
+- Chat: review and cleanup the generated chat code
+- Chat: ensure chat logic works well with Store and API
+- Chat: align with openapi Chat API spec
+- Chat: review and decide if we need dedicated UI-kit / UI-core component and what to do with Theme
+- Chat: fix all arch:check issues
+- build test: ensure there are no custom colors (e.g. bg-green-500, text-gray-700)
+- arch:check - skip folders starting with "." , e.g. ".HAI3-poc.old"
+- global "full screen" toggle (as overlay on the top of the screen)
