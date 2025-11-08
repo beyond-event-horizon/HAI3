@@ -14,7 +14,7 @@ import {
   ApiEvents,
   I18nEvents,
 } from '../core/events/eventTypes';
-import { setUser, setError, setLoading, setUseMockApi, setLanguage } from './appSlice';
+import { setUser, setError, setLoading, setUseMockApi, setLanguage, setTranslationsReady } from './appSlice';
 import { apiRegistry } from '../api/apiRegistry';
 import { i18nRegistry } from '../i18n/i18nRegistry';
 
@@ -42,10 +42,16 @@ export function initAppEffects(store: Store): void {
 
   // i18n events
   eventBus.on(I18nEvents.LanguageChanged, async ({ language }) => {
+    // Mark translations as not ready while loading
+    store.dispatch(setTranslationsReady(false));
+    
     // Update Redux store
     store.dispatch(setLanguage(language));
     
     // Update i18nRegistry (sets HTML attributes, loads translations)
     await i18nRegistry.setLanguage(language);
+    
+    // Mark translations as ready after loading
+    store.dispatch(setTranslationsReady(true));
   });
 }

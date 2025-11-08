@@ -57,6 +57,7 @@ export { AppRouter } from './core/routing/AppRouter';
 export { routeRegistry, type RouteInfo } from './core/routing/routeRegistry';
 
 // Event-driven actions (AI: READ THIS - use these, NOT slice actions)
+// Note: bootstrapApp is internal to uicore, dispatched automatically by Layout
 export { setTheme, setCurrentScreenset, toggleMenu, navigateToScreen, fetchCurrentUser, setApiMode } from './core/actions';
 export { setSelectedScreen } from './layout/layoutSlice'; // Direct action (Menu internal use)
 

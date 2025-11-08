@@ -19,14 +19,10 @@ export class I18nRegistry {
   private loaders = new Map<string, TranslationLoader>();
   // namespace → loader function
   
-  private currentLanguage: Language = Language.English;
-  private fallbackLanguage: Language = Language.English;
+  private currentLanguage: Language | null = null; // null until first language is set
 
-  constructor(config?: Partial<I18nConfig>) {
-    if (config) {
-      this.fallbackLanguage = config.fallbackLanguage ?? Language.English;
-      this.currentLanguage = config.defaultLanguage ?? Language.English;
-    }
+  constructor(_config?: Partial<I18nConfig>) {
+    // No default language - wait for user's language to be loaded
   }
 
   /**
@@ -51,21 +47,15 @@ export class I18nRegistry {
   t(key: string, params?: Record<string, string | number | boolean>): string {
     const { namespace, path } = this.parseKey(key);
 
-    // Try current language
-    let translation = this.lookup(namespace, path, this.currentLanguage);
-    if (translation) {
-      return this.interpolate(translation, params);
-    }
-
-    // Try fallback language
-    if (this.currentLanguage !== this.fallbackLanguage) {
-      translation = this.lookup(namespace, path, this.fallbackLanguage);
+    // Try current language (if set)
+    if (this.currentLanguage) {
+      const translation = this.lookup(namespace, path, this.currentLanguage);
       if (translation) {
         return this.interpolate(translation, params);
       }
     }
 
-    // Return key as last resort
+    // Return key as last resort (no language loaded yet)
     return key;
   }
 
@@ -75,28 +65,28 @@ export class I18nRegistry {
    * Does NOT emit events (follows Flux: Effect updates own domain only)
    */
   async setLanguage(language: Language): Promise<void> {
-    if (this.currentLanguage === language) return;
-
     const metadata = this.getLanguageMetadata(language);
     if (!metadata) {
       console.error(`[i18n] Unsupported language: ${language}`);
       return;
     }
 
+    // Always update currentLanguage and HTML attributes
     this.currentLanguage = language;
 
     // Update HTML attributes for RTL support
     document.documentElement.setAttribute(HTML_LANG_ATTRIBUTE, language);
     document.documentElement.setAttribute(HTML_DIR_ATTRIBUTE, metadata.direction);
 
-    // Load translations for the new language
+    // Always load translations (idempotent - won't reload if already loaded)
     await this.loadLanguage(language);
   }
 
   /**
    * Get current language
+   * Returns null if no language set yet
    */
-  getLanguage(): Language {
+  getLanguage(): Language | null {
     return this.currentLanguage;
   }
 

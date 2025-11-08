@@ -17,16 +17,20 @@ import { TextDirection, type Language, type LanguageMetadata } from './types';
  * @example
  * ```tsx
  * import { useTranslation, Language } from '@hai3/uicore';
+ * import { Skeleton } from '@hai3/uikit';
  * 
  * function MyComponent() {
- *   const { t, language, direction, changeLanguage } = useTranslation();
+ *   const { t, language, direction, translationsReady, changeLanguage } = useTranslation();
  *   
  *   return (
  *     <div>
- *       <h1>{t('screenset.demo:screens.hello.title')}</h1>
- *       <p>{t('screenset.demo:screens.hello.message', { name: 'John' })}</p>
+ *       {translationsReady ? (
+ *         <h1>{t('screenset.demo:screens.hello.title')}</h1>
+ *       ) : (
+ *         <Skeleton className="h-10 w-48" />
+ *       )}
  *       <button onClick={() => changeLanguage(Language.Arabic)}>
- *         {t('app:settings.switch_to_arabic')}
+ *         {translationsReady ? t('app:settings.switch_to_arabic') : 'Loading...'}
  *       </button>
  *     </div>
  *   );
@@ -34,8 +38,9 @@ import { TextDirection, type Language, type LanguageMetadata } from './types';
  * ```
  */
 export function useTranslation() {
-  // Read language from Redux store (Flux pattern: Store → Component)
+  // Read language and translations ready state from Redux store (Flux pattern: Store → Component)
   const language = useSelector((state: RootState) => state.app.language);
+  const translationsReady = useSelector((state: RootState) => state.app.translationsReady);
   
   // Compute direction from language metadata
   const direction = i18nRegistry.isRTL(language) 
@@ -63,6 +68,7 @@ export function useTranslation() {
     t,
     language,
     direction,
+    translationsReady,
     changeLanguage,
     getLanguageMetadata,
     getSupportedLanguages,
