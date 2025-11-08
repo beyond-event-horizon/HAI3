@@ -1,9 +1,10 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { ApiUser } from '../api/accounts/api';
+import { Language } from '../i18n/types';
 
 /**
  * App Slice - Application-level state
- * Manages user authentication, tenant, loading/error states, and API configuration
+ * Manages user authentication, tenant, loading/error states, API configuration, and language preference
  * Updated by appEffects based on events
  */
 
@@ -12,6 +13,7 @@ const APP_SLICE_NAME = 'app';
 export interface AppState {
   user: ApiUser | null;
   tenant: unknown | null; // TODO: Define Tenant type in accounts/api.ts
+  language: Language; // User's language preference
   loading: boolean;
   error: string | null;
   useMockApi: boolean;
@@ -20,6 +22,7 @@ export interface AppState {
 const initialState: AppState = {
   user: null,
   tenant: null,
+  language: Language.English, // Default language (overridden by user preference)
   loading: false,
   error: null,
   useMockApi: true, // Default to mock API
@@ -47,9 +50,12 @@ const appSlice = createSlice({
     setUseMockApi: (state, action: PayloadAction<boolean>) => {
       state.useMockApi = action.payload;
     },
+    setLanguage: (state, action: PayloadAction<Language>) => {
+      state.language = action.payload;
+    },
   },
 });
 
-export const { setUser, setTenant, setLoading, setError, clearError, setUseMockApi } = appSlice.actions;
+export const { setUser, setTenant, setLoading, setError, clearError, setUseMockApi, setLanguage } = appSlice.actions;
 
 export default appSlice.reducer;

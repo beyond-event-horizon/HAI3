@@ -1,5 +1,6 @@
 import React from 'react';
-import { useAppSelector } from '@hai3/uicore';
+import { useAppSelector, useTranslation } from '@hai3/uicore';
+import { DEMO_SCREENSET_ID } from '../../demoScreenset';
 
 /**
  * Current Theme Screen ID
@@ -12,19 +13,24 @@ export const CURRENT_THEME_SCREEN_ID = 'theme';
  */
 export const CurrentThemeScreen: React.FC = () => {
   const theme = useAppSelector((state) => state.layout.theme);
+  const { t } = useTranslation();
 
   return (
     <div className="flex flex-col gap-8 p-8">
       <div className="flex flex-col gap-4">
-        <h1 className="text-4xl font-bold">Current Theme</h1>
+        <h1 className="text-4xl font-bold">
+          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${CURRENT_THEME_SCREEN_ID}.title`)}
+        </h1>
         <p className="text-muted-foreground">
-          Shows the currently active theme
+          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${CURRENT_THEME_SCREEN_ID}.description`)}
         </p>
       </div>
 
       <div className="max-w-2xl">
         <div className="flex flex-col gap-2 p-6 border border-border rounded-lg bg-background">
-          <h2 className="text-xl font-semibold">Active Theme</h2>
+          <h2 className="text-xl font-semibold">
+            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${CURRENT_THEME_SCREEN_ID}.current_theme_label`)}
+          </h2>
           <p className="text-3xl font-mono text-primary">{theme || 'None'}</p>
         </div>
       </div>

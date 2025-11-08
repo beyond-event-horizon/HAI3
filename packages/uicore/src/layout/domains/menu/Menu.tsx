@@ -4,6 +4,7 @@ import { navigateToScreen } from '../../../core/actions';
 import { toggleMenu } from '../../../core/actions';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
 import { UiKitComponent, UiKitIcon } from '@hai3/uikit-contracts';
+import { useTranslation } from '../../../i18n/useTranslation';
 
 export interface MenuProps {}
 
@@ -17,6 +18,7 @@ export const Menu: React.FC<MenuProps> = () => {
   const dispatch = useAppDispatch();
   const { items, collapsed, visible } = useAppSelector((state) => state.menu);
   const selectedScreen = useAppSelector((state) => state.layout.selectedScreen);
+  const { t } = useTranslation();
 
   if (!visible) return null;
 
@@ -49,16 +51,17 @@ export const Menu: React.FC<MenuProps> = () => {
           {items.map((item) => {
             const icon = uikitRegistry.getIcon(item.icon || '');
             const isActive = selectedScreen === item.id;
+            const translatedLabel = t(item.label);
 
             return (
               <SidebarMenuItem key={item.id}>
                 <SidebarMenuButton
                   isActive={isActive}
-                  tooltip={item.label}
+                  tooltip={translatedLabel}
                   onClick={() => navigateToScreen(item.id)}
                 >
                   {icon && <SidebarMenuIcon>{icon}</SidebarMenuIcon>}
-                  <SidebarMenuLabel>{item.label}</SidebarMenuLabel>
+                  <SidebarMenuLabel>{translatedLabel}</SidebarMenuLabel>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             );

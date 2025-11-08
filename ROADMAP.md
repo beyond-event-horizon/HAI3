@@ -8,7 +8,7 @@
 - [x] ~~Migrate to flux architecture~~
 - [x] ~~Navigation (application routing)~~
 - [x] ~~Basic interaction with API~~
-- [ ] Remove dependency of UI Core on UI Kit. Abstract UI Kit components. Implement UI Kit components registry.
+- [x] ~~Remove dependency of UI Core on UI Kit. Abstract UI Kit components. Implement UI Kit components registry.~~
 - [ ] Support updating data on backend events
 - [ ] Localization, incl. multi-language dict examples
 - [ ] Role based access control
