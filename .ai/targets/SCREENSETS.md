@@ -1,62 +1,35 @@
 # Screensets Guidelines
 
-> Common: .ai/GUIDELINES.md | Data Flow: EVENTS.md | Styling: STYLING.md
+## AI WORKFLOW (REQUIRED)
+1) Summarize 3–5 rules from this file before proposing changes.
+2) STOP if you add manual styling, import slices directly, or hardcode screenset names.
 
-## CRITICAL (AI: READ THIS FIRST)
+## SCOPE
+- Applies to all screensets under `src/screensets/**`
+- Each screenset may define its own actions, events, slices, and effects
 
-**NEVER manual styling:**
-- FORBIDDEN: `<div className="border rounded bg-card">`
-- REQUIRED: Use `@hai3/uikit` components
-- Detect: grep for `className=".*border.*rounded` in screensets
+## CRITICAL RULES
+- Manual styling is FORBIDDEN — always use `@hai3/uikit` components
+- Data flow must follow the event-driven pattern defined in `EVENTS.md`
+- Screensets are isolated — no hardcoded screenset names in shared code
+- Registry imports entire screensets, never individual screens
+- No direct slice imports — actions must come from `@hai3/uicore` or screenset-local actions
 
-**Data Flow (AI: READ THIS - CRITICAL):**
-- ONLY allowed: Event-driven via `@hai3/uicore` actions (See EVENTS.md)
-- FORBIDDEN: `import { setTheme } from '@/layout/layoutSlice'`
-- REQUIRED: `import { setTheme } from '@hai3/uicore'`
-- Pattern: Component -> Action -> Event -> Effect -> Slice
-- READ: `useAppSelector((state) => state.app.user)`
-- MODIFY: `dispatch(setTheme('dark'))` from imported action
-- NEVER: Direct slice imports, prop drilling, manual state sync
+## ICON RULES
+- Icons are registered inside the screenset file
+- Icon IDs must be exported as constants
+- Screenset icons do NOT go into `UiKitIcon` enum
 
-**Rules:**
-- MUST: Isolated screensets
-- NEVER: Hardcoded screenset names in shared code
-- NEVER: `if screenset ==` conditionals
+## UI KIT DECISION TREE
+1) Use existing `@hai3/uikit` component
+2) If missing, generate via `npx shadcn add`
+3) If composite needed, add to `@hai3/uikit/composite`
+4) Only screenset-specific composites may live locally
+5) Manual styling is never allowed
 
-**Structure:**
-- Registry: only imports screensets, NOT individual screens
-- Screenset file: self-contained config + screens + icons
-- BAD: screensetRegistry.tsx imports all screens
-- GOOD: screensetRegistry.tsx imports demoScreenset only
-
-**Icon Registration (AI: READ THIS):**
-- REQUIRED: Self-register icons in screenset file
-- REQUIRED: Export string constants for icon IDs
-- Pattern: `export const WORLD_ICON_ID = 'world' as const;`
-- Pattern: `uikitRegistry.registerIcons({ [WORLD_ICON_ID]: <WorldIcon /> })`
-- UiKitIcon enum is for CORE framework icons only
-- Screenset icons use exported constants, NOT enum, NOT inline strings
-- Icons used by Menu domain need registry lookup
-- BAD: `registerIcon('world', ...)` (hardcoded string)
-- BAD: Central icon registry file
-- GOOD: Icons registered in screenset.tsx with exported constants
-
-**Navigation:**
-- Menu items in screenset config
-- MenuItem type from `@hai3/uicore`
-
-**UI Kit Decision Tree:**
-1. Check `@hai3/uikit` -> Use it
-2. Check shadcn catalog -> `npx shadcn add [component]` -> move to uikit
-3. Need composite? Check `@hai3/uikit` composite/ -> create if missing
-4. Local uikit -> ONLY screenset-specific composites
-5. Manual styling -> FORBIDDEN
-
-**Data:**
-- Mock + setTimeout simulation
-- Handle loading/error
-
-**References:**
-- Registry: See GUIDELINES.md Self-Registering Registries
-- IDs: See GUIDELINES.md Identifiers section
-- Themes: See THEMES.md
+## PRE-DIFF CHECKLIST
+- [ ] No manual Tailwind/className styling
+- [ ] No direct slice imports
+- [ ] Registry imports screenset root file only
+- [ ] Icons exported and registered inside screenset
+- [ ] Data flow rules from `EVENTS.md` are followed

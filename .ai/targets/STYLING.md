@@ -1,26 +1,26 @@
 # Styling Guidelines
 
-> Common rules: .ai/GUIDELINES.md
+## AI WORKFLOW (REQUIRED)
+1) Summarize 3–5 rules from this file before proposing changes.
+2) STOP if you type hex colors, inline styles, or use px units (except borders).
 
-## CRITICAL (AI: READ THIS FIRST)
+## SCOPE
+- Applies to styling across packages and app code
 
-**Responsibility:**
-- Base: ALL visual
-- Composite/Core/Screensets: ONLY layout
-- NO hardcoded values, states in base only
+## CRITICAL RULES
+- Layer responsibilities: Base = visual styling; Composite/Core/Screensets = layout only
+- Units: use rem-based tokens; px allowed only for border width
+- Hierarchy: Tokens → Themes → Base → Composite → Core
+- Dark mode: CSS variables via `[data-theme]`
+- No hardcoded colors or inline `style={{}}`
 
-**Units:**
-- MUST: rem-based units
-- BAD: `min-w-[160px]`
-- GOOD: `min-w-40`
-- Pixels ONLY for borders
+## STOP CONDITIONS
+- Hex color literals (e.g., `#0066cc`)
+- Inline styles
+- px units for sizing/spacing (except borders)
 
-**Hierarchy:** Tokens -> Themes -> Base -> Composite -> Core
-
-**Responsive:** Mobile-first, Tailwind prefixes
-
-**Dark Mode:** CSS variables via `data-theme`
-
-**Anti-Patterns:**
-- BAD: `bg-[#0066cc]`, inline styles
-- GOOD: `bg-primary`, `flex gap-md`
+## PRE-DIFF CHECKLIST
+- [ ] All sizes use rem tokens (e.g., `w-40`, `min-w-40`)
+- [ ] No hex colors or inline styles present
+- [ ] Visual styling only in Base layer; others handle layout
+- [ ] Responsive behavior uses Tailwind prefixes (mobile-first)
