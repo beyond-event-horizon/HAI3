@@ -1,6 +1,6 @@
 import React from 'react';
-import { navigateToScreen, useTranslation } from '@hai3/uicore';
-import { Button } from '@hai3/uikit';
+import { navigateToScreen, useTranslation, uikitRegistry, UiKitComponent } from '@hai3/uicore';
+import { Skeleton, Card, CardContent } from '@hai3/uikit';
 import { CURRENT_THEME_SCREEN_ID } from '../theme/CurrentThemeScreen';
 import { DEMO_SCREENSET_ID } from '../../demoScreenset';
 
@@ -14,7 +14,34 @@ export const HELLO_WORLD_SCREEN_ID = 'helloworld';
  * Simple welcome screen with navigation example
  */
 export const HelloWorldScreen: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, translationsReady } = useTranslation();
+  const Button = uikitRegistry.getComponent(UiKitComponent.Button);
+  
+  // Show skeleton loaders while translations loading
+  if (!translationsReady) {
+    return (
+      <div className="flex flex-col gap-8 p-8">
+        <div className="flex flex-col gap-4">
+          <Skeleton className="h-10 w-64" />
+          <Skeleton className="h-6 w-96" />
+        </div>
+
+        <Card className="max-w-2xl">
+          <CardContent className="pt-6">
+            <Skeleton className="h-6 w-full" />
+          </CardContent>
+        </Card>
+
+        <Card className="max-w-2xl">
+          <CardContent className="flex flex-col gap-4 pt-6">
+            <Skeleton className="h-8 w-48" />
+            <Skeleton className="h-5 w-full" />
+            <Skeleton className="h-10 w-32" />
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
   
   return (
     <div className="flex flex-col gap-8 p-8">
@@ -27,14 +54,16 @@ export const HelloWorldScreen: React.FC = () => {
         </p>
       </div>
 
-      <div className="max-w-2xl p-6 border border-border rounded-lg bg-background">
-        <p className="text-lg">
-          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${HELLO_WORLD_SCREEN_ID}.description`)}
-        </p>
-      </div>
+      <Card className="max-w-2xl">
+        <CardContent className="pt-6">
+          <p className="text-lg">
+            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${HELLO_WORLD_SCREEN_ID}.description`)}
+          </p>
+        </CardContent>
+      </Card>
 
-      <div className="max-w-2xl">
-        <div className="flex flex-col gap-4 p-6 border border-border rounded-lg bg-background">
+      <Card className="max-w-2xl">
+        <CardContent className="flex flex-col gap-4 pt-6">
           <h2 className="text-xl font-semibold">
             {t(`screenset.${DEMO_SCREENSET_ID}:screens.${HELLO_WORLD_SCREEN_ID}.navigation_title`)}
           </h2>
@@ -44,8 +73,8 @@ export const HelloWorldScreen: React.FC = () => {
           <Button onClick={() => navigateToScreen(CURRENT_THEME_SCREEN_ID)}>
             {t(`screenset.${DEMO_SCREENSET_ID}:screens.${HELLO_WORLD_SCREEN_ID}.go_to_theme`)}
           </Button>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

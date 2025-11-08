@@ -2,7 +2,7 @@
  * Mock data for accounts service
  */
 
-import { UserRole, type ApiUser, type GetCurrentUserResponse } from '@hai3/uicore';
+import { UserRole, Language, type ApiUser, type GetCurrentUserResponse } from '@hai3/uicore';
 import './extra';
 
 export const mockDemoUser: ApiUser = {
@@ -11,6 +11,7 @@ export const mockDemoUser: ApiUser = {
   firstName: 'Demo',
   lastName: 'User',
   role: UserRole.Admin,
+  language: Language.English,
   avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Demo',
   createdAt: new Date('2024-01-01T00:00:00Z').toISOString(),
   updatedAt: new Date('2024-12-01T00:00:00Z').toISOString(),

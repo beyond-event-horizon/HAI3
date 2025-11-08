@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../store';
 import { Header } from './domains/header/Header';
 import { Footer } from './domains/footer/Footer';
 import { Menu } from './domains/menu/Menu';
@@ -6,6 +8,7 @@ import { Sidebar } from './domains/sidebar/Sidebar';
 import { Screen } from './domains/screen/Screen';
 import { Popup } from './domains/popup/Popup';
 import { Overlay } from './domains/overlay/Overlay';
+import { bootstrapApp } from '../core/actions/appActions';
 
 /**
  * Layout component for HAI3 UI-Core
@@ -20,6 +23,14 @@ export interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  // Bootstrap application on mount
+  // Fetches user and initializes language
+  // Components render with skeletons until data arrives
+  useEffect(() => {
+    dispatch(bootstrapApp());
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden">

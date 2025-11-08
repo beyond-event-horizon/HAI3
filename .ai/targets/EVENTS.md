@@ -21,11 +21,19 @@
 - NEVER: `dispatch(setSliceData(...))`
 - ALWAYS: `eventBus.emit(NamespaceEvents.EventName, {...})`
 - Update own slice only + emit events
+- CAN: Call other actions (composition allowed)
+- PATTERN: Action -> Action is valid (e.g., fetchUser calls changeLanguage)
+- MUST: Return void (never Promise<void>)
+- FORBIDDEN: `async (dispatch) => Promise<void>`
+- REQUIRED: `(dispatch) => void` with fire-and-forget promises
 
 **Effects:**
 - MUST: Subscribe to events
 - MUST: Update own slice only
 - NEVER: Business logic
+- NEVER: Call actions (prevents cycles)
+- FORBIDDEN: `changeLanguage()`, `fetchUser()` etc in effects
+- WHY: Effect -> Action -> Event -> Effect = infinite loop potential
 
 **Cross-Domain:**
 - FORBIDDEN: `import { setSliceAction } from '@/layout/domains/domain'`

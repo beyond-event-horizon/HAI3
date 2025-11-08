@@ -14,6 +14,7 @@ export interface AppState {
   user: ApiUser | null;
   tenant: unknown | null; // TODO: Define Tenant type in accounts/api.ts
   language: Language; // User's language preference
+  translationsReady: boolean; // Whether current language translations are loaded
   loading: boolean;
   error: string | null;
   useMockApi: boolean;
@@ -23,6 +24,7 @@ const initialState: AppState = {
   user: null,
   tenant: null,
   language: Language.English, // Default language (overridden by user preference)
+  translationsReady: false, // Set to true after translations load
   loading: false,
   error: null,
   useMockApi: true, // Default to mock API
@@ -53,9 +55,12 @@ const appSlice = createSlice({
     setLanguage: (state, action: PayloadAction<Language>) => {
       state.language = action.payload;
     },
+    setTranslationsReady: (state, action: PayloadAction<boolean>) => {
+      state.translationsReady = action.payload;
+    },
   },
 });
 
-export const { setUser, setTenant, setLoading, setError, clearError, setUseMockApi, setLanguage } = appSlice.actions;
+export const { setUser, setTenant, setLoading, setError, clearError, setUseMockApi, setLanguage, setTranslationsReady } = appSlice.actions;
 
 export default appSlice.reducer;

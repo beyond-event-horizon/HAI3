@@ -7,6 +7,8 @@
  * Keep them clean, typed, and well-documented
  */
 
+import type { Language } from '../../i18n/types';
+
 /**
  * User Extra Properties
  * Applications extend this via module augmentation for platform-specific fields
@@ -25,6 +27,7 @@ export interface ApiUser {
   firstName: string;
   lastName: string;
   role: UserRole;
+  language: Language;
   avatarUrl?: string;
   createdAt: string;
   updatedAt: string;
