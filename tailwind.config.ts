@@ -9,6 +9,16 @@ export default {
     './packages/*/src/**/*.{js,ts,jsx,tsx}',
     './packages/*/dist/**/*.{js,mjs}',  // Scan built package files for classes
   ],
+  safelist: [
+    // RTL utilities used in package components
+    'rtl:flex-row-reverse',
+    'rtl:rotate-180',
+    'rtl:-translate-x-4',
+    'ms-auto',  // Direction-aware margin (margin-inline-start: auto)
+    // Data attribute + RTL combos for Switch
+    'data-[state=checked]:ltr:translate-x-4',
+    'data-[state=checked]:rtl:-translate-x-4',
+  ],
   theme: {
     extend: {
       colors: {

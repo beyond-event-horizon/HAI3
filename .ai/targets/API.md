@@ -1,51 +1,44 @@
 # API Guidelines
 
-> Common: .ai/GUIDELINES.md | Events: .ai/targets/EVENTS.md
+## AI WORKFLOW (REQUIRED)
+1) Summarize 3–6 rules from this file before proposing changes.
+2) STOP if you intend to modify `BaseApiService` or `apiRegistry.ts`.
 
-## CRITICAL (AI: READ THIS FIRST)
+## SCOPE
+- Core API layer in `packages/uicore/api/**`
+- App-level API extensions in `src/api/**`
 
-**Rules:**
-- One service per backend domain
-- BAD: EntityService (UserService, InvoiceService)
-- GOOD: DomainService pattern
-- Extend BaseApiService
-- Each service defines own domain constant locally
-- Mocks in app layer, NOT in services
+## CRITICAL RULES
+- One **domain service** per backend domain (no entity-based services).
+- Services **self-register** using `apiRegistry.register(...)` — registry source file must never be edited.
+- All calls must go through **typed service methods** (no raw `.get('/url')`).
+- Mock data lives in the **app layer** and is wired via `apiRegistry.initialize({ useMockApi, mockMaps })`.
+- All services extend `BaseApiService` and update `ApiServicesMap` via module augmentation.
 
-**Mocking:**
-- Apps provide mockMaps via apiRegistry.initialize()
-- BaseApiService intercepts requests when useMockApi=true
-- Mock data in app layer: src/api/[service]/mocks.ts
+## STOP CONDITIONS
+- Editing `BaseApiService` or `apiRegistry.ts`
+- Calling APIs inside React components
+- Adding generic helpers like `get('/endpoint')`
+- Creating `UserService`, `InvoiceService`, or other entity-style services
 
-**Usage:**
-- BAD: `apiService.get('/endpoint')`, `getService('accounts')`
-- GOOD: `apiRegistry.getService(DOMAIN_CONSTANT).methodName()`
-- Type inferred from ApiServicesMap
-- Init in main.tsx: `apiRegistry.initialize({ useMockApi, mockMaps })`
+## ADDING A SERVICE
+1) Create `packages/uicore/api/<domain>/` with `ServiceNameApiService.ts` and `api.ts`
+2) Define domain constant: `export const DOMAIN = 'domain' as const`
+3) Extend `BaseApiService` and set `baseURL`
+4) Add module augmentation for `ApiServicesMap`
+5) Register service: `apiRegistry.register(DOMAIN, ServiceName)`
+6) In app: add `src/api/<domain>/extra.ts` and `mocks.ts`
+7) Export `apiMockMaps` from `src/api/index.ts`
 
-**Adding Service:**
-1. UICore: Create `api/[domain]/`: `ServiceNameApiService.ts`, `api.ts`
-2. Define domain constant: `export const DOMAIN_CONST = 'domain' as const;`
-3. Extend BaseApiService, set baseURL
-4. Module augmentation for ApiServicesMap
-5. Self-register: `apiRegistry.register(DOMAIN_CONST, ServiceName);`
-6. App: Create `src/api/[service]/`: `extra.ts`, `mocks.ts`
-7. App: Export in src/api/index.ts apiMockMaps
-8. NO modification to apiRegistry.ts (Open/Closed)
+## USAGE RULES
+- Access only via `apiRegistry.getService(DOMAIN).methodName()`
+- Type inference must originate from `ApiServicesMap`
+- No direct axios/fetch usage outside `BaseApiService`
 
-**Anti-Patterns:**
-- BAD: API calls in components, Redux dispatch in actions
-- BAD: Generic `get('/url')`
-- BAD: Entity-based services
-- GOOD: Domain services, type-safe methods, self-registration
-
-**Structure:**
-- UICore: `api/[domain]/` has `*ApiService.ts`, `api.ts`
-- App: `src/api/[service]/` has `extra.ts`, `mocks.ts`
-- App: `src/api/index.ts` exports `apiMockMaps`
-
-**Extending Types:**
-- `ApiUser.extra?: UserExtra` for platform fields
-- src/api/[service]/extra.ts: module augmentation
-- src/api/[service]/mocks.ts: full mock with extra
-- Pass mockMaps to apiRegistry.initialize()
+## PRE-DIFF CHECKLIST
+- [ ] Domain constant created
+- [ ] `BaseApiService` extended with `baseURL`
+- [ ] `ApiServicesMap` augmented
+- [ ] App mocks added and exported
+- [ ] No edits to `apiRegistry.ts`
+- [ ] No raw `.get('/url')` calls

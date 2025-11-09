@@ -12,6 +12,7 @@ import type { MenuEventPayloadMap } from './menuEvents';
 import type { ThemeEventPayloadMap } from './themeEvents';
 import type { NavigationEventPayloadMap } from './navigationEvents';
 import type { ScreensetEventPayloadMap } from './screensetEvents';
+import type { I18nEventPayloadMap } from './i18nEvents';
 
 /**
  * Global event-to-payload type map
@@ -42,6 +43,7 @@ export interface EventPayloadMap extends
   MenuEventPayloadMap,
   ThemeEventPayloadMap,
   NavigationEventPayloadMap,
-  ScreensetEventPayloadMap {
+  ScreensetEventPayloadMap,
+  I18nEventPayloadMap {
   // Extensible - screensets add via module augmentation
 }

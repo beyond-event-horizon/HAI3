@@ -13,30 +13,20 @@ import {
   ScreensetEvents
 } from '../core/events/eventTypes';
 import { setSelectedScreen, setCurrentScreenset } from './layoutSlice';
-import { routeRegistry } from '../core/routing/routeRegistry';
 
 /**
  * Initialize navigation effects
  * Call this once during app setup
  */
 export function initNavigationEffects(store: Store): void {
-  // When screen navigation happens, update Redux state
+  // Listen to screenset changes and update slice
+  eventBus.on(ScreensetEvents.Changed, ({ screensetId }) => {
+    store.dispatch(setCurrentScreenset(screensetId));
+  });
+  
+  // Listen to screen navigation and update slice
+  // Note: Action handles screenset switching logic and emits both events
   eventBus.on(NavigationEvents.ScreenNavigated, ({ screenId }) => {
-    // Find which screenset contains this screen
-    const screensetKey = routeRegistry.getScreensetKeyForScreen(screenId);
-    
-    if (screensetKey) {
-      const currentScreenset = store.getState().layout.currentScreenset;
-      
-      // Switch screenset if needed (this will emit ScreensetChanged event)
-      if (screensetKey !== currentScreenset) {
-        eventBus.emit(ScreensetEvents.Changed, { 
-          screensetId: screensetKey 
-        });
-        store.dispatch(setCurrentScreenset(screensetKey));
-      }
-      
-      store.dispatch(setSelectedScreen(screenId));
-    }
+    store.dispatch(setSelectedScreen(screenId));
   });
 }

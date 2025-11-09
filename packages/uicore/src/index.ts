@@ -19,22 +19,24 @@ export { useAppDispatch, useAppSelector } from './hooks/useRedux';
 export { Layout } from './layout';
 
 // Layout domains
-export { Header, type HeaderProps } from './layout/domains/header/Header';
-export { Footer, type FooterProps } from './layout/domains/footer/Footer';
-export { setFooterConfig } from './layout/domains/footer/footerSlice';
-export { Menu, type MenuProps } from './layout/domains/menu/Menu';
+export { Header } from './layout/domains/header/Header';
+export { Footer } from './layout/domains/footer/Footer';
+export { Menu } from './layout/domains/menu/Menu';
 export { setMenuConfig, type MenuItem } from './layout/domains/menu/menuSlice';
-export { Sidebar, type SidebarProps } from './layout/domains/sidebar/Sidebar';
+export { Sidebar } from './layout/domains/sidebar/Sidebar';
 export { setSidebarConfig } from './layout/domains/sidebar/sidebarSlice';
 export { Screen, type ScreenProps } from './layout/domains/screen/Screen';
-export { Popup, type PopupProps } from './layout/domains/popup/Popup';
-export { openPopup, closePopup, closeAllPopups } from './layout/domains/popup/popupSlice';
-export { Overlay, type OverlayProps } from './layout/domains/overlay/Overlay';
+export { Popup } from './layout/domains/popup/Popup';
+export { Overlay } from './layout/domains/overlay/Overlay';
+// TODO: setMenuConfig, setSidebarConfig should have action wrappers
+// Currently exported from slices - will be flagged by arch:check if used in components
 
 // Components (Redux-aware reusable widgets)
 export { UserInfo } from './components/UserInfo';
 export { ThemeSelector, type ThemeSelectorProps } from './components/ThemeSelector';
 export { ScreensetSelector, type ScreensetSelectorProps, type ScreensetOption } from './components/ScreensetSelector';
+// TODO: Uncomment when Select components are registered in UI Kit
+// export { LanguageSelector, type LanguageSelectorProps } from './components/LanguageSelector';
 
 // Screenset management (Footer domain handles watching)
 export { screensetRegistry, type ScreensetConfig } from './screensets/screensetRegistry';
@@ -55,7 +57,9 @@ export { AppRouter } from './core/routing/AppRouter';
 export { routeRegistry, type RouteInfo } from './core/routing/routeRegistry';
 
 // Event-driven actions (AI: READ THIS - use these, NOT slice actions)
-export { setTheme, setCurrentScreenset, toggleMenu, navigateToScreen, fetchCurrentUser, setApiMode } from './core/actions';
+// Note: bootstrapApp is internal to uicore, dispatched automatically by Layout
+// Actions use imperative names (change, select, toggle, fetch) - NOT "set" prefix
+export { changeTheme, selectScreenset, toggleMenu, navigateToScreen, fetchCurrentUser, setApiMode } from './core/actions';
 export { setSelectedScreen } from './layout/layoutSlice'; // Direct action (Menu internal use)
 
 // API (SOLID architecture with domain-driven, self-registering services)
@@ -63,3 +67,14 @@ export { apiRegistry, type ApiServicesConfig, type ApiServicesMap } from './api/
 export { BaseApiService, type BaseApiServiceConfig } from './api/BaseApiService';
 export { AccountsApiService, ACCOUNTS_DOMAIN } from './api/accounts/AccountsApiService'; // Triggers self-registration
 export * from './api/accounts/api';
+
+// i18n (Internationalization system)
+export { i18nRegistry } from './i18n/i18nRegistry';
+export { useTranslation } from './i18n/useTranslation';
+export { TextLoader, type TextLoaderProps } from './i18n/TextLoader';
+export { changeLanguage } from './core/actions/i18nActions';
+export { Language, TextDirection, LanguageDisplayMode, SUPPORTED_LANGUAGES, type LanguageMetadata, type TranslationDictionary, type TranslationLoader, type I18nConfig } from './i18n/types';
+export { I18nEvents, type LanguageChangedPayload } from './core/events/eventTypes/i18nEvents';
+
+// Event Bus (for i18n lazy loading and custom screenset events)
+export { eventBus } from './core/events/eventBus';

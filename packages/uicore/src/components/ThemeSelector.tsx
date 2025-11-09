@@ -1,9 +1,9 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '../hooks/useRedux';
+import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
+import { useTranslation } from '../i18n/useTranslation';
 import { uikitRegistry } from '../uikit/uikitRegistry';
 import { UiKitComponent, ButtonVariant } from '@hai3/uikit-contracts';
-import { ChevronDown } from 'lucide-react';
-import { setTheme } from '../core/actions';
+import { changeTheme } from '../core/actions';
 import { themeRegistry } from '../theme/themeRegistry';
 
 /**
@@ -21,12 +21,13 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const currentTheme = useAppSelector((state) => state.layout.theme);
+  const { direction } = useTranslation();
 
   const DropdownMenu = uikitRegistry.getComponent(UiKitComponent.DropdownMenu);
   const DropdownMenuTrigger = uikitRegistry.getComponent(UiKitComponent.DropdownMenuTrigger);
   const DropdownMenuContent = uikitRegistry.getComponent(UiKitComponent.DropdownMenuContent);
   const DropdownMenuItem = uikitRegistry.getComponent(UiKitComponent.DropdownMenuItem);
-  const Button = uikitRegistry.getComponent(UiKitComponent.Button);
+  const DropdownButton = uikitRegistry.getComponent(UiKitComponent.DropdownButton);
 
   const formatThemeName = (themeName: string): string => {
     return themeName
@@ -39,25 +40,21 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   const availableThemes = themeRegistry.getThemeNames();
 
   return (
-    <div className={`inline-flex items-center gap-2 ${className}`}>
+    <div className={`inline-flex items-center gap-2 rtl:flex-row-reverse ${className}`}>
       <label className="text-sm text-muted-foreground whitespace-nowrap">
         Theme:
       </label>
-      <DropdownMenu>
+      <DropdownMenu dir={direction}>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant={ButtonVariant.Outline}
-            className="inline-flex items-center justify-between min-w-40"
-          >
-            <span>{formatThemeName(currentTheme)}</span>
-            <ChevronDown className="ml-2 h-4 w-4" />
-          </Button>
+          <DropdownButton variant={ButtonVariant.Outline}>
+            {formatThemeName(currentTheme)}
+          </DropdownButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
           {availableThemes.map((themeName) => (
             <DropdownMenuItem
               key={themeName}
-              onClick={() => dispatch(setTheme(themeName))}
+              onClick={() => dispatch(changeTheme(themeName))}
             >
               {formatThemeName(themeName)}
             </DropdownMenuItem>

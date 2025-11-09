@@ -1,10 +1,21 @@
 import * as React from "react"
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
 import { Check, ChevronRight, Circle } from "lucide-react"
+import { TextDirection } from "@hai3/uikit-contracts"
 
 import { cn } from "../lib/utils"
 
-const DropdownMenu = DropdownMenuPrimitive.Root
+const DropdownMenu: React.FC<
+  Omit<React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Root>, 'dir'> & {
+    dir?: TextDirection;
+  }
+> = ({ dir, ...props }) => (
+  <DropdownMenuPrimitive.Root 
+    {...props} 
+    dir={dir as 'ltr' | 'rtl' | undefined} 
+  />
+);
+DropdownMenu.displayName = "DropdownMenu";
 
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
 
@@ -32,7 +43,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <ChevronRight className="ml-auto" />
+    <ChevronRight className="ms-auto rtl:rotate-180" />
   </DropdownMenuPrimitive.SubTrigger>
 ))
 DropdownMenuSubTrigger.displayName =

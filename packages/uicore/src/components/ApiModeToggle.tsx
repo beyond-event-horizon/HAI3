@@ -23,7 +23,7 @@ export const ApiModeToggle: React.FC<ApiModeToggleProps> = ({ className }) => {
 
   return (
     <div className={className}>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 rtl:flex-row-reverse">
         <label
           htmlFor="api-mode-toggle"
           className="cursor-pointer select-none"

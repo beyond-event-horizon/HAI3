@@ -8,7 +8,9 @@ import { uikitRegistry, UiKitIcon } from '@hai3/uicore';
 import {
   Button,
   IconButton,
+  DropdownButton,
   Switch,
+  Skeleton,
   Header,
   Sidebar,
   SidebarContent,
@@ -26,7 +28,6 @@ import {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
-  CascadingDropdown,
   CloseIcon,
   CLOSE_ICON_ID,
 } from '@hai3/uikit';
@@ -41,7 +42,9 @@ uikitRegistry.registerComponents({
   // Basic components
   Button: Button as import('@hai3/uikit-contracts').ButtonComponent, // Type assertion to bridge contract/implementation mismatch
   IconButton: IconButton as import('@hai3/uikit-contracts').IconButtonComponent,
+  DropdownButton: DropdownButton as import('@hai3/uikit-contracts').DropdownButtonComponent,
   Switch: Switch as import('@hai3/uikit-contracts').SwitchComponent,
+  Skeleton: Skeleton as import('@hai3/uikit-contracts').SkeletonComponent,
   
   // Layout components
   Header,
@@ -65,7 +68,6 @@ uikitRegistry.registerComponents({
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
-  CascadingDropdown: CascadingDropdown as import('@hai3/uikit-contracts').CascadingDropdownComponent,
 });
 
 // Register core framework icons

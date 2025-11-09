@@ -1,98 +1,85 @@
-# HAI3 AI Guidelines
+# HAI3 AI Guidelines (Canonical)
 
-## Routing (AI: READ THIS FIRST)
+## AI WORKFLOW (REQUIRED)
+1) Route: select the correct target file from the Routing table.
+2) Summarize: list 3–7 applicable rules from that target file in your own words.
+3) Verify: pass the Pre-diff Checklist before proposing code.
+4) If unsure which target applies -> STOP and ask.
 
-**ALWAYS read the target guideline BEFORE making changes:**
+## ROUTING
 
-- Data flow questions -> .ai/targets/EVENTS.md (CRITICAL - ONLY allowed pattern)
-- `packages/uikit-contracts` -> .ai/targets/UIKIT_CONTRACTS.md
-- `packages/uicore` -> .ai/targets/UICORE.md (includes routing)
-- `packages/uikit` -> .ai/targets/UIKIT.md
-- `src/screensets` -> .ai/targets/SCREENSETS.md
-- `src/themes` -> .ai/targets/THEMES.md
-- Styling questions -> .ai/targets/STYLING.md
-- API integration -> .ai/targets/API.md
-- `.ai/*.md` files -> .ai/targets/AI.md
+| Area | Target file |
+|-------|-------------|
+| Data flow / events | `.ai/targets/EVENTS.md` |
+| API layer | `.ai/targets/API.md` |
+| `packages/uicore/**` | `.ai/targets/UICORE.md` |
+| `packages/uikit/**` | `.ai/targets/UIKIT.md` |
+| `packages/uikit-contracts/**` | `.ai/targets/UIKIT_CONTRACTS.md` |
+| `src/screensets/**` | `.ai/targets/SCREENSETS.md` |
+| `src/themes/**` | `.ai/targets/THEMES.md` |
+| Styling anywhere | `.ai/targets/STYLING.md` |
+| `.ai/*.md` docs | `.ai/targets/AI.md` |
 
----
+## REPO INVARIANTS (MANDATORY)
+- Event-driven architecture only -> full rules in `EVENTS.md`
+- Registries follow Open/Closed -> adding items must not require editing registry root files (cleanup after deletion is OK)
+- App-level dependencies limited to: `@hai3/uicore`, `@hai3/uikit`, `react`, `react-dom`
+- Cross-domain communication only via events — no direct slice imports, no prop drilling
+- No string-literal identifiers — always use constants/enums
+- No `any`, no type-erasing casts
+- Always support RTL/LTR layouts — use logical properties (`ms-`, `me-`), `rtl:` variants, and `TextDirection` enum
 
-## HAI3 Architecture (AI: READ THIS)
+## IMPORT RULES
 
-**Monorepo:** `packages/uicore`, `packages/uikit`, `src/`
+| Case | Rule |
+|-------|------|
+| Inside same package | Relative paths (`../..`) |
+| Cross-branch in same app | `@/...` alias |
+| Cross-package | `@hai3/uicore`, `@hai3/uikit` |
+| Index files | Only when aggregating ≥ 3 exports |
+| Redux slices | Import directly, no barrel indirection |
 
-**Dependencies:**
-- Apps: ONLY `@hai3/uicore`, `@hai3/uikit`, `react`, `react-dom`
-- BAD: Apps declaring `@radix-ui/*`, `react-router-dom`, `@reduxjs/toolkit`
-- GOOD: UI packages own dependencies
+## TYPE RULES
+- `type` for objects/unions, `interface` for React props
+- No hardcoded string IDs
+- Fix type errors at boundary — do not cast to bypass
+- Class ordering: properties -> constructor -> methods (public -> protected -> private)
 
-**Core Rules:**
-- Data flow: ONLY event-driven (See EVENTS.md)
-- Pattern: Component -> Action -> Event -> Effect -> Slice -> Store
-- FORBIDDEN: Direct slice dispatch, prop drilling, callbacks
-- Self-registering: `service.register()` at module level
-- NO bridging: Domains read Redux, emit via actions
+## STOP CONDITIONS (ASK FIRST)
+- Editing `/core/runtime/**` or `/sdk/**`
+- Modifying registry root files to add new items (cleanup after deletion is OK)
+- Changing public contracts in `uikit-contracts/**`
+- Adding new top-level dependencies
+- Violating the data-flow rules in `EVENTS.md`
 
----
+## PRE-DIFF CHECKLIST (MUST PASS)
+- [ ] `npm run arch:check` passes
+- [ ] Routed to correct target file
+- [ ] Summarized rules in own words
+- [ ] No registry root file modified to add items (cleanup OK)
+- [ ] Import paths follow rules
+- [ ] Snapshot + type dependents updated if types changed
 
-## Import Path Rules
+## BLOCKLIST
+- Secrets / telemetry / analytics code
+- `as unknown as` type chains
+- Direct slice dispatch
+- Barrel exports that hide real imports
+- Manual state sync / prop drilling
 
-**Relative vs Alias:**
-- Sibling files: Relative `../sibling`
-- Within package: Relative `../../../`
-- Cross-branch in app: Alias `@/other/branch`
-- Cross-package: `@hai3/uicore`, `@hai3/uikit`
+## DOC STYLE
+- Short, technical, ASCII only
+- Use `->` arrows
+- Use `BAD -> GOOD` diffs
+- PR descriptions must cite rule numbers followed (e.g. `Follows: 2.1, 3.4`)
 
-**Examples:**
-- BAD: `@/screensets/.../screens/theme`
-- GOOD: `../theme/Screen`
+## AFTER A MISTAKE (SELF-CORRECTION)
+1) Add or adjust rule here (1–2 lines max)
+2) Update the matching target file
+3) Save memory of the fix
+4) Re-validate with `.ai/targets/AI.md`
 
-**Index Files:**
-- Create ONLY when aggregating 3+ files
-- Import directly from slices: `from './menu/menuSlice'`
-
----
-
-## TypeScript Rules
-
-**STRICT:** Types for all, NEVER `any`, `type` for objects, `interface` for props
-
-**Identifiers (AI: READ THIS):**
-- NEVER hardcoded strings, use constants
-- 1-3 constants -> define where used
-- 4-9 constants -> consider context
-- 10+ constants -> own file
-- BAD: `id: 'stringLiteral'`, `variant: 'stringLiteral'`
-- GOOD: `id: CONSTANT_ID`, `variant: EnumType.Value`
-
-**Registry Pattern (AI: READ THIS - CRITICAL):**
-- Registry file NEVER modified when adding items
-- Items self-register, define own constants locally
-- BAD: Central constants in registry file
-- GOOD: Each item exports own constant
-- If adding item requires modifying registry -> pattern is WRONG
-
-**Types Enforce Boundaries:**
-- BAD: `theme: string`, `as SomeType` casts
-- GOOD: `theme: ThemeName`, proper type constraints
-- Type casts hide problems, fix root cause instead
-- String types hide violations, proper types reveal them
-
-**Class Member Ordering:**
-Properties, Constructor, Methods (public, protected, private)
-
----
-
-## Self-Improvement (AI: READ THIS - CRITICAL)
-
-**Documentation:**
-- NO emoji, use -> for arrows, BAD:/GOOD: examples
-- Technical, concise, NO markdown reports (unless user asks)
-
-**After mistake:**
-1. Update GUIDELINES.md with decision rule
-2. Update target .ai file
-3. Create memory
-4. Verify .ai edits follow AI.md
-
-**Before creating files:**
-- Check pattern, count items, verify Open/Closed
+## FILE / FEATURE CREATION POLICY
+- Prefer existing extension + registry patterns
+- If adding the 3rd+ similar item -> consider index/aggregate
+- If adding an item requires editing a central file -> redesign to self-register

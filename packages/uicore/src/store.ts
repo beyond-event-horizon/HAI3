@@ -33,20 +33,12 @@ export const store = configureStore({
     popup: popupReducer,
     overlay: overlayReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        // Ignore popup props which may contain non-serializable values
-        ignoredActions: ['popup/openPopup'],
-        ignoredPaths: ['popup.stack'],
-      },
-    }),
 });
 
 // Initialize effects - sets up event subscriptions
 // Pattern: Each slice has its own effects file co-located with it
 initAppEffects(store);
-initLayoutEffects();
+initLayoutEffects(store);
 initNavigationEffects(store);
 initMenuEffects(store);
 

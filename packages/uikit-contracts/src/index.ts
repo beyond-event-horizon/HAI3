@@ -7,6 +7,15 @@
 import type { ComponentType, ReactNode, ButtonHTMLAttributes } from 'react';
 
 /**
+ * Text Direction Enum
+ * Defines text direction values for RTL/LTR support
+ */
+export enum TextDirection {
+  LeftToRight = 'ltr',
+  RightToLeft = 'rtl',
+}
+
+/**
  * Theme Contract
  * Defines the structure of themes that UI Core expects
  */
@@ -156,6 +165,19 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export type ButtonComponent = ComponentType<ButtonProps>;
 
 /**
+ * DropdownButton Component Contract
+ * Button with integrated chevron for dropdown triggers
+ * Extends ButtonHTMLAttributes to support DropdownMenuTrigger props
+ */
+export interface DropdownButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
+  variant?: ButtonVariant;
+  className?: string;
+}
+
+export type DropdownButtonComponent = ComponentType<DropdownButtonProps>;
+
+/**
  * IconButton Component Contract
  */
 export enum IconButtonSize {
@@ -186,6 +208,21 @@ export interface SwitchProps {
 }
 
 export type SwitchComponent = ComponentType<SwitchProps>;
+
+/**
+ * Skeleton Component Contract
+ * Used for loading states
+ */
+export interface SkeletonProps {
+  className?: string;
+  /**
+   * If true, skeleton inherits text color instead of using bg-muted
+   * Useful for buttons, menu items, and colored text
+   */
+  inheritColor?: boolean;
+}
+
+export type SkeletonComponent = ComponentType<SkeletonProps>;
 
 /**
  * Sidebar Components Contract
@@ -276,6 +313,7 @@ export type UserInfoComponent = ComponentType<UserInfoProps>;
  */
 export interface DropdownMenuProps {
   children?: ReactNode;
+  dir?: TextDirection;
 }
 
 export interface DropdownMenuTriggerProps {
@@ -315,24 +353,6 @@ export type DropdownMenuSubTriggerComponent = ComponentType<DropdownMenuSubTrigg
 export type DropdownMenuSubContentComponent = ComponentType<DropdownMenuSubContentProps>;
 
 /**
- * Cascading Dropdown Component Contract
- */
-export interface CascadingDropdownOption {
-  category: string;
-  items: Array<{ id: string; name: string }>;
-}
-
-export interface CascadingDropdownProps {
-  options: CascadingDropdownOption[];
-  currentValue: string; // Format: "category:itemId"
-  onChange: (value: string) => void;
-  label?: string;
-  className?: string;
-}
-
-export type CascadingDropdownComponent = ComponentType<CascadingDropdownProps>;
-
-/**
  * UI Kit Component Enum
  * Defines components that UI Core requires from UI Kit
  * Part of UI Core's API contract
@@ -340,7 +360,9 @@ export type CascadingDropdownComponent = ComponentType<CascadingDropdownProps>;
 export enum UiKitComponent {
   Button = 'Button',
   IconButton = 'IconButton',
+  DropdownButton = 'DropdownButton',
   Switch = 'Switch',
+  Skeleton = 'Skeleton',
   Header = 'Header',
   Sidebar = 'Sidebar',
   SidebarContent = 'SidebarContent',
@@ -358,7 +380,6 @@ export enum UiKitComponent {
   DropdownMenuSub = 'DropdownMenuSub',
   DropdownMenuSubTrigger = 'DropdownMenuSubTrigger',
   DropdownMenuSubContent = 'DropdownMenuSubContent',
-  CascadingDropdown = 'CascadingDropdown',
 }
 
 /**
@@ -369,7 +390,9 @@ export interface UiKitComponentMap {
   // Basic components
   [UiKitComponent.Button]: ButtonComponent;
   [UiKitComponent.IconButton]: IconButtonComponent;
+  [UiKitComponent.DropdownButton]: DropdownButtonComponent;
   [UiKitComponent.Switch]: SwitchComponent;
+  [UiKitComponent.Skeleton]: SkeletonComponent;
   
   // Layout components
   [UiKitComponent.Header]: HeaderComponent;
@@ -393,7 +416,6 @@ export interface UiKitComponentMap {
   [UiKitComponent.DropdownMenuSub]: DropdownMenuSubComponent;
   [UiKitComponent.DropdownMenuSubTrigger]: DropdownMenuSubTriggerComponent;
   [UiKitComponent.DropdownMenuSubContent]: DropdownMenuSubContentComponent;
-  [UiKitComponent.CascadingDropdown]: CascadingDropdownComponent;
 }
 
 /**

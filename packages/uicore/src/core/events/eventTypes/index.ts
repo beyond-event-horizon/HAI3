@@ -9,4 +9,5 @@ export * from './screensetEvents';
 export * from './menuEvents';
 export * from './themeEvents';
 export * from './navigationEvents';
+export * from './i18nEvents';
 export * from './eventMap';

@@ -91,13 +91,9 @@ export {
   DropdownMenuShortcut,
 } from './base/dropdown-menu';
 
-// Composite selectors
-export { CascadingDropdown } from './composite/selectors/CascadingDropdown';
-// Re-export contract types to ensure consistency
-export { type CascadingDropdownProps, type CascadingDropdownOption } from '@hai3/uikit-contracts';
-
 // Composite components
 export { IconButton, type IconButtonProps } from './composite/buttons/IconButton';
+export { DropdownButton, type DropdownButtonProps } from './composite/buttons/DropdownButton';
 // Re-export contract types to ensure consistency
 export { IconButtonSize } from '@hai3/uikit-contracts';
 

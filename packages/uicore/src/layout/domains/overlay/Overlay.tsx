@@ -1,18 +1,17 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../../hooks/useRedux';
-import { hideOverlay } from './overlaySlice';
 
-export interface OverlayProps {}
-
-export const Overlay: React.FC<OverlayProps> = () => {
-  const { visible } = useAppSelector((state) => state.overlay);
-  const dispatch = useAppDispatch();
-
-  if (!visible) return null;
-
-  return (
-    <div className="fixed inset-0 transition-opacity duration-300 bg-black/50 backdrop-blur-sm z-40" onClick={() => dispatch(hideOverlay())} />
-  );
+/**
+ * Overlay Component (Placeholder)
+ * Reserved for future backdrop/overlay functionality
+ * Currently not rendered or used anywhere
+ */
+export const Overlay: React.FC = () => {
+  // TODO: Implement overlay functionality when needed
+  // Will require:
+  // - Overlay actions (emit events, not direct dispatch)
+  // - Overlay effects (listen to events, update slice)
+  // - Render in Layout component
+  return null;
 };
 
 Overlay.displayName = 'Overlay';

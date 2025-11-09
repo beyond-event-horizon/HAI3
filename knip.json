@@ -1,0 +1,27 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": [
+    "src/main.tsx",
+    "src/App.tsx",
+    "packages/*/src/index.ts",
+    "packages/*/src/index.tsx"
+  ],
+  "project": [
+    "src/**/*.{ts,tsx}",
+    "packages/*/src/**/*.{ts,tsx}"
+  ],
+  "ignore": [
+    "**/*.test.{ts,tsx}",
+    "**/*.spec.{ts,tsx}",
+    "**/dist/**",
+    "**/node_modules/**",
+    "scripts/**",
+    "**/*.config.{ts,js,cjs,mjs}",
+    "vite.config.ts",
+    ".eslintrc.cjs"
+  ],
+  "ignoreDependencies": [
+    "@types/*"
+  ],
+  "ignoreExportsUsedInFile": true
+}

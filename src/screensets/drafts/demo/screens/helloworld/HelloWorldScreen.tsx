@@ -1,7 +1,8 @@
 import React from 'react';
-import { navigateToScreen } from '@hai3/uicore';
-import { Button } from '@hai3/uikit';
+import { navigateToScreen, useTranslation, uikitRegistry, UiKitComponent, TextLoader, useAppDispatch } from '@hai3/uicore';
+import { Card, CardContent } from '@hai3/uikit';
 import { CURRENT_THEME_SCREEN_ID } from '../theme/CurrentThemeScreen';
+import { DEMO_SCREENSET_ID } from '../../demoScreenset';
 
 /**
  * Hello World Screen ID
@@ -11,35 +12,57 @@ export const HELLO_WORLD_SCREEN_ID = 'helloworld';
 /**
  * Hello World Screen
  * Simple welcome screen with navigation example
+ * Uses TextLoader for automatic translation loading states
  */
 export const HelloWorldScreen: React.FC = () => {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const Button = uikitRegistry.getComponent(UiKitComponent.Button);
+  
   return (
     <div className="flex flex-col gap-8 p-8">
       <div className="flex flex-col gap-4">
-        <h1 className="text-4xl font-bold">Hello World</h1>
-        <p className="text-muted-foreground">
-          Welcome to HAI3 Demo Screenset
-        </p>
-      </div>
-
-      <div className="max-w-2xl p-6 border border-border rounded-lg bg-background">
-        <p className="text-lg">
-          This is a simple demo screen showing the HAI3 framework in action.
-          Navigate through the menu to explore different features.
-        </p>
-      </div>
-
-      <div className="max-w-2xl">
-        <div className="flex flex-col gap-4 p-6 border border-border rounded-lg bg-background">
-          <h2 className="text-xl font-semibold">Navigation Example</h2>
+        <TextLoader skeletonClassName="h-10 w-64">
+          <h1 className="text-4xl font-bold">
+            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${HELLO_WORLD_SCREEN_ID}.title`)}
+          </h1>
+        </TextLoader>
+        <TextLoader skeletonClassName="h-6 w-96">
           <p className="text-muted-foreground">
-            Click the button below to navigate to the Theme screen programmatically.
+            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${HELLO_WORLD_SCREEN_ID}.welcome`)}
           </p>
-          <Button onClick={() => navigateToScreen(CURRENT_THEME_SCREEN_ID)}>
-            Go to Theme Screen
-          </Button>
-        </div>
+        </TextLoader>
       </div>
+
+      <Card className="max-w-2xl">
+        <CardContent className="pt-6">
+          <TextLoader skeletonClassName="h-6 w-full">
+            <p className="text-lg">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${HELLO_WORLD_SCREEN_ID}.description`)}
+            </p>
+          </TextLoader>
+        </CardContent>
+      </Card>
+
+      <Card className="max-w-2xl">
+        <CardContent className="flex flex-col gap-4 pt-6">
+          <TextLoader skeletonClassName="h-8 w-48">
+            <h2 className="text-xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${HELLO_WORLD_SCREEN_ID}.navigation_title`)}
+            </h2>
+          </TextLoader>
+          <TextLoader skeletonClassName="h-5 w-full">
+            <p className="text-muted-foreground">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${HELLO_WORLD_SCREEN_ID}.navigation_description`)}
+            </p>
+          </TextLoader>
+          <Button onClick={() => dispatch(navigateToScreen(CURRENT_THEME_SCREEN_ID))}>
+            <TextLoader skeletonClassName="h-5 w-32" inheritColor>
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${HELLO_WORLD_SCREEN_ID}.go_to_theme`)}
+            </TextLoader>
+          </Button>
+        </CardContent>
+      </Card>
     </div>
   );
 };

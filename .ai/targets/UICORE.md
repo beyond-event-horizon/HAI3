@@ -1,72 +1,38 @@
 # UI Core Guidelines
 
-> Common: .ai/GUIDELINES.md | Data Flow: EVENTS.md | Styling: STYLING.md
+## AI WORKFLOW (REQUIRED)
+1) Summarize 3–6 rules from this file before proposing changes.
+2) STOP if you import from `@hai3/uikit`, use raw HTML controls, or dispatch slices directly.
 
-## CRITICAL (AI: READ THIS FIRST)
+## SCOPE
+- All code under `packages/uicore/**`
+- UI Core owns domains, routing, providers, registry access, and shared actions/events
+- Screensets may define their own state and events, but UI Core must not depend on screenset internals
 
-**NEVER use raw HTML interactive elements:**
-- FORBIDDEN: `<button>`, `<input>`, `<select>`
-- REQUIRED: UI Kit components via registry
-- Detect: grep for `<button|<input|<select` in `packages/uicore/`
+## CRITICAL RULES
+- Raw HTML controls (`<button>`, `<input>`, `<select>`) are FORBIDDEN — use UI Kit components via `uikitRegistry`
+- UI Core must not import from `@hai3/uikit` directly — all components/icons must come from `uikitRegistry`
+- UI Core follows event-driven architecture — no direct slice dispatch, no prop drilling, no callback-based state mutation
+- App must be wrapped in `<HAI3Provider>` (Redux Provider + Router + registries)
+- Domains are vertical slices: each owns its slice, effects, and actions; cross-domain communication only through events
 
-**UI Kit Registry (AI: READ THIS - CRITICAL):**
-- FORBIDDEN: Direct import from `@hai3/uikit`
-- REQUIRED: `const Component = uikitRegistry.getComponent(UiKitComponent.Button)`
-- REQUIRED: `const icon = uikitRegistry.getIcon(UiKitIcon.Close)`
-- Detect: grep for `from '@hai3/uikit'` in `packages/uicore/src/`
+## FILE LOCATION RULES
+- Domain slices & effects: `packages/uicore/src/domains/<domain>/{slice.ts,effects.ts}`
+- Domain actions: `packages/uicore/src/actions/<namespace>Actions.ts`
+- Domain events: `packages/uicore/src/events/<namespace>Events.ts`
+- Bootstrap & providers: `packages/uicore/src/app/{HAI3Provider.tsx,store.ts,initEffects.ts}`
+- UI Kit registry accessors: `packages/uicore/src/registry/uikitRegistry.ts`
+- Screenset-driven routing (no hardcoded routes): `packages/uicore/src/routing/**`
 
-**UI Kit Contracts (@hai3/uikit-contracts - AI: CRITICAL):**
-- See UIKIT_CONTRACTS.md for full details
-- Import from: `@hai3/uikit-contracts` (dependency)
-- Re-exported by UI Core for app convenience
+## STOP CONDITIONS
+- Importing from `@hai3/uikit` inside UI Core
+- Writing `<button>`, `<input>`, `<select>` or other raw HTML form controls
+- Directly dispatching slice actions from UI components
+- Hardcoding routes or importing screenset internals into UI Core
 
-**Data Flow (AI: READ THIS - CRITICAL):**
-- ONLY allowed: Event-driven architecture (See EVENTS.md)
-- Pattern: Component -> Action -> Event -> Effect -> Slice -> Store
-- FORBIDDEN: Direct slice dispatch, prop drilling, callbacks up
-- REQUIRED: Import actions from `@hai3/uicore` or `@/core/actions`
-- Components read Redux, emit via actions, NEVER dispatch directly
-- Cross-domain: ONLY via events, NEVER via slice imports
-- Example: `dispatch(navigateToScreen(id))` NOT `dispatch(setSelectedScreen(id))`
-- Violations: grep for `dispatch(set[A-Z])` or `import.*Slice.*from`
-
-**Entry:**
-- MUST: `<HAI3Provider>` wraps app
-- Includes Redux Provider + AppRouter
-
-**Routing:**
-- URL: `/:screenId`
-- Routes auto-generate from registered screensets
-- NEVER: Hardcoded routes, manual sync
-
-**Domain Rules:**
-- NEVER: Prop drilling
-- MUST: Self-contained component + slice
-- MUST: Orchestrators accept only `children`
-- MUST: Self-hide via `visible: boolean`
-- Styling: Layout only (See STYLING.md)
-
-**Domains:** Header, Footer, Menu, Sidebar, Screen, Popup, Overlay
-
-**Domain vs Component:**
-- Domain = Major layout section, own slice, one instance
-- Component = Reusable widget, props config, reads/writes Redux
-
-**Component Pattern:**
-- MUST: Wrap UI Kit components + Redux
-- NEVER: Reimplement UI Kit logic
-- If duplicating -> extract to UI Kit composite
-
-**Domain Slice:**
-- State: `visible: boolean`, Actions: `setDomainConfig`, `setDomainVisible`
-- Types in slice (vertical slice: MenuItem in menuSlice)
-
-**Services:** See GUIDELINES.md Self-Registering Registries
-
-**Anti-Patterns (grep for violations):**
-- FORBIDDEN: `<Layout logo={x}/>` -> `<Layout/>`
-- FORBIDDEN: `{show && <Menu/>}` -> `<Menu/>`
-- FORBIDDEN: `useState` -> Redux
-- FORBIDDEN: Direct cross-domain dispatch -> Event-driven
-- FORBIDDEN: Eager init in `useEffect` -> Lazy init with cache
-- FORBIDDEN: `useParams()` outside route -> Inside route element
+## PRE-DIFF CHECKLIST
+- [ ] All UI components/icons retrieved through `uikitRegistry`
+- [ ] No direct slice dispatch or prop drilling
+- [ ] `<HAI3Provider>` is still the root wrapper
+- [ ] Routing is generated from screenset registry, not hardcoded
+- [ ] No imports from screenset-private modules

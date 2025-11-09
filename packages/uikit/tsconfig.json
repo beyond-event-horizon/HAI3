@@ -12,6 +12,7 @@
     "noEmit": false,
     "declaration": true,
     "declarationMap": true,
+    "stripInternal": true,
     "outDir": "./dist",
     "jsx": "react-jsx",
     "strict": true,

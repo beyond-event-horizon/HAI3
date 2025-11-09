@@ -4,8 +4,8 @@ import { navigateToScreen } from '../../../core/actions';
 import { toggleMenu } from '../../../core/actions';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
 import { UiKitComponent, UiKitIcon } from '@hai3/uikit-contracts';
-
-export interface MenuProps {}
+import { useTranslation } from '../../../i18n/useTranslation';
+import { TextLoader } from '../../../i18n/TextLoader';
 
 /**
  * Menu Domain - Uses tailored shadcn sidebar components
@@ -13,10 +13,11 @@ export interface MenuProps {}
  * Purely presentational - responds to user clicks only
  * Initial navigation handled by AppRouter (default route)
  */
-export const Menu: React.FC<MenuProps> = () => {
+export const Menu: React.FC = () => {
   const dispatch = useAppDispatch();
   const { items, collapsed, visible } = useAppSelector((state) => state.menu);
   const selectedScreen = useAppSelector((state) => state.layout.selectedScreen);
+  const { t } = useTranslation();
 
   if (!visible) return null;
 
@@ -49,16 +50,21 @@ export const Menu: React.FC<MenuProps> = () => {
           {items.map((item) => {
             const icon = uikitRegistry.getIcon(item.icon || '');
             const isActive = selectedScreen === item.id;
+            const translatedLabel = t(item.label);
 
             return (
               <SidebarMenuItem key={item.id}>
                 <SidebarMenuButton
                   isActive={isActive}
-                  tooltip={item.label}
-                  onClick={() => navigateToScreen(item.id)}
+                  tooltip={translatedLabel}
+                  onClick={() => dispatch(navigateToScreen(item.id))}
                 >
                   {icon && <SidebarMenuIcon>{icon}</SidebarMenuIcon>}
-                  <SidebarMenuLabel>{item.label}</SidebarMenuLabel>
+                  <SidebarMenuLabel>
+                    <TextLoader skeletonClassName="h-4 w-20" inheritColor>
+                      {translatedLabel}
+                    </TextLoader>
+                  </SidebarMenuLabel>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             );

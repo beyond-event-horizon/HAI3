@@ -4,6 +4,8 @@ import { StarIcon } from '../../uikit/icons/StarIcon';
 import { LoaderIcon } from '../../uikit/icons/LoaderIcon';
 import { BadgeCheckIcon } from '../../uikit/icons/BadgeCheckIcon';
 
+import { useTranslation } from '@hai3/uicore';
+import { DEMO_SCREENSET_ID } from '../../demoScreenset';
 /**
  * UI Kit Elements Screen ID
  */
@@ -18,20 +20,26 @@ export const UIKitElementsScreen: React.FC = () => {
   const [sliderValue, setSliderValue] = useState([50]);
   const [customSliderValue, setCustomSliderValue] = useState([50]);
   const [progressValue, setProgressValue] = useState(33);
+  const { t } = useTranslation();
+
 
   return (
     <div className="flex flex-col gap-8 p-8">
       <div className="flex flex-col gap-4">
-        <h1 className="text-4xl font-bold">UI Kit Elements</h1>
+        <h1 className="text-4xl font-bold">
+          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.title`)}
+        </h1>
         <p className="text-muted-foreground">
-          Demo page with available UI Kit elements and styles annotations
+          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.description`)}
         </p>
       </div>
 
       <div className="max-w-2xl flex flex-col gap-8">
         {/* Avatar Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Avatar</h2>
+          <h2 className="text-2xl font-semibold">
+            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.avatar_heading`)}
+          </h2>
           <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background">
             <div className="flex flex-row flex-wrap items-center gap-12">
               <Avatar>
@@ -115,23 +123,39 @@ export const UIKitElementsScreen: React.FC = () => {
 
         {/* Button Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Button</h2>
+          <h2 className="text-2xl font-semibold">
+            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_heading`)}
+          </h2>
           <div className="flex flex-col gap-4 p-6 border border-border rounded-lg bg-background overflow-hidden">
             {/* First row: 6 Default sized buttons with variants */}
             <div className="flex flex-wrap items-center justify-between w-full gap-2 min-w-0">
-              <Button variant={ButtonVariant.Default} className="shrink-0">Default</Button>
-              <Button variant={ButtonVariant.Destructive} className="shrink-0">Destructive</Button>
-              <Button variant={ButtonVariant.Outline} className="shrink-0">Outline</Button>
-              <Button variant={ButtonVariant.Secondary} className="shrink-0">Secondary</Button>
-              <Button variant={ButtonVariant.Ghost} className="shrink-0">Ghost</Button>
-              <Button variant={ButtonVariant.Link} className="shrink-0">Link</Button>
+              <Button variant={ButtonVariant.Default} className="shrink-0">
+                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_default`)}
+              </Button>
+              <Button variant={ButtonVariant.Destructive} className="shrink-0">
+                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_destructive`)}
+              </Button>
+              <Button variant={ButtonVariant.Outline} className="shrink-0">
+                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_outline`)}
+              </Button>
+              <Button variant={ButtonVariant.Secondary} className="shrink-0">
+                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_secondary`)}
+              </Button>
+              <Button variant={ButtonVariant.Ghost} className="shrink-0">
+                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_ghost`)}
+              </Button>
+              <Button variant={ButtonVariant.Link} className="shrink-0">
+                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_link`)}
+              </Button>
             </div>
 
             {/* Second row: 6 buttons grouped by size (Small, Default, Large) */}
             <div className="flex flex-wrap items-center justify-between w-full gap-2 min-w-0">
               {/* Small group */}
               <div className="flex items-center gap-2 shrink-0">
-                <Button variant={ButtonVariant.Outline} size={ButtonSize.Sm}>Small Outlined</Button>
+                <Button variant={ButtonVariant.Outline} size={ButtonSize.Sm}>
+                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_small_outlined`)}
+                </Button>
                 <IconButton
                   variant={ButtonVariant.Outline}
                   size={IconButtonSize.Small}
@@ -143,7 +167,9 @@ export const UIKitElementsScreen: React.FC = () => {
 
               {/* Default group */}
               <div className="flex items-center gap-2 shrink-0">
-                <Button variant={ButtonVariant.Outline} size={ButtonSize.Default}>Default Outlined</Button>
+                <Button variant={ButtonVariant.Outline} size={ButtonSize.Default}>
+                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_default_outlined`)}
+                </Button>
                 <IconButton
                   variant={ButtonVariant.Outline}
                   size={IconButtonSize.Default}
@@ -155,7 +181,9 @@ export const UIKitElementsScreen: React.FC = () => {
 
               {/* Large group */}
               <div className="flex items-center gap-2 shrink-0">
-                <Button variant={ButtonVariant.Outline} size={ButtonSize.Lg}>Large Outlined</Button>
+                <Button variant={ButtonVariant.Outline} size={ButtonSize.Lg}>
+                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_large_outlined`)}
+                </Button>
                 <IconButton
                   variant={ButtonVariant.Outline}
                   size={IconButtonSize.Large}
@@ -209,64 +237,56 @@ export const UIKitElementsScreen: React.FC = () => {
 
         {/* Select Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Select</h2>
+          <h2 className="text-2xl font-semibold">
+            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.select_heading`)}
+          </h2>
           <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
             <Select>
               <SelectTrigger className="w-[280px] max-w-full">
-                <SelectValue placeholder="Select a timezone" />
+                <SelectValue placeholder={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.select_placeholder`)} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>North America</SelectLabel>
-                  <SelectItem value="est">Eastern Standard Time (EST)</SelectItem>
-                  <SelectItem value="cst">Central Standard Time (CST)</SelectItem>
-                  <SelectItem value="mst">Mountain Standard Time (MST)</SelectItem>
-                  <SelectItem value="pst">Pacific Standard Time (PST)</SelectItem>
-                  <SelectItem value="akst">Alaska Standard Time (AKST)</SelectItem>
-                  <SelectItem value="hst">Hawaii Standard Time (HST)</SelectItem>
+                  <SelectLabel>{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.select_group_north_america`)}</SelectLabel>
+                  <SelectItem value="est">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_est`)}</SelectItem>
+                  <SelectItem value="cst">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_cst`)}</SelectItem>
+                  <SelectItem value="mst">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_mst`)}</SelectItem>
+                  <SelectItem value="pst">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_pst`)}</SelectItem>
+                  <SelectItem value="akst">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_akst`)}</SelectItem>
+                  <SelectItem value="hst">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_hst`)}</SelectItem>
                 </SelectGroup>
                 <SelectGroup>
-                  <SelectLabel>Europe & Africa</SelectLabel>
-                  <SelectItem value="gmt">Greenwich Mean Time (GMT)</SelectItem>
-                  <SelectItem value="cet">Central European Time (CET)</SelectItem>
-                  <SelectItem value="eet">Eastern European Time (EET)</SelectItem>
-                  <SelectItem value="west">
-                    Western European Summer Time (WEST)
-                  </SelectItem>
-                  <SelectItem value="cat">Central Africa Time (CAT)</SelectItem>
-                  <SelectItem value="eat">East Africa Time (EAT)</SelectItem>
+                  <SelectLabel>{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.select_group_europe_africa`)}</SelectLabel>
+                  <SelectItem value="gmt">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_gmt`)}</SelectItem>
+                  <SelectItem value="cet">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_cet`)}</SelectItem>
+                  <SelectItem value="eet">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_eet`)}</SelectItem>
+                  <SelectItem value="west">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_west`)}</SelectItem>
+                  <SelectItem value="cat">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_cat`)}</SelectItem>
+                  <SelectItem value="eat">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_eat`)}</SelectItem>
                 </SelectGroup>
                 <SelectGroup>
-                  <SelectLabel>Asia</SelectLabel>
-                  <SelectItem value="msk">Moscow Time (MSK)</SelectItem>
-                  <SelectItem value="ist">India Standard Time (IST)</SelectItem>
-                  <SelectItem value="cst_china">China Standard Time (CST)</SelectItem>
-                  <SelectItem value="jst">Japan Standard Time (JST)</SelectItem>
-                  <SelectItem value="kst">Korea Standard Time (KST)</SelectItem>
-                  <SelectItem value="ist_indonesia">
-                    Indonesia Central Standard Time (WITA)
-                  </SelectItem>
+                  <SelectLabel>{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.select_group_asia`)}</SelectLabel>
+                  <SelectItem value="msk">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_msk`)}</SelectItem>
+                  <SelectItem value="ist">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_ist`)}</SelectItem>
+                  <SelectItem value="cst_china">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_cst_china`)}</SelectItem>
+                  <SelectItem value="jst">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_jst`)}</SelectItem>
+                  <SelectItem value="kst">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_kst`)}</SelectItem>
+                  <SelectItem value="ist_indonesia">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_wita`)}</SelectItem>
                 </SelectGroup>
                 <SelectGroup>
-                  <SelectLabel>Australia & Pacific</SelectLabel>
-                  <SelectItem value="awst">
-                    Australian Western Standard Time (AWST)
-                  </SelectItem>
-                  <SelectItem value="acst">
-                    Australian Central Standard Time (ACST)
-                  </SelectItem>
-                  <SelectItem value="aest">
-                    Australian Eastern Standard Time (AEST)
-                  </SelectItem>
-                  <SelectItem value="nzst">New Zealand Standard Time (NZST)</SelectItem>
-                  <SelectItem value="fjt">Fiji Time (FJT)</SelectItem>
+                  <SelectLabel>{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.select_group_australia_pacific`)}</SelectLabel>
+                  <SelectItem value="awst">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_awst`)}</SelectItem>
+                  <SelectItem value="acst">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_acst`)}</SelectItem>
+                  <SelectItem value="aest">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_aest`)}</SelectItem>
+                  <SelectItem value="nzst">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_nzst`)}</SelectItem>
+                  <SelectItem value="fjt">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_fjt`)}</SelectItem>
                 </SelectGroup>
                 <SelectGroup>
-                  <SelectLabel>South America</SelectLabel>
-                  <SelectItem value="art">Argentina Time (ART)</SelectItem>
-                  <SelectItem value="bot">Bolivia Time (BOT)</SelectItem>
-                  <SelectItem value="brt">Brasilia Time (BRT)</SelectItem>
-                  <SelectItem value="clt">Chile Standard Time (CLT)</SelectItem>
+                  <SelectLabel>{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.select_group_south_america`)}</SelectLabel>
+                  <SelectItem value="art">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_art`)}</SelectItem>
+                  <SelectItem value="bot">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_bot`)}</SelectItem>
+                  <SelectItem value="brt">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_brt`)}</SelectItem>
+                  <SelectItem value="clt">{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.timezone_clt`)}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -275,7 +295,9 @@ export const UIKitElementsScreen: React.FC = () => {
 
         {/* Skeleton Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Skeleton</h2>
+          <h2 className="text-2xl font-semibold">
+            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.skeleton_heading`)}
+          </h2>
           <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
             <div className="flex items-center space-x-4">
               <Skeleton className="h-12 w-12 rounded-full shrink-0" />
@@ -360,14 +382,16 @@ export const UIKitElementsScreen: React.FC = () => {
 
         {/* Switch Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Switch</h2>
+          <h2 className="text-2xl font-semibold">
+            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.switch_heading`)}
+          </h2>
           <div className="flex flex-col gap-2 p-6 border border-border rounded-lg bg-background">
             <div className="flex items-center justify-center gap-2">
               <label
                 htmlFor="airplane-mode-switch"
                 className="cursor-pointer select-none"
               >
-                Airplane Mode
+                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.airplane_mode`)}
               </label>
               <Switch
                 id="airplane-mode-switch"

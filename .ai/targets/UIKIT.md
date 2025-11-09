@@ -1,50 +1,40 @@
 # UI Kit Guidelines
 
-> Common rules: .ai/GUIDELINES.md | Styling: .ai/targets/STYLING.md
+## AI WORKFLOW (REQUIRED)
+1) Summarize 3–6 rules from this file before proposing changes.
+2) STOP if you add Redux/business logic, create custom base components, or bypass contracts.
 
-## CRITICAL (AI: READ THIS FIRST)
+## SCOPE
+- All code under `packages/uikit/**`
+- UI Kit is **presentational only** — no state management, no business logic
+- Must implement the contracts from `@hai3/uikit-contracts`
 
-**Scope:**
-- Pure presentational React
-- Theme utilities
-- NO Redux, NO business logic
+## CRITICAL RULES
+- Base components come from **shadcn**; composites are built from base components
+- No custom base components — if missing, generate via `npx shadcn add <component>`
+- All component types, props, and IDs must follow the `UiKitComponent` enum & contract types
+- Icons live in `icons/` and are exported (tree-shakeable) — no self-registration, no hardcoded strings
+- Loading states must use `<Skeleton />` from base — no custom animated divs
 
-**UI Kit Contracts (AI: READ THIS):**
-- See UIKIT_CONTRACTS.md for full details
-- MUST implement interfaces from `@hai3/uikit-contracts`
+## STOP CONDITIONS
+- Adding Redux, effects, slice logic, or app-level state
+- Implementing a component that doesn’t match the contract type
+- Writing manual skeletons instead of `<Skeleton />`
+- Creating visual components in screensets instead of UI Kit where reusable
 
-**shadcn:**
-- ALWAYS use shadcn first
-- ALL base components are shadcn
-- Update: `npx shadcn add [component]`
-- Enums in same file as component
-- Mark customizations: `// HAI3 customization: ...`
+## FILE STRUCTURE RULES
+- Base components: `packages/uikit/src/base/**`
+- Composites: `packages/uikit/src/composite/**`
+- Icons: `packages/uikit/src/icons/**`
+- Theme utilities: `packages/uikit/src/theme/**`
 
-**Hierarchy:** base -> composite
-- Base = shadcn ONLY
-- Composite = combinations of base
-- NO custom base components
-- Placement: shadcn -> `base/`, combinations -> `composite/`
+## COMPOSITE RULES
+- Composites accept `value`, `onChange`, and props — no side effects
+- Must be reusable across screensets; if not reusable, it stays in screenset, not UI Kit
 
-**Composite Pattern:**
-- BAD: Composite has Redux, theme registry, screenset logic
-- GOOD: Composite takes value/onChange props only
-
-**Icons:**
-- Location: `icons/` directory
-- Tree-shakeable: exported, NOT self-registered
-- Props: className only
-
-**Loading States:**
-- ALWAYS use Skeleton base component
-- FORBIDDEN: Custom skeleton divs with bg-muted animate-pulse
-- Pattern: `loading` prop on composite component
-- Render: `<Skeleton className="h-8 w-24" />` for text/shapes
-- Placement: Matches content layout exactly
-
-**Rules:**
-- Pure presentational, props in/events out
-- Enums for variants, NEVER string unions
-- Styling per STYLING.md
-- Export types with component, enums in same file
-- BEFORE deleting: grep UI Core for imports
+## PRE-DIFF CHECKLIST
+- [ ] Base or composite placement is correct
+- [ ] Component props & types match `@hai3/uikit-contracts`
+- [ ] No Redux/business logic or side effects added
+- [ ] Icons exported from `icons/`, no string literal IDs
+- [ ] Skeleton used for loading states if applicable

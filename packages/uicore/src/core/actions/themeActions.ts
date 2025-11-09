@@ -7,17 +7,15 @@
 import type { AppDispatch } from '../../store';
 import { eventBus } from '../events/eventBus';
 import { ThemeEvents } from '../events/eventTypes';
-import { setTheme as setThemeReducer } from '../../layout/layoutSlice';
 
 /**
  * Change current theme
- * Emits events for theme application
+ * Action (imperative name) - emits events only, effects update slices
+ * Follows Flux: Action → Event → Effect → Slice
  */
-export const setTheme = (themeName: string) => {
-  return (dispatch: AppDispatch): void => {
-    dispatch(setThemeReducer(themeName));
-
-    // Emit event for theme application
+export const changeTheme = (themeName: string) => {
+  return (_dispatch: AppDispatch): void => {
+    // Emit event - effect will update slice and apply theme
     eventBus.emit(ThemeEvents.Changed, { 
       themeName 
     });
