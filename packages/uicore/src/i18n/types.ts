@@ -30,6 +30,7 @@ export enum LanguageDisplayMode {
 /**
  * Language enum - all supported languages
  * Based on major platforms (Google, Facebook, Microsoft, Apple)
+ * Now supports 36 languages with complete coverage of major tech platforms
  */
 export enum Language {
   // Western European
@@ -75,6 +76,12 @@ export enum Language {
   Greek = 'el',
   Romanian = 'ro',
   Hungarian = 'hu',
+  
+  // Additional major languages
+  Malay = 'ms',
+  Tagalog = 'tl',
+  Tamil = 'ta',
+  Swahili = 'sw',
 }
 
 /**
@@ -132,7 +139,15 @@ export const SUPPORTED_LANGUAGES: LanguageMetadata[] = [
   { code: Language.Greek, name: 'Ελληνικά', englishName: 'Greek', direction: TextDirection.LeftToRight },
   { code: Language.Romanian, name: 'Română', englishName: 'Romanian', direction: TextDirection.LeftToRight },
   { code: Language.Hungarian, name: 'Magyar', englishName: 'Hungarian', direction: TextDirection.LeftToRight },
+  
+  // Additional major languages
+  { code: Language.Malay, name: 'Bahasa Melayu', englishName: 'Malay', direction: TextDirection.LeftToRight },
+  { code: Language.Tagalog, name: 'Tagalog', englishName: 'Tagalog', direction: TextDirection.LeftToRight },
+  { code: Language.Tamil, name: 'தமிழ்', englishName: 'Tamil', direction: TextDirection.LeftToRight },
+  { code: Language.Swahili, name: 'Kiswahili', englishName: 'Swahili', direction: TextDirection.LeftToRight },
 ];
+
+// Total: 36 languages - complete coverage of major tech platform languages
 
 export type LanguageCode = typeof SUPPORTED_LANGUAGES[number]['code'];
 
