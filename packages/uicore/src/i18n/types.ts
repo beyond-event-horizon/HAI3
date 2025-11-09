@@ -1,3 +1,5 @@
+import { TextDirection } from '@hai3/uikit-contracts';
+
 /**
  * I18n configuration constants
  */
@@ -13,11 +15,9 @@ export const HTML_DIR_ATTRIBUTE = 'dir';
 
 /**
  * Text direction for languages
+ * Re-exported from @hai3/uikit-contracts for convenience
  */
-export enum TextDirection {
-  LeftToRight = 'ltr',
-  RightToLeft = 'rtl',
-}
+export { TextDirection };
 
 /**
  * Display mode for language names

@@ -22,11 +22,12 @@
 
 ## REPO INVARIANTS (MANDATORY)
 - Event-driven architecture only -> full rules in `EVENTS.md`
-- Registries follow Open/Closed -> adding items must not require editing registry root files
+- Registries follow Open/Closed -> adding items must not require editing registry root files (cleanup after deletion is OK)
 - App-level dependencies limited to: `@hai3/uicore`, `@hai3/uikit`, `react`, `react-dom`
 - Cross-domain communication only via events — no direct slice imports, no prop drilling
 - No string-literal identifiers — always use constants/enums
 - No `any`, no type-erasing casts
+- Always support RTL/LTR layouts — use logical properties (`ms-`, `me-`), `rtl:` variants, and `TextDirection` enum
 
 ## IMPORT RULES
 
@@ -46,7 +47,7 @@
 
 ## STOP CONDITIONS (ASK FIRST)
 - Editing `/core/runtime/**` or `/sdk/**`
-- Modifying registry root files (`apiRegistry`, UI Kit registry, etc.)
+- Modifying registry root files to add new items (cleanup after deletion is OK)
 - Changing public contracts in `uikit-contracts/**`
 - Adding new top-level dependencies
 - Violating the data-flow rules in `EVENTS.md`
@@ -55,7 +56,7 @@
 - [ ] `npm run arch:check` passes
 - [ ] Routed to correct target file
 - [ ] Summarized rules in own words
-- [ ] No registry root file modified
+- [ ] No registry root file modified to add items (cleanup OK)
 - [ ] Import paths follow rules
 - [ ] Snapshot + type dependents updated if types changed
 
