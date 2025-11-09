@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
 import { useTranslation } from '../i18n/useTranslation';
 import { uikitRegistry } from '../uikit/uikitRegistry';
 import { UiKitComponent, ButtonVariant } from '@hai3/uikit-contracts';
-import { setTheme } from '../core/actions';
+import { changeTheme } from '../core/actions';
 import { themeRegistry } from '../theme/themeRegistry';
 
 /**
@@ -54,7 +54,7 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
           {availableThemes.map((themeName) => (
             <DropdownMenuItem
               key={themeName}
-              onClick={() => dispatch(setTheme(themeName))}
+              onClick={() => dispatch(changeTheme(themeName))}
             >
               {formatThemeName(themeName)}
             </DropdownMenuItem>

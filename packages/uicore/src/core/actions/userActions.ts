@@ -8,7 +8,6 @@ import { eventBus } from '../events/eventBus';
 import { UserEvents } from '../events/eventTypes';
 import { apiRegistry } from '../../api/apiRegistry';
 import { ACCOUNTS_DOMAIN } from '../../api/accounts/AccountsApiService';
-import { setLoading } from '../../app/appSlice';
 import type { ApiError } from '../../api/accounts/api';
 import { changeLanguage } from './i18nActions';
 
@@ -19,9 +18,11 @@ import { changeLanguage } from './i18nActions';
  * Mock handling is transparent - managed by BaseApiService interceptor
  * Emits events for success/failure
  * Sets language from user preference after fetch
+ * Follows Flux: Action → Event → Effect → Slice
  */
-export const fetchCurrentUser = () => (dispatch: AppDispatch): void => {
-  dispatch(setLoading(true));
+export const fetchCurrentUser = () => (_dispatch: AppDispatch): void => {
+  // Emit start event - effect will set loading
+  eventBus.emit(UserEvents.UserFetchStarted);
   
   const accountsService = apiRegistry.getService(ACCOUNTS_DOMAIN);
   

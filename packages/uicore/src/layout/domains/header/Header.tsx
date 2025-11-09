@@ -9,11 +9,7 @@ import { UiKitComponent } from '@hai3/uikit-contracts';
  * No styling - all presentation in uikit
  */
 
-export interface HeaderProps {
-  // All configuration is managed via Redux
-}
-
-export const Header: React.FC<HeaderProps> = () => {
+export const Header: React.FC = () => {
   const HeaderUI = uikitRegistry.getComponent(UiKitComponent.Header);
   
   return (

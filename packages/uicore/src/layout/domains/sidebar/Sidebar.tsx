@@ -1,9 +1,7 @@
 import React from 'react';
 import { useAppSelector } from '../../../hooks/useRedux';
 
-export interface SidebarProps {}
-
-export const Sidebar: React.FC<SidebarProps> = () => {
+export const Sidebar: React.FC = () => {
   const { content, position, collapsed, visible } = useAppSelector((state) => state.sidebar);
 
   if (!visible) return null;

@@ -10,15 +10,15 @@ import {
   ScreensetEvents,
   MenuEvents
 } from '../events/eventTypes';
-import { setCurrentScreenset as setCurrentScreensetReducer } from '../../layout/layoutSlice';
 import { screensetRegistry } from '../../screensets/screensetRegistry';
 
 /**
- * Change current screenset
- * Emits events for other domains to react to
+ * Select/change current screenset
+ * Action (imperative name) - emits events only, effects update slices
+ * Follows Flux: Action → Event → Effect → Slice
  */
-export const setCurrentScreenset = (screensetId: string) => {
-  return (dispatch: AppDispatch): void => {
+export const selectScreenset = (screensetId: string) => {
+  return (_dispatch: AppDispatch): void => {
     const screenset = screensetRegistry.get(screensetId);
     
     if (!screenset) {
@@ -26,8 +26,7 @@ export const setCurrentScreenset = (screensetId: string) => {
       return;
     }
 
-    dispatch(setCurrentScreensetReducer(screensetId));
-
+    // Emit events - effects will update slices
     eventBus.emit(ScreensetEvents.Changed, { 
       screensetId 
     });
