@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb } from '@hai3/uikit';
+import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb, Tooltip, TooltipTrigger, TooltipContent } from '@hai3/uikit';
 import { StarIcon } from '../../uikit/icons/StarIcon';
 import { LoaderIcon } from '../../uikit/icons/LoaderIcon';
 
@@ -289,6 +289,60 @@ export const UIKitElementsScreen: React.FC = () => {
                 checked={airplaneMode}
                 onCheckedChange={setAirplaneMode}
               />
+            </div>
+          </div>
+        </div>
+
+        {/* Tooltip Element Block */}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-2xl font-semibold">Tooltip</h2>
+          <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
+            <div className="flex flex-wrap items-center justify-center gap-8">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant={ButtonVariant.Outline}>Hover me</Button>
+                </TooltipTrigger>
+                <TooltipContent className="bg-primary text-primary-foreground">
+                  <p>This is a tooltip</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <IconButton
+                    variant={ButtonVariant.Outline}
+                    size={IconButtonSize.Default}
+                    aria-label="Info button"
+                  >
+                    <StarIcon />
+                  </IconButton>
+                </TooltipTrigger>
+                <TooltipContent className="bg-green-500 text-white">
+                  <p>Icon button with tooltip</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="text-sm text-muted-foreground underline cursor-help">
+                    Hover for more info
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent side="top" className="bg-destructive text-destructive-foreground">
+                  <p>Tooltip on top</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="text-sm text-muted-foreground underline cursor-help">
+                    Different side
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="bg-muted text-muted-foreground">
+                  <p>Tooltip on the right side</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           </div>
         </div>
