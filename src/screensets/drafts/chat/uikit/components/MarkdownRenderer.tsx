@@ -35,7 +35,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-    } catch (err) {
+    } catch (_err) {
       // Fallback for older browsers
       const textArea = document.createElement('textarea');
       textArea.value = text;

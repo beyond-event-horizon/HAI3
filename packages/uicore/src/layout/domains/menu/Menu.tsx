@@ -7,15 +7,13 @@ import { UiKitComponent, UiKitIcon } from '@hai3/uikit-contracts';
 import { useTranslation } from '../../../i18n/useTranslation';
 import { TextLoader } from '../../../i18n/TextLoader';
 
-export interface MenuProps {}
-
 /**
  * Menu Domain - Uses tailored shadcn sidebar components
  * Composes shadcn primitives with Redux state management
  * Purely presentational - responds to user clicks only
  * Initial navigation handled by AppRouter (default route)
  */
-export const Menu: React.FC<MenuProps> = () => {
+export const Menu: React.FC = () => {
   const dispatch = useAppDispatch();
   const { items, collapsed, visible } = useAppSelector((state) => state.menu);
   const selectedScreen = useAppSelector((state) => state.layout.selectedScreen);
@@ -59,7 +57,7 @@ export const Menu: React.FC<MenuProps> = () => {
                 <SidebarMenuButton
                   isActive={isActive}
                   tooltip={translatedLabel}
-                  onClick={() => navigateToScreen(item.id)}
+                  onClick={() => dispatch(navigateToScreen(item.id))}
                 >
                   {icon && <SidebarMenuIcon>{icon}</SidebarMenuIcon>}
                   <SidebarMenuLabel>

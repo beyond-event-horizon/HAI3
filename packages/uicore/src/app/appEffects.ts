@@ -23,12 +23,18 @@ import { i18nRegistry } from '../i18n/i18nRegistry';
  * Call this once during app setup
  */
 export function initAppEffects(store: Store): void {
-  // User events
+  // User fetch started - set loading state
+  eventBus.on(UserEvents.UserFetchStarted, () => {
+    store.dispatch(setLoading(true));
+  });
+  
+  // User fetch succeeded - update user and clear loading
   eventBus.on(UserEvents.UserFetched, ({ user }) => {
     store.dispatch(setUser(user));
     store.dispatch(setLoading(false));
   });
 
+  // User fetch failed - set error and clear loading
   eventBus.on(UserEvents.UserFetchFailed, ({ error }) => {
     store.dispatch(setError(error.message));
     store.dispatch(setLoading(false));

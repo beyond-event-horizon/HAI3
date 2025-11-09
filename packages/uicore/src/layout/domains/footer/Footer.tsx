@@ -1,41 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../../hooks/useRedux';
 import { ThemeSelector } from '../../../components/ThemeSelector';
 import { ScreensetSelector } from '../../../components/ScreensetSelector';
 import { ApiModeToggle } from '../../../components/ApiModeToggle';
 import { LanguageSelector } from '../../../components/LanguageSelector';
-import { setCurrentScreenset, setTheme } from '../../../core/actions';
+import { selectScreenset, changeTheme } from '../../../core/actions';
 import { themeRegistry } from '../../../theme/themeRegistry';
-import { setFooterConfig } from './footerSlice';
 import { buildScreensetOptions } from './footerHelpers';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
 import { UiKitComponent, ButtonVariant } from '@hai3/uikit-contracts';
+import type { ScreensetOption } from './footerSlice';
 
 /**
  * Core Footer component (dev tool, not for production)
- * Wraps UI Kit Footer and manages its own configuration via Redux
- * Includes ThemeSelector and ScreensetSelector as built-in children
- * 
- * IMPORTANT: Footer reports screenset AND theme changes
- * - Discovers registered themes/screensets at runtime from services
- * - Sets initial theme (first registered) and screenset (first in first category)
- * - Dispatches actions that emit events (event-driven architecture)
- * - Effects handle side effects (menu updates, theme application)
- * - Footer has NO knowledge of Menu or other domains
  */
 
-export interface FooterProps {
-  // All configuration is managed via Redux
-}
-
-export const Footer: React.FC<FooterProps> = () => {
+export const Footer: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { visible, screensetOptions } = useAppSelector((state) => state.footer);
+  const visible = useAppSelector((state) => state.footer.visible);
   const theme = useAppSelector((state) => state.layout.theme);
   const currentScreenset = useAppSelector((state) => state.layout.currentScreenset);
+  
+  // Screenset options in local state - no need for Redux (purely UI)
+  const [screensetOptions, setScreensetOptions] = useState<ScreensetOption[]>([]);
 
   // Dev-only footer content (not configurable)
-  const copyright = ' 2025 HAI3 Framework';
+  const copyright = '© 2025 HAI3 Framework';
   const links = [
     { label: 'Documentation', href: '#docs' },
     { label: 'GitHub', href: '#github' },
@@ -46,19 +36,20 @@ export const Footer: React.FC<FooterProps> = () => {
     const options = buildScreensetOptions();
     const themes = themeRegistry.getThemeNames();
     
+    // Update local state
+    setScreensetOptions(options);
+    
+    // Set initial theme if not set
     if (!theme && themes.length > 0) {
-      dispatch(setTheme(themes[0]));
+      dispatch(changeTheme(themes[0]));
     }
 
+    // Set initial screenset if not set
     if (!currentScreenset && options.length > 0 && options[0].screensets.length > 0) {
       const firstCategory = options[0].category;
       const firstScreenset = options[0].screensets[0].id;
-      dispatch(setCurrentScreenset(`${firstCategory}:${firstScreenset}`));
+      dispatch(selectScreenset(`${firstCategory}:${firstScreenset}`));
     }
-    
-    dispatch(setFooterConfig({ 
-      screensetOptions: options,
-    }));
   }, [dispatch, theme, currentScreenset]);
 
   // No side effects here - actions emit events, effects handle them
@@ -92,7 +83,7 @@ export const Footer: React.FC<FooterProps> = () => {
           <ScreensetSelector
             options={screensetOptions}
             currentValue={currentScreenset}
-            onChange={(value: string) => dispatch(setCurrentScreenset(value))}
+            onChange={(value: string) => dispatch(selectScreenset(value))}
           />
         )}
         <ThemeSelector />
