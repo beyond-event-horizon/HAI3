@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback } from '@hai3/uikit';
+import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner } from '@hai3/uikit';
 import { StarIcon } from '../../uikit/icons/StarIcon';
+import { LoaderIcon } from '../../uikit/icons/LoaderIcon';
 
 /**
  * UI Kit Elements Screen ID
@@ -215,6 +216,30 @@ export const UIKitElementsScreen: React.FC = () => {
                 checked={airplaneMode}
                 onCheckedChange={setAirplaneMode}
               />
+            </div>
+          </div>
+        </div>
+
+        {/* Spinner Element Block */}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-2xl font-semibold">Spinner</h2>
+          <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
+            <div className="flex flex-wrap items-center justify-center gap-8">
+              {/* Different sizes */}
+              <Spinner size="size-4" className="text-primary" />
+              <Spinner size="size-6" className="text-primary" />
+              <Spinner size="size-8" className="text-primary" />
+              <Spinner size="size-12" className="text-primary" />
+              
+              {/* Different colors */}
+              <Spinner icon={LoaderIcon} size="size-6" className="text-primary" />
+              <Spinner icon={LoaderIcon} size="size-6" className="text-destructive" />
+              <Spinner icon={LoaderIcon} size="size-6" className="text-muted-foreground" />
+
+              {/* Different colors */}
+              <Spinner size="size-6" className="text-green-500" />
+              <Spinner size="size-6" className="text-purple-500" />
+              <Spinner size="size-6" className="text-yellow-500" />
             </div>
           </div>
         </div>
