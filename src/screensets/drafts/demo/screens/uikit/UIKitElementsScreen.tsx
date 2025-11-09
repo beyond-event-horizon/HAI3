@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb, Tooltip, TooltipTrigger, TooltipContent, Badge } from '@hai3/uikit';
+import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb, Tooltip, TooltipTrigger, TooltipContent, Badge, Progress } from '@hai3/uikit';
 import { StarIcon } from '../../uikit/icons/StarIcon';
 import { LoaderIcon } from '../../uikit/icons/LoaderIcon';
 import { BadgeCheckIcon } from '../../uikit/icons/BadgeCheckIcon';
@@ -17,6 +17,7 @@ export const UIKitElementsScreen: React.FC = () => {
   const [airplaneMode, setAirplaneMode] = useState(false);
   const [sliderValue, setSliderValue] = useState([50]);
   const [customSliderValue, setCustomSliderValue] = useState([50]);
+  const [progressValue, setProgressValue] = useState(33);
 
   return (
     <div className="flex flex-col gap-8 p-8">
@@ -91,6 +92,11 @@ export const UIKitElementsScreen: React.FC = () => {
                   8
                 </Badge>
                 <Badge
+                  className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums bg-green-500 text-white"
+                >
+                  99
+                </Badge>
+                <Badge
                   className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
                   variant="destructive"
                 >
@@ -157,6 +163,45 @@ export const UIKitElementsScreen: React.FC = () => {
                 >
                   <StarIcon />
                 </IconButton>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Progress Element Block */}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-2xl font-semibold">Progress</h2>
+          <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
+            <div className="flex flex-col gap-6 w-full max-w-md">
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium">Primary Progress</label>
+                <Progress value={progressValue} className="bg-primary/20" />
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>{progressValue}%</span>
+                  <button
+                    onClick={() => setProgressValue((prev) => Math.min(100, prev + 10))}
+                    className="text-primary hover:underline"
+                  >
+                    Increase
+                  </button>
+                </div>
+              </div>
+              
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium">Destructive Progress</label>
+                <Progress 
+                  value={progressValue} 
+                  className="bg-destructive/20 [&>div]:bg-destructive" 
+                />
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>{progressValue}%</span>
+                  <button
+                    onClick={() => setProgressValue((prev) => Math.max(0, prev - 10))}
+                    className="text-destructive hover:underline"
+                  >
+                    Decrease
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -386,7 +431,6 @@ export const UIKitElementsScreen: React.FC = () => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
