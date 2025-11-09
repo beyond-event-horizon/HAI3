@@ -11,6 +11,7 @@ export { ButtonVariant, ButtonSize } from '@hai3/uikit-contracts';
 export { Switch } from './base/switch';
 export { Skeleton } from './base/skeleton';
 export { Spinner, type SpinnerProps } from './base/spinner';
+export { Slider, SliderTrack, SliderRange, SliderThumb } from './base/slider';
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './base/card';
 export { Header, type HeaderProps } from './base/header'; // HAI3 custom base component
 

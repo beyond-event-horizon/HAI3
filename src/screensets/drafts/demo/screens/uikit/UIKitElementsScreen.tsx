@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner } from '@hai3/uikit';
+import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb } from '@hai3/uikit';
 import { StarIcon } from '../../uikit/icons/StarIcon';
 import { LoaderIcon } from '../../uikit/icons/LoaderIcon';
 
@@ -14,6 +14,8 @@ export const UI_KIT_ELEMENTS_SCREEN_ID = 'uikit';
  */
 export const UIKitElementsScreen: React.FC = () => {
   const [airplaneMode, setAirplaneMode] = useState(false);
+  const [sliderValue, setSliderValue] = useState([50]);
+  const [customSliderValue, setCustomSliderValue] = useState([50]);
 
   return (
     <div className="flex flex-col gap-8 p-8">
@@ -200,22 +202,49 @@ export const UIKitElementsScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Switch Element Block */}
+        {/* Slider Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Switch</h2>
-          <div className="flex flex-col gap-2 p-6 border border-border rounded-lg bg-background">
-            <div className="flex items-center justify-center gap-2">
-              <label
-                htmlFor="airplane-mode-switch"
-                className="cursor-pointer select-none"
-              >
-                Airplane Mode
-              </label>
-              <Switch
-                id="airplane-mode-switch"
-                checked={airplaneMode}
-                onCheckedChange={setAirplaneMode}
-              />
+          <h2 className="text-2xl font-semibold">Slider</h2>
+          <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
+            <div className="flex flex-col gap-8 w-full max-w-md">
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium">Volume</label>
+                <Slider
+                  value={sliderValue}
+                  onValueChange={setSliderValue}
+                  max={100}
+                  step={1}
+                  className="w-full"
+                >
+                  <SliderTrack>
+                    <SliderRange />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>0</span>
+                  <span>{sliderValue[0]}</span>
+                  <span>100</span>
+                </div>
+              </div>
+              
+              {/* Customized slider */}
+              <div className="flex flex-col gap-2">
+                <Slider
+                  value={customSliderValue}
+                  onValueChange={setCustomSliderValue}
+                  max={100}
+                  step={1}
+                  className="w-full"
+                >
+                  <SliderTrack className="bg-destructive/20">
+                    <SliderRange className="bg-destructive" />
+                  </SliderTrack>
+                  <SliderThumb className="border-muted-foreground flex items-center justify-center bg-transparent p-0">
+                    <StarIcon className="w-4 h-4 fill-muted-foreground text-muted-foreground stroke-muted-foreground" />
+                  </SliderThumb>
+                </Slider>
+              </div>
             </div>
           </div>
         </div>
@@ -240,6 +269,26 @@ export const UIKitElementsScreen: React.FC = () => {
               <Spinner size="size-6" className="text-green-500" />
               <Spinner size="size-6" className="text-purple-500" />
               <Spinner size="size-6" className="text-yellow-500" />
+            </div>
+          </div>
+        </div>
+
+        {/* Switch Element Block */}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-2xl font-semibold">Switch</h2>
+          <div className="flex flex-col gap-2 p-6 border border-border rounded-lg bg-background">
+            <div className="flex items-center justify-center gap-2">
+              <label
+                htmlFor="airplane-mode-switch"
+                className="cursor-pointer select-none"
+              >
+                Airplane Mode
+              </label>
+              <Switch
+                id="airplane-mode-switch"
+                checked={airplaneMode}
+                onCheckedChange={setAirplaneMode}
+              />
             </div>
           </div>
         </div>
