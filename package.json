@@ -31,10 +31,13 @@
   "dependencies": {
     "@hai3/uicore": "^0.1.0",
     "@hai3/uikit": "^0.1.0",
+    "@hai3/uikit-contracts": "^0.1.0",
+    "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
@@ -45,7 +48,6 @@
     "autoprefixer": "^10.4.18",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
     "eslint-plugin-unused-imports": "^4.3.0",
     "knip": "^5.68.0",
     "postcss": "^8.4.35",

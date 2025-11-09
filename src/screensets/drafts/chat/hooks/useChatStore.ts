@@ -18,8 +18,3 @@ export function useChatStore<T>(selector: (state: ChatState) => T): T {
 
   return value;
 }
-
-// Convenience hook for full state
-export function useFullChatStore(): ChatState {
-  return useChatStore((state) => state);
-}
