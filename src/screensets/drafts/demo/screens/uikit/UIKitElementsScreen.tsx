@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb, Tooltip, TooltipTrigger, TooltipContent } from '@hai3/uikit';
+import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb, Tooltip, TooltipTrigger, TooltipContent, Badge } from '@hai3/uikit';
 import { StarIcon } from '../../uikit/icons/StarIcon';
 import { LoaderIcon } from '../../uikit/icons/LoaderIcon';
+import { BadgeCheckIcon } from '../../uikit/icons/BadgeCheckIcon';
 
 /**
  * UI Kit Elements Screen ID
@@ -62,6 +63,45 @@ export const UIKitElementsScreen: React.FC = () => {
                   />
                   <AvatarFallback>ER</AvatarFallback>
                 </Avatar>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Badge Element Block */}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-2xl font-semibold">Badge</h2>
+          <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
+            <div className="flex flex-col items-center gap-2 w-full">
+              <div className="flex w-full flex-wrap gap-2 justify-center">
+                <Badge>Badge</Badge>
+                <Badge variant="secondary">Secondary</Badge>
+                <Badge variant="destructive">Destructive</Badge>
+                <Badge variant="outline">Outline</Badge>
+              </div>
+              <div className="flex w-full flex-wrap gap-2 justify-center">
+                <Badge
+                  variant="secondary"
+                  className="bg-blue-500 text-white dark:bg-blue-600"
+                >
+                  <BadgeCheckIcon className="w-3 h-3" />
+                  Verified
+                </Badge>
+                <Badge className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums">
+                  8
+                </Badge>
+                <Badge
+                  className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
+                  variant="destructive"
+                >
+                  99
+                </Badge>
+                <Badge
+                  className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
+                  variant="outline"
+                >
+                  20+
+                </Badge>
               </div>
             </div>
           </div>
@@ -346,6 +386,7 @@ export const UIKitElementsScreen: React.FC = () => {
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );

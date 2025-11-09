@@ -8,6 +8,7 @@ export { Avatar, AvatarImage, AvatarFallback } from './base/avatar';
 export { Button, type ButtonProps } from './base/button';
 // Re-export contract types to ensure consistency
 export { ButtonVariant, ButtonSize } from '@hai3/uikit-contracts';
+export { Badge, badgeVariants, type BadgeProps } from './base/badge';
 export { Switch } from './base/switch';
 export { Skeleton } from './base/skeleton';
 export { Spinner, type SpinnerProps } from './base/spinner';
