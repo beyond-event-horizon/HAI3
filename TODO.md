@@ -1,5 +1,4 @@
 ## TODO
-- Toggles and dropdowns are broken for RTL languages.
 - Rename Menu to MainMenu. Update file names, variables names, etc. everywhere.
 - Chat: fix color schemas
 - Chat: review and cleanup the generated chat code
