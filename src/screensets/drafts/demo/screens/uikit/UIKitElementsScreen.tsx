@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb, Tooltip, TooltipTrigger, TooltipContent, Badge, Progress } from '@hai3/uikit';
+import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb, Tooltip, TooltipTrigger, TooltipContent, Badge, Progress, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@hai3/uikit';
 import { StarIcon } from '../../uikit/icons/StarIcon';
 import { LoaderIcon } from '../../uikit/icons/LoaderIcon';
 import { BadgeCheckIcon } from '../../uikit/icons/BadgeCheckIcon';
@@ -145,6 +145,190 @@ export const UIKitElementsScreen: React.FC = () => {
                   20+
                 </Badge>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card Element Block */}
+        <div className="flex flex-col gap-4">
+          <TextLoader skeletonClassName="h-8 w-24">
+            <h2 className="text-2xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_heading`)}
+            </h2>
+          </TextLoader>
+          <div className="flex flex-col gap-6 p-6 border border-border rounded-lg bg-background overflow-hidden">
+            {/* Basic Card */}
+            <div className="flex flex-col gap-2">
+              <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+                <label className="text-xs text-muted-foreground">
+                  Basic Card
+                </label>
+              </TextLoader>
+              <Card className="w-full max-w-sm">
+                <CardHeader>
+                  <CardTitle>
+                    <TextLoader skeletonClassName="h-6 w-32" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_basic_title`)}
+                    </TextLoader>
+                  </CardTitle>
+                  <CardDescription>
+                    <TextLoader skeletonClassName="h-4 w-48" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_basic_description`)}
+                    </TextLoader>
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <TextLoader skeletonClassName="h-4 w-full" inheritColor>
+                    <p className="text-sm">
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_basic_content`)}
+                    </p>
+                  </TextLoader>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* User Card */}
+            <div className="flex flex-col gap-2">
+              <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+                <label className="text-xs text-muted-foreground">
+                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_title`)}
+                </label>
+              </TextLoader>
+              <Card className="w-full max-w-sm">
+                <CardHeader>
+                  <div className="flex items-center gap-4">
+                    <Avatar>
+                      <AvatarImage src="https://github.com/shadcn.png" alt="User" />
+                      <AvatarFallback>U</AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col">
+                      <CardTitle className="text-lg">
+                        <TextLoader skeletonClassName="h-5 w-24" inheritColor>
+                          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_name`)}
+                        </TextLoader>
+                      </CardTitle>
+                      <CardDescription>
+                        <TextLoader skeletonClassName="h-4 w-40" inheritColor>
+                          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_email`)}
+                        </TextLoader>
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-2">
+                      <Badge variant="secondary">
+                        <TextLoader skeletonClassName="h-3.5 w-20" inheritColor>
+                          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_role`)}
+                        </TextLoader>
+                      </Badge>
+                    </div>
+                    <TextLoader skeletonClassName="h-4 w-full" inheritColor>
+                      <p className="text-sm text-muted-foreground">
+                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_bio`)}
+                      </p>
+                    </TextLoader>
+                  </div>
+                </CardContent>
+                <CardFooter className="gap-2">
+                  <Button variant={ButtonVariant.Default} size={ButtonSize.Sm} className="flex-1">
+                    <TextLoader skeletonClassName="h-5 w-16" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_follow`)}
+                    </TextLoader>
+                  </Button>
+                  <Button variant={ButtonVariant.Outline} size={ButtonSize.Sm} className="flex-1">
+                    <TextLoader skeletonClassName="h-5 w-20" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_message`)}
+                    </TextLoader>
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+
+            {/* Login Form Card */}
+            <div className="flex flex-col gap-2">
+              <TextLoader skeletonClassName="h-4 w-32" inheritColor>
+                <label className="text-xs text-muted-foreground">
+                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_title`)}
+                </label>
+              </TextLoader>
+              <Card className="w-full max-w-sm">
+                <CardHeader>
+                  <CardTitle>
+                    <TextLoader skeletonClassName="h-6 w-48" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_login_title`)}
+                    </TextLoader>
+                  </CardTitle>
+                  <CardDescription>
+                    <div className="flex items-center justify-between">
+                      <TextLoader skeletonClassName="h-4 w-56" inheritColor>
+                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_login_description`)}
+                      </TextLoader>
+                      <Button variant={ButtonVariant.Link} size={ButtonSize.Sm} className="h-auto p-0">
+                        <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_signup`)}
+                        </TextLoader>
+                      </Button>
+                    </div>
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form>
+                    <div className="flex flex-col gap-6">
+                      <div className="grid gap-2">
+                        <TextLoader skeletonClassName="h-4 w-12" inheritColor>
+                          <label htmlFor="email" className="text-sm font-medium">
+                            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_email_label`)}
+                          </label>
+                        </TextLoader>
+                        <input
+                          id="email"
+                          type="email"
+                          placeholder={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_email_placeholder`)}
+                          className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                          required
+                        />
+                      </div>
+                      <div className="grid gap-2">
+                        <div className="flex items-center">
+                          <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                            <label htmlFor="password" className="text-sm font-medium">
+                              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_password_label`)}
+                            </label>
+                          </TextLoader>
+                          <TextLoader skeletonClassName="h-4 w-32 ml-auto" inheritColor>
+                            <a
+                              href="#"
+                              className="ml-auto inline-block text-sm underline-offset-4 hover:underline text-primary"
+                            >
+                              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_forgot_password`)}
+                            </a>
+                          </TextLoader>
+                        </div>
+                        <input
+                          id="password"
+                          type="password"
+                          className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </form>
+                </CardContent>
+                <CardFooter className="flex-col gap-2">
+                  <Button type="submit" variant={ButtonVariant.Default} className="w-full">
+                    <TextLoader skeletonClassName="h-5 w-16" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_login_button`)}
+                    </TextLoader>
+                  </Button>
+                  <Button variant={ButtonVariant.Outline} className="w-full">
+                    <TextLoader skeletonClassName="h-5 w-32" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_login_google`)}
+                    </TextLoader>
+                  </Button>
+                </CardFooter>
+              </Card>
             </div>
           </div>
         </div>
