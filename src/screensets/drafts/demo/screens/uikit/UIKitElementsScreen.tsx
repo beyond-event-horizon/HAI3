@@ -161,7 +161,7 @@ export const UIKitElementsScreen: React.FC = () => {
             <div className="flex flex-col gap-2">
               <TextLoader skeletonClassName="h-4 w-24" inheritColor>
                 <label className="text-xs text-muted-foreground">
-                  Basic Card
+                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_basic_label`)}
                 </label>
               </TextLoader>
               <Card className="w-full max-w-sm">

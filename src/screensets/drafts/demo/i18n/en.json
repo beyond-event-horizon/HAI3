@@ -88,6 +88,7 @@
       "badge_outline": "Outline",
       "badge_verified": "Verified",
       "card_heading": "Card",
+      "card_basic_label": "Basic Card",
       "card_basic_title": "Basic Card",
       "card_basic_description": "A simple card with header and content",
       "card_basic_content": "This is a basic card example showing the standard card structure with header, content, and footer.",
