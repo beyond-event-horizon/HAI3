@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useTranslation } from '@hai3/uicore';
-import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback } from '@hai3/uikit';
+import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb, Tooltip, TooltipTrigger, TooltipContent, Badge, Progress } from '@hai3/uikit';
 import { StarIcon } from '../../uikit/icons/StarIcon';
-import { DEMO_SCREENSET_ID } from '../../demoScreenset';
+import { LoaderIcon } from '../../uikit/icons/LoaderIcon';
+import { BadgeCheckIcon } from '../../uikit/icons/BadgeCheckIcon';
 
+import { useTranslation } from '@hai3/uicore';
+import { DEMO_SCREENSET_ID } from '../../demoScreenset';
 /**
  * UI Kit Elements Screen ID
  */
@@ -15,7 +17,11 @@ export const UI_KIT_ELEMENTS_SCREEN_ID = 'uikit';
  */
 export const UIKitElementsScreen: React.FC = () => {
   const [airplaneMode, setAirplaneMode] = useState(false);
+  const [sliderValue, setSliderValue] = useState([50]);
+  const [customSliderValue, setCustomSliderValue] = useState([50]);
+  const [progressValue, setProgressValue] = useState(33);
   const { t } = useTranslation();
+
 
   return (
     <div className="flex flex-col gap-8 p-8">
@@ -66,6 +72,50 @@ export const UIKitElementsScreen: React.FC = () => {
                   />
                   <AvatarFallback>ER</AvatarFallback>
                 </Avatar>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Badge Element Block */}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-2xl font-semibold">Badge</h2>
+          <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
+            <div className="flex flex-col items-center gap-2 w-full">
+              <div className="flex w-full flex-wrap gap-2 justify-center">
+                <Badge>Badge</Badge>
+                <Badge variant="secondary">Secondary</Badge>
+                <Badge variant="destructive">Destructive</Badge>
+                <Badge variant="outline">Outline</Badge>
+              </div>
+              <div className="flex w-full flex-wrap gap-2 justify-center">
+                <Badge
+                  variant="secondary"
+                  className="bg-blue-500 text-white dark:bg-blue-600"
+                >
+                  <BadgeCheckIcon className="w-3 h-3" />
+                  Verified
+                </Badge>
+                <Badge className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums">
+                  8
+                </Badge>
+                <Badge
+                  className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums bg-green-500 text-white"
+                >
+                  99
+                </Badge>
+                <Badge
+                  className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
+                  variant="destructive"
+                >
+                  99
+                </Badge>
+                <Badge
+                  className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums"
+                  variant="outline"
+                >
+                  20+
+                </Badge>
               </div>
             </div>
           </div>
@@ -146,6 +196,45 @@ export const UIKitElementsScreen: React.FC = () => {
           </div>
         </div>
 
+        {/* Progress Element Block */}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-2xl font-semibold">Progress</h2>
+          <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
+            <div className="flex flex-col gap-6 w-full max-w-md">
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium">Primary Progress</label>
+                <Progress value={progressValue} className="bg-primary/20" />
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>{progressValue}%</span>
+                  <button
+                    onClick={() => setProgressValue((prev) => Math.min(100, prev + 10))}
+                    className="text-primary hover:underline"
+                  >
+                    Increase
+                  </button>
+                </div>
+              </div>
+              
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium">Destructive Progress</label>
+                <Progress 
+                  value={progressValue} 
+                  className="bg-destructive/20 [&>div]:bg-destructive" 
+                />
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>{progressValue}%</span>
+                  <button
+                    onClick={() => setProgressValue((prev) => Math.max(0, prev - 10))}
+                    className="text-destructive hover:underline"
+                  >
+                    Decrease
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Select Element Block */}
         <div className="flex flex-col gap-4">
           <h2 className="text-2xl font-semibold">
@@ -220,6 +309,77 @@ export const UIKitElementsScreen: React.FC = () => {
           </div>
         </div>
 
+        {/* Slider Element Block */}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-2xl font-semibold">Slider</h2>
+          <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
+            <div className="flex flex-col gap-8 w-full max-w-md">
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium">Volume</label>
+                <Slider
+                  value={sliderValue}
+                  onValueChange={setSliderValue}
+                  max={100}
+                  step={1}
+                  className="w-full"
+                >
+                  <SliderTrack>
+                    <SliderRange />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>0</span>
+                  <span>{sliderValue[0]}</span>
+                  <span>100</span>
+                </div>
+              </div>
+              
+              {/* Customized slider */}
+              <div className="flex flex-col gap-2">
+                <Slider
+                  value={customSliderValue}
+                  onValueChange={setCustomSliderValue}
+                  max={100}
+                  step={1}
+                  className="w-full"
+                >
+                  <SliderTrack className="bg-destructive/20">
+                    <SliderRange className="bg-destructive" />
+                  </SliderTrack>
+                  <SliderThumb className="border-muted-foreground flex items-center justify-center bg-transparent p-0">
+                    <StarIcon className="w-4 h-4 fill-muted-foreground text-muted-foreground stroke-muted-foreground" />
+                  </SliderThumb>
+                </Slider>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Spinner Element Block */}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-2xl font-semibold">Spinner</h2>
+          <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
+            <div className="flex flex-wrap items-center justify-center gap-8">
+              {/* Different sizes */}
+              <Spinner size="size-4" className="text-primary" />
+              <Spinner size="size-6" className="text-primary" />
+              <Spinner size="size-8" className="text-primary" />
+              <Spinner size="size-12" className="text-primary" />
+              
+              {/* Different colors */}
+              <Spinner icon={LoaderIcon} size="size-6" className="text-primary" />
+              <Spinner icon={LoaderIcon} size="size-6" className="text-destructive" />
+              <Spinner icon={LoaderIcon} size="size-6" className="text-muted-foreground" />
+
+              {/* Different colors */}
+              <Spinner size="size-6" className="text-green-500" />
+              <Spinner size="size-6" className="text-purple-500" />
+              <Spinner size="size-6" className="text-yellow-500" />
+            </div>
+          </div>
+        </div>
+
         {/* Switch Element Block */}
         <div className="flex flex-col gap-4">
           <h2 className="text-2xl font-semibold">
@@ -238,6 +398,60 @@ export const UIKitElementsScreen: React.FC = () => {
                 checked={airplaneMode}
                 onCheckedChange={setAirplaneMode}
               />
+            </div>
+          </div>
+        </div>
+
+        {/* Tooltip Element Block */}
+        <div className="flex flex-col gap-4">
+          <h2 className="text-2xl font-semibold">Tooltip</h2>
+          <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
+            <div className="flex flex-wrap items-center justify-center gap-8">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant={ButtonVariant.Outline}>Hover me</Button>
+                </TooltipTrigger>
+                <TooltipContent className="bg-primary text-primary-foreground">
+                  <p>This is a tooltip</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <IconButton
+                    variant={ButtonVariant.Outline}
+                    size={IconButtonSize.Default}
+                    aria-label="Info button"
+                  >
+                    <StarIcon />
+                  </IconButton>
+                </TooltipTrigger>
+                <TooltipContent className="bg-green-500 text-white">
+                  <p>Icon button with tooltip</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="text-sm text-muted-foreground underline cursor-help">
+                    Hover for more info
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent side="top" className="bg-destructive text-destructive-foreground">
+                  <p>Tooltip on top</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="text-sm text-muted-foreground underline cursor-help">
+                    Different side
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="bg-muted text-muted-foreground">
+                  <p>Tooltip on the right side</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           </div>
         </div>
