@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb, Tooltip, TooltipTrigger, TooltipContent, Badge, Progress, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@hai3/uikit';
+import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb, Tooltip, TooltipTrigger, TooltipContent, Badge, Progress, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@hai3/uikit';
 import { StarIcon } from '../../uikit/icons/StarIcon';
 import { LoaderIcon } from '../../uikit/icons/LoaderIcon';
 import { BadgeCheckIcon } from '../../uikit/icons/BadgeCheckIcon';
@@ -330,6 +330,134 @@ export const UIKitElementsScreen: React.FC = () => {
                 </CardFooter>
               </Card>
             </div>
+          </div>
+        </div>
+
+        {/* Dialog Element Block */}
+        <div className="flex flex-col gap-4">
+          <TextLoader skeletonClassName="h-8 w-24">
+            <h2 className="text-2xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_heading`)}
+            </h2>
+          </TextLoader>
+          <div className="flex items-center justify-center gap-4 p-6 border border-border rounded-lg bg-background overflow-hidden">
+            {/* Edit Profile Dialog */}
+            <Dialog>
+              <form>
+                <DialogTrigger asChild>
+                  <Button variant={ButtonVariant.Outline}>
+                    <TextLoader skeletonClassName="h-5 w-24" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_open_dialog`)}
+                    </TextLoader>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>
+                      <TextLoader skeletonClassName="h-6 w-32" inheritColor>
+                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_edit_profile_title`)}
+                      </TextLoader>
+                    </DialogTitle>
+                    <DialogDescription>
+                      <TextLoader skeletonClassName="h-4 w-full" inheritColor>
+                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_edit_profile_description`)}
+                      </TextLoader>
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4">
+                    <div className="grid gap-3">
+                      <TextLoader skeletonClassName="h-4 w-12" inheritColor>
+                        <label htmlFor="name-1" className="text-sm font-medium">
+                          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_name_label`)}
+                        </label>
+                      </TextLoader>
+                      <input
+                        id="name-1"
+                        name="name"
+                        defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_name_placeholder`)}
+                        className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                      />
+                    </div>
+                    <div className="grid gap-3">
+                      <TextLoader skeletonClassName="h-4 w-20" inheritColor>
+                        <label htmlFor="username-1" className="text-sm font-medium">
+                          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_username_label`)}
+                        </label>
+                      </TextLoader>
+                      <input
+                        id="username-1"
+                        name="username"
+                        defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_username_placeholder`)}
+                        className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                      />
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <DialogClose asChild>
+                      <Button variant={ButtonVariant.Outline}>
+                        <TextLoader skeletonClassName="h-5 w-16" inheritColor>
+                          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_cancel`)}
+                        </TextLoader>
+                      </Button>
+                    </DialogClose>
+                    <Button type="submit">
+                      <TextLoader skeletonClassName="h-5 w-28" inheritColor>
+                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_save_changes`)}
+                      </TextLoader>
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </form>
+            </Dialog>
+
+            {/* Custom close button Dialog */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant={ButtonVariant.Outline}>
+                  <TextLoader skeletonClassName="h-5 w-40" inheritColor>
+                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_custom_close_button`)}
+                  </TextLoader>
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>
+                    <TextLoader skeletonClassName="h-6 w-24" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_share_title`)}
+                    </TextLoader>
+                  </DialogTitle>
+                  <DialogDescription>
+                    <TextLoader skeletonClassName="h-4 w-full" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_share_description`)}
+                    </TextLoader>
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="flex items-center gap-2">
+                  <div className="grid flex-1 gap-2">
+                    <TextLoader skeletonClassName="h-4 w-12 sr-only" inheritColor>
+                      <label htmlFor="link" className="sr-only">
+                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_link_label`)}
+                      </label>
+                    </TextLoader>
+                    <input
+                      id="link"
+                      defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_link_value`)}
+                      readOnly
+                      className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                    />
+                  </div>
+                </div>
+                <DialogFooter className="sm:justify-start">
+                  <DialogClose asChild>
+                    <Button type="button" variant={ButtonVariant.Secondary}>
+                      <TextLoader skeletonClassName="h-5 w-12" inheritColor>
+                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_close`)}
+                      </TextLoader>
+                    </Button>
+                  </DialogClose>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
 
