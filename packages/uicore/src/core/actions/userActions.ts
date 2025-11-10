@@ -38,6 +38,7 @@ export const fetchCurrentUser = () => (_dispatch: AppDispatch): void => {
       // Set language from user preference
       // Action -> Action is allowed (actions can call other actions)
       // Effect -> Action is NOT allowed (would be circular)
+      // Action is pure function - effect will check if language changed
       changeLanguage(response.user.language);
     })
     .catch(error => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../../hooks/useRedux';
+import { useAppSelector } from '../../../hooks/useRedux';
 import { navigateToScreen } from '../../../core/actions';
 import { toggleMenu } from '../../../core/actions';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
@@ -14,7 +14,6 @@ import { TextLoader } from '../../../i18n/TextLoader';
  * Initial navigation handled by AppRouter (default route)
  */
 export const Menu: React.FC = () => {
-  const dispatch = useAppDispatch();
   const { items, collapsed, visible } = useAppSelector((state) => state.menu);
   const selectedScreen = useAppSelector((state) => state.layout.selectedScreen);
   const { t } = useTranslation();
@@ -34,7 +33,7 @@ export const Menu: React.FC = () => {
   const logoTextIcon = uikitRegistry.getIcon(UiKitIcon.AppLogoText);
 
   const handleToggle = (): void => {
-    dispatch(toggleMenu());
+    toggleMenu();
   };
 
   return (
@@ -57,7 +56,7 @@ export const Menu: React.FC = () => {
                 <SidebarMenuButton
                   isActive={isActive}
                   tooltip={translatedLabel}
-                  onClick={() => dispatch(navigateToScreen(item.id))}
+                  onClick={() => navigateToScreen(item.id)}
                 >
                   {icon && <SidebarMenuIcon>{icon}</SidebarMenuIcon>}
                   <SidebarMenuLabel>

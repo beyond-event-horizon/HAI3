@@ -42,8 +42,8 @@ export function useTranslation() {
   const language = useSelector((state: RootState) => state.app.language);
   const translationsReady = useSelector((state: RootState) => state.app.translationsReady);
   
-  // Compute direction from language metadata
-  const direction = i18nRegistry.isRTL(language) 
+  // Compute direction from language metadata (convert null to undefined for isRTL)
+  const direction = i18nRegistry.isRTL(language ?? undefined) 
     ? TextDirection.RightToLeft 
     : TextDirection.LeftToRight;
 
@@ -52,6 +52,7 @@ export function useTranslation() {
   }, []); // No dependencies - always use current language from registry
 
   // Call action (Flux pattern: Component → Action → Event → Effect)
+  // Action is a pure function that emits event - effect checks if language changed
   const changeLanguage = useCallback((lang: Language) => {
     changeLanguageAction(lang);
   }, []);

@@ -1,7 +1,7 @@
 /**
- * Menu Actions - Async actions that emit events
- * These actions process data and emit events (NOT direct store updates)
- * Following Flux architecture pattern
+ * Menu Actions - Pure functions that emit events
+ * Actions cannot access store state
+ * Following Flux architecture pattern (see EVENTS.md)
  */
 
 import { eventBus } from '../events/eventBus';
@@ -9,11 +9,9 @@ import { MenuEvents } from '../events/eventTypes';
 
 /**
  * Toggle menu collapsed state
- * Emits event for Menu to handle
+ * Pure function that emits event - effect handles the actual toggle
  */
-export const toggleMenu = () => {
-  return (): void => {
-    // Emit event for menu to handle its own toggle (no payload for void events)
-    eventBus.emit(MenuEvents.Toggled);
-  };
+export const toggleMenu = (): void => {
+  // Emit event for menu effect to handle the toggle (no payload for void events)
+  eventBus.emit(MenuEvents.Toggled);
 };

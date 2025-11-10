@@ -28,6 +28,7 @@
 - No string-literal identifiers — always use constants/enums
 - No `any`, no type-erasing casts
 - Always support RTL/LTR layouts — use logical properties (`ms-`, `me-`), `rtl:` variants, and `TextDirection` enum
+- No default language — initial language state is `null` until determined by user preference/detection
 
 ## IMPORT RULES
 
@@ -66,6 +67,7 @@
 - Direct slice dispatch
 - Barrel exports that hide real imports
 - Manual state sync / prop drilling
+- Default language hardcoded in slice initial state
 
 ## DOC STYLE
 - Short, technical, ASCII only
