@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb, Tooltip, TooltipTrigger, TooltipContent, Badge, Progress, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@hai3/uikit';
+import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Skeleton, Avatar, AvatarImage, AvatarFallback, Spinner, Slider, SliderTrack, SliderRange, SliderThumb, Tooltip, TooltipTrigger, TooltipContent, Badge, Progress, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Sheet, SheetTrigger, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from '@hai3/uikit';
 import { StarIcon } from '../../uikit/icons/StarIcon';
 import { LoaderIcon } from '../../uikit/icons/LoaderIcon';
 import { BadgeCheckIcon } from '../../uikit/icons/BadgeCheckIcon';
@@ -668,6 +668,80 @@ export const UIKitElementsScreen: React.FC = () => {
                 </SelectGroup>
               </SelectContent>
             </Select>
+          </div>
+        </div>
+
+        {/* Sheet Element Block */}
+        <div className="flex flex-col gap-4">
+          <TextLoader skeletonClassName="h-8 w-24">
+            <h2 className="text-2xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_heading`)}
+            </h2>
+          </TextLoader>
+          <div className="flex items-center justify-center gap-4 p-6 border border-border rounded-lg bg-background overflow-hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant={ButtonVariant.Outline}>
+                  <TextLoader skeletonClassName="h-5 w-16" inheritColor>
+                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_open`)}
+                  </TextLoader>
+                </Button>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>
+                    <TextLoader skeletonClassName="h-6 w-32" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_edit_profile_title`)}
+                    </TextLoader>
+                  </SheetTitle>
+                  <SheetDescription>
+                    <TextLoader skeletonClassName="h-4 w-full" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_edit_profile_description`)}
+                    </TextLoader>
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="grid flex-1 auto-rows-min gap-6 px-4">
+                  <div className="grid gap-3">
+                    <TextLoader skeletonClassName="h-4 w-12" inheritColor>
+                      <label htmlFor="sheet-demo-name" className="text-sm font-medium">
+                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_name_label`)}
+                      </label>
+                    </TextLoader>
+                    <input
+                      id="sheet-demo-name"
+                      defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_name_placeholder`)}
+                      className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                    />
+                  </div>
+                  <div className="grid gap-3">
+                    <TextLoader skeletonClassName="h-4 w-20" inheritColor>
+                      <label htmlFor="sheet-demo-username" className="text-sm font-medium">
+                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_username_label`)}
+                      </label>
+                    </TextLoader>
+                    <input
+                      id="sheet-demo-username"
+                      defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_username_placeholder`)}
+                      className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                    />
+                  </div>
+                </div>
+                <SheetFooter>
+                  <Button type="submit">
+                    <TextLoader skeletonClassName="h-5 w-28" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_save_changes`)}
+                    </TextLoader>
+                  </Button>
+                  <SheetClose asChild>
+                    <Button variant={ButtonVariant.Outline}>
+                      <TextLoader skeletonClassName="h-5 w-16" inheritColor>
+                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_close`)}
+                      </TextLoader>
+                    </Button>
+                  </SheetClose>
+                </SheetFooter>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
 
