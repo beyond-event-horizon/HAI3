@@ -80,7 +80,29 @@
       "timezone_bot": "Boliviansk tid (BOT)",
       "timezone_brt": "Brasília-tid (BRT)",
       "timezone_clt": "Chilensk standardtid (CLT)",
-      "airplane_mode": "Flytilstand"
+      "airplane_mode": "Flytilstand",
+      "badge_heading": "Badge",
+      "badge_default": "Badge",
+      "badge_secondary": "Sekundær",
+      "badge_destructive": "Destruktiv",
+      "badge_outline": "Kontur",
+      "badge_verified": "Verificeret",
+      "progress_heading": "Fremgang",
+      "progress_primary_label": "Primær fremgang",
+      "progress_destructive_label": "Destruktiv fremgang",
+      "progress_increase": "Forøg",
+      "progress_decrease": "Formindsk",
+      "slider_heading": "Slider",
+      "slider_volume_label": "Volumen",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Tooltip",
+      "tooltip_hover_me": "Hold musen over",
+      "tooltip_text": "Dette er et tooltip",
+      "tooltip_icon_text": "Ikon-knap med tooltip",
+      "tooltip_hover_info": "Hold musen over for info",
+      "tooltip_top_text": "Tooltip øverst",
+      "tooltip_different_side": "Forskellig side",
+      "tooltip_right_text": "Tooltip til højre"
     }
   }
 }

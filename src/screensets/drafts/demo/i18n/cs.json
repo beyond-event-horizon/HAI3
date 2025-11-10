@@ -80,7 +80,29 @@
       "timezone_bot": "Bolivijský čas (BOT)",
       "timezone_brt": "Brazilský čas (BRT)",
       "timezone_clt": "Chilský standardní čas (CLT)",
-      "airplane_mode": "Režim letadlo"
+      "airplane_mode": "Režim letadla",
+      "badge_heading": "Odznak",
+      "badge_default": "Odznak",
+      "badge_secondary": "Sekundární",
+      "badge_destructive": "Destruktivní",
+      "badge_outline": "Obrys",
+      "badge_verified": "Ověřeno",
+      "progress_heading": "Průběh",
+      "progress_primary_label": "Primární průběh",
+      "progress_destructive_label": "Destruktivní průběh",
+      "progress_increase": "Zvýšit",
+      "progress_decrease": "Snížit",
+      "slider_heading": "Posuvník",
+      "slider_volume_label": "Hlasitost",
+      "spinner_heading": "Rotující animace",
+      "tooltip_heading": "Nástrojový tip",
+      "tooltip_hover_me": "Najetím myší",
+      "tooltip_text": "Toto je nástrojový tip",
+      "tooltip_icon_text": "Ikona s nástrojovým tipem",
+      "tooltip_hover_info": "Najetím pro více informací",
+      "tooltip_top_text": "Nástrojový tip nahoře",
+      "tooltip_different_side": "Různá strana",
+      "tooltip_right_text": "Nástrojový tip vpravo"
     }
   }
 }

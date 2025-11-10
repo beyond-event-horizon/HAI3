@@ -80,7 +80,29 @@
       "timezone_bot": "Bolivia Time (BOT)",
       "timezone_brt": "Brasilia Time (BRT)",
       "timezone_clt": "Chile Standard Time (CLT)",
-      "airplane_mode": "Λειτουργία πτήσης"
+      "airplane_mode": "Λειτουργία πτήσης",
+      "badge_heading": "Έμβλημα",
+      "badge_default": "Έμβλημα",
+      "badge_secondary": "Δευτερεύον",
+      "badge_destructive": "Καταστροφικό",
+      "badge_outline": "Περίγραμμα",
+      "badge_verified": "Επαληθευμένο",
+      "progress_heading": "Πρόοδος",
+      "progress_primary_label": "Πρωτεύουσα πρόοδος",
+      "progress_destructive_label": "Καταστροφική πρόοδος",
+      "progress_increase": "Αύξηση",
+      "progress_decrease": "Μείωση",
+      "slider_heading": "Ολισθητής",
+      "slider_volume_label": "Ένταση ήχου",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Tooltip",
+      "tooltip_hover_me": "Πέρασε το ποντίκι",
+      "tooltip_text": "Αυτό είναι ένα tooltip",
+      "tooltip_icon_text": "Κουμπί εικονιδίου με tooltip",
+      "tooltip_hover_info": "Πέρασε το ποντίκι για πληροφορίες",
+      "tooltip_top_text": "Tooltip πάνω",
+      "tooltip_different_side": "Διαφορετική πλευρά",
+      "tooltip_right_text": "Tooltip δεξιά"
     }
   }
 }

@@ -80,7 +80,29 @@
       "timezone_bot": "Waktu Bolivia (BOT)",
       "timezone_brt": "Waktu Brasilia (BRT)",
       "timezone_clt": "Waktu Standard Chile (CLT)",
-      "airplane_mode": "Mod kapal terbang"
+      "airplane_mode": "Mod kapal terbang",
+      "badge_heading": "Lencana",
+      "badge_default": "Lencana",
+      "badge_secondary": "Sekunder",
+      "badge_destructive": "Destruktif",
+      "badge_outline": "Garis luar",
+      "badge_verified": "Disahkan",
+      "progress_heading": "Kemajuan",
+      "progress_primary_label": "Kemajuan primer",
+      "progress_destructive_label": "Kemajuan destruktif",
+      "progress_increase": "Tambah",
+      "progress_decrease": "Kurangkan",
+      "slider_heading": "Peluncur",
+      "slider_volume_label": "Volum",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Tooltip",
+      "tooltip_hover_me": "Arahkan ke sini",
+      "tooltip_text": "Ini adalah tooltip",
+      "tooltip_icon_text": "Butang ikon dengan tooltip",
+      "tooltip_hover_info": "Arahkan untuk maklumat lanjut",
+      "tooltip_top_text": "Tooltip di atas",
+      "tooltip_different_side": "Sisi berbeza",
+      "tooltip_right_text": "Tooltip di kanan"
     }
   }
 }

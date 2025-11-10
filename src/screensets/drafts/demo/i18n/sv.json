@@ -80,7 +80,29 @@
       "timezone_bot": "Bolivia Time (BOT)",
       "timezone_brt": "Brasilia Time (BRT)",
       "timezone_clt": "Chile Standard Time (CLT)",
-      "airplane_mode": "Flygplansläge"
+      "airplane_mode": "Flygplansläge",
+      "badge_heading": "Märke",
+      "badge_default": "Märke",
+      "badge_secondary": "Sekundär",
+      "badge_destructive": "Destruktiv",
+      "badge_outline": "Kontur",
+      "badge_verified": "Verifierad",
+      "progress_heading": "Förlopp",
+      "progress_primary_label": "Primärt förlopp",
+      "progress_destructive_label": "Destruktivt förlopp",
+      "progress_increase": "Öka",
+      "progress_decrease": "Minska",
+      "slider_heading": "Slider",
+      "slider_volume_label": "Volym",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Tooltip",
+      "tooltip_hover_me": "Hovra här",
+      "tooltip_text": "Detta är en tooltip",
+      "tooltip_icon_text": "Ikonknapp med tooltip",
+      "tooltip_hover_info": "Hovra för mer info",
+      "tooltip_top_text": "Tooltip överst",
+      "tooltip_different_side": "Olika sida",
+      "tooltip_right_text": "Tooltip till höger"
     }
   }
 }

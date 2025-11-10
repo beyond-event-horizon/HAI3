@@ -80,7 +80,29 @@
       "timezone_bot": "玻利维亚时间 (BOT)",
       "timezone_brt": "巴西利亚时间 (BRT)",
       "timezone_clt": "智利标准时间 (CLT)",
-      "airplane_mode": "飞行模式"
+      "airplane_mode": "飞行模式",
+      "badge_heading": "徽章",
+      "badge_default": "徽章",
+      "badge_secondary": "次要",
+      "badge_destructive": "破坏性",
+      "badge_outline": "轮廓",
+      "badge_verified": "已验证",
+      "progress_heading": "进度",
+      "progress_primary_label": "主要进度",
+      "progress_destructive_label": "破坏性进度",
+      "progress_increase": "增加",
+      "progress_decrease": "减少",
+      "slider_heading": "滑块",
+      "slider_volume_label": "音量",
+      "spinner_heading": "旋转器",
+      "tooltip_heading": "工具提示",
+      "tooltip_hover_me": "悬停此处",
+      "tooltip_text": "这是工具提示",
+      "tooltip_icon_text": "带工具提示的图标按钮",
+      "tooltip_hover_info": "悬停获取更多信息",
+      "tooltip_top_text": "顶部工具提示",
+      "tooltip_different_side": "不同面",
+      "tooltip_right_text": "右侧工具提示"
     }
   }
 }

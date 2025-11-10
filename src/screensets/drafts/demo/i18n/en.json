@@ -80,7 +80,29 @@
       "timezone_bot": "Bolivia Time (BOT)",
       "timezone_brt": "Brasilia Time (BRT)",
       "timezone_clt": "Chile Standard Time (CLT)",
-      "airplane_mode": "Airplane Mode"
+      "airplane_mode": "Airplane Mode",
+      "badge_heading": "Badge",
+      "badge_default": "Badge",
+      "badge_secondary": "Secondary",
+      "badge_destructive": "Destructive",
+      "badge_outline": "Outline",
+      "badge_verified": "Verified",
+      "progress_heading": "Progress",
+      "progress_primary_label": "Primary Progress",
+      "progress_destructive_label": "Destructive Progress",
+      "progress_increase": "Increase",
+      "progress_decrease": "Decrease",
+      "slider_heading": "Slider",
+      "slider_volume_label": "Volume",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Tooltip",
+      "tooltip_hover_me": "Hover me",
+      "tooltip_text": "This is a tooltip",
+      "tooltip_icon_text": "Icon button with tooltip",
+      "tooltip_hover_info": "Hover for more info",
+      "tooltip_top_text": "Tooltip on top",
+      "tooltip_different_side": "Different side",
+      "tooltip_right_text": "Tooltip on the right side"
     }
   }
 }

@@ -80,7 +80,29 @@
       "timezone_bot": "Bolivya Saati (BOT)",
       "timezone_brt": "Brezilya Saati (BRT)",
       "timezone_clt": "Şili Standart Saati (CLT)",
-      "airplane_mode": "Uçak Modu"
+      "airplane_mode": "Uçak modu",
+      "badge_heading": "Rozet",
+      "badge_default": "Rozet",
+      "badge_secondary": "İkincil",
+      "badge_destructive": "Yıkıcı",
+      "badge_outline": "Anahat",
+      "badge_verified": "Doğrulanmış",
+      "progress_heading": "İlerleme",
+      "progress_primary_label": "Birincil ilerleme",
+      "progress_destructive_label": "Yıkıcı ilerleme",
+      "progress_increase": "Artır",
+      "progress_decrease": "Azalt",
+      "slider_heading": "Kaydırıcı",
+      "slider_volume_label": "Ses seviyesi",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Araç ipucu",
+      "tooltip_hover_me": "Üzerine gelin",
+      "tooltip_text": "Bu bir araç ipucudur",
+      "tooltip_icon_text": "Araç ipuculu ikon düğme",
+      "tooltip_hover_info": "Bilgi için üzerine gelin",
+      "tooltip_top_text": "Üstte araç ipucu",
+      "tooltip_different_side": "Farklı taraf",
+      "tooltip_right_text": "Sağda araç ipucu"
     }
   }
 }

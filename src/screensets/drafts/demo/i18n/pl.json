@@ -80,7 +80,29 @@
       "timezone_bot": "Czas boliwijski (BOT)",
       "timezone_brt": "Czas Brazylia (BRT)",
       "timezone_clt": "Chilijski czas standardowy (CLT)",
-      "airplane_mode": "Tryb samolotowy"
+      "airplane_mode": "Tryb samolotowy",
+      "badge_heading": "Odznaka",
+      "badge_default": "Odznaka",
+      "badge_secondary": "Dodatkowy",
+      "badge_destructive": "Destrukcyjny",
+      "badge_outline": "Obrys",
+      "badge_verified": "Zweryfikowany",
+      "progress_heading": "Postęp",
+      "progress_primary_label": "Podstawowy postęp",
+      "progress_destructive_label": "Destrukcyjny postęp",
+      "progress_increase": "Zwiększ",
+      "progress_decrease": "Zmniejsz",
+      "slider_heading": "Suwak",
+      "slider_volume_label": "Głośność",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Podpowiedź",
+      "tooltip_hover_me": "Najedź",
+      "tooltip_text": "To jest podpowiedź",
+      "tooltip_icon_text": "Przycisk ikony z podpowiedzią",
+      "tooltip_hover_info": "Najedź po więcej informacji",
+      "tooltip_top_text": "Podpowiedź na górze",
+      "tooltip_different_side": "Inna strona",
+      "tooltip_right_text": "Podpowiedź po prawej"
     }
   }
 }

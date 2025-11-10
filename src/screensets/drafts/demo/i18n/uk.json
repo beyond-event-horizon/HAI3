@@ -80,7 +80,29 @@
       "timezone_bot": "Болівійський час (BOT)",
       "timezone_brt": "Час Бразиліа (BRT)",
       "timezone_clt": "Чилійський стандартний час (CLT)",
-      "airplane_mode": "Режим польоту"
+      "airplane_mode": "Режим польоту",
+      "badge_heading": "Значок",
+      "badge_default": "Значок",
+      "badge_secondary": "Вторинний",
+      "badge_destructive": "Руйнівний",
+      "badge_outline": "Контур",
+      "badge_verified": "Перевірено",
+      "progress_heading": "Прогрес",
+      "progress_primary_label": "Основний прогрес",
+      "progress_destructive_label": "Руйнівний прогрес",
+      "progress_increase": "Збільшити",
+      "progress_decrease": "Зменшити",
+      "slider_heading": "Повзунок",
+      "slider_volume_label": "Гучність",
+      "spinner_heading": "Спіннер",
+      "tooltip_heading": "Спливаюча підказка",
+      "tooltip_hover_me": "Наведіть",
+      "tooltip_text": "Це спливаюча підказка",
+      "tooltip_icon_text": "Кнопка-значок з підказкою",
+      "tooltip_hover_info": "Наведіть для інформації",
+      "tooltip_top_text": "Підказка зверху",
+      "tooltip_different_side": "Інша сторона",
+      "tooltip_right_text": "Підказка справа"
     }
   }
 }

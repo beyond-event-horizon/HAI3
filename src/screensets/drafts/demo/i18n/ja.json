@@ -80,7 +80,29 @@
       "timezone_bot": "ボリビア時間 (BOT)",
       "timezone_brt": "ブラジリア時間 (BRT)",
       "timezone_clt": "チリ標準時 (CLT)",
-      "airplane_mode": "機内モード"
+      "airplane_mode": "機内モード",
+      "badge_heading": "バッジ",
+      "badge_default": "バッジ",
+      "badge_secondary": "セカンダリ",
+      "badge_destructive": "デストラクティブ",
+      "badge_outline": "アウトライン",
+      "badge_verified": "認証済み",
+      "progress_heading": "プログレス",
+      "progress_primary_label": "プライマリプログレス",
+      "progress_destructive_label": "デストラクティブプログレス",
+      "progress_increase": "増加",
+      "progress_decrease": "減少",
+      "slider_heading": "スライダー",
+      "slider_volume_label": "音量",
+      "spinner_heading": "スピナー",
+      "tooltip_heading": "ツールチップ",
+      "tooltip_hover_me": "ホバーしてください",
+      "tooltip_text": "これはツールチップです",
+      "tooltip_icon_text": "ツールチップ付きアイコンボタン",
+      "tooltip_hover_info": "詳細はホバーしてください",
+      "tooltip_top_text": "上部のツールチップ",
+      "tooltip_different_side": "別の面",
+      "tooltip_right_text": "右側のツールチップ"
     }
   }
 }

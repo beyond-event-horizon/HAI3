@@ -4,7 +4,7 @@ import { StarIcon } from '../../uikit/icons/StarIcon';
 import { LoaderIcon } from '../../uikit/icons/LoaderIcon';
 import { BadgeCheckIcon } from '../../uikit/icons/BadgeCheckIcon';
 
-import { useTranslation } from '@hai3/uicore';
+import { useTranslation, TextLoader } from '@hai3/uicore';
 import { DEMO_SCREENSET_ID } from '../../demoScreenset';
 /**
  * UI Kit Elements Screen ID
@@ -26,20 +26,26 @@ export const UIKitElementsScreen: React.FC = () => {
   return (
     <div className="flex flex-col gap-8 p-8">
       <div className="flex flex-col gap-4">
-        <h1 className="text-4xl font-bold">
-          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.title`)}
-        </h1>
-        <p className="text-muted-foreground">
-          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.description`)}
-        </p>
+        <TextLoader skeletonClassName="h-10 w-48">
+          <h1 className="text-4xl font-bold">
+            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.title`)}
+          </h1>
+        </TextLoader>
+        <TextLoader skeletonClassName="h-6 w-full">
+          <p className="text-muted-foreground">
+            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.description`)}
+          </p>
+        </TextLoader>
       </div>
 
       <div className="max-w-2xl flex flex-col gap-8">
         {/* Avatar Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.avatar_heading`)}
-          </h2>
+          <TextLoader skeletonClassName="h-8 w-24">
+            <h2 className="text-2xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.avatar_heading`)}
+            </h2>
+          </TextLoader>
           <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background">
             <div className="flex flex-row flex-wrap items-center gap-12">
               <Avatar>
@@ -79,14 +85,34 @@ export const UIKitElementsScreen: React.FC = () => {
 
         {/* Badge Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Badge</h2>
+          <TextLoader skeletonClassName="h-8 w-24">
+            <h2 className="text-2xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.badge_heading`)}
+            </h2>
+          </TextLoader>
           <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
             <div className="flex flex-col items-center gap-2 w-full">
               <div className="flex w-full flex-wrap gap-2 justify-center">
-                <Badge>Badge</Badge>
-                <Badge variant="secondary">Secondary</Badge>
-                <Badge variant="destructive">Destructive</Badge>
-                <Badge variant="outline">Outline</Badge>
+                <Badge>
+                  <TextLoader skeletonClassName="h-4 w-12" inheritColor>
+                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.badge_default`)}
+                  </TextLoader>
+                </Badge>
+                <Badge variant="secondary">
+                  <TextLoader skeletonClassName="h-3.5 w-14" inheritColor>
+                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.badge_secondary`)}
+                  </TextLoader>
+                </Badge>
+                <Badge variant="destructive">
+                  <TextLoader skeletonClassName="h-4 w-20" inheritColor>
+                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.badge_destructive`)}
+                  </TextLoader>
+                </Badge>
+                <Badge variant="outline">
+                  <TextLoader skeletonClassName="h-3.5 w-14" inheritColor>
+                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.badge_outline`)}
+                  </TextLoader>
+                </Badge>
               </div>
               <div className="flex w-full flex-wrap gap-2 justify-center">
                 <Badge
@@ -94,7 +120,9 @@ export const UIKitElementsScreen: React.FC = () => {
                   className="bg-blue-500 text-white dark:bg-blue-600"
                 >
                   <BadgeCheckIcon className="w-3 h-3" />
-                  Verified
+                  <TextLoader skeletonClassName="h-3.5 w-10" inheritColor>
+                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.badge_verified`)}
+                  </TextLoader>
                 </Badge>
                 <Badge className="h-5 min-w-5 rounded-full px-1 font-mono tabular-nums">
                   8
@@ -123,29 +151,43 @@ export const UIKitElementsScreen: React.FC = () => {
 
         {/* Button Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_heading`)}
-          </h2>
+          <TextLoader skeletonClassName="h-8 w-24">
+            <h2 className="text-2xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_heading`)}
+            </h2>
+          </TextLoader>
           <div className="flex flex-col gap-4 p-6 border border-border rounded-lg bg-background overflow-hidden">
             {/* First row: 6 Default sized buttons with variants */}
             <div className="flex flex-wrap items-center justify-between w-full gap-2 min-w-0">
               <Button variant={ButtonVariant.Default} className="shrink-0">
-                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_default`)}
+                <TextLoader skeletonClassName="h-6 w-16" inheritColor>
+                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_default`)}
+                </TextLoader>
               </Button>
               <Button variant={ButtonVariant.Destructive} className="shrink-0">
-                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_destructive`)}
+                <TextLoader skeletonClassName="h-6 w-20" inheritColor>
+                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_destructive`)}
+                </TextLoader>
               </Button>
               <Button variant={ButtonVariant.Outline} className="shrink-0">
-                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_outline`)}
+                <TextLoader skeletonClassName="h-6 w-16" inheritColor>
+                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_outline`)}
+                </TextLoader>
               </Button>
               <Button variant={ButtonVariant.Secondary} className="shrink-0">
-                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_secondary`)}
+                <TextLoader skeletonClassName="h-6 w-20" inheritColor>
+                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_secondary`)}
+                </TextLoader>
               </Button>
               <Button variant={ButtonVariant.Ghost} className="shrink-0">
-                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_ghost`)}
+                <TextLoader skeletonClassName="h-6 w-16" inheritColor>
+                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_ghost`)}
+                </TextLoader>
               </Button>
               <Button variant={ButtonVariant.Link} className="shrink-0">
-                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_link`)}
+                <TextLoader skeletonClassName="h-6 w-12" inheritColor>
+                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_link`)}
+                </TextLoader>
               </Button>
             </div>
 
@@ -154,7 +196,9 @@ export const UIKitElementsScreen: React.FC = () => {
               {/* Small group */}
               <div className="flex items-center gap-2 shrink-0">
                 <Button variant={ButtonVariant.Outline} size={ButtonSize.Sm}>
-                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_small_outlined`)}
+                  <TextLoader skeletonClassName="h-5 w-24" inheritColor>
+                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_small_outlined`)}
+                  </TextLoader>
                 </Button>
                 <IconButton
                   variant={ButtonVariant.Outline}
@@ -168,7 +212,9 @@ export const UIKitElementsScreen: React.FC = () => {
               {/* Default group */}
               <div className="flex items-center gap-2 shrink-0">
                 <Button variant={ButtonVariant.Outline} size={ButtonSize.Default}>
-                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_default_outlined`)}
+                  <TextLoader skeletonClassName="h-6 w-28" inheritColor>
+                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_default_outlined`)}
+                  </TextLoader>
                 </Button>
                 <IconButton
                   variant={ButtonVariant.Outline}
@@ -182,7 +228,9 @@ export const UIKitElementsScreen: React.FC = () => {
               {/* Large group */}
               <div className="flex items-center gap-2 shrink-0">
                 <Button variant={ButtonVariant.Outline} size={ButtonSize.Lg}>
-                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_large_outlined`)}
+                  <TextLoader skeletonClassName="h-6 w-32" inheritColor>
+                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.button_large_outlined`)}
+                  </TextLoader>
                 </Button>
                 <IconButton
                   variant={ButtonVariant.Outline}
@@ -198,37 +246,53 @@ export const UIKitElementsScreen: React.FC = () => {
 
         {/* Progress Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Progress</h2>
+          <TextLoader skeletonClassName="h-8 w-24">
+            <h2 className="text-2xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.progress_heading`)}
+            </h2>
+          </TextLoader>
           <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
             <div className="flex flex-col gap-6 w-full max-w-md">
               <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium">Primary Progress</label>
+                <TextLoader skeletonClassName="h-5 w-32" inheritColor>
+                  <label className="text-sm font-medium">
+                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.progress_primary_label`)}
+                  </label>
+                </TextLoader>
                 <Progress value={progressValue} className="bg-primary/20" />
                 <div className="flex justify-between text-xs text-muted-foreground">
                   <span>{progressValue}%</span>
-                  <button
-                    onClick={() => setProgressValue((prev) => Math.min(100, prev + 10))}
-                    className="text-primary hover:underline"
-                  >
-                    Increase
-                  </button>
+                  <TextLoader skeletonClassName="h-3.5 w-14" inheritColor>
+                    <button
+                      onClick={() => setProgressValue((prev) => Math.min(100, prev + 10))}
+                      className="text-primary hover:underline"
+                    >
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.progress_increase`)}
+                    </button>
+                  </TextLoader>
                 </div>
               </div>
               
               <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium">Destructive Progress</label>
+                <TextLoader skeletonClassName="h-4 w-36" inheritColor>
+                  <label className="text-sm font-medium">
+                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.progress_destructive_label`)}
+                  </label>
+                </TextLoader>
                 <Progress 
                   value={progressValue} 
                   className="bg-destructive/20 [&>div]:bg-destructive" 
                 />
                 <div className="flex justify-between text-xs text-muted-foreground">
                   <span>{progressValue}%</span>
-                  <button
-                    onClick={() => setProgressValue((prev) => Math.max(0, prev - 10))}
-                    className="text-destructive hover:underline"
-                  >
-                    Decrease
-                  </button>
+                  <TextLoader skeletonClassName="h-3.5 w-14" inheritColor>
+                    <button
+                      onClick={() => setProgressValue((prev) => Math.max(0, prev - 10))}
+                      className="text-destructive hover:underline"
+                    >
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.progress_decrease`)}
+                    </button>
+                  </TextLoader>
                 </div>
               </div>
             </div>
@@ -237,9 +301,11 @@ export const UIKitElementsScreen: React.FC = () => {
 
         {/* Select Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.select_heading`)}
-          </h2>
+          <TextLoader skeletonClassName="h-8 w-24">
+            <h2 className="text-2xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.select_heading`)}
+            </h2>
+          </TextLoader>
           <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
             <Select>
               <SelectTrigger className="w-[280px] max-w-full">
@@ -295,9 +361,11 @@ export const UIKitElementsScreen: React.FC = () => {
 
         {/* Skeleton Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.skeleton_heading`)}
-          </h2>
+          <TextLoader skeletonClassName="h-8 w-24">
+            <h2 className="text-2xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.skeleton_heading`)}
+            </h2>
+          </TextLoader>
           <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
             <div className="flex items-center space-x-4">
               <Skeleton className="h-12 w-12 rounded-full shrink-0" />
@@ -311,11 +379,19 @@ export const UIKitElementsScreen: React.FC = () => {
 
         {/* Slider Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Slider</h2>
+          <TextLoader skeletonClassName="h-8 w-24">
+            <h2 className="text-2xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.slider_heading`)}
+            </h2>
+          </TextLoader>
           <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
             <div className="flex flex-col gap-8 w-full max-w-md">
               <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium">Volume</label>
+                <TextLoader skeletonClassName="h-5 w-20" inheritColor>
+                  <label className="text-sm font-medium">
+                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.slider_volume_label`)}
+                  </label>
+                </TextLoader>
                 <Slider
                   value={sliderValue}
                   onValueChange={setSliderValue}
@@ -358,7 +434,11 @@ export const UIKitElementsScreen: React.FC = () => {
 
         {/* Spinner Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Spinner</h2>
+          <TextLoader skeletonClassName="h-8 w-24">
+            <h2 className="text-2xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.spinner_heading`)}
+            </h2>
+          </TextLoader>
           <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
             <div className="flex flex-wrap items-center justify-center gap-8">
               {/* Different sizes */}
@@ -382,17 +462,21 @@ export const UIKitElementsScreen: React.FC = () => {
 
         {/* Switch Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.switch_heading`)}
-          </h2>
+          <TextLoader skeletonClassName="h-8 w-24">
+            <h2 className="text-2xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.switch_heading`)}
+            </h2>
+          </TextLoader>
           <div className="flex flex-col gap-2 p-6 border border-border rounded-lg bg-background">
             <div className="flex items-center justify-center gap-2">
-              <label
-                htmlFor="airplane-mode-switch"
-                className="cursor-pointer select-none"
-              >
-                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.airplane_mode`)}
-              </label>
+              <TextLoader skeletonClassName="h-5 w-32" inheritColor>
+                <label
+                  htmlFor="airplane-mode-switch"
+                  className="cursor-pointer select-none"
+                >
+                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.airplane_mode`)}
+                </label>
+              </TextLoader>
               <Switch
                 id="airplane-mode-switch"
                 checked={airplaneMode}
@@ -404,15 +488,25 @@ export const UIKitElementsScreen: React.FC = () => {
 
         {/* Tooltip Element Block */}
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Tooltip</h2>
+          <TextLoader skeletonClassName="h-8 w-24">
+            <h2 className="text-2xl font-semibold">
+              {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_heading`)}
+            </h2>
+          </TextLoader>
           <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
             <div className="flex flex-wrap items-center justify-center gap-8">
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant={ButtonVariant.Outline}>Hover me</Button>
+                  <Button variant={ButtonVariant.Outline}>
+                    <TextLoader skeletonClassName="h-6 w-16" inheritColor>
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_hover_me`)}
+                    </TextLoader>
+                  </Button>
                 </TooltipTrigger>
                 <TooltipContent className="bg-primary text-primary-foreground">
-                  <p>This is a tooltip</p>
+                  <TextLoader skeletonClassName="h-3.5 w-28" inheritColor>
+                    <p>{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_text`)}</p>
+                  </TextLoader>
                 </TooltipContent>
               </Tooltip>
 
@@ -427,29 +521,39 @@ export const UIKitElementsScreen: React.FC = () => {
                   </IconButton>
                 </TooltipTrigger>
                 <TooltipContent className="bg-green-500 text-white">
-                  <p>Icon button with tooltip</p>
+                  <TextLoader skeletonClassName="h-3.5 w-36" inheritColor>
+                    <p>{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_icon_text`)}</p>
+                  </TextLoader>
                 </TooltipContent>
               </Tooltip>
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span className="text-sm text-muted-foreground underline cursor-help">
-                    Hover for more info
-                  </span>
+                  <TextLoader skeletonClassName="h-3.5 w-32" inheritColor>
+                    <span className="text-sm text-muted-foreground underline cursor-help">
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_hover_info`)}
+                    </span>
+                  </TextLoader>
                 </TooltipTrigger>
                 <TooltipContent side="top" className="bg-destructive text-destructive-foreground">
-                  <p>Tooltip on top</p>
+                  <TextLoader skeletonClassName="h-3.5 w-24" inheritColor>
+                    <p>{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_top_text`)}</p>
+                  </TextLoader>
                 </TooltipContent>
               </Tooltip>
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <span className="text-sm text-muted-foreground underline cursor-help">
-                    Different side
-                  </span>
+                  <TextLoader skeletonClassName="h-3.5 w-24" inheritColor>
+                    <span className="text-sm text-muted-foreground underline cursor-help">
+                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_different_side`)}
+                    </span>
+                  </TextLoader>
                 </TooltipTrigger>
                 <TooltipContent side="right" className="bg-muted text-muted-foreground">
-                  <p>Tooltip on the right side</p>
+                  <TextLoader skeletonClassName="h-3.5 w-44" inheritColor>
+                    <p>{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_right_text`)}</p>
+                  </TextLoader>
                 </TooltipContent>
               </Tooltip>
             </div>

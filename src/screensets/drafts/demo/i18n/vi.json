@@ -80,7 +80,29 @@
       "timezone_bot": "Giờ Bolivia (BOT)",
       "timezone_brt": "Giờ Brasilia (BRT)",
       "timezone_clt": "Giờ Chuẩn Chile (CLT)",
-      "airplane_mode": "Chế độ máy bay"
+      "airplane_mode": "Chế độ máy bay",
+      "badge_heading": "Huy hiệu",
+      "badge_default": "Huy hiệu",
+      "badge_secondary": "Phụ",
+      "badge_destructive": "Phá hủy",
+      "badge_outline": "Viền",
+      "badge_verified": "Đã xác minh",
+      "progress_heading": "Tiến trình",
+      "progress_primary_label": "Tiến trình chính",
+      "progress_destructive_label": "Tiến trình phá hủy",
+      "progress_increase": "Tăng",
+      "progress_decrease": "Giảm",
+      "slider_heading": "Thanh trượt",
+      "slider_volume_label": "Âm lượng",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Tooltip",
+      "tooltip_hover_me": "Di chuột vào đây",
+      "tooltip_text": "Đây là tooltip",
+      "tooltip_icon_text": "Nút biểu tượng với tooltip",
+      "tooltip_hover_info": "Di chuột để biết thêm thông tin",
+      "tooltip_top_text": "Tooltip ở trên",
+      "tooltip_different_side": "Phía khác",
+      "tooltip_right_text": "Tooltip ở bên phải"
     }
   }
 }

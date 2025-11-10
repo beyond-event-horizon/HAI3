@@ -80,7 +80,29 @@
       "timezone_bot": "Ora Bolivia (BOT)",
       "timezone_brt": "Ora Brasilia (BRT)",
       "timezone_clt": "Ora Standard Chile (CLT)",
-      "airplane_mode": "Mod avion"
+      "airplane_mode": "Mod avion",
+      "badge_heading": "Insignă",
+      "badge_default": "Insignă",
+      "badge_secondary": "Secundar",
+      "badge_destructive": "Distructiv",
+      "badge_outline": "Contur",
+      "badge_verified": "Verificat",
+      "progress_heading": "Progres",
+      "progress_primary_label": "Progres primar",
+      "progress_destructive_label": "Progres distructiv",
+      "progress_increase": "Crește",
+      "progress_decrease": "Scade",
+      "slider_heading": "Slider",
+      "slider_volume_label": "Volum",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Tooltip",
+      "tooltip_hover_me": "Trece mouse-ul",
+      "tooltip_text": "Acesta este un tooltip",
+      "tooltip_icon_text": "Buton iconă cu tooltip",
+      "tooltip_hover_info": "Trece mouse-ul pentru info",
+      "tooltip_top_text": "Tooltip sus",
+      "tooltip_different_side": "Parte diferită",
+      "tooltip_right_text": "Tooltip dreapta"
     }
   }
 }

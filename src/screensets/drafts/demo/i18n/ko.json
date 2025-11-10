@@ -80,7 +80,29 @@
       "timezone_bot": "볼리비아 시간 (BOT)",
       "timezone_brt": "브라질리아 시간 (BRT)",
       "timezone_clt": "칠레 표준시 (CLT)",
-      "airplane_mode": "비행기 모드"
+      "airplane_mode": "비행기 모드",
+      "badge_heading": "배지",
+      "badge_default": "배지",
+      "badge_secondary": "보조",
+      "badge_destructive": "파괴적",
+      "badge_outline": "아웃라인",
+      "badge_verified": "인증됨",
+      "progress_heading": "진행률",
+      "progress_primary_label": "기본 진행률",
+      "progress_destructive_label": "파괴적 진행률",
+      "progress_increase": "증가",
+      "progress_decrease": "감소",
+      "slider_heading": "슬라이더",
+      "slider_volume_label": "볼륨",
+      "spinner_heading": "스피너",
+      "tooltip_heading": "툴팁",
+      "tooltip_hover_me": "여기에 마우스를 올려보세요",
+      "tooltip_text": "이것은 툴팁입니다",
+      "tooltip_icon_text": "툴팁이 있는 아이콘 버튼",
+      "tooltip_hover_info": "자세한 정보는 마우스를 올려보세요",
+      "tooltip_top_text": "상단 툴팁",
+      "tooltip_different_side": "다른 면",
+      "tooltip_right_text": "오른쪽 툴팁"
     }
   }
 }
