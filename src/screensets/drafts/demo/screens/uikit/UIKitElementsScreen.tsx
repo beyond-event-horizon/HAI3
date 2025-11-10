@@ -529,11 +529,11 @@ export const UIKitElementsScreen: React.FC = () => {
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <TextLoader skeletonClassName="h-3.5 w-32" inheritColor>
-                    <span className="text-sm text-muted-foreground underline cursor-help">
+                  <span className="text-sm text-muted-foreground underline cursor-help">
+                    <TextLoader skeletonClassName="h-3.5 w-32" inheritColor>
                       {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_hover_info`)}
-                    </span>
-                  </TextLoader>
+                    </TextLoader>
+                  </span>
                 </TooltipTrigger>
                 <TooltipContent side="top" className="bg-destructive text-destructive-foreground">
                   <TextLoader skeletonClassName="h-3.5 w-24" inheritColor>
@@ -544,11 +544,11 @@ export const UIKitElementsScreen: React.FC = () => {
 
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <TextLoader skeletonClassName="h-3.5 w-24" inheritColor>
-                    <span className="text-sm text-muted-foreground underline cursor-help">
+                  <span className="text-sm text-muted-foreground underline cursor-help">
+                    <TextLoader skeletonClassName="h-3.5 w-24" inheritColor>
                       {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_different_side`)}
-                    </span>
-                  </TextLoader>
+                    </TextLoader>
+                  </span>
                 </TooltipTrigger>
                 <TooltipContent side="right" className="bg-muted text-muted-foreground">
                   <TextLoader skeletonClassName="h-3.5 w-44" inheritColor>
