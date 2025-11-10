@@ -20,3 +20,11 @@
 - [ ] Electron build
 - [ ] Develop HAI3-Samples in separate repository
 - [ ] Implement screens lazy loading
+
+# Checks in arch:check script (called in CI)
+- [x] ~~Circular dependencies~~
+- [x] ~~HAI3 packages dependencies violations~~
+- [x] ~~Flux architecture violations~~
+- [x] ~~Unused imports and variables~~
+- [x] ~~Clean build~~
+- [ ] Hardcoded colors violations
