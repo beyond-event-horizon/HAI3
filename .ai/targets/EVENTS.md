@@ -11,6 +11,7 @@
 - Direct slice dispatch, prop drilling, and callback state mutation are **FORBIDDEN**
 
 ## ACTIONS
+- **Pure functions only** - cannot access store state (`getState`)
 - Fire events through the event bus
 - May compose other actions
 - Must return `void` (no async Promise-returning thunks)
@@ -21,6 +22,7 @@
 - Update only their own slice
 - Contain no business logic
 - May not call actions
+- Can read store state to optimize (but check initialization state too)
 
 ## EVENT NAMING
 - Past-tense names
@@ -40,3 +42,4 @@
 ## DETECTION RULES
 - Direct slice dispatch: `dispatch(set[A-Z])`
 - Cross-domain slice import: `import .*Slice .* from`
+- Action accessing store: `getState.*app\.|getState\(\).*\.` in `*Actions.ts`

@@ -10,11 +10,13 @@ import type { Language } from '../../i18n/types';
 
 /**
  * Change user's language preference
+ * Actions are PURE FUNCTIONS - they cannot access store state
  * Emits event - effects handle store updates and side effects
+ * Effect will check if language changed before reloading translations
  * 
  * @param language - Language enum value
  */
 export const changeLanguage = (language: Language): void => {
-  // Emit event - appEffects will handle slice update and i18n loading
+  // Emit event - appEffects will check if changed and handle slice update and i18n loading
   eventBus.emit(I18nEvents.LanguageChanged, { language });
 };

@@ -13,7 +13,7 @@ const APP_SLICE_NAME = 'app';
 export interface AppState {
   user: ApiUser | null;
   tenant: unknown | null; // TODO: Define Tenant type in accounts/api.ts
-  language: Language; // User's language preference
+  language: Language | null; // User's language preference (null until determined)
   translationsReady: boolean; // Whether current language translations are loaded
   loading: boolean;
   error: string | null;
@@ -23,7 +23,7 @@ export interface AppState {
 const initialState: AppState = {
   user: null,
   tenant: null,
-  language: Language.English, // Default language (overridden by user preference)
+  language: null, // No default - wait for user preference/browser detection
   translationsReady: false, // Set to true after translations load
   loading: false,
   error: null,

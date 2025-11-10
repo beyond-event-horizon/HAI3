@@ -80,7 +80,29 @@
       "timezone_bot": "زمان بولیوی (BOT)",
       "timezone_brt": "زمان برازیلیا (BRT)",
       "timezone_clt": "زمان استاندارد شیلی (CLT)",
-      "airplane_mode": "حالت هواپیما"
+      "airplane_mode": "حالت هواپیما",
+      "badge_heading": "نشان",
+      "badge_default": "نشان",
+      "badge_secondary": "ثانویه",
+      "badge_destructive": "مخرب",
+      "badge_outline": "طرح",
+      "badge_verified": "تأیید شده",
+      "progress_heading": "پیشرفت",
+      "progress_primary_label": "پیشرفت اصلی",
+      "progress_destructive_label": "پیشرفت مخرب",
+      "progress_increase": "افزایش",
+      "progress_decrease": "کاهش",
+      "slider_heading": "اسلایدر",
+      "slider_volume_label": "حجم صدا",
+      "spinner_heading": "اسپینر",
+      "tooltip_heading": "راهنمای ابزار",
+      "tooltip_hover_me": "ماوس را ببرید",
+      "tooltip_text": "این یک راهنمای ابزار است",
+      "tooltip_icon_text": "دکمه آیکون با راهنما",
+      "tooltip_hover_info": "برای اطلاعات بیشتر ماوس را ببرید",
+      "tooltip_top_text": "راهنما در بالا",
+      "tooltip_different_side": "سمت مختلف",
+      "tooltip_right_text": "راهنما در سمت راست"
     }
   }
 }

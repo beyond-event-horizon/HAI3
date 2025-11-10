@@ -80,7 +80,29 @@
       "timezone_bot": "Hora de Bolivia (BOT)",
       "timezone_brt": "Hora de Brasilia (BRT)",
       "timezone_clt": "Hora Estándar de Chile (CLT)",
-      "airplane_mode": "Modo Avión"
+      "airplane_mode": "Modo avión",
+      "badge_heading": "Insignia",
+      "badge_default": "Insignia",
+      "badge_secondary": "Secundario",
+      "badge_destructive": "Destructor",
+      "badge_outline": "Contorno",
+      "badge_verified": "Verificado",
+      "progress_heading": "Progreso",
+      "progress_primary_label": "Progreso primario",
+      "progress_destructive_label": "Progreso destructor",
+      "progress_increase": "Aumentar",
+      "progress_decrease": "Disminuir",
+      "slider_heading": "Deslizador",
+      "slider_volume_label": "Volumen",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Tooltip",
+      "tooltip_hover_me": "Pasa el cursor",
+      "tooltip_text": "Esto es un tooltip",
+      "tooltip_icon_text": "Botón de icono con tooltip",
+      "tooltip_hover_info": "Pasa el cursor para más info",
+      "tooltip_top_text": "Tooltip arriba",
+      "tooltip_different_side": "Lado diferente",
+      "tooltip_right_text": "Tooltip a la derecha"
     }
   }
 }

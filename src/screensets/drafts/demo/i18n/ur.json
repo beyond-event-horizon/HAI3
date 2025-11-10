@@ -80,7 +80,29 @@
       "timezone_bot": "بولیویا وقت (BOT)",
       "timezone_brt": "برازیلیا وقت (BRT)",
       "timezone_clt": "چلی معیاری وقت (CLT)",
-      "airplane_mode": "ہوائی جہاز موڈ"
+      "airplane_mode": "طیارہ موڈ",
+      "badge_heading": "بیج",
+      "badge_default": "بیج",
+      "badge_secondary": "ثانوی",
+      "badge_destructive": "تخریبی",
+      "badge_outline": "خاکہ",
+      "badge_verified": "تصدیق شدہ",
+      "progress_heading": "پیشرفت",
+      "progress_primary_label": "بنیادی پیشرفت",
+      "progress_destructive_label": "تخریبی پیشرفت",
+      "progress_increase": "اضافہ کریں",
+      "progress_decrease": "کم کریں",
+      "slider_heading": "سلائیڈر",
+      "slider_volume_label": "آواز",
+      "spinner_heading": "سپنر",
+      "tooltip_heading": "ٹول ٹپ",
+      "tooltip_hover_me": "یہاں موس رکھیں",
+      "tooltip_text": "یہ ٹول ٹپ ہے",
+      "tooltip_icon_text": "آئکن بٹن کے ساتھ ٹول ٹپ",
+      "tooltip_hover_info": "معلومات کے لیے موس رکھیں",
+      "tooltip_top_text": "اوپر ٹول ٹپ",
+      "tooltip_different_side": "مختلف طرف",
+      "tooltip_right_text": "دائیں طرف ٹول ٹپ"
     }
   }
 }

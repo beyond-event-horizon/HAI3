@@ -80,7 +80,29 @@
       "timezone_bot": "שעון בוליביה (BOT)",
       "timezone_brt": "שעון ברזיליה (BRT)",
       "timezone_clt": "שעון צ'ילה סטנדרטי (CLT)",
-      "airplane_mode": "מצב טיסה"
+      "airplane_mode": "מצב טיסה",
+      "badge_heading": "תג",
+      "badge_default": "תג",
+      "badge_secondary": "משני",
+      "badge_destructive": "הרסני",
+      "badge_outline": "מתאר",
+      "badge_verified": "מאומת",
+      "progress_heading": "התקדמות",
+      "progress_primary_label": "התקדמות ראשית",
+      "progress_destructive_label": "התקדמות הרסנית",
+      "progress_increase": "הגדל",
+      "progress_decrease": "הקטן",
+      "slider_heading": "סליידר",
+      "slider_volume_label": "עוצמת קול",
+      "spinner_heading": "ספינר",
+      "tooltip_heading": "טיפ",
+      "tooltip_hover_me": "רחף עליי",
+      "tooltip_text": "זהו טיפ",
+      "tooltip_icon_text": "כפתור אייקון עם טיפ",
+      "tooltip_hover_info": "רחף למידע נוסף",
+      "tooltip_top_text": "טיפ למעלה",
+      "tooltip_different_side": "צד שונה",
+      "tooltip_right_text": "טיפ מימין"
     }
   }
 }

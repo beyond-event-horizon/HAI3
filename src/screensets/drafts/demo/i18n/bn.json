@@ -80,7 +80,29 @@
       "timezone_bot": "বলিভিয়া সময় (BOT)",
       "timezone_brt": "ব্রাসিলিয়া সময় (BRT)",
       "timezone_clt": "চিলি মান সময় (CLT)",
-      "airplane_mode": "বিমান মোড"
+      "airplane_mode": "বিমান মোড",
+      "badge_heading": "ব্যাজ",
+      "badge_default": "ব্যাজ",
+      "badge_secondary": "গৌণ",
+      "badge_destructive": "ধ্বংসাত্মক",
+      "badge_outline": "আউটলাইন",
+      "badge_verified": "যাচাইকৃত",
+      "progress_heading": "অগ্রগতি",
+      "progress_primary_label": "প্রাথমিক অগ্রগতি",
+      "progress_destructive_label": "ধ্বংসাত্মক অগ্রগতি",
+      "progress_increase": "বৃদ্ধি",
+      "progress_decrease": "হ্রাস",
+      "slider_heading": "স্লাইডার",
+      "slider_volume_label": "ভলিউম",
+      "spinner_heading": "স্পিনার",
+      "tooltip_heading": "টুলটিপ",
+      "tooltip_hover_me": "এখানে হোভার করুন",
+      "tooltip_text": "এটি একটি টুলটিপ",
+      "tooltip_icon_text": "টুলটিপ সহ আইকন বোতাম",
+      "tooltip_hover_info": "আরও তথ্যের জন্য হোভার করুন",
+      "tooltip_top_text": "উপরে টুলটিপ",
+      "tooltip_different_side": "ভিন্ন দিক",
+      "tooltip_right_text": "ডান দিকে টুলটিপ"
     }
   }
 }

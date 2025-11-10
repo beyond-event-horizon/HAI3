@@ -80,7 +80,29 @@
       "timezone_bot": "توقيت بوليفيا (BOT)",
       "timezone_brt": "توقيت برازيليا (BRT)",
       "timezone_clt": "توقيت تشيلي القياسي (CLT)",
-      "airplane_mode": "وضع الطائرة"
+      "airplane_mode": "وضع الطيران",
+      "badge_heading": "شارة",
+      "badge_default": "شارة",
+      "badge_secondary": "ثانوي",
+      "badge_destructive": "مدمر",
+      "badge_outline": "مخطط",
+      "badge_verified": "موثق",
+      "progress_heading": "التقدم",
+      "progress_primary_label": "التقدم الأساسي",
+      "progress_destructive_label": "التقدم المدمر",
+      "progress_increase": "زيادة",
+      "progress_decrease": "نقصان",
+      "slider_heading": "شريط تمرير",
+      "slider_volume_label": "مستوى الصوت",
+      "spinner_heading": "دوار",
+      "tooltip_heading": "تلميح",
+      "tooltip_hover_me": "مرر الفأرة هنا",
+      "tooltip_text": "هذا تلميح",
+      "tooltip_icon_text": "زر أيقونة مع تلميح",
+      "tooltip_hover_info": "مرر الفأرة للمزيد من المعلومات",
+      "tooltip_top_text": "تلميح في الأعلى",
+      "tooltip_different_side": "جانب مختلف",
+      "tooltip_right_text": "تلميح على الجانب الأيمن"
     }
   }
 }

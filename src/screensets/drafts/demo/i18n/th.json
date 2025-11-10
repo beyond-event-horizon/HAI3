@@ -80,7 +80,29 @@
       "timezone_bot": "เวลาโบลิเวีย (BOT)",
       "timezone_brt": "เวลาบราซีเลีย (BRT)",
       "timezone_clt": "เวลามาตรฐานชิลี (CLT)",
-      "airplane_mode": "โหมดเครื่องบิน"
+      "airplane_mode": "โหมดเครื่องบิน",
+      "badge_heading": "ป้าย",
+      "badge_default": "ป้าย",
+      "badge_secondary": "รอง",
+      "badge_destructive": "ทำลาย",
+      "badge_outline": "เส้นขอบ",
+      "badge_verified": "ยืนยันแล้ว",
+      "progress_heading": "ความคืบหน้า",
+      "progress_primary_label": "ความคืบหน้าหลัก",
+      "progress_destructive_label": "ความคืบหน้าทำลาย",
+      "progress_increase": "เพิ่ม",
+      "progress_decrease": "ลด",
+      "slider_heading": "สลัดเดอร์",
+      "slider_volume_label": "ระดับเสียง",
+      "spinner_heading": "สปินเนอร์",
+      "tooltip_heading": "คำแนะนำเครื่องมือ",
+      "tooltip_hover_me": "วางเมาส์ที่นี่",
+      "tooltip_text": "นี่คือคำแนะนำเครื่องมือ",
+      "tooltip_icon_text": "ปุ่มไอคอนพร้อมคำแนะนำ",
+      "tooltip_hover_info": "วางเมาส์สำหรับข้อมูลเพิ่มเติม",
+      "tooltip_top_text": "คำแนะนำด้านบน",
+      "tooltip_different_side": "ด้านต่างกัน",
+      "tooltip_right_text": "คำแนะนำด้านขวา"
     }
   }
 }

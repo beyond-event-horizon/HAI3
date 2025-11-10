@@ -80,7 +80,29 @@
       "timezone_bot": "Bolivia Time (BOT)",
       "timezone_brt": "Brasilia Time (BRT)",
       "timezone_clt": "Chile Standard Time (CLT)",
-      "airplane_mode": "Hali ya ndege"
+      "airplane_mode": "Hali ya ndege",
+      "badge_heading": "Beji",
+      "badge_default": "Beji",
+      "badge_secondary": "Ya pili",
+      "badge_destructive": "Ya kuharibu",
+      "badge_outline": "Mfumo",
+      "badge_verified": "Imethibitishwa",
+      "progress_heading": "Maendeleo",
+      "progress_primary_label": "Maendeleo ya msingi",
+      "progress_destructive_label": "Maendeleo ya kuharibu",
+      "progress_increase": "Ongeza",
+      "progress_decrease": "Punguza",
+      "slider_heading": "Slider",
+      "slider_volume_label": "Sauti",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Ushauri wa zana",
+      "tooltip_hover_me": "Bebe juu",
+      "tooltip_text": "Hii ni ushauri wa zana",
+      "tooltip_icon_text": "Kitufe cha ikoni na ushauri",
+      "tooltip_hover_info": "Bebe juu kwa maelezo zaidi",
+      "tooltip_top_text": "Ushauri juu",
+      "tooltip_different_side": "Upande tofauti",
+      "tooltip_right_text": "Ushauri kulia"
     }
   }
 }

@@ -80,7 +80,29 @@
       "timezone_bot": "बोलीविया समय (BOT)",
       "timezone_brt": "ब्राज़ीलिया समय (BRT)",
       "timezone_clt": "चिली मानक समय (CLT)",
-      "airplane_mode": "हवाई जहाज़ मोड"
+      "airplane_mode": "विमान मोड",
+      "badge_heading": "बैज",
+      "badge_default": "बैज",
+      "badge_secondary": "द्वितीयक",
+      "badge_destructive": "विनाशकारी",
+      "badge_outline": "रूपरेखा",
+      "badge_verified": "सत्यापित",
+      "progress_heading": "प्रगति",
+      "progress_primary_label": "प्राथमिक प्रगति",
+      "progress_destructive_label": "विनाशकारी प्रगति",
+      "progress_increase": "बढ़ाएँ",
+      "progress_decrease": "घटाएँ",
+      "slider_heading": "स्लाइडर",
+      "slider_volume_label": "वॉल्यूम",
+      "spinner_heading": "स्पिनर",
+      "tooltip_heading": "टूलटिप",
+      "tooltip_hover_me": "मेरे ऊपर होवर करें",
+      "tooltip_text": "यह एक टूलटिप है",
+      "tooltip_icon_text": "टूलटिप के साथ आइकन बटन",
+      "tooltip_hover_info": "अधिक जानकारी के लिए होवर करें",
+      "tooltip_top_text": "ऊपर टूलटिप",
+      "tooltip_different_side": "अलग तरफ",
+      "tooltip_right_text": "दाईं ओर टूलटिप"
     }
   }
 }

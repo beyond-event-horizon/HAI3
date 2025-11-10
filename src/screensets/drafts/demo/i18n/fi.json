@@ -80,7 +80,29 @@
       "timezone_bot": "Bolivian aika (BOT)",
       "timezone_brt": "Brasilian aika (BRT)",
       "timezone_clt": "Chilen normaaliaika (CLT)",
-      "airplane_mode": "Lentotila"
+      "airplane_mode": "Lentokonetila",
+      "badge_heading": "Merkki",
+      "badge_default": "Merkki",
+      "badge_secondary": "Toissijainen",
+      "badge_destructive": "Tuhoisa",
+      "badge_outline": "Ääriviiva",
+      "badge_verified": "Varmennettu",
+      "progress_heading": "Edistyminen",
+      "progress_primary_label": "Ensisijainen edistyminen",
+      "progress_destructive_label": "Tuhoisa edistyminen",
+      "progress_increase": "Lisää",
+      "progress_decrease": "Vähennä",
+      "slider_heading": "Liukusäädin",
+      "slider_volume_label": "Äänenvoimakkuus",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Tooltip",
+      "tooltip_hover_me": "Vie hiiri ylle",
+      "tooltip_text": "Tämä on tooltip",
+      "tooltip_icon_text": "Ikonipainike tooltipilla",
+      "tooltip_hover_info": "Vie hiiri ylle lisätietoja",
+      "tooltip_top_text": "Tooltip ylhäällä",
+      "tooltip_different_side": "Eri puoli",
+      "tooltip_right_text": "Tooltip oikealla"
     }
   }
 }

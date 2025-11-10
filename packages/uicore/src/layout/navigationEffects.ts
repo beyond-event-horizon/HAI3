@@ -20,8 +20,14 @@ import { setSelectedScreen, setCurrentScreenset } from './layoutSlice';
  */
 export function initNavigationEffects(store: Store): void {
   // Listen to screenset changes and update slice
+  // Check if screenset actually changed before updating (action is pure function)
   eventBus.on(ScreensetEvents.Changed, ({ screensetId }) => {
-    store.dispatch(setCurrentScreenset(screensetId));
+    const currentScreenset = store.getState().layout.currentScreenset;
+    
+    // Only update if screenset actually changed
+    if (currentScreenset !== screensetId) {
+      store.dispatch(setCurrentScreenset(screensetId));
+    }
   });
   
   // Listen to screen navigation and update slice

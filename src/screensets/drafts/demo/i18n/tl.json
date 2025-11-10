@@ -80,7 +80,29 @@
       "timezone_bot": "Bolivia Time (BOT)",
       "timezone_brt": "Brasilia Time (BRT)",
       "timezone_clt": "Chile Standard Time (CLT)",
-      "airplane_mode": "Airplane mode"
+      "airplane_mode": "Mode eroplano",
+      "badge_heading": "Badge",
+      "badge_default": "Badge",
+      "badge_secondary": "Pangalawa",
+      "badge_destructive": "Destruktibo",
+      "badge_outline": "Outline",
+      "badge_verified": "Beripikado",
+      "progress_heading": "Progreso",
+      "progress_primary_label": "Pangunahing progreso",
+      "progress_destructive_label": "Destruktibong progreso",
+      "progress_increase": "Dagdagan",
+      "progress_decrease": "Bawasan",
+      "slider_heading": "Slider",
+      "slider_volume_label": "Volume",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Tooltip",
+      "tooltip_hover_me": "I-hover dito",
+      "tooltip_text": "Ito ay isang tooltip",
+      "tooltip_icon_text": "Icon button na may tooltip",
+      "tooltip_hover_info": "I-hover para sa karagdagang impormasyon",
+      "tooltip_top_text": "Tooltip sa taas",
+      "tooltip_different_side": "Magkaibang side",
+      "tooltip_right_text": "Tooltip sa kanan"
     }
   }
 }

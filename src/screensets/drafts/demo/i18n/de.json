@@ -80,7 +80,29 @@
       "timezone_bot": "Bolivianische Zeit (BOT)",
       "timezone_brt": "Brasília-Zeit (BRT)",
       "timezone_clt": "Chilenische Standardzeit (CLT)",
-      "airplane_mode": "Flugmodus"
+      "airplane_mode": "Flugzeugmodus",
+      "badge_heading": "Abzeichen",
+      "badge_default": "Abzeichen",
+      "badge_secondary": "Sekundär",
+      "badge_destructive": "Destruktiv",
+      "badge_outline": "Kontur",
+      "badge_verified": "Verifiziert",
+      "progress_heading": "Fortschritt",
+      "progress_primary_label": "Primärer Fortschritt",
+      "progress_destructive_label": "Destruktiver Fortschritt",
+      "progress_increase": "Erhöhen",
+      "progress_decrease": "Verringern",
+      "slider_heading": "Schieberegler",
+      "slider_volume_label": "Lautstärke",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Tooltip",
+      "tooltip_hover_me": "Maus darüber bewegen",
+      "tooltip_text": "Dies ist ein Tooltip",
+      "tooltip_icon_text": "Icon-Schaltfläche mit Tooltip",
+      "tooltip_hover_info": "Für mehr Infos Maus darüber bewegen",
+      "tooltip_top_text": "Tooltip oben",
+      "tooltip_different_side": "Andere Seite",
+      "tooltip_right_text": "Tooltip rechts"
     }
   }
 }

@@ -80,7 +80,29 @@
       "timezone_bot": "Bolivia-tid (BOT)",
       "timezone_brt": "Brasilia-tid (BRT)",
       "timezone_clt": "Chile standardtid (CLT)",
-      "airplane_mode": "Flymodus"
+      "airplane_mode": "Flymodus",
+      "badge_heading": "Merke",
+      "badge_default": "Merke",
+      "badge_secondary": "Sekundær",
+      "badge_destructive": "Destruktiv",
+      "badge_outline": "Kontur",
+      "badge_verified": "Verifisert",
+      "progress_heading": "Fremdrift",
+      "progress_primary_label": "Primær fremdrift",
+      "progress_destructive_label": "Destruktiv fremdrift",
+      "progress_increase": "Øk",
+      "progress_decrease": "Reduser",
+      "slider_heading": "Slider",
+      "slider_volume_label": "Volum",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Verktøytips",
+      "tooltip_hover_me": "Hold musepekeren over",
+      "tooltip_text": "Dette er et verktøytips",
+      "tooltip_icon_text": "Ikonknapp med verktøytips",
+      "tooltip_hover_info": "Hold musepekeren over for info",
+      "tooltip_top_text": "Verktøytips øverst",
+      "tooltip_different_side": "Annen side",
+      "tooltip_right_text": "Verktøytips til høyre"
     }
   }
 }

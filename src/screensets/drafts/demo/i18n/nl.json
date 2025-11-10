@@ -80,7 +80,29 @@
       "timezone_bot": "Boliviaanse Tijd (BOT)",
       "timezone_brt": "Brasilia Tijd (BRT)",
       "timezone_clt": "Chileense Standaardtijd (CLT)",
-      "airplane_mode": "Vliegtuigmodus"
+      "airplane_mode": "Vliegtuigmodus",
+      "badge_heading": "Badge",
+      "badge_default": "Badge",
+      "badge_secondary": "Secundair",
+      "badge_destructive": "Destructief",
+      "badge_outline": "Omtrek",
+      "badge_verified": "Geverifieerd",
+      "progress_heading": "Voortgang",
+      "progress_primary_label": "Primaire voortgang",
+      "progress_destructive_label": "Destructieve voortgang",
+      "progress_increase": "Verhogen",
+      "progress_decrease": "Verlagen",
+      "slider_heading": "Slider",
+      "slider_volume_label": "Volume",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Tooltip",
+      "tooltip_hover_me": "Hou er de muis boven",
+      "tooltip_text": "Dit is een tooltip",
+      "tooltip_icon_text": "Icoonknop met tooltip",
+      "tooltip_hover_info": "Hou de muis boven voor info",
+      "tooltip_top_text": "Tooltip boven",
+      "tooltip_different_side": "Andere kant",
+      "tooltip_right_text": "Tooltip rechts"
     }
   }
 }

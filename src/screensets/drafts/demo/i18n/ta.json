@@ -80,7 +80,29 @@
       "timezone_bot": "Bolivia Time (BOT)",
       "timezone_brt": "Brasilia Time (BRT)",
       "timezone_clt": "Chile Standard Time (CLT)",
-      "airplane_mode": "விமான பயன்முறை"
+      "airplane_mode": "விமான பயன்முறை",
+      "badge_heading": "பேட்ஜ்",
+      "badge_default": "பேட்ஜ்",
+      "badge_secondary": "இரண்டாம் நிலை",
+      "badge_destructive": "அழிவு",
+      "badge_outline": "வெளிவரைவு",
+      "badge_verified": "சரிபார்க்கப்பட்டது",
+      "progress_heading": "முன்னேற்றம்",
+      "progress_primary_label": "முதன்மை முன்னேற்றம்",
+      "progress_destructive_label": "அழிவு முன்னேற்றம்",
+      "progress_increase": "அதிகரி",
+      "progress_decrease": "குறை",
+      "slider_heading": "ஸ்லைடர்",
+      "slider_volume_label": "ஒலியளவு",
+      "spinner_heading": "ஸ்பின்னர்",
+      "tooltip_heading": "உதவிக்குறிப்பு",
+      "tooltip_hover_me": "மேல் வைக்கவும்",
+      "tooltip_text": "இது ஒரு உதவிக்குறிப்பு",
+      "tooltip_icon_text": "உதவிக்குறிப்புடன் ஐகான் பொத்தான்",
+      "tooltip_hover_info": "மேலும் தகவலுக்கு மேல் வைக்கவும்",
+      "tooltip_top_text": "மேலே உதவிக்குறிப்பு",
+      "tooltip_different_side": "வேறு பக்கம்",
+      "tooltip_right_text": "வலது பக்கம் உதவிக்குறிப்பு"
     }
   }
 }

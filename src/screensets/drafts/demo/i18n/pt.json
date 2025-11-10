@@ -80,7 +80,29 @@
       "timezone_bot": "Horário da Bolívia (BOT)",
       "timezone_brt": "Horário de Brasília (BRT)",
       "timezone_clt": "Horário Padrão do Chile (CLT)",
-      "airplane_mode": "Modo Avião"
+      "airplane_mode": "Modo avião",
+      "badge_heading": "Distintivo",
+      "badge_default": "Distintivo",
+      "badge_secondary": "Secundário",
+      "badge_destructive": "Destrutivo",
+      "badge_outline": "Contorno",
+      "badge_verified": "Verificado",
+      "progress_heading": "Progresso",
+      "progress_primary_label": "Progresso primário",
+      "progress_destructive_label": "Progresso destrutivo",
+      "progress_increase": "Aumentar",
+      "progress_decrease": "Diminuir",
+      "slider_heading": "Controle deslizante",
+      "slider_volume_label": "Volume",
+      "spinner_heading": "Spinner",
+      "tooltip_heading": "Dica",
+      "tooltip_hover_me": "Passe o mouse",
+      "tooltip_text": "Esta é uma dica",
+      "tooltip_icon_text": "Botão de ícone com dica",
+      "tooltip_hover_info": "Passe o mouse para mais informações",
+      "tooltip_top_text": "Dica acima",
+      "tooltip_different_side": "Lado diferente",
+      "tooltip_right_text": "Dica à direita"
     }
   }
 }
