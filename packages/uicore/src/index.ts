@@ -4,7 +4,7 @@
  */
 
 // Redux store
-export { store } from './store';
+export { store, registerSlice } from './store';
 export type { RootState, AppDispatch } from './store';
 
 // App slice (application-level state)
