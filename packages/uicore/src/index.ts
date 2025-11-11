@@ -76,5 +76,6 @@ export { changeLanguage } from './core/actions/i18nActions';
 export { Language, TextDirection, LanguageDisplayMode, SUPPORTED_LANGUAGES, type LanguageMetadata, type TranslationDictionary, type TranslationLoader, type I18nConfig } from './i18n/types';
 export { I18nEvents, type LanguageChangedPayload } from './core/events/eventTypes/i18nEvents';
 
-// Event Bus (for i18n lazy loading and custom screenset events)
+// Event system (bus, types, enums)
 export { eventBus } from './core/events/eventBus';
+export type { EventPayloadMap, EventKey } from './core/events/eventTypes/eventMap';

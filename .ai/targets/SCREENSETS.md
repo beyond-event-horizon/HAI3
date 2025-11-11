@@ -2,7 +2,7 @@
 
 ## AI WORKFLOW (REQUIRED)
 1) Summarize 3–5 rules from this file before proposing changes.
-2) STOP if you add manual styling, import slices directly, or hardcode screenset names.
+2) STOP if you add manual styling, custom state management, import slices directly, or hardcode screenset names.
 
 ## SCOPE
 - Applies to all screensets under `src/screensets/**`
@@ -11,9 +11,18 @@
 ## CRITICAL RULES
 - Manual styling is FORBIDDEN — all UI must use `@hai3/uikit` components
 - Data flow must follow the event-driven pattern in `EVENTS.md`
+- State management MUST use Redux — no custom stores, no Zustand-like patterns, no `useState` for shared state
 - Screensets are isolated — no hardcoded screenset names in shared/shared code
 - Registry imports one screenset root file, never individual screens
 - No direct slice imports — only `@hai3/uicore` actions or screenset-local actions
+
+## STATE MANAGEMENT RULES
+- Redux only — screensets define: slices/, actions/, events/, effects/
+- Components use `useSelector` from Redux, never custom hooks like `use*Store`
+- No custom store classes (e.g. `class ChatStore`)
+- No subscribe/notify patterns (e.g. `listeners.add()`)
+- Detection: `grep -rn "class.*Store\|subscribe.*listener" src/screensets/*/store/` -> must be empty
+- Detection: `grep -rn "use.*Store.*useState\|Set<.*>" src/screensets/*/hooks/` -> must be empty
 
 ## LOCALIZATION RULES
 - Localization folder: `i18n/{lang}.json` inside the screenset
@@ -37,6 +46,7 @@
 
 ## PRE-DIFF CHECKLIST
 - [ ] No manual Tailwind/className styling
+- [ ] No custom state management (Redux only)
 - [ ] No direct slice imports
 - [ ] Registry imports screenset root only
 - [ ] Icons exported and registered

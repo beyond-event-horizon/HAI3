@@ -6,9 +6,9 @@
  * Type Safety: EventPayloadMap ensures emit/on use correct payload per event
  */
 
-import type { EventPayloadMap } from './eventTypes/eventMap';
+import type { EventPayloadMap, EventKey } from './eventTypes/eventMap';
 
-type EventHandler<T = unknown> = (payload: T) => void;
+type EventHandler<T = never> = (payload: T) => void;
 
 interface Subscription {
   unsubscribe: () => void;
@@ -22,7 +22,7 @@ class EventBus {
    * Type-safe: payload must match event type in EventPayloadMap
    * Payload is optional for void events
    */
-  emit<K extends keyof EventPayloadMap>(
+  emit<K extends EventKey>(
     eventType: K,
     ...args: EventPayloadMap[K] extends void ? [] : [EventPayloadMap[K]]
   ): void {
@@ -38,7 +38,7 @@ class EventBus {
    * Type-safe: handler receives correct payload type for event
    * Returns subscription object with unsubscribe method
    */
-  on<K extends keyof EventPayloadMap>(
+  on<K extends EventKey>(
     eventType: K,
     handler: EventHandler<EventPayloadMap[K]>
   ): Subscription {
@@ -66,7 +66,7 @@ class EventBus {
    * Subscribe to event, but only fire once then auto-unsubscribe
    * Type-safe: handler receives correct payload type for event
    */
-  once<K extends keyof EventPayloadMap>(
+  once<K extends EventKey>(
     eventType: K,
     handler: EventHandler<EventPayloadMap[K]>
   ): Subscription {
