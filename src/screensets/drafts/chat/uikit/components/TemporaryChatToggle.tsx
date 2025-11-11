@@ -8,16 +8,18 @@ import { Switch } from '@hai3/uikit';
 export interface TemporaryChatToggleProps {
   value: boolean;
   onChange: (value: boolean) => void;
+  label?: string;
   disabled?: boolean;
   className?: string;
 }
 
-export const TemporaryChatToggle = ({
+export const TemporaryChatToggle: React.FC<TemporaryChatToggleProps> = ({
   value,
   onChange,
+  label = 'Temporary chat',
   disabled = false,
   className = '',
-}: TemporaryChatToggleProps) => {
+}) => {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <Switch
@@ -25,12 +27,13 @@ export const TemporaryChatToggle = ({
         checked={value}
         onCheckedChange={onChange}
         disabled={disabled}
+        aria-label={label}
       />
       <label
         htmlFor="temporary-chat"
         className="text-sm font-medium text-muted-foreground cursor-pointer"
       >
-        Temporary Chat
+        {label}
       </label>
     </div>
   );

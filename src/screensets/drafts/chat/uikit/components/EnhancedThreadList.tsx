@@ -18,32 +18,39 @@ export interface EnhancedChatThread {
 
 export interface EnhancedThreadListProps {
   threads: EnhancedChatThread[];
-  selectedThreadId?: string;
+  currentThreadId: string | null;
   onThreadSelect: (threadId: string) => void;
   onNewThread: () => void;
-  onDeleteThread?: (threadId: string) => void;
-  onTitleEdit?: (threadId: string, newTitle: string) => void;
-  onReorder?: (threads: EnhancedChatThread[]) => void;
-  searchQuery?: string;
-  onSearchChange?: (query: string) => void;
+  onThreadDelete: (threadId: string) => void;
+  onThreadTitleEdit: (threadId: string, newTitle: string) => void;
+  onReorder: (newThreads: EnhancedChatThread[]) => void;
+  newThreadLabel?: string;
+  searchPlaceholder?: string;
+  tempIndicator?: string;
+  editLabel?: string;
+  deleteLabel?: string;
   className?: string;
 }
 
 export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
   threads,
-  selectedThreadId,
+  currentThreadId,
   onThreadSelect,
   onNewThread,
-  onDeleteThread,
-  onTitleEdit,
+  onThreadDelete,
+  onThreadTitleEdit,
   onReorder,
-  searchQuery = '',
-  onSearchChange,
+  newThreadLabel = 'New Thread',
+  searchPlaceholder = 'Search threads...',
+  tempIndicator = '(Temp)',
+  editLabel = 'Edit',
+  deleteLabel = 'Delete',
   className = '',
 }) => {
   const [editingThreadId, setEditingThreadId] = useState<string | null>(null);
   const [editedTitle, setEditedTitle] = useState('');
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const formatTimestamp = (date: Date): string => {
     const now = new Date();
@@ -52,7 +59,7 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
 
-    if (minutes < 1) return 'Just now';
+    if (minutes < 1) return 'just now';
     if (minutes < 60) return `${minutes}m`;
     if (hours < 24) return `${hours}h`;
     if (days < 7) return `${days}d`;
@@ -68,7 +75,7 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
   const handleEditSave = (threadId: string) => {
     const trimmed = editedTitle.trim();
     if (trimmed && trimmed !== threads.find((t) => t.id === threadId)?.title) {
-      onTitleEdit?.(threadId, trimmed);
+      onThreadTitleEdit?.(threadId, trimmed);
     }
     setEditingThreadId(null);
   };
@@ -106,38 +113,37 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
         <div className="flex items-center justify-between flex-1">
           <h2 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap">Recent Chats</h2>
           <Button
-            variant={ButtonVariant.Ghost}
+            variant={ButtonVariant.Default}
             size={ButtonSize.Icon}
             onClick={onNewThread}
-            aria-label="New chat"
+            aria-label={newThreadLabel}
           >
             <Plus size={16} />
           </Button>
+          <span className="text-sm font-medium text-muted-foreground">{newThreadLabel}</span>
         </div>
 
         {/* Search */}
-        {onSearchChange && (
-          <div className="relative">
-            <Search
-              size={16}
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
-            />
-            <input
-              type="text"
-              placeholder="Search chats..."
-              value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 border border-input rounded-lg text-sm bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            />
-          </div>
-        )}
+        <div className="relative">
+          <Search
+            size={16}
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
+          />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={searchPlaceholder}
+            className="h-9 px-3 py-2 text-sm"
+          />
+        </div>
       </div>
 
       {/* Thread list */}
       <div className="flex-1 overflow-y-auto">
         {threads.length === 0 ? (
           <div className="p-4 text-center text-muted-foreground text-sm">
-            No chats yet. Start a new conversation!
+            No chats yet
           </div>
         ) : (
           threads.map((thread, index) => (
@@ -149,7 +155,7 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
               onDragEnd={handleDragEnd}
               onClick={() => !editingThreadId && onThreadSelect(thread.id)}
               className={`group relative p-3 border-b border-border cursor-pointer transition-colors hover:bg-muted/50 ${
-                selectedThreadId === thread.id ? 'bg-muted' : ''
+                currentThreadId === thread.id ? 'bg-muted' : ''
               } ${draggedIndex === index ? 'opacity-50' : ''}`}
             >
               <div className="flex items-start gap-2">
@@ -184,11 +190,11 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
                       <h3
                         className="font-medium text-sm truncate flex-1"
                         onDoubleClick={(e) => handleEditStart(thread.id, thread.title, e)}
-                        title="Double-click to edit"
+                        title="Double click to edit"
                       >
                         {thread.title}
                         {thread.isTemporary && (
-                          <span className="ml-2 text-xs text-muted-foreground">(Temp)</span>
+                          <span className="ms-2 text-xs text-muted-foreground">{tempIndicator}</span>
                         )}
                       </h3>
                     )}
@@ -196,7 +202,7 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
                     {/* Timestamp and actions */}
                     <div className="flex items-center gap-1">
                       {thread.isTemporary && (
-                        <Clock size={12} className="text-orange-400" />
+                        <Clock size={12} className="text-orange-600 dark:text-orange-500" />
                       )}
                       <span className="text-xs text-muted-foreground whitespace-nowrap group-hover:opacity-0 transition-opacity">
                         {formatTimestamp(thread.timestamp)}
@@ -204,27 +210,27 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
 
                       {/* Action buttons */}
                       <div className="absolute right-3 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                        {onTitleEdit && (
-                          <button
-                            onClick={(e) => handleEditStart(thread.id, thread.title, e)}
-                            className="p-1 hover:bg-muted rounded transition-colors"
-                            title="Edit title"
-                          >
-                            <Edit3 size={12} className="text-muted-foreground" />
-                          </button>
-                        )}
-                        {onDeleteThread && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onDeleteThread(thread.id);
-                            }}
-                            className="p-1 hover:bg-destructive/10 rounded transition-colors"
-                            title="Delete chat"
-                          >
-                            <Trash2 size={12} className="text-destructive" />
-                          </button>
-                        )}
+                        <Button
+                          variant={ButtonVariant.Ghost}
+                          size={ButtonSize.Icon}
+                          onClick={(e) => handleEditStart(thread.id, thread.title, e)}
+                          className="h-6 w-6"
+                          aria-label={editLabel}
+                        >
+                          <Edit3 size={12} />
+                        </Button>
+                        <Button
+                          variant={ButtonVariant.Ghost}
+                          size={ButtonSize.Icon}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onThreadDelete(thread.id);
+                          }}
+                          className="h-6 w-6 text-destructive"
+                          aria-label={deleteLabel}
+                        >
+                          <Trash2 size={12} className="text-destructive" />
+                        </Button>
                       </div>
                     </div>
                   </div>
