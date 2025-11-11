@@ -5,7 +5,7 @@
 
 import React, { useRef } from 'react';
 import { Paperclip, X, File, Image, FileText } from 'lucide-react';
-import type { AttachedFile } from '../../store/chatStore';
+import type { AttachedFile } from '../../types';
 
 export interface FileAttachmentButtonProps {
   onFileSelect: (file: AttachedFile) => void;

@@ -1,29 +1,43 @@
 /**
  * ChatTitleEditor - Editable chat title component
- * Allows inline editing of chat titles with save/cancel actions
+ * Presentational component - state managed by parent per UIKIT.md guidelines
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Edit3, Check, X } from 'lucide-react';
+import { Button, Input } from '@hai3/uikit';
+import { ButtonVariant, ButtonSize } from '@hai3/uikit-contracts';
 
 export interface ChatTitleEditorProps {
   title: string;
-  onSave: (newTitle: string) => void;
+  isEditing: boolean;
+  editedTitle: string;
+  onEditStart: () => void;
+  onTitleChange: (value: string) => void;
+  onSave: () => void;
+  onCancel: () => void;
+  editLabel?: string;
+  saveLabel?: string;
+  cancelLabel?: string;
+  placeholderLabel?: string;
   className?: string;
 }
 
 export const ChatTitleEditor: React.FC<ChatTitleEditorProps> = ({
   title,
+  isEditing,
+  editedTitle,
+  onEditStart,
+  onTitleChange,
   onSave,
+  onCancel,
+  editLabel = 'Edit title',
+  saveLabel = 'Save',
+  cancelLabel = 'Cancel',
+  placeholderLabel = 'Enter title',
   className = '',
 }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedTitle, setEditedTitle] = useState(title);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    setEditedTitle(title);
-  }, [title]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -32,57 +46,47 @@ export const ChatTitleEditor: React.FC<ChatTitleEditorProps> = ({
     }
   }, [isEditing]);
 
-  const handleSave = () => {
-    const trimmed = editedTitle.trim();
-    if (trimmed && trimmed !== title) {
-      onSave(trimmed);
-    }
-    setIsEditing(false);
-  };
-
-  const handleCancel = () => {
-    setEditedTitle(title);
-    setIsEditing(false);
-  };
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      handleSave();
+      onSave();
     } else if (e.key === 'Escape') {
       e.preventDefault();
-      handleCancel();
+      onCancel();
     }
   };
 
   if (isEditing) {
     return (
       <div className={`flex items-center gap-2 ${className}`}>
-        <input
+        <Input
           ref={inputRef}
-          type="text"
           value={editedTitle}
-          onChange={(e) => setEditedTitle(e.target.value)}
+          onChange={(e) => onTitleChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          onBlur={handleSave}
-          className="flex-1 px-2 py-1 text-sm border border-input rounded bg-background focus:outline-none focus:ring-2 focus:ring-ring min-w-0"
+          placeholder={placeholderLabel}
+          className="h-8 text-base font-medium"
         />
-        <button
+        <Button
+          variant={ButtonVariant.Ghost}
+          size={ButtonSize.Icon}
           onMouseDown={(e) => e.preventDefault()}
-          onClick={handleSave}
-          className="p-1 text-green-600 hover:text-green-700 hover:bg-muted rounded transition-colors"
-          title="Save"
+          onClick={onSave}
+          className="text-green-600 dark:text-green-500 hover:text-green-700 dark:hover:text-green-600"
+          aria-label={saveLabel}
         >
           <Check size={14} />
-        </button>
-        <button
+        </Button>
+        <Button
+          variant={ButtonVariant.Ghost}
+          size={ButtonSize.Icon}
           onMouseDown={(e) => e.preventDefault()}
-          onClick={handleCancel}
-          className="p-1 text-red-600 hover:text-red-700 hover:bg-muted rounded transition-colors"
-          title="Cancel"
+          onClick={onCancel}
+          className="text-destructive hover:opacity-80"
+          aria-label={cancelLabel}
         >
           <X size={14} />
-        </button>
+        </Button>
       </div>
     );
   }
@@ -91,19 +95,21 @@ export const ChatTitleEditor: React.FC<ChatTitleEditorProps> = ({
     <div className={`flex items-center gap-2 group ${className}`}>
       <span
         className="text-lg font-semibold cursor-pointer hover:text-primary transition-colors"
-        onClick={() => setIsEditing(true)}
-        onDoubleClick={() => setIsEditing(true)}
-        title="Click to edit title"
+        onClick={onEditStart}
+        onDoubleClick={onEditStart}
+        aria-label={editLabel}
       >
         {title}
       </span>
-      <button
-        onClick={() => setIsEditing(true)}
-        className="p-1 opacity-0 group-hover:opacity-100 hover:bg-muted rounded transition-opacity"
-        title="Edit title"
+      <Button
+        variant={ButtonVariant.Ghost}
+        size={ButtonSize.Icon}
+        onClick={onEditStart}
+        className="opacity-0 group-hover:opacity-100"
+        aria-label={editLabel}
       >
         <Edit3 size={14} className="text-muted-foreground" />
-      </button>
+      </Button>
     </div>
   );
 };
