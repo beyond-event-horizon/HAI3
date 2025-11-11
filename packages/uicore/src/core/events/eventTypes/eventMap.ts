@@ -15,35 +15,39 @@ import type { ScreensetEventPayloadMap } from './screensetEvents';
 import type { I18nEventPayloadMap } from './i18nEvents';
 
 /**
- * Global event-to-payload type map
- * TypeScript ensures emit/on calls use correct payload for each event
+ * Global Event Payload Map
+ * Central registry of ALL events in the app
+ * Maps event keys (strings) to payload types
  * 
- * Core Usage:
- * - eventBus.emit(UserEvents.UserFetched, { user }) -> Correct payload
- * - eventBus.emit(UserEvents.UserFetched, { wrong }) -> Type error
- * 
- * Screenset Extension (module augmentation):
+ * Screensets can augment this via module augmentation:
  * ```typescript
  * // In your screenset code
  * declare module '@hai3/uicore' {
  *   interface EventPayloadMap {
  *     'myScreenset/dataLoaded': { data: MyData[] };
- *     'myScreenset/actionPerformed': { action: string };
  *   }
  * }
- * 
- * // Now type-safe in your screenset
- * eventBus.emit('myScreenset/dataLoaded', { data: [...] }); // OK
- * eventBus.emit('myScreenset/dataLoaded', { wrong: true }); // Type error
  * ```
+ * 
+ * Design: Interface (not type) to support declaration merging
+ * Naming: PascalCase per TypeScript interface convention
  */
-export interface EventPayloadMap extends
-  ApiEventPayloadMap,
-  UserEventPayloadMap,
-  MenuEventPayloadMap,
-  ThemeEventPayloadMap,
-  NavigationEventPayloadMap,
-  ScreensetEventPayloadMap,
-  I18nEventPayloadMap {
-  // Extensible - screensets add via module augmentation
+export interface EventPayloadMap {
+  // Base interface - can be augmented by screensets
 }
+
+export interface EventPayloadMap
+  extends ApiEventPayloadMap,
+    UserEventPayloadMap,
+    MenuEventPayloadMap,
+    ThemeEventPayloadMap,
+    NavigationEventPayloadMap,
+    ScreensetEventPayloadMap,
+    I18nEventPayloadMap {}
+
+/**
+ * Event Key Type
+ * Union of all event keys from EventPayloadMap
+ * Used in EventBus generic constraints for type-safe event emission
+ */
+export type EventKey = keyof EventPayloadMap;

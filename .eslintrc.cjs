@@ -227,8 +227,26 @@ module.exports = {
         '**/*Slice.tsx',  // Exclude slice files themselves
         '**/actions/**',  // Exclude actions
         '**/effects/**',  // Exclude effects
+        '**/store/**',  // Exclude store files themselves (but they shouldn't exist in screensets!)
       ],
       rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: [
+              {
+                // Forbid importing custom stores - components should only use Redux
+                group: ['**/store/*Store', '../store/*Store', './store/*Store', '../../store/*Store'],
+                message: 'FLUX VIOLATION: Components cannot import custom stores. Use Redux slices with useSelector and dispatch actions. See EVENTS.md.',
+              },
+              {
+                // Forbid importing hooks that bypass Redux
+                group: ['**/hooks/use*Store', '../hooks/use*Store', './hooks/use*Store', '../../hooks/use*Store'],
+                message: 'FLUX VIOLATION: Components cannot use custom store hooks. Use Redux useSelector hook. See EVENTS.md.',
+              },
+            ],
+          },
+        ],
         'no-restricted-syntax': [
           'error',
           {
@@ -236,6 +254,11 @@ module.exports = {
             // This prevents calling slice reducers that follow the setXxx naming convention
             selector: "CallExpression[callee.name='dispatch'] CallExpression[callee.name=/^set[A-Z]/]",
             message: 'FLUX VIOLATION: Components cannot call slice reducers (setXxx functions). Use actions from /actions/ instead. See EVENTS.md.',
+          },
+          {
+            // Catch: customStore.someMethod() - direct method calls on custom stores
+            selector: "CallExpression[callee.object.name=/Store$/][callee.property.name!='getState']",
+            message: 'FLUX VIOLATION: Components cannot call custom store methods directly. Use Redux actions and useSelector. See EVENTS.md.',
           },
         ],
       },
