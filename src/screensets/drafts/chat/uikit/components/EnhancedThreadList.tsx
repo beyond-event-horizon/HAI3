@@ -228,7 +228,7 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
                     </div>
 
                     {/* Action buttons */}
-                    <div className="absolute right-3 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                    <div className="absolute end-3 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
                       <Button
                         variant={ButtonVariant.Ghost}
                         size={ButtonSize.Icon}
