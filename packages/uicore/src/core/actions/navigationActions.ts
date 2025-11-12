@@ -5,8 +5,9 @@
  */
 
 import { eventBus } from '../events/eventBus';
-import { NavigationEvents, ScreensetEvents } from '../events/eventTypes';
+import { NavigationEvents, ScreensetEvents, MenuEvents } from '../events/eventTypes';
 import { routeRegistry } from '../routing/routeRegistry';
+import { screensetRegistry } from '../../screensets/screensetRegistry';
 
 /**
  * Navigate to a screen by ID
@@ -31,6 +32,12 @@ export const navigateToScreen = (screenId: string): void => {
     // Actions are pure functions and cannot access store state
     eventBus.emit(ScreensetEvents.Changed, { 
       screensetId: screensetKey 
+    });
+    
+    // Emit menu items change event (actions emit both events, effects only listen)
+    const menuItems = screensetRegistry.getMenuItems(screensetKey);
+    eventBus.emit(MenuEvents.ItemsChanged, { 
+      items: menuItems 
     });
   }
 

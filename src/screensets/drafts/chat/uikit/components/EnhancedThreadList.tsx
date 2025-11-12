@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { Plus, Search, Edit3, Trash2, Clock, GripVertical } from 'lucide-react';
 import { Button } from '@hai3/uikit';
 import { ButtonVariant, ButtonSize } from '@hai3/uikit-contracts';
+// All styles are now inline - no design tokens needed
 
 export interface EnhancedChatThread {
   id: string;
@@ -109,32 +110,31 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
   return (
     <div className={`flex flex-col h-full bg-card ${className}`}>
       {/* Header */}
-      <div className="px-4 py-3 border-b border-border h-16 flex items-center">
-        <div className="flex items-center justify-between flex-1">
-          <h2 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap">Recent Chats</h2>
-          <Button
-            variant={ButtonVariant.Default}
-            size={ButtonSize.Icon}
-            onClick={onNewThread}
-            aria-label={newThreadLabel}
-          >
-            <Plus size={16} />
-          </Button>
-          <span className="text-sm font-medium text-muted-foreground">{newThreadLabel}</span>
-        </div>
+      <div className="px-4 py-3 border-b border-border flex items-center justify-between">
+        <h2 className="text-lg font-semibold">Recent Chats</h2>
+        <Button
+          variant={ButtonVariant.Default}
+          size={ButtonSize.Icon}
+          onClick={onNewThread}
+          aria-label={newThreadLabel}
+          className="[&_svg]:size-4"
+        >
+          <Plus />
+        </Button>
+      </div>
 
-        {/* Search */}
+      {/* Search */}
+      <div className="px-4 py-2 border-b border-border">
         <div className="relative">
-          <Search
-            size={16}
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
-          />
+          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground pointer-events-none [&_svg]:size-4">
+            <Search />
+          </div>
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={searchPlaceholder}
-            className="h-9 px-3 py-2 text-sm"
+            className="w-full h-9 pl-9 pr-3 py-2 text-sm border border-input rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-ring"
           />
         </div>
       </div>
@@ -160,13 +160,13 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
             >
               <div className="flex items-start gap-2">
                 {/* Drag handle */}
-                <div className="flex-shrink-0 pt-1 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing">
-                  <GripVertical size={14} className="text-muted-foreground" />
+                <div className="flex-shrink-0 pt-1 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing [&_svg]:size-3.5">
+                  <GripVertical className="text-muted-foreground" />
                 </div>
 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between gap-2 mb-1">
+                  <div className="flex items-center justify-between gap-2 mb-1">
                     {editingThreadId === thread.id ? (
                       <input
                         type="text"
@@ -200,38 +200,40 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
                     )}
 
                     {/* Timestamp and actions */}
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 group-hover:opacity-0 transition-opacity">
                       {thread.isTemporary && (
-                        <Clock size={12} className="text-orange-600 dark:text-orange-500" />
+                        <div className="[&_svg]:size-3.5 text-orange-600 dark:text-orange-500">
+                          <Clock />
+                        </div>
                       )}
-                      <span className="text-xs text-muted-foreground whitespace-nowrap group-hover:opacity-0 transition-opacity">
+                      <span className="text-xs text-muted-foreground whitespace-nowrap">
                         {formatTimestamp(thread.timestamp)}
                       </span>
+                    </div>
 
-                      {/* Action buttons */}
-                      <div className="absolute right-3 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                        <Button
-                          variant={ButtonVariant.Ghost}
-                          size={ButtonSize.Icon}
-                          onClick={(e) => handleEditStart(thread.id, thread.title, e)}
-                          className="h-6 w-6"
-                          aria-label={editLabel}
-                        >
-                          <Edit3 size={12} />
-                        </Button>
-                        <Button
-                          variant={ButtonVariant.Ghost}
-                          size={ButtonSize.Icon}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onThreadDelete(thread.id);
-                          }}
-                          className="h-6 w-6 text-destructive"
-                          aria-label={deleteLabel}
-                        >
-                          <Trash2 size={12} className="text-destructive" />
-                        </Button>
-                      </div>
+                    {/* Action buttons */}
+                    <div className="absolute right-3 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                      <Button
+                        variant={ButtonVariant.Ghost}
+                        size={ButtonSize.Icon}
+                        onClick={(e) => handleEditStart(thread.id, thread.title, e)}
+                        className="h-6 w-6 [&_svg]:size-3.5"
+                        aria-label={editLabel}
+                      >
+                        <Edit3 />
+                      </Button>
+                      <Button
+                        variant={ButtonVariant.Ghost}
+                        size={ButtonSize.Icon}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onThreadDelete(thread.id);
+                        }}
+                        className="h-6 w-6 [&_svg]:size-3.5 text-destructive"
+                        aria-label={deleteLabel}
+                      >
+                        <Trash2 className="text-destructive" />
+                      </Button>
                     </div>
                   </div>
 
