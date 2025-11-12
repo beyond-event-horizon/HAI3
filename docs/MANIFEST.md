@@ -2,7 +2,7 @@
 
 # HAI3 dev kit Manifest
 
-> **TARGET AUDIENCE:** Humans and AI  
+> **TARGET AUDIENCE:** Humans and AI
 > **PURPOSE:** Core philosophy, principles, and vision of the HAI3 framework
 
 The purpose of this document is to define the core philosophy, principles, and values behind the HAI3 dev kit - a framework that merges AI-assisted UI generation with human craftsmanship, ensuring maintainable, scalable, and visually consistent applications for SaaS multitenant and multi-user control panels.
@@ -65,6 +65,7 @@ All generated UI elements must align with existing UI-Core controls and styles.
 - Support for color palettes, fonts, and logos
 - Theme inheritance across AI-generated and human screens
 - AI-generated code must respect theme tokens and constraints (e.g. by rules and prompts)
+- Components provide virtualization for large lists/grids; use skeletons/streaming for progressive render
 
 **Goal:** Avoid design fragmentation - AI must behave like a trained team member reusing existing UI vocabulary maintaining consistent brand identity across all auto-generated screens.
 
@@ -117,6 +118,7 @@ Provide a typed, reusable SDK that abstracts backend APIs through consistent con
 - Runtime input/output validation and observability (Zod)
 - Unified API client with retries, ETags, and error normalization
 - Unified caching layer with explicing caching strategies and invalidation policies/APIs
+- API latency tracking and observability
 
 **Goal:** Provide a consistent API access layer for all screens and services.
 
@@ -159,5 +161,6 @@ HAI3 establishes a tiered, automated quality assurance pipeline that ensures all
 - Automated Accessibility Checks integration into CI pipeline to scan all screens for WCAG 2.1 AA compliance (color contrast, ARIA attributes, keyboard navigation)
 - Microfrontend Isolation Testing to verify sandbox boundaries, CSP enforcement, and inter-plugin communication contracts
 - Automated pre-commit hooks enforce linting, formatting, and basic validation
+- Performance gates: CI enforces LCP P75 < 1.8s, INP P95 < 200ms, route change P95 < 150ms; RUM dashboards track LCP/INP/CLS/TTFB
 
 **Goal:** Shift quality left by providing immediate, actionable feedback to AI models and human developers. Ensure enterprise-grade quality, accessibility, and security compliance are baked in from the design stage, not retrofitted.
