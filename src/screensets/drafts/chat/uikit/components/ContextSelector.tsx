@@ -35,7 +35,7 @@ export const ContextSelector: React.FC<ContextSelectorProps> = ({
 }) => {
   return (
     <Select disabled={disabled}>
-      <SelectTrigger className={`w-[200px] ${className}`}>
+      <SelectTrigger className={`w-50 ${className}`}>
         <SelectValue placeholder={placeholderLabel} />
       </SelectTrigger>
       <SelectContent>

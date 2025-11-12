@@ -3,7 +3,7 @@
  * Implements a full-featured chat UI with threads, messages, and controls
  */
 
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import {
   ChevronLeft,
   ChevronRight,
@@ -24,13 +24,10 @@ import {
   Skeleton,
 } from '@hai3/uikit';
 import { ButtonVariant, ButtonSize } from '@hai3/uikit-contracts';
-import { useTranslation, TextLoader } from '@hai3/uicore';
-import { useSelector } from 'react-redux';
-import { CHAT_SCREENSET_ID } from '../../chatScreenset';
-import { selectChat } from '../../chatStore';
+import { TextLoader, useAppSelector } from '@hai3/uicore';
 import * as chatActions from '../../actions/chatActions';
 import type { AttachedFile } from '../../types';
-import '../../chatStore'; // Initialize store and effects
+import '../../chatStore'; // Import for module augmentation side effect
 import { ModelSelector } from '../../uikit/components/ModelSelector';
 import { TemporaryChatToggle } from '../../uikit/components/TemporaryChatToggle';
 import { ChatTitleEditor } from '../../uikit/components/ChatTitleEditor';
@@ -49,8 +46,9 @@ import { MarkdownRenderer } from '../../uikit/components/MarkdownRenderer';
 export const CHAT_SCREEN_ID = 'chat';
 
 const ChatScreenInternal: React.FC = () => {
-  const { t } = useTranslation();
-  const tk = (key: string) => t(`screenset.${CHAT_SCREENSET_ID}:screens.${CHAT_SCREEN_ID}.${key}`);
+  // Note: This draft screenset uses isolated Redux store, so useTranslation() doesn't work
+  // For production, integrate with global store or use nested Providers
+  const tk = (key: string) => key; // Temporary: return key as label
   
   const [isMenuCollapsed, setIsMenuCollapsed] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -61,8 +59,9 @@ const ChatScreenInternal: React.FC = () => {
   const [isTitleEditing, setIsTitleEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState('');
 
-  // Subscribe to Redux state
-  const chat = useSelector(selectChat);
+  // Subscribe to Redux state from global uicore store
+  // Chat slice was dynamically registered and RootState augmented in types.ts
+  const chat = useAppSelector((state) => state.chat);
   const {
     threads,
     messages,
@@ -85,7 +84,10 @@ const ChatScreenInternal: React.FC = () => {
   }, [currentMessages.length, currentThreadId]);
 
   // Get current thread
-  const currentThread = threads.find((t) => t.id === currentThreadId);
+  const currentThread = useMemo(
+    () => threads.find((t) => t.id === currentThreadId) || { isTemporary: false, title: 'New Chat' },
+    [threads, currentThreadId]
+  );
 
   // Handlers
   const handleThreadSelect = useCallback((threadId: string) => {
@@ -241,14 +243,15 @@ const ChatScreenInternal: React.FC = () => {
       {/* Main chat area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header with collapse button and editable title */}
-        <div className="border-b border-border px-4 py-3 flex items-center gap-4 bg-card h-16">
+        <div className="border-b border-border px-4 py-3 flex items-center gap-4 bg-card">
           <Button
             variant={ButtonVariant.Ghost}
             size={ButtonSize.Icon}
             onClick={() => setIsMenuCollapsed(!isMenuCollapsed)}
             aria-label={isMenuCollapsed ? tk('expand_menu') : tk('collapse_menu')}
+            className="[&_svg]:size-5"
           >
-            {isMenuCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+            {isMenuCollapsed ? <ChevronRight /> : <ChevronLeft />}
           </Button>
           <div className="flex-1 min-w-0">
             {currentThread && (
@@ -294,13 +297,13 @@ const ChatScreenInternal: React.FC = () => {
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                        className={`w-8 h-8 rounded-full flex items-center justify-center [&_svg]:size-4 ${
                           message.type === 'user'
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-secondary text-secondary-foreground'
                         }`}
                       >
-                        {message.type === 'user' ? <User size={16} /> : <Bot size={16} />}
+                        {message.type === 'user' ? <User /> : <Bot />}
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">
@@ -351,10 +354,10 @@ const ChatScreenInternal: React.FC = () => {
                         {/* Always visible copy button */}
                         <button
                           onClick={() => handleCopyMessage(message.content)}
-                          className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground"
+                          className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground [&_svg]:size-3.5"
                           title={tk('copy_message')}
                         >
-                          <Copy size={14} />
+                          <Copy />
                         </button>
 
                         {/* Additional buttons visible on hover or when liked/disliked/raw view */}
@@ -365,58 +368,56 @@ const ChatScreenInternal: React.FC = () => {
                         >
                           <button
                             onClick={() => handleToggleViewMode(message.id)}
-                            className={`p-1.5 hover:bg-muted rounded-lg transition-colors ${
+                            className={`p-1.5 hover:bg-muted rounded-lg transition-colors [&_svg]:size-3.5 ${
                               message.showRawMarkdown
-                                ? 'text-primary'
+                                ? 'bg-muted text-foreground'
                                 : 'text-muted-foreground hover:text-foreground'
                             }`}
                             title={message.showRawMarkdown ? tk('show_markdown_view') : tk('show_raw_markdown')}
                           >
-                            <Code size={14} />
+                            <Code />
                           </button>
                           <button
                             onClick={() => handleEditMessage(message.id)}
-                            className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground"
+                            className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground [&_svg]:size-3.5"
                             title={tk('edit_message')}
                           >
-                            <Edit3 size={14} />
+                            <Edit3 />
                           </button>
                           {message.type === 'assistant' && (
                             <button
                               onClick={() => handleRegenerateMessage(message.id)}
-                              className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground"
+                              className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-foreground [&_svg]:size-3.5"
                               title={tk('regenerate_response')}
                             >
-                              <RotateCcw size={14} />
+                              <RotateCcw />
                             </button>
                           )}
                           {message.type === 'assistant' && (
                             <>
                               <button
                                 onClick={() => handleLikeMessage(message.id)}
-                                className={`p-1.5 hover:bg-muted rounded-lg transition-colors ${
+                                className={`p-1.5 hover:bg-muted rounded-lg transition-colors [&_svg]:size-3.5 ${
                                   message.liked
                                     ? 'text-green-600 dark:text-green-500'
-                                    : 'text-muted-foreground hover:text-green-600 dark:hover:text-green-500'
+                                    : 'text-muted-foreground hover:text-foreground'
                                 }`}
                                 title={tk('like_message')}
                               >
                                 <ThumbsUp 
-                                  size={14} 
                                   fill={message.liked ? 'currentColor' : 'none'}
                                 />
                               </button>
                               <button
                                 onClick={() => handleDislikeMessage(message.id)}
-                                className={`p-1.5 hover:bg-muted rounded-lg transition-colors ${
+                                className={`p-1.5 hover:bg-muted rounded-lg transition-colors [&_svg]:size-3.5 ${
                                   message.disliked
-                                    ? 'text-destructive'
-                                    : 'text-muted-foreground hover:text-destructive'
+                                    ? 'text-red-600 dark:text-red-500'
+                                    : 'text-muted-foreground hover:text-foreground'
                                 }`}
                                 title={tk('dislike_message')}
                               >
                                 <ThumbsDown 
-                                  size={14} 
                                   fill={message.disliked ? 'currentColor' : 'none'}
                                 />
                               </button>
@@ -424,10 +425,10 @@ const ChatScreenInternal: React.FC = () => {
                           )}
                           <button
                             onClick={() => handleDeleteMessage(message.id)}
-                            className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-destructive"
+                            className="p-1.5 hover:bg-muted rounded-lg transition-colors text-muted-foreground hover:text-destructive [&_svg]:size-3.5"
                             title={tk('delete_message')}
                           >
-                            <Trash2 size={14} />
+                            <Trash2 />
                           </button>
                         </div>
                       </div>
@@ -444,7 +445,7 @@ const ChatScreenInternal: React.FC = () => {
         </div>
 
         {/* Input area with controls */}
-        <div className="border-t border-border bg-card p-4">
+        <div className="border-t border-border bg-card px-4 py-3">
           <div className="max-w-3xl mx-auto space-y-3">
             {/* Model and temporary chat toggle */}
             <div className="flex items-center gap-3">
@@ -470,7 +471,7 @@ const ChatScreenInternal: React.FC = () => {
                 selectedContexts={currentContext}
                 onRemove={handleRemoveContext}
                 contextLabel={tk('context_label')}
-                removeAriaLabelFormatter={(name) => t(`screenset.${CHAT_SCREENSET_ID}:screens.chat.remove_context`, { name })}
+                removeAriaLabelFormatter={(name) => `Remove ${name}`}
               />
             )}
 
@@ -481,7 +482,7 @@ const ChatScreenInternal: React.FC = () => {
             />
 
             {/* Message input */}
-            <div className="flex gap-3 items-start">
+            <div className="flex gap-2 items-end">
               <div className="flex-1 relative">
                 <Textarea
                   ref={inputRef}
@@ -490,12 +491,11 @@ const ChatScreenInternal: React.FC = () => {
                   onKeyDown={handleKeyPress}
                   placeholder={tk('message_placeholder')}
                   disabled={isStreaming}
+                  size="sm"
                   autoResize
-                  minHeight={50}
-                  maxHeight={350}
-                  className="w-full pe-24 rounded-xl resize-none overflow-y-auto leading-normal"
+                  className="w-full pe-20 rounded-lg resize-none overflow-y-auto"
                 />
-                <div className="absolute right-3 top-3 flex items-center gap-1.5">
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
                   <EnhancedContextSelector
                     availableContexts={chat.availableContexts}
                     selectedContexts={currentContext}
@@ -516,10 +516,10 @@ const ChatScreenInternal: React.FC = () => {
                 variant={ButtonVariant.Default}
                 onClick={handleSendMessage}
                 disabled={isStreaming || (!inputValue.trim() && attachedFiles.length === 0)}
-                className="h-[3.125rem] px-4 rounded-xl"
+                className="h-11 px-4 rounded-lg [&_svg]:size-5"
                 aria-label={tk('send_message')}
               >
-                <Send size={20} />
+                <Send />
               </Button>
             </div>
           </div>

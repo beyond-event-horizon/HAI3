@@ -8,7 +8,8 @@ import type { AppDispatch } from '../../store';
 import { eventBus } from '../events/eventBus';
 import { 
   ScreensetEvents,
-  MenuEvents
+  MenuEvents,
+  NavigationEvents
 } from '../events/eventTypes';
 import { screensetRegistry } from '../../screensets/screensetRegistry';
 
@@ -26,13 +27,21 @@ export const selectScreenset = (screensetId: string) => {
       return;
     }
 
-    // Emit events - effects will update slices
+    // Emit screenset change event
     eventBus.emit(ScreensetEvents.Changed, { 
       screensetId 
     });
 
+    // Emit menu items change event
     eventBus.emit(MenuEvents.ItemsChanged, { 
       items: screensetRegistry.getMenuItems(screensetId)
     });
+
+    // Navigate to default screen of the new screenset
+    if (screenset.defaultScreen) {
+      eventBus.emit(NavigationEvents.ScreenNavigated, { 
+        screenId: screenset.defaultScreen 
+      });
+    }
   };
 };

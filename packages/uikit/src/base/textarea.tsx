@@ -15,17 +15,39 @@ export interface TextareaProps
    * Maximum height in pixels when auto-resize is enabled (default: 350)
    */
   maxHeight?: number;
+  /**
+   * Size variant (affects min-height)
+   * - sm: min-h-11 (44px / 2.75rem)
+   * - default: min-h-[60px] (3.75rem)
+   * - lg: min-h-20 (80px / 5rem)
+   */
+  size?: 'sm' | 'default' | 'lg';
 }
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, autoResize = false, minHeight = 50, maxHeight = 350, onChange, ...props }, ref) => {
+  ({ className, autoResize = false, minHeight = 50, maxHeight = 350, size = 'default', onChange, ...props }, ref) => {
     const internalRef = React.useRef<HTMLTextAreaElement>(null);
     
     // Merge external ref with internal ref
     React.useImperativeHandle(ref, () => internalRef.current as HTMLTextAreaElement);
 
+    // Map size to min-height classes
+    const sizeClasses = {
+      sm: 'min-h-11 h-11',      // 44px / 2.75rem - exact height
+      default: 'min-h-[60px]', // 60px / 3.75rem
+      lg: 'min-h-20',      // 80px / 5rem
+    };
+
+    // Padding varies by size - sm uses py-3 (12px) for proper centering in 44px height
+    const paddingClasses = {
+      sm: 'py-3',       // 12px top + 12px bottom + 20px line-height = 44px
+      default: 'py-2',  // 8px top + 8px bottom (default)
+      lg: 'py-2',       // 8px top + 8px bottom (default)
+    };
+
     const handleResize = React.useCallback(() => {
-      if (autoResize && internalRef.current) {
+      // Don't auto-resize for 'sm' size - it has a fixed height
+      if (autoResize && size !== 'sm' && internalRef.current) {
         const textarea = internalRef.current;
         // Reset height to get accurate scrollHeight
         textarea.style.height = 'auto';
@@ -34,7 +56,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         // Set height with constraints
         textarea.style.height = `${Math.min(Math.max(scrollHeight, minHeight), maxHeight)}px`;
       }
-    }, [autoResize, minHeight, maxHeight]);
+    }, [autoResize, size, minHeight, maxHeight]);
 
     // Auto-resize on mount and value changes
     React.useEffect(() => {
@@ -52,7 +74,9 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <textarea
         className={cn(
-          "flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          "flex w-full rounded-md border border-input bg-transparent px-3 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          sizeClasses[size],
+          paddingClasses[size],
           className
         )}
         ref={internalRef}

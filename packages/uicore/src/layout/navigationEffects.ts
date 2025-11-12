@@ -21,6 +21,7 @@ import { setSelectedScreen, setCurrentScreenset } from './layoutSlice';
 export function initNavigationEffects(store: Store): void {
   // Listen to screenset changes and update slice
   // Check if screenset actually changed before updating (action is pure function)
+  // Note: The action that emits ScreensetEvents.Changed should also emit MenuEvents.ItemsChanged
   eventBus.on(ScreensetEvents.Changed, ({ screensetId }) => {
     const currentScreenset = store.getState().layout.currentScreenset;
     

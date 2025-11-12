@@ -3,9 +3,10 @@
  * Full-featured chat interface with threads, messages, and LLM controls
  */
 
-import { type ScreensetConfig, uikitRegistry, i18nRegistry, Language, type TranslationDictionary } from '@hai3/uicore';
+import { type ScreensetConfig, uikitRegistry, i18nRegistry, Language, type TranslationDictionary, registerSlice } from '@hai3/uicore';
 import { ChatScreen, CHAT_SCREEN_ID } from './screens/chat/ChatScreen';
 import { MessageSquareIcon, MESSAGE_SQUARE_ICON_ID } from './uikit/icons/MessageSquareIcon';
+import { chatReducer, initializeChatEffects } from './chatStore';
 
 /**
  * Chat Screenset ID
@@ -71,8 +72,15 @@ uikitRegistry.registerIcons({
 });
 
 /**
+ * Register chat slice dynamically with uicore store
+ * Screensets can add their state without modifying uicore package
+ */
+registerSlice('chat', chatReducer, initializeChatEffects);
+
+/**
  * Chat Screenset Configuration
  * Self-contained - knows about its own screens, icons, and structure
+ * Chat state is now part of global uicore store via dynamic registration
  */
 export const chatScreenset: ScreensetConfig = {
   id: CHAT_SCREENSET_ID,
