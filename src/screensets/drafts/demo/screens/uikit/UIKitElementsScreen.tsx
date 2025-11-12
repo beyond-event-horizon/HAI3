@@ -3,6 +3,7 @@ import { Switch, Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize, 
 import { StarIcon } from '../../uikit/icons/StarIcon';
 import { LoaderIcon } from '../../uikit/icons/LoaderIcon';
 import { BadgeCheckIcon } from '../../uikit/icons/BadgeCheckIcon';
+import { FormInput } from '../../uikit/icons/FormInput';
 
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { DEMO_SCREENSET_ID } from '../../demoScreenset';
@@ -282,11 +283,10 @@ export const UIKitElementsScreen: React.FC = () => {
                             {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_email_label`)}
                           </label>
                         </TextLoader>
-                        <input
+                        <FormInput
                           id="email"
                           type="email"
                           placeholder={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_email_placeholder`)}
-                          className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                           required
                         />
                       </div>
@@ -306,10 +306,9 @@ export const UIKitElementsScreen: React.FC = () => {
                             </a>
                           </TextLoader>
                         </div>
-                        <input
+                        <FormInput
                           id="password"
                           type="password"
-                          className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                           required
                         />
                       </div>
@@ -371,11 +370,11 @@ export const UIKitElementsScreen: React.FC = () => {
                           {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_name_label`)}
                         </label>
                       </TextLoader>
-                      <input
+                      <FormInput
                         id="name-1"
                         name="name"
+                        type="text"
                         defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_name_placeholder`)}
-                        className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                       />
                     </div>
                     <div className="grid gap-3">
@@ -384,11 +383,11 @@ export const UIKitElementsScreen: React.FC = () => {
                           {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_username_label`)}
                         </label>
                       </TextLoader>
-                      <input
+                      <FormInput
                         id="username-1"
                         name="username"
+                        type="text"
                         defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_username_placeholder`)}
-                        className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                       />
                     </div>
                   </div>
@@ -439,11 +438,10 @@ export const UIKitElementsScreen: React.FC = () => {
                         {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_link_label`)}
                       </label>
                     </TextLoader>
-                    <input
+                    <FormInput
                       id="link"
+                      type="text"
                       defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_link_value`)}
-                      readOnly
-                      className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                     />
                   </div>
                 </div>
@@ -707,10 +705,10 @@ export const UIKitElementsScreen: React.FC = () => {
                         {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_name_label`)}
                       </label>
                     </TextLoader>
-                    <input
+                    <FormInput
                       id="sheet-demo-name"
+                      type="text"
                       defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_name_placeholder`)}
-                      className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                     />
                   </div>
                   <div className="grid gap-3">
@@ -719,10 +717,10 @@ export const UIKitElementsScreen: React.FC = () => {
                         {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_username_label`)}
                       </label>
                     </TextLoader>
-                    <input
+                    <FormInput
                       id="sheet-demo-username"
+                      type="text"
                       defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_username_placeholder`)}
-                      className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                     />
                   </div>
                 </div>
