@@ -159,8 +159,10 @@ const ChatScreenInternal: React.FC = () => {
   }, []);
 
   const handleTemporaryToggle = useCallback((isTemporary: boolean) => {
-    chatActions.toggleThreadTemporary(isTemporary);
-  }, []);
+    if (currentThreadId) {
+      chatActions.toggleThreadTemporary(currentThreadId, isTemporary);
+    }
+  }, [currentThreadId]);
 
   const handleThreadReorder = useCallback((newThreads: EnhancedChatThread[]) => {
     chatActions.reorderThreads(newThreads);
@@ -180,16 +182,21 @@ const ChatScreenInternal: React.FC = () => {
   }, []);
 
   const handleEditMessage = useCallback((messageId: string) => {
-    chatActions.startEditingMessage(messageId);
-  }, []);
+    const message = currentMessages.find(m => m.id === messageId);
+    if (message) {
+      chatActions.startEditingMessage(messageId, message.content);
+    }
+  }, [currentMessages]);
 
   const handleEditedContentChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     chatActions.updateEditedContent(e.target.value);
   }, []);
 
   const handleSaveEdit = useCallback(() => {
-    chatActions.saveEditedMessage();
-  }, []);
+    if (editingMessageId && editedContent.trim()) {
+      chatActions.saveEditedMessage(editingMessageId, editedContent);
+    }
+  }, [editingMessageId, editedContent]);
 
   const handleCancelEdit = useCallback(() => {
     chatActions.cancelEditingMessage();

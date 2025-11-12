@@ -256,6 +256,12 @@ export const chatSlice = createSlice({
         Object.assign(message, action.payload.updates);
       }
     },
+    toggleMessageRawMarkdown: (state, action: PayloadAction<{ messageId: string }>) => {
+      const message = state.messages.find((m) => m.id === action.payload.messageId);
+      if (message) {
+        message.showRawMarkdown = !message.showRawMarkdown;
+      }
+    },
     removeMessage: (state, action: PayloadAction<{ messageId: string }>) => {
       state.messages = state.messages.filter((m) => m.id !== action.payload.messageId);
     },
@@ -328,6 +334,7 @@ export const {
   setMessages,
   addMessage,
   updateMessage,
+  toggleMessageRawMarkdown,
   removeMessage,
   removeMessagesAfter,
   setEditingMessageId,

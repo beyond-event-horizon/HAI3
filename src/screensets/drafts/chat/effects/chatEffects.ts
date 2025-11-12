@@ -14,6 +14,7 @@ import {
   updateThread,
   setThreads,
   updateMessage,
+  toggleMessageRawMarkdown,
   removeMessage,
   removeMessagesAfter,
   setEditingMessageId,
@@ -75,10 +76,8 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
     dispatch(setThreads(reorderedThreads));
   });
 
-  eventBus.on(ChatEvents.ThreadTemporaryToggled, ({ isTemporary: _isTemporary }) => {
-    // Note: currentThreadId comes from state in component, passed via effect
-    // This is a simplified version - in real app would need to get currentThreadId
-    // For now, we'll handle this in the component's derived state
+  eventBus.on(ChatEvents.ThreadTemporaryToggled, ({ threadId, isTemporary }) => {
+    dispatch(updateThread({ threadId, updates: { isTemporary } }));
   });
 
   // Message effects
@@ -90,17 +89,17 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
     // For now, simplified version
   });
 
-  eventBus.on(ChatEvents.MessageEditingStarted, ({ messageId }) => {
+  eventBus.on(ChatEvents.MessageEditingStarted, ({ messageId, content }) => {
     dispatch(setEditingMessageId(messageId));
-    // Note: editedContent set from message content in component
+    dispatch(setEditedContent(content));
   });
 
   eventBus.on(ChatEvents.MessageEditedContentUpdated, ({ content }) => {
     dispatch(setEditedContent(content));
   });
 
-  eventBus.on(ChatEvents.MessageEditSaved, () => {
-    // Note: Actual save logic handled separately
+  eventBus.on(ChatEvents.MessageEditSaved, ({ messageId, content }) => {
+    dispatch(updateMessage({ messageId, updates: { content } }));
     dispatch(setEditingMessageId(null));
     dispatch(setEditedContent(''));
   });
@@ -128,8 +127,8 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
     dispatch(removeMessage({ messageId }));
   });
 
-  eventBus.on(ChatEvents.MessageViewModeToggled, ({ messageId: _messageId }) => {
-    // Toggle is handled in reducer logic
+  eventBus.on(ChatEvents.MessageViewModeToggled, ({ messageId }) => {
+    dispatch(toggleMessageRawMarkdown({ messageId }));
   });
 
   eventBus.on(ChatEvents.MessageRegenerated, ({ messageId }) => {

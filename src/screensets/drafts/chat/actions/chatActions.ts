@@ -32,8 +32,8 @@ export const reorderThreads = (threads: EnhancedChatThread[]): void => {
   eventBus.emit(ChatEvents.ThreadsReordered, { threads });
 };
 
-export const toggleThreadTemporary = (isTemporary: boolean): void => {
-  eventBus.emit(ChatEvents.ThreadTemporaryToggled, { isTemporary });
+export const toggleThreadTemporary = (threadId: string, isTemporary: boolean): void => {
+  eventBus.emit(ChatEvents.ThreadTemporaryToggled, { threadId, isTemporary });
 };
 
 /**
@@ -43,16 +43,16 @@ export const sendMessage = (content: string): void => {
   eventBus.emit(ChatEvents.MessageSent, { content });
 };
 
-export const startEditingMessage = (messageId: string): void => {
-  eventBus.emit(ChatEvents.MessageEditingStarted, { messageId });
+export const startEditingMessage = (messageId: string, content: string): void => {
+  eventBus.emit(ChatEvents.MessageEditingStarted, { messageId, content });
 };
 
 export const updateEditedContent = (content: string): void => {
   eventBus.emit(ChatEvents.MessageEditedContentUpdated, { content });
 };
 
-export const saveEditedMessage = (): void => {
-  eventBus.emit(ChatEvents.MessageEditSaved);
+export const saveEditedMessage = (messageId: string, content: string): void => {
+  eventBus.emit(ChatEvents.MessageEditSaved, { messageId, content });
 };
 
 export const cancelEditingMessage = (): void => {

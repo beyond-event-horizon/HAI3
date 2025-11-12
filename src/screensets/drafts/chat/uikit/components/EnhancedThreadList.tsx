@@ -53,6 +53,16 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Filter threads based on search query
+  const filteredThreads = threads.filter((thread) => {
+    if (!searchQuery.trim()) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      thread.title.toLowerCase().includes(query) ||
+      thread.preview.toLowerCase().includes(query)
+    );
+  });
+
   const formatTimestamp = (date: Date): string => {
     const now = new Date();
     const diff = now.getTime() - date.getTime();
@@ -86,21 +96,25 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
     setEditedTitle('');
   };
 
-  const handleDragStart = (index: number) => {
+  const handleDragStart = (threadId: string) => {
+    const index = threads.findIndex(t => t.id === threadId);
     setDraggedIndex(index);
   };
 
-  const handleDragOver = (e: React.DragEvent, index: number) => {
+  const handleDragOver = (e: React.DragEvent, targetThreadId: string) => {
     e.preventDefault();
-    if (draggedIndex === null || draggedIndex === index) return;
+    if (draggedIndex === null) return;
+
+    const targetIndex = threads.findIndex(t => t.id === targetThreadId);
+    if (draggedIndex === targetIndex) return;
 
     const newThreads = [...threads];
     const draggedThread = newThreads[draggedIndex];
     newThreads.splice(draggedIndex, 1);
-    newThreads.splice(index, 0, draggedThread);
+    newThreads.splice(targetIndex, 0, draggedThread);
 
     onReorder?.(newThreads);
-    setDraggedIndex(index);
+    setDraggedIndex(targetIndex);
   };
 
   const handleDragEnd = () => {
@@ -141,22 +155,24 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
 
       {/* Thread list */}
       <div className="flex-1 overflow-y-auto">
-        {threads.length === 0 ? (
+        {filteredThreads.length === 0 ? (
           <div className="p-4 text-center text-muted-foreground text-sm">
-            No chats yet
+            {searchQuery ? 'No matching chats found' : 'No chats yet'}
           </div>
         ) : (
-          threads.map((thread, index) => (
+          filteredThreads.map((thread) => {
+            const originalIndex = threads.findIndex(t => t.id === thread.id);
+            return (
             <div
               key={thread.id}
               draggable={!editingThreadId}
-              onDragStart={() => handleDragStart(index)}
-              onDragOver={(e) => handleDragOver(e, index)}
+              onDragStart={() => handleDragStart(thread.id)}
+              onDragOver={(e) => handleDragOver(e, thread.id)}
               onDragEnd={handleDragEnd}
               onClick={() => !editingThreadId && onThreadSelect(thread.id)}
               className={`group relative p-3 border-b border-border cursor-pointer transition-colors hover:bg-muted/50 ${
                 currentThreadId === thread.id ? 'bg-muted' : ''
-              } ${draggedIndex === index ? 'opacity-50' : ''}`}
+              } ${draggedIndex === originalIndex ? 'opacity-50' : ''}`}
             >
               <div className="flex items-start gap-2">
                 {/* Drag handle */}
@@ -243,7 +259,8 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
                 </div>
               </div>
             </div>
-          ))
+            );
+          })
         )}
       </div>
     </div>

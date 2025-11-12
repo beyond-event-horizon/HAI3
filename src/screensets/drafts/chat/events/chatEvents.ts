@@ -63,13 +63,13 @@ declare module '@hai3/uicore' {
     'chat/threadDeleted': { threadId: string };
     'chat/threadTitleUpdated': { threadId: string; newTitle: string };
     'chat/threadsReordered': { threads: EnhancedChatThread[] };
-    'chat/threadTemporaryToggled': { isTemporary: boolean };
+    'chat/threadTemporaryToggled': { threadId: string; isTemporary: boolean };
     
     // Message events
     'chat/messageSent': { content: string };
-    'chat/messageEditingStarted': { messageId: string };
+    'chat/messageEditingStarted': { messageId: string; content: string };
     'chat/messageEditedContentUpdated': { content: string };
-    'chat/messageEditSaved': void;
+    'chat/messageEditSaved': { messageId: string; content: string };
     'chat/messageEditCancelled': void;
     'chat/messageLiked': { messageId: string };
     'chat/messageDisliked': { messageId: string };
