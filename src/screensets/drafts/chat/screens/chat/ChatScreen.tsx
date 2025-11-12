@@ -24,7 +24,7 @@ import {
   Skeleton,
 } from '@hai3/uikit';
 import { ButtonVariant, ButtonSize } from '@hai3/uikit-contracts';
-import { TextLoader, useAppSelector } from '@hai3/uicore';
+import { TextLoader, useAppSelector, useTranslation } from '@hai3/uicore';
 import * as chatActions from '../../actions/chatActions';
 import type { AttachedFile } from '../../types';
 import '../../chatStore'; // Import for module augmentation side effect
@@ -46,9 +46,8 @@ import { MarkdownRenderer } from '../../uikit/components/MarkdownRenderer';
 export const CHAT_SCREEN_ID = 'chat';
 
 const ChatScreenInternal: React.FC = () => {
-  // Note: This draft screenset uses isolated Redux store, so useTranslation() doesn't work
-  // For production, integrate with global store or use nested Providers
-  const tk = (key: string) => key; // Temporary: return key as label
+  const { t } = useTranslation();
+  const tk = (key: string) => t(`screenset.chat:screens.chat.${key}`);
   
   const [isMenuCollapsed, setIsMenuCollapsed] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -486,6 +485,7 @@ const ChatScreenInternal: React.FC = () => {
             <FileAttachmentPreview
               files={attachedFiles}
               onRemove={handleFileRemove}
+              removeLabel={tk('remove_file')}
             />
 
             {/* Message input */}
@@ -502,7 +502,7 @@ const ChatScreenInternal: React.FC = () => {
                   autoResize
                   className="w-full pe-20 rounded-lg resize-none overflow-y-auto"
                 />
-                <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                <div className="absolute end-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
                   <EnhancedContextSelector
                     availableContexts={chat.availableContexts}
                     selectedContexts={currentContext}
@@ -511,11 +511,13 @@ const ChatScreenInternal: React.FC = () => {
                     onAdd={handleAddContext}
                     onRemove={handleRemoveContext}
                     placeholderLabel={tk('add_context')}
+                    selectContextLabel={tk('select_context')}
                     disabled={isStreaming}
                   />
                   <FileAttachmentButton
                     onFileSelect={handleFileSelect}
                     disabled={isStreaming}
+                    attachLabel={tk('attach_file')}
                   />
                 </div>
               </div>

@@ -11,12 +11,14 @@ export interface FileAttachmentButtonProps {
   onFileSelect: (file: AttachedFile) => void;
   disabled?: boolean;
   className?: string;
+  attachLabel?: string;
 }
 
 export const FileAttachmentButton: React.FC<FileAttachmentButtonProps> = ({
   onFileSelect,
   disabled = false,
   className = '',
+  attachLabel = 'Attach file',
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -53,7 +55,7 @@ export const FileAttachmentButton: React.FC<FileAttachmentButtonProps> = ({
         onClick={() => fileInputRef.current?.click()}
         disabled={disabled}
         className={`p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors disabled:opacity-50 ${className}`}
-        title="Attach file"
+        title={attachLabel}
       >
         <Paperclip size={16} />
       </button>
@@ -65,6 +67,7 @@ export interface FileAttachmentPreviewProps {
   files: AttachedFile[];
   onRemove: (fileId: string) => void;
   className?: string;
+  removeLabel?: string;
 }
 
 const formatFileSize = (bytes: number): string => {
@@ -89,6 +92,7 @@ export const FileAttachmentPreview: React.FC<FileAttachmentPreviewProps> = ({
   files,
   onRemove,
   className = '',
+  removeLabel = 'Remove file',
 }) => {
   if (files.length === 0) return null;
 
@@ -111,7 +115,7 @@ export const FileAttachmentPreview: React.FC<FileAttachmentPreviewProps> = ({
           <button
             onClick={() => onRemove(file.id)}
             className="p-1 hover:bg-background rounded-lg transition-colors text-muted-foreground hover:text-foreground flex-shrink-0"
-            title="Remove file"
+            title={removeLabel}
           >
             <X size={16} />
           </button>
