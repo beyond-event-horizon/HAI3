@@ -25,11 +25,14 @@ export interface EnhancedThreadListProps {
   onThreadDelete: (threadId: string) => void;
   onThreadTitleEdit: (threadId: string, newTitle: string) => void;
   onReorder: (newThreads: EnhancedChatThread[]) => void;
+  heading?: React.ReactNode;
   newThreadLabel?: string;
   searchPlaceholder?: string;
-  tempIndicator?: string;
+  tempIndicator?: React.ReactNode;
   editLabel?: string;
   deleteLabel?: string;
+  noMatchingChatsMessage?: React.ReactNode;
+  noChatsYetMessage?: React.ReactNode;
   className?: string;
 }
 
@@ -41,11 +44,14 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
   onThreadDelete,
   onThreadTitleEdit,
   onReorder,
+  heading,
   newThreadLabel = 'New Thread',
-  searchPlaceholder = 'Search threads...',
-  tempIndicator = '(Temp)',
+  searchPlaceholder,
+  tempIndicator,
   editLabel = 'Edit',
   deleteLabel = 'Delete',
+  noMatchingChatsMessage,
+  noChatsYetMessage,
   className = '',
 }) => {
   const [editingThreadId, setEditingThreadId] = useState<string | null>(null);
@@ -125,7 +131,7 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
     <div className={`flex flex-col h-full bg-card ${className}`}>
       {/* Header */}
       <div className="px-4 py-3 border-b border-border flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Recent Chats</h2>
+        {heading && <h2 className="text-lg font-semibold">{heading}</h2>}
         <Button
           variant={ButtonVariant.Default}
           size={ButtonSize.Icon}
@@ -157,7 +163,7 @@ export const EnhancedThreadList: React.FC<EnhancedThreadListProps> = ({
       <div className="flex-1 overflow-y-auto">
         {filteredThreads.length === 0 ? (
           <div className="p-4 text-center text-muted-foreground text-sm">
-            {searchQuery ? 'No matching chats found' : 'No chats yet'}
+            {searchQuery ? noMatchingChatsMessage : noChatsYetMessage}
           </div>
         ) : (
           filteredThreads.map((thread) => {

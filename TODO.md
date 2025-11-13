@@ -13,3 +13,4 @@
 - Add LTR/RTL toggle on ui kit screen
 - Add translations to other languages
 - Make "inheritColor" to be the default option in the TextLoader
+- Move lucide icons to the screensets ui kit

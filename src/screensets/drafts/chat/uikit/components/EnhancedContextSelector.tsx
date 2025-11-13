@@ -16,8 +16,8 @@ export interface EnhancedContextSelectorProps {
   onToggleOpen: () => void;
   onAdd: (contextId: string) => void;
   onRemove: (contextId: string) => void;
-  placeholderLabel?: string;
-  selectContextLabel?: string;
+  placeholderLabel?: React.ReactNode;
+  selectContextLabel?: React.ReactNode;
   disabled?: boolean;
   className?: string;
 }
@@ -29,8 +29,8 @@ export const EnhancedContextSelector: React.FC<EnhancedContextSelectorProps> = (
   onToggleOpen,
   onAdd,
   onRemove,
-  placeholderLabel = 'Add context',
-  selectContextLabel = 'Select Context',
+  placeholderLabel,
+  selectContextLabel,
   disabled = false,
   className = '',
 }) => {
@@ -43,14 +43,14 @@ export const EnhancedContextSelector: React.FC<EnhancedContextSelectorProps> = (
         disabled={disabled}
         className="flex flex-row items-center gap-2 px-3 py-1.5 border border-input rounded-lg hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed [direction:ltr]"
       >
-        <span className="text-sm" dir="auto">{placeholderLabel}</span>
+        {placeholderLabel && <span className="text-sm" dir="auto">{placeholderLabel}</span>}
         <ChevronDown size={16} />
       </button>
 
       {isOpen && (
         <div className="absolute bottom-full right-0 mb-2 w-64 bg-popover border border-border rounded-lg shadow-lg z-50">
           <div className="p-3 border-b border-border">
-            <h3 className="font-medium text-sm">{selectContextLabel}</h3>
+            {selectContextLabel && <h3 className="font-medium text-sm">{selectContextLabel}</h3>}
           </div>
           <div className="max-h-64 overflow-y-auto">
             {availableContexts.map((context) => {
@@ -114,23 +114,23 @@ export interface SelectedContextsDisplayProps {
   availableContexts: Context[];
   selectedContexts: string[];
   onRemove: (contextId: string) => void;
-  contextLabel?: string;
   removeAriaLabelFormatter?: (name: string) => string;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const SelectedContextsDisplay: React.FC<SelectedContextsDisplayProps> = ({
   availableContexts,
   selectedContexts,
   onRemove,
-  contextLabel = 'Context:',
   className = '',
+  children,
 }) => {
   if (selectedContexts.length === 0) return null;
 
   return (
     <div className={`flex flex-wrap items-center gap-2 ${className}`}>
-      <span className="text-sm text-muted-foreground">{contextLabel}</span>
+      {children && <span className="text-sm text-muted-foreground">{children}</span>}
       {selectedContexts.map((contextId) => {
         const context = availableContexts.find((c) => c.id === contextId);
         if (!context) return null;

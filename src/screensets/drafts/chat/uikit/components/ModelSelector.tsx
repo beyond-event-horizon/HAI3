@@ -9,11 +9,11 @@ import { ChatModel } from '../../constants/modelConstants';
 export interface ModelSelectorProps {
   value: string;
   onChange: (value: string) => void;
-  label?: string;
   placeholder?: string;
   models?: Array<{ id: string; name: string }>;
   disabled?: boolean;
   className?: string;
+  children?: React.ReactNode;
 }
 
 const MODELS = [
@@ -26,17 +26,19 @@ const MODELS = [
 export const ModelSelector: React.FC<ModelSelectorProps> = ({
   value,
   onChange,
-  label = 'Model:',
   placeholder = 'Select model',
   models = MODELS,
   disabled = false,
   className = '',
+  children,
 }) => {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <label className="text-sm font-medium text-muted-foreground">
-        {label}
-      </label>
+      {children && (
+        <label className="text-sm font-medium text-muted-foreground">
+          {children}
+        </label>
+      )}
       <Select value={value} onValueChange={onChange} disabled={disabled}>
         <SelectTrigger className="w-40">
           <SelectValue placeholder={placeholder} />

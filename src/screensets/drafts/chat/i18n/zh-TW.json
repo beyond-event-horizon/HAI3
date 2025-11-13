@@ -38,6 +38,7 @@
       "model_label": "模型：",
       "new_thread": "新線程",
       "no_chats_yet": "還沒有聊天。開始新對話！",
+      "no_matching_chats": "未找到匹配的聊天",
       "temp_indicator": "(臨時)",
       "double_click_to_edit": "雙擊編輯",
       "search_threads": "搜索線程...",
