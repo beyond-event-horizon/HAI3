@@ -46,7 +46,7 @@ import { MarkdownRenderer } from '../../uikit/components/MarkdownRenderer';
 export const CHAT_SCREEN_ID = 'chat';
 
 const ChatScreenInternal: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, translationsReady } = useTranslation();
   const tk = (key: string) => t(`screenset.chat:screens.chat.${key}`);
   
   const [isMenuCollapsed, setIsMenuCollapsed] = useState(false);
@@ -237,11 +237,30 @@ const ChatScreenInternal: React.FC = () => {
           onThreadDelete={handleDeleteThread}
           onThreadTitleEdit={handleThreadTitleEdit}
           onReorder={handleThreadReorder}
+          heading={
+            <TextLoader skeletonClassName="h-7 w-32">
+              {tk('recent_chats')}
+            </TextLoader>
+          }
           newThreadLabel={tk('new_thread')}
-          searchPlaceholder={tk('search_threads')}
-          tempIndicator={tk('temp_indicator')}
+          searchPlaceholder={translationsReady ? tk('search_threads') : undefined}
+          tempIndicator={
+            <TextLoader skeletonClassName="text-xs w-12" inheritColor>
+              {tk('temp_indicator')}
+            </TextLoader>
+          }
           editLabel={tk('edit_message')}
           deleteLabel={tk('delete_thread')}
+          noMatchingChatsMessage={
+            <TextLoader skeletonClassName="h-4 w-40">
+              {tk('no_matching_chats')}
+            </TextLoader>
+          }
+          noChatsYetMessage={
+            <TextLoader skeletonClassName="h-4 w-24">
+              {tk('no_chats_yet')}
+            </TextLoader>
+          }
           className="h-full"
         />
       </div>
@@ -329,13 +348,17 @@ const ChatScreenInternal: React.FC = () => {
                               onClick={handleSaveEdit}
                               className="px-3 py-1 bg-primary text-primary-foreground text-sm rounded hover:bg-primary/90 transition-colors"
                             >
-                              {tk('save')}
+                              <TextLoader skeletonClassName="h-4 w-12" inheritColor>
+                                {tk('save')}
+                              </TextLoader>
                             </button>
                             <button
                               onClick={handleCancelEdit}
                               className="px-3 py-1 bg-secondary text-secondary-foreground text-sm rounded hover:bg-secondary/90 transition-colors"
                             >
-                              {tk('cancel')}
+                              <TextLoader skeletonClassName="h-4 w-14" inheritColor>
+                                {tk('cancel')}
+                              </TextLoader>
                             </button>
                           </div>
                         </div>
@@ -458,16 +481,22 @@ const ChatScreenInternal: React.FC = () => {
               <ModelSelector
                 value={currentModel}
                 onChange={handleModelChange}
-                label={tk('model_label')}
                 placeholder={tk('select_model')}
                 disabled={isStreaming}
-              />
+              >
+                <TextLoader skeletonClassName="h-4 w-12" inheritColor>
+                  {tk('model_label')}
+                </TextLoader>
+              </ModelSelector>
               <TemporaryChatToggle
                 value={currentThread?.isTemporary || false}
                 onChange={handleTemporaryToggle}
-                label={tk('temporary_chat')}
                 disabled={isStreaming}
-              />
+              >
+                <TextLoader skeletonClassName="h-4 w-28" inheritColor>
+                  {tk('temporary_chat')}
+                </TextLoader>
+              </TemporaryChatToggle>
             </div>
 
             {/* Selected contexts display */}
@@ -476,9 +505,12 @@ const ChatScreenInternal: React.FC = () => {
                 availableContexts={chat.availableContexts}
                 selectedContexts={currentContext}
                 onRemove={handleRemoveContext}
-                contextLabel={tk('context_label')}
                 removeAriaLabelFormatter={(name) => `Remove ${name}`}
-              />
+              >
+                <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                  {tk('context_label')}
+                </TextLoader>
+              </SelectedContextsDisplay>
             )}
 
             {/* File attachments preview */}
@@ -496,7 +528,7 @@ const ChatScreenInternal: React.FC = () => {
                   value={inputValue}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyPress}
-                  placeholder={tk('message_placeholder')}
+                  placeholder={translationsReady ? tk('message_placeholder') : undefined}
                   disabled={isStreaming}
                   size="sm"
                   autoResize
@@ -510,8 +542,16 @@ const ChatScreenInternal: React.FC = () => {
                     onToggleOpen={() => setIsContextSelectorOpen(!isContextSelectorOpen)}
                     onAdd={handleAddContext}
                     onRemove={handleRemoveContext}
-                    placeholderLabel={tk('add_context')}
-                    selectContextLabel={tk('select_context')}
+                    placeholderLabel={
+                      <TextLoader skeletonClassName="h-4 w-20" inheritColor>
+                        {tk('add_context')}
+                      </TextLoader>
+                    }
+                    selectContextLabel={
+                      <TextLoader skeletonClassName="h-4 w-24">
+                        {tk('select_context')}
+                      </TextLoader>
+                    }
                     disabled={isStreaming}
                   />
                   <FileAttachmentButton

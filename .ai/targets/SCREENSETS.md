@@ -36,12 +36,16 @@
 - Export icon IDs as constants.
 - Do not add screenset icons to the `UiKitIcon` enum.
 
+## SCREENSET UI KIT RULES
+- Screenset-local UI Kit components must follow the same rules as components in `UIKIT.md`.
+
 ## UI KIT DECISION TREE
 1) Use existing `@hai3/uikit` component.
 2) If missing, generate via `npx shadcn add`.
 3) If composite needed, add to `@hai3/uikit/composite`.
-4) Only screenset-specific composites may live locally.
-5) Manual styling is never allowed.
+4) Only screenset-specific composites may live locally in `src/screensets/*/uikit/`.
+5) Screenset UI Kit components are package-ready and must not depend on UI Core.
+6) Manual styling is never allowed.
 
 ## PRE-DIFF CHECKLIST
 - [ ] No manual Tailwind/className styling.
@@ -53,4 +57,5 @@
 - [ ] Icons exported and registered.
 - [ ] i18n loader registered under `screenset.${ID}`.
 - [ ] All user-facing strings use `t()`.
+- [ ] Screenset UI Kit components have no `@hai3/uicore` imports or hooks.
 - [ ] Data flow rules from `EVENTS.md` are followed.

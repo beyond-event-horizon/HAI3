@@ -1,38 +1,53 @@
-# AI Workflow: Update Guidelines
+# Workflow: Update AI Guidelines
 
 ## PURPOSE
-Safely update `.ai/**/*.md` rules without adding verbosity or breaking structure.
+Apply user-requested changes to `.ai/**/*.md` files by editing them in place, with minimal diff and no duplication.
 
-## INPUT
-- Classify update: new rule / clarification / correction
-- Identify domain: API, UIKIT, UICORE, SCREENSETS, THEMES, STYLING, EVENTS, AI docs
+## HARD CONSTRAINTS
+- You MUST modify the target file in the workspace, not just print a rewritten copy.
+- You MUST NOT restate rules that already exist in other `.ai/targets/*.md` files.
+- You MUST NOT copy text from other guideline files; instead, reference them.
+- You MAY rewrite an existing section only if the new information changes or supersedes existing rules.
+- You MUST keep each `.ai/*.md` file under 100 lines, ASCII only.
 
 ## ROUTE
-- Use `.ai/GUIDELINES.md` to select the correct `.ai/targets/*.md`
-- Edit only one target file per update
-- If ambiguous, ask for routing
+1. Use `.ai/GUIDELINES.md` to identify the correct target file in `.ai/targets/*.md`.
+2. Open that file in the editor.
+3. Internally summarize 3–5 key rules from that file (do not write the summary into the file).
 
-## READ FIRST
-- `.ai/targets/AI.md` for format and keywords
-- Target top sections: AI WORKFLOW, CRITICAL RULES, STOP CONDITIONS
+## APPLY CHANGE
+- Work directly in the opened file.
+- Keep the change as small as possible:
+  - Add or update a bullet
+  - Add or update a short sentence
+  - Add or update a DETECT rule
+  - Rewrite a section only if necessary to integrate the new rule
+- Use short declarative statements with these keywords where appropriate:
+  - MUST, REQUIRED, FORBIDDEN, STOP, DETECT
+- When the new rule refers to behavior defined elsewhere, add a reference instead of duplicating:
+  - Example form: `See UIKIT.md for component rules.`
+- Do NOT add multi-line examples, long explanations, or code blocks into `.ai/targets/*.md`.
 
-## APPLY
-- ASCII only, one rule per line, max 100 lines per file
-- Use keywords: FORBIDDEN, REQUIRED, MUST, STOP, DETECT
-- Place new rules under the correct section (do not create new sections unless required)
-- Do not add multi-line examples or code blocks
-- Prefer short grep patterns for detection, or reference another file/workflow
-- Do not modify unrelated content
+## SCOPE OF EDIT
+- Only touch the section that is logically related to the user request (for example, SCREENSETS UI KIT RULES when the request is about screenset UI components).
+- Do not modify unrelated sections.
+- Do not introduce new sections unless the user explicitly asks for a new section.
 
-## VALIDATE
-- Ensure no duplication with other target files
-- Confirm headings, cross-references, and tone match the rest of `.ai/targets/*`
-- Internally summarize 3–6 changed rules to confirm understanding
+## VALIDATION
+Before finishing the edit:
+- Check that the change is directly related to the user request.
+- Check that you did not duplicate content from other `.ai/targets/*.md` files.
+- Check that the file is still under 100 lines and uses ASCII only.
+- Check that cross-references (for example to UIKIT.md or STYLING.md) are correct.
 
-## OUTPUT
-- Return only the full updated target file as a fenced markdown block
-- No commentary or extra text
+## OUTPUT BEHAVIOR
+- Primary action: edit the file content in place.
+- When invoked as a command (for example `/update-guidelines`), you should:
+  - Apply the change to the file in the workspace.
+  - Only print the final full file content if the user explicitly asks to see it.
+  - Do NOT print “proposed” content instead of editing.
 
 ## SELF-CORRECTION
-- If a rule caused verbosity or confusion, refine the rule text
-- If invariants changed, update `.ai/GUIDELINES.md` accordingly
+- If a future request reveals that this workflow caused duplication or verbose rules:
+  - Refine the affected rule(s) in the target file to be shorter and more referential.
+  - Update this workflow to tighten the constraints if needed.

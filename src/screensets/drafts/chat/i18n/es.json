@@ -38,6 +38,7 @@
       "model_label": "Modelo:",
       "new_thread": "Nuevo Hilo",
       "no_chats_yet": "¡No hay chats aún. Inicia una nueva conversación!",
+      "no_matching_chats": "No se encontraron chats coincidentes",
       "temp_indicator": "(Temp)",
       "double_click_to_edit": "Haz doble clic para editar",
       "search_threads": "Buscar hilos...",

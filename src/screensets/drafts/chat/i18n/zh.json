@@ -38,6 +38,7 @@
       "model_label": "模型：",
       "new_thread": "新主题",
       "no_chats_yet": "还没有聊天。开始新对话吧！",
+      "no_matching_chats": "未找到匹配的聊天",
       "temp_indicator": "(临时)",
       "double_click_to_edit": "双击编辑",
       "search_threads": "搜索主题...",

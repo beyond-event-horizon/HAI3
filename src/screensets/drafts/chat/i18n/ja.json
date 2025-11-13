@@ -38,6 +38,7 @@
       "model_label": "モデル：",
       "new_thread": "新しいスレッド",
       "no_chats_yet": "チャットがありません。新しい会話を始めてください！",
+      "no_matching_chats": "一致するチャットが見つかりません",
       "temp_indicator": "(一時)",
       "double_click_to_edit": "ダブルクリックして編集",
       "search_threads": "スレッドを検索...",

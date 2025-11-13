@@ -38,6 +38,7 @@
       "model_label": "Modèle :",
       "new_thread": "Nouveau Fil",
       "no_chats_yet": "Aucun chat pour le moment. Commencez une nouvelle conversation !",
+      "no_matching_chats": "Aucun chat correspondant trouvé",
       "temp_indicator": "(Temp)",
       "double_click_to_edit": "Double-cliquez pour modifier",
       "search_threads": "Rechercher des fils...",
