@@ -4,7 +4,7 @@ import { ThemeSelector } from '../../../components/ThemeSelector';
 import { ScreensetSelector } from '../../../components/ScreensetSelector';
 import { ApiModeToggle } from '../../../components/ApiModeToggle';
 import { LanguageSelector } from '../../../components/LanguageSelector';
-import { selectScreenset, changeTheme } from '../../../core/actions';
+import { changeTheme, selectScreenset } from '../../../core/actions';
 import { themeRegistry } from '../../../theme/themeRegistry';
 import { buildScreensetOptions } from './footerHelpers';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
@@ -31,7 +31,7 @@ export const Footer: React.FC = () => {
     { label: 'GitHub', href: '#github' },
   ];
 
-  // Build screenset options and theme list on mount, set initial values
+  // Build screenset options and theme list on mount
   useEffect(() => {
     const options = buildScreensetOptions();
     const themes = themeRegistry.getThemeNames();
@@ -44,13 +44,10 @@ export const Footer: React.FC = () => {
       dispatch(changeTheme(themes[0]));
     }
 
-    // Set initial screenset if not set
-    if (!currentScreenset && options.length > 0 && options[0].screensets.length > 0) {
-      const firstCategory = options[0].category;
-      const firstScreenset = options[0].screensets[0].id;
-      dispatch(selectScreenset(`${firstCategory}:${firstScreenset}`));
-    }
-  }, [dispatch, theme, currentScreenset]);
+    // DO NOT set initial screenset here - AppRouter handles "/" route redirect
+    // Setting screenset here causes race condition with URL-based navigation (RouterSync)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run only once on mount
 
   // No side effects here - actions emit events, effects handle them
 
