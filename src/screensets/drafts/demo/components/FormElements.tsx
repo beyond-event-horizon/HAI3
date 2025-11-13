@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Switch, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
-import { DEMO_SCREENSET_ID } from '../../../demoScreenset';
-import { UI_KIT_ELEMENTS_SCREEN_ID } from '../UIKitElementsScreen';
+import { DEMO_SCREENSET_ID } from '../demoScreenset';
+import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screens/uikit/UIKitElementsScreen';
 
 /**
  * Form Elements Component

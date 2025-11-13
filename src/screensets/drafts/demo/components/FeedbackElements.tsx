@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Progress, Skeleton, Spinner } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
-import { LoaderIcon } from '../../../uikit/icons/LoaderIcon';
-import { DEMO_SCREENSET_ID } from '../../../demoScreenset';
-import { UI_KIT_ELEMENTS_SCREEN_ID } from '../UIKitElementsScreen';
+import { LoaderIcon } from '../uikit/icons/LoaderIcon';
+import { DEMO_SCREENSET_ID } from '../demoScreenset';
+import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screens/uikit/UIKitElementsScreen';
 
 /**
  * Feedback Elements Component

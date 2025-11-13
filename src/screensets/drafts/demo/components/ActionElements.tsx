@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, IconButton, ButtonVariant, ButtonSize, IconButtonSize } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
-import { StarIcon } from '../../../uikit/icons/StarIcon';
-import { DEMO_SCREENSET_ID } from '../../../demoScreenset';
-import { UI_KIT_ELEMENTS_SCREEN_ID } from '../UIKitElementsScreen';
+import { StarIcon } from '../uikit/icons/StarIcon';
+import { DEMO_SCREENSET_ID } from '../demoScreenset';
+import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screens/uikit/UIKitElementsScreen';
 
 /**
  * Action Elements Component

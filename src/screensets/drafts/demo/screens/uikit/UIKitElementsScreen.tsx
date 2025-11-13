@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { CategoryMenu } from './CategoryMenu';
-import { DataDisplayElements } from './elements/DataDisplayElements';
-import { LayoutElements } from './elements/LayoutElements';
-import { ActionElements } from './elements/ActionElements';
-import { FeedbackElements } from './elements/FeedbackElements';
-import { MediaElements } from './elements/MediaElements';
-import { FormElements } from './elements/FormElements';
-import { OverlayElements } from './elements/OverlayElements';
+import { DataDisplayElements } from '../../components/DataDisplayElements';
+import { LayoutElements } from '../../components/LayoutElements';
+import { ActionElements } from '../../components/ActionElements';
+import { FeedbackElements } from '../../components/FeedbackElements';
+import { MediaElements } from '../../components/MediaElements';
+import { FormElements } from '../../components/FormElements';
+import { OverlayElements } from '../../components/OverlayElements';
 import { DEMO_SCREENSET_ID } from '../../demoScreenset';
 import { UIKIT_CATEGORIES, IMPLEMENTED_ELEMENTS, getElementId } from './uikitCategories';
 /**
