@@ -38,7 +38,7 @@ export const UIKitElementsScreen: React.FC = () => {
         }
       }
     }
-  }, []);
+  }, [selectedCategory, activeElementId]);
 
   // Handle category selection
   const handleCategorySelect = (categoryId: string) => {
