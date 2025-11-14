@@ -2,104 +2,30 @@
 description: Fix a rule violation following HAI3 correction policy
 ---
 
-Follow the workflow from `.ai/workflows/FIX_RULE_VIOLATION.md`:
+## WORKFLOW
+1. IDENTIFY: Location (file:line), rule violated, category
+2. ROUTE: Use .ai/GUIDELINES.md table to find target file
+3. SUMMARIZE: Extract 3-7 applicable rules from target
+4. FIX: Apply correction
+5. VERIFY: Run npm run arch:check && npm run lint && npm run type-check
+6. REPORT: What violated, rule applied, changes made, results
 
-## 1. IDENTIFY
+## CATEGORY
+- typing | data flow | styling | registry | contracts | imports
 
-Ask the user or analyze the code to identify:
-- Violating code location (file:line)
-- Exact rule being violated
-- Category: typing | data flow | styling | registry | contracts | imports
+## TARGET FILES
+- Data flow/events -> .ai/targets/EVENTS.md
+- API layer -> .ai/targets/API.md
+- packages/uicore -> .ai/targets/UICORE.md
+- packages/uikit -> .ai/targets/UIKIT.md
+- packages/uikit-contracts -> .ai/targets/UIKIT_CONTRACTS.md
+- src/screensets -> .ai/targets/SCREENSETS.md
+- src/themes -> .ai/targets/THEMES.md
+- Styling -> .ai/targets/STYLING.md
 
-## 2. CLASSIFY AND ROUTE
-
-Use `.ai/GUIDELINES.md` routing table to identify target file:
-
-| Area | Target file |
-|------|-------------|
-| Data flow / events | .ai/targets/EVENTS.md |
-| API layer | .ai/targets/API.md |
-| packages/uicore | .ai/targets/UICORE.md |
-| packages/uikit | .ai/targets/UIKIT.md |
-| packages/uikit-contracts | .ai/targets/UIKIT_CONTRACTS.md |
-| src/screensets | .ai/targets/SCREENSETS.md |
-| src/themes | .ai/targets/THEMES.md |
-| Styling anywhere | .ai/targets/STYLING.md |
-
-## 3. SUMMARIZE RULES
-
-Read the target file and summarize 3-7 applicable rules in your own words.
-
-## 4. FIX
-
-Apply the fix to make code compliant with the target file.
-
-Common violations and fixes:
-
-**Direct slice dispatch:**
-```typescript
-// ❌ BAD
-dispatch(setMenuItems(items));
-
-// ✅ GOOD
-navigateToScreen(screenId); // Emits event → effect updates slice
-```
-
-**Hardcoded colors:**
-```typescript
-// ❌ BAD
-<div style={{ color: '#0066cc' }}>
-
-// ✅ GOOD
-<div className="text-primary">
-```
-
-**Raw HTML in uicore:**
-```typescript
-// ❌ BAD
-<button onClick={...}>
-
-// ✅ GOOD
-const Button = uikitRegistry.getComponent(UiKitComponent.Button);
-<Button onClick={...}>
-```
-
-**Import violations:**
-```typescript
-// ❌ BAD
-import { Foo } from '@hai3/uikit/src/components/Foo';
-
-// ✅ GOOD
-import { Foo } from '@hai3/uikit';
-```
-
-**String literal IDs:**
-```typescript
-// ❌ BAD
-screenId: 'dashboard'
-
-// ✅ GOOD
-export const DASHBOARD_SCREEN_ID = 'dashboard';
-screenId: DASHBOARD_SCREEN_ID
-```
-
-## 5. DOCUMENT
-
-If the rule was ambiguous and caused the violation, clarify it in the target file.
-
-## 6. VERIFY
-
-Run validation:
-```bash
-npm run arch:check
-npm run lint
-npm run type-check
-```
-
-## 7. REPORT
-
-Provide a summary:
-- What was violated
-- What rule applies
-- What was changed
-- Verification results
+## COMMON FIXES
+- Direct dispatch: BAD dispatch(setMenuItems(items)) -> GOOD navigateToScreen(screenId)
+- Hardcoded colors: BAD style={{ color: '#0066cc' }} -> GOOD className="text-primary"
+- Raw HTML in uicore: BAD <button onClick={...}> -> GOOD uikitRegistry.getComponent(Button)
+- Import violations: BAD import from '@hai3/uikit/src/Foo' -> GOOD import from '@hai3/uikit'
+- String literals: BAD screenId: 'dashboard' -> GOOD export const DASHBOARD_SCREEN_ID = 'dashboard'

@@ -2,136 +2,54 @@
 description: Quick reference for common HAI3 patterns
 ---
 
-## Event-Driven Pattern
+## Event-Driven
+- REQUIRED: Action emits event via eventBus.emit('event/name', payload)
+- REQUIRED: Effect subscribes via eventBus.on('event/name', handler)
+- REQUIRED: Effect updates slice via store.dispatch(setSlice(data))
+- FORBIDDEN: Direct slice dispatch from actions or components
 
-```typescript
-// 1. Define Event
-export const NavEvents = {
-  ScreenChanged: 'navigation/screenChanged' as const,
-};
-export type ScreenChangedPayload = { screenId: string };
+## Imports
+- Same package: BAD import from '@hai3/uikit/src/Foo' -> GOOD import from './Foo'
+- Cross-branch app: BAD import from '../../core/layout' -> GOOD import from '@/core/layout'
+- Cross-package: BAD import from '@hai3/uikit/src/internal' -> GOOD import from '@hai3/uikit'
 
-// 2. Create Action (emits event)
-export const navigateToScreen = (screenId: string) => {
-  return (_dispatch: AppDispatch): void => {
-    eventBus.emit(NavEvents.ScreenChanged, { screenId });
-  };
-};
+## Components
+- uicore: REQUIRED const Button = uikitRegistry.getComponent(UiKitComponent.Button)
+- app/screensets: REQUIRED import { Button } from '@hai3/uikit'
+- FORBIDDEN: Raw HTML elements in uicore
 
-// 3. Create Effect (listens and updates slice)
-export function initNavEffects(store: Store): void {
-  eventBus.on(NavEvents.ScreenChanged, ({ screenId }) => {
-    store.dispatch(setCurrentScreen(screenId));
-  });
-}
-```
-
-## Import Rules
-
-```typescript
-// Same package
-import { Foo } from './Foo';
-
-// Cross-branch in app
-import { Layout } from '@/core/layout';
-
-// Cross-package
-import { Layout } from '@hai3/uicore';
-import { Button } from '@hai3/uikit';
-
-// ❌ NEVER
-import { Foo } from '@hai3/uikit/src/internal/Foo';
-```
-
-## Component Usage
-
-```typescript
-// In uicore
-const Button = uikitRegistry.getComponent(UiKitComponent.Button);
-<Button onClick={handleClick}>Click me</Button>
-
-// In app/screensets
-import { Button } from '@hai3/uikit';
-<Button onClick={handleClick}>Click me</Button>
-```
-
-## Registry Pattern
-
-```typescript
-// 1. Define domain constant
-export const MY_DOMAIN = 'my-domain' as const;
-
-// 2. Create service
-export class MyService extends BaseApiService {
-  constructor(useMockApi: boolean, mockMap?: Map<string, any>) {
-    super('https://api.example.com/my-domain', useMockApi, mockMap);
-  }
-}
-
-// 3. Module augmentation
-declare module '@hai3/uicore' {
-  interface ApiServicesMap {
-    [MY_DOMAIN]: MyService;
-  }
-}
-
-// 4. Self-register
-apiRegistry.register(MY_DOMAIN, MyService);
-```
+## Registry
+- REQUIRED: export const MY_DOMAIN = 'my-domain'
+- REQUIRED: class MyService extends BaseApiService
+- REQUIRED: declare module '@hai3/uicore' { interface ApiServicesMap }
+- REQUIRED: apiRegistry.register(MY_DOMAIN, MyService)
 
 ## Styling
-
-```typescript
-// ✅ GOOD - theme tokens
-<div className="bg-background text-foreground">
-  <h1 className="text-2xl font-bold text-primary">Title</h1>
-  <p className="text-muted-foreground">Description</p>
-</div>
-
-// ❌ BAD - hardcoded
-<div style={{ backgroundColor: '#ffffff', color: '#000000' }}>
-  <h1 style={{ fontSize: '24px', color: '#0066cc' }}>Title</h1>
-</div>
-```
+- BAD style={{ backgroundColor: '#fff' }} -> GOOD className="bg-background"
+- BAD style={{ color: '#000' }} -> GOOD className="text-foreground"
+- REQUIRED: Use Tailwind utilities, CSS variables only
 
 ## i18n
+- REQUIRED: i18nRegistry.registerLoader('screenset.demo', loader)
+- REQUIRED: Use t('screenset.demo:screens.home.title') format
+- FORBIDDEN: Hardcoded strings in UI
 
-```typescript
-// Register loader
-i18nRegistry.registerLoader('screenset.demo', async (language) => {
-  return (await import(`./i18n/${language}.json`)).default;
-});
+## Commands
+- npm ci -> Install dependencies
+- npm run dev -> Start dev server
+- npm run arch:check -> Validate (CRITICAL before commits)
+- npm run type-check -> TypeScript validation
+- npm run lint -> ESLint validation
 
-// Usage
-const title = t('screenset.demo:screens.home.title');
-const subtitle = t('screenset.demo:screens.home.subtitle', { name: 'John' });
-```
+## Invariants
+- REQUIRED: Event-driven architecture only
+- REQUIRED: Registries follow Open/Closed principle
+- REQUIRED: App deps limited to @hai3/uicore, @hai3/uikit, react, react-dom
+- REQUIRED: Cross-domain communication via events only
+- FORBIDDEN: String literals for IDs
+- FORBIDDEN: any type or unsafe casts
 
-## Common Commands
-
-```bash
-npm ci                    # Install dependencies
-npm run dev               # Start dev server
-npm run build             # Build all
-npm run build:packages    # Build packages only
-npm run type-check        # TypeScript check
-npm run lint              # ESLint
-npm run arch:check        # Architecture validation (CRITICAL)
-npm run arch:deps         # Dependency rules check
-```
-
-## Repo Invariants
-
-- Event-driven architecture only
-- Registries follow Open/Closed principle
-- App deps limited to: @hai3/uicore, @hai3/uikit, react, react-dom
-- Cross-domain communication only via events
-- No string literal identifiers (use constants/enums)
-- No `any`, no unsafe casts
-
-## Documentation
-
-- `.ai/GUIDELINES.md` - Main guidelines with routing table
-- `.ai/targets/*.md` - Area-specific rules
-- `CLAUDE.md` - Architecture overview for Claude Code
-- `README.md` - Project overview
+## Docs
+- .ai/GUIDELINES.md -> Routing table
+- .ai/targets/*.md -> Area-specific rules
+- CLAUDE.md -> Architecture overview
