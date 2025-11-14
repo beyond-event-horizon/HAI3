@@ -1,8 +1,5 @@
 import { type ScreensetConfig, uikitRegistry, i18nRegistry, Language, type TranslationDictionary } from '@hai3/uicore';
-import { HelloWorldScreen, HELLO_WORLD_SCREEN_ID } from './screens/helloworld/HelloWorldScreen';
-import { CurrentThemeScreen, CURRENT_THEME_SCREEN_ID } from './screens/theme/CurrentThemeScreen';
-import { ProfileScreen, PROFILE_SCREEN_ID } from './screens/profile/ProfileScreen';
-import { UIKitElementsScreen, UI_KIT_ELEMENTS_SCREEN_ID } from './screens/uikit/UIKitElementsScreen';
+import { HELLO_WORLD_SCREEN_ID, CURRENT_THEME_SCREEN_ID, PROFILE_SCREEN_ID, UI_KIT_ELEMENTS_SCREEN_ID } from './screens/screenIds';
 import { WorldIcon, WORLD_ICON_ID } from './uikit/icons/WorldIcon';
 import { PaletteIcon, PALETTE_ICON_ID } from './uikit/icons/PaletteIcon';
 import { UserIcon, USER_ICON_ID } from './uikit/icons/UserIcon';
@@ -80,6 +77,7 @@ uikitRegistry.registerIcons({
 /**
  * Demo Screenset Configuration
  * Self-contained - knows about its own screens, icons, translations, and structure
+ * All screens are lazy-loaded for optimal performance
  */
 export const demoScreenset: ScreensetConfig = {
   id: DEMO_SCREENSET_ID,
@@ -93,7 +91,7 @@ export const demoScreenset: ScreensetConfig = {
         label: `screenset.${DEMO_SCREENSET_ID}:screens.${HELLO_WORLD_SCREEN_ID}.title`,
         icon: WORLD_ICON_ID,
       },
-      screen: HelloWorldScreen,
+      screen: () => import('./screens/helloworld/HelloWorldScreen'),
     },
     {
       menuItem: {
@@ -101,7 +99,7 @@ export const demoScreenset: ScreensetConfig = {
         label: `screenset.${DEMO_SCREENSET_ID}:screens.${CURRENT_THEME_SCREEN_ID}.title`,
         icon: PALETTE_ICON_ID,
       },
-      screen: CurrentThemeScreen,
+      screen: () => import('./screens/theme/CurrentThemeScreen'),
     },
     {
       menuItem: {
@@ -109,7 +107,7 @@ export const demoScreenset: ScreensetConfig = {
         label: `screenset.${DEMO_SCREENSET_ID}:screens.${PROFILE_SCREEN_ID}.title`,
         icon: USER_ICON_ID,
       },
-      screen: ProfileScreen,
+      screen: () => import('./screens/profile/ProfileScreen'),
     },
     {
       menuItem: {
@@ -117,7 +115,7 @@ export const demoScreenset: ScreensetConfig = {
         label: `screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.title`,
         icon: SHADCN_ICON_ID,
       },
-      screen: UIKitElementsScreen,
+      screen: () => import('./screens/uikit/UIKitElementsScreen'),
     },
   ],
 };

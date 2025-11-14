@@ -43,8 +43,6 @@ import {
 } from '../../uikit/components/FileAttachment';
 import { MarkdownRenderer } from '../../uikit/components/MarkdownRenderer';
 
-export const CHAT_SCREEN_ID = 'chat';
-
 const ChatScreenInternal: React.FC = () => {
   const { t, translationsReady } = useTranslation();
   const tk = (key: string) => t(`screenset.chat:screens.chat.${key}`);
@@ -579,10 +577,13 @@ const ChatScreenInternal: React.FC = () => {
 };
 
 /**
- * ChatScreen - Main chat interface  
+ * ChatScreen - Main chat interface
  * Uses global Redux store (accessed via HAI3Provider in main.tsx)
  * Chat slice is registered in chatStore.ts
  */
 export const ChatScreen: React.FC = ChatScreenInternal;
 
 ChatScreen.displayName = 'ChatScreen';
+
+// Default export for lazy loading
+export default ChatScreen;

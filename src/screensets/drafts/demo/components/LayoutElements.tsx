@@ -3,7 +3,7 @@ import { Button, ButtonVariant, ButtonSize, Card, CardHeader, CardTitle, CardDes
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { FormInput } from '../uikit/icons/FormInput';
 import { DEMO_SCREENSET_ID } from '../demoScreenset';
-import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screens/uikit/UIKitElementsScreen';
+import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screens/screenIds';
 
 /**
  * Layout Elements Component

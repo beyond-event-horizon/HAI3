@@ -11,6 +11,7 @@ import {
   DropdownButton,
   Switch,
   Skeleton,
+  Spinner,
   Header,
   Sidebar,
   SidebarContent,
@@ -45,7 +46,8 @@ uikitRegistry.registerComponents({
   DropdownButton: DropdownButton as import('@hai3/uikit-contracts').DropdownButtonComponent,
   Switch: Switch as import('@hai3/uikit-contracts').SwitchComponent,
   Skeleton: Skeleton as import('@hai3/uikit-contracts').SkeletonComponent,
-  
+  Spinner: Spinner as import('@hai3/uikit-contracts').SpinnerComponent,
+
   // Layout components
   Header,
   Sidebar,
@@ -56,10 +58,10 @@ uikitRegistry.registerComponents({
   SidebarMenuButton: SidebarMenuButton as import('@hai3/uikit-contracts').SidebarMenuButtonComponent,
   SidebarMenuIcon: SidebarMenuIcon as import('@hai3/uikit-contracts').SidebarMenuIconComponent,
   SidebarMenuLabel: SidebarMenuLabel as import('@hai3/uikit-contracts').SidebarMenuLabelComponent,
-  
+
   // Domain components
   UserInfo,
-  
+
   // Dropdown components
   DropdownMenu,
   DropdownMenuTrigger,

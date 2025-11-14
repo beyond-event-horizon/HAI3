@@ -427,26 +427,40 @@ const users = await accountsApi.getUsers();
 
 ## Creating a New Screenset
 
+**IMPORTANT:** All screens MUST be lazy-loaded using dynamic imports for optimal performance and code-splitting.
+
 1. **Create directory structure:**
    ```bash
    mkdir -p src/screensets/drafts/my-screenset/screens/home
    ```
 
-2. **Create screen component:**
+2. **Create screen IDs file:**
+   ```typescript
+   // src/screensets/drafts/my-screenset/screens/screenIds.ts
+   export const HOME_SCREEN_ID = 'my-screenset-home';
+   ```
+
+3. **Create screen component with default export:**
    ```typescript
    // src/screensets/drafts/my-screenset/screens/home/HomeScreen.tsx
-   export const HOME_SCREEN_ID = 'my-screenset-home';
+   import React from 'react';
+   import { HOME_SCREEN_ID } from '../screenIds';
 
    export const HomeScreen: React.FC = () => {
      return <div>Home Screen</div>;
    };
+
+   HomeScreen.displayName = 'HomeScreen';
+
+   // Default export required for lazy loading
+   export default HomeScreen;
    ```
 
-3. **Create screenset config:**
+4. **Create screenset config with lazy loaders:**
    ```typescript
    // src/screensets/drafts/my-screenset/myScreenset.tsx
    import { screensetRegistry, type ScreensetConfig } from '@hai3/uicore';
-   import { HomeScreen, HOME_SCREEN_ID } from './screens/home/HomeScreen';
+   import { HOME_SCREEN_ID } from './screens/screenIds';
 
    export const MY_SCREENSET_ID = 'my-screenset';
 
@@ -455,24 +469,34 @@ const users = await accountsApi.getUsers();
      name: 'My Screenset',
      category: 'drafts',
      defaultScreen: HOME_SCREEN_ID,
-     getMenuItems: () => [
-       { id: HOME_SCREEN_ID, label: 'Home', screenId: HOME_SCREEN_ID },
+     menu: [
+       {
+         menuItem: {
+           id: HOME_SCREEN_ID,
+           label: 'Home',
+           icon: 'home-icon-id', // Optional
+         },
+         screen: () => import('./screens/home/HomeScreen'), // Lazy loader
+       },
      ],
-     getScreens: () => ({
-       [HOME_SCREEN_ID]: HomeScreen,
-     }),
    };
 
    screensetRegistry.register(myScreenset);
    ```
 
-4. **Import in screenset registry:**
+5. **Import in screenset registry:**
    ```typescript
    // src/screensets/screensetRegistry.tsx
    import './drafts/my-screenset/myScreenset';
    ```
 
-5. **Run app and switch screenset via UI selector**
+6. **Run app and switch screenset via UI selector**
+
+**Key Points:**
+- Screen IDs are in separate `screenIds.ts` to prevent circular dependencies
+- Screen components must export a default export for lazy loading
+- Use dynamic imports `() => import('./path/to/Screen')` in screenset config
+- No top-level screen component imports in screenset files
 
 ## Initialization Sequence (Critical)
 

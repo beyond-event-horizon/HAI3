@@ -39,7 +39,7 @@ export { ScreensetSelector, type ScreensetSelectorProps, type ScreensetOption } 
 // export { LanguageSelector, type LanguageSelectorProps } from './components/LanguageSelector';
 
 // Screenset management (Footer domain handles watching)
-export { screensetRegistry, type ScreensetConfig } from './screensets/screensetRegistry';
+export { screensetRegistry, type ScreensetConfig, type ScreenLoader, type MenuScreenItem } from './screensets/screensetRegistry';
 
 // Theme management (Footer domain handles watching)
 export { themeRegistry } from './theme/themeRegistry';

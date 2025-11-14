@@ -4,7 +4,7 @@
  */
 
 import { type ScreensetConfig, uikitRegistry, i18nRegistry, Language, type TranslationDictionary, registerSlice } from '@hai3/uicore';
-import { ChatScreen, CHAT_SCREEN_ID } from './screens/chat/ChatScreen';
+import { CHAT_SCREEN_ID } from './screens/screenIds';
 import { MessageSquareIcon, MESSAGE_SQUARE_ICON_ID } from './uikit/icons/MessageSquareIcon';
 import { chatReducer, initializeChatEffects } from './chatStore';
 
@@ -81,6 +81,7 @@ registerSlice('chat', chatReducer, initializeChatEffects);
  * Chat Screenset Configuration
  * Self-contained - knows about its own screens, icons, and structure
  * Chat state is now part of global uicore store via dynamic registration
+ * All screens are lazy-loaded for optimal performance
  */
 export const chatScreenset: ScreensetConfig = {
   id: CHAT_SCREENSET_ID,
@@ -94,7 +95,7 @@ export const chatScreenset: ScreensetConfig = {
         label: `screenset.${CHAT_SCREENSET_ID}:screens.${CHAT_SCREEN_ID}.title`,
         icon: MESSAGE_SQUARE_ICON_ID,
       },
-      screen: ChatScreen,
+      screen: () => import('./screens/chat/ChatScreen'),
     },
   ],
 };

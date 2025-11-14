@@ -1,11 +1,7 @@
 import React from 'react';
 import { useAppSelector, useTranslation, TextLoader } from '@hai3/uicore';
+import { CURRENT_THEME_SCREEN_ID } from '../screenIds';
 import { DEMO_SCREENSET_ID } from '../../demoScreenset';
-
-/**
- * Current Theme Screen ID
- */
-export const CURRENT_THEME_SCREEN_ID = 'theme';
 
 /**
  * Current Theme Screen
@@ -45,3 +41,6 @@ export const CurrentThemeScreen: React.FC = () => {
 };
 
 CurrentThemeScreen.displayName = 'CurrentThemeScreen';
+
+// Default export for lazy loading
+export default CurrentThemeScreen;
