@@ -5,7 +5,7 @@
  * Effects NEVER call actions or emit events (would create circular flow)
  */
 
-import { eventBus, type AppDispatch } from '@hai3/uicore';
+import { eventBus, type AppDispatch, store, type RootState } from '@hai3/uicore';
 import { ChatEvents } from '../events/chatEvents';
 import {
   setCurrentThreadId,
@@ -13,6 +13,7 @@ import {
   removeThread,
   updateThread,
   setThreads,
+  addMessage,
   updateMessage,
   toggleMessageRawMarkdown,
   removeMessage,
@@ -27,7 +28,7 @@ import {
   setInputValue,
   setIsStreaming,
 } from '../slices/chatSlice';
-import type { Thread } from '../types';
+import type { Thread, Message } from '../types';
 
 let dispatch: AppDispatch;
 
@@ -81,12 +82,39 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
   });
 
   // Message effects
-  eventBus.on(ChatEvents.MessageSent, ({ content: _content }) => {
-    // Note: In real implementation, this would:
-    // 1. Create user message
-    // 2. Call API
-    // 3. Start streaming
-    // For now, simplified version
+  eventBus.on(ChatEvents.MessageSent, ({ content }) => {
+    // Draft implementation: Add user message to store
+    // In real implementation, this would also call API and start streaming
+    const state = store.getState() as RootState;
+    const currentThreadId = state.chat.currentThreadId;
+
+    if (!currentThreadId || !content.trim()) {
+      return;
+    }
+
+    // Create user message
+    const userMessage: Message = {
+      id: `msg-${Date.now()}`,
+      threadId: currentThreadId,
+      type: 'user',
+      content: content.trim(),
+      timestamp: new Date(),
+    };
+
+    // Add message to store
+    dispatch(addMessage(userMessage));
+
+    // Clear input
+    dispatch(setInputValue(''));
+
+    // Update thread preview with the new message
+    dispatch(updateThread({
+      threadId: currentThreadId,
+      updates: {
+        preview: content.trim().substring(0, 100),
+        timestamp: new Date(),
+      }
+    }));
   });
 
   eventBus.on(ChatEvents.MessageEditingStarted, ({ messageId, content }) => {

@@ -506,7 +506,8 @@ When working with AI (Claude, GPT, etc.):
 3. **Follow event-driven patterns** - emit events, don't dispatch directly
 4. **Use registries for extensibility** - never modify registry root files
 5. **Validate with `npm run arch:check`** before finalizing code
-6. **Keep screensets as vertical slices** - no cross-screenset dependencies
+6. **Test changes immediately via Chrome MCP** - never skip visual verification (see `.ai/MCP_TROUBLESHOOTING.md`)
+7. **Keep screensets as vertical slices** - no cross-screenset dependencies
 
 ## Common Pitfalls
 
@@ -529,6 +530,11 @@ When working with AI (Claude, GPT, etc.):
 5. **Forgetting to register translations**
    - Each screenset should register its i18n namespace with `i18nRegistry.registerLoader()`
 
+6. **Killing MCP processes during development**
+   - ❌ `pkill -f chrome-devtools-mcp` (permanently breaks MCP tools for the session)
+   - ✅ Ask user to restart MCP through Claude Code, or start new conversation
+   - See `.ai/MCP_TROUBLESHOOTING.md` for recovery procedures
+
 ## Documentation References
 
 - **README.md**: Project overview, getting started, mission
@@ -538,6 +544,7 @@ When working with AI (Claude, GPT, etc.):
 - **docs/MODEL.md**: Domain glossary
 - **.ai/GUIDELINES.md**: AI routing table and workflow
 - **.ai/targets/*.md**: Area-specific rules (EVENTS, SCREENSETS, UICORE, etc.)
+- **.ai/MCP_TROUBLESHOOTING.md**: **CRITICAL** - Chrome MCP connection management and recovery procedures
 
 ## Technology Stack
 

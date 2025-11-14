@@ -1,84 +1,68 @@
-# HAI3 AI Guidelines (Canonical)
+# .ai Documentation Guidelines
 
-## AI WORKFLOW (REQUIRED)
-1) Route: select the correct target file from the Routing table.
-2) Summarize: list 3–7 rules from that target file in your own words.
-3) Verify: pass the Pre-diff Checklist before proposing code.
-4) If unsure which target applies → stop and ask.
+## CRITICAL (AI: READ THIS FIRST)
+- Files must stay under 100 lines.
+- ASCII only. No unicode arrows, emojis, smart quotes, or decorative symbols.
+- One concern per file. Do not mix topics.
+- Never duplicate rules from other .ai/targets/*.md files. Always reference them.
+- Use short declarative rules with these keywords:
+  MUST, REQUIRED, FORBIDDEN, STOP, DETECT, BAD, GOOD.
+- Apply updates using UPDATE_GUIDELINES.md.
 
-## ROUTING
+## STRUCTURE
+- Start every file with one of the following headings:
+  AI WORKFLOW (REQUIRED)
+  or
+  CRITICAL RULES
+- Group content logically: WORKFLOW, RULES, CHECKLIST.
+- Use single-line bullets. No multi-line examples.
+- Keep headings minimal and consistent.
 
-| Area | Target file |
-|-------|-------------|
-| Data flow / events | .ai/targets/EVENTS.md |
-| API layer | .ai/targets/API.md |
-| packages/uicore | .ai/targets/UICORE.md |
-| packages/uikit | .ai/targets/UIKIT.md |
-| packages/uikit-contracts | .ai/targets/UIKIT_CONTRACTS.md |
-| src/screensets | .ai/targets/SCREENSETS.md |
-| src/themes | .ai/targets/THEMES.md |
-| Styling anywhere | .ai/targets/STYLING.md |
-| .ai documentation | .ai/targets/AI.md |
+## KEYWORDS (GREP-FRIENDLY)
+- REQUIRED or MUST: enforceable rules.
+- FORBIDDEN or NEVER: anti-patterns.
+- DETECT: grep pattern lines.
+- BAD and GOOD: short inline contrasts.
 
-## REPO INVARIANTS
-- Event-driven architecture only (see EVENTS.md)
-- Registries follow Open/Closed: adding items must not modify registry root files
-- App-level deps limited to: @hai3/uicore, @hai3/uikit, react, react-dom
-- Cross-domain communication only via events
-- No string literal identifiers; use constants or enums
-- No any, no unsafe casts
+## RULE FORMAT
+Rules must follow one of these forms:
+- FORBIDDEN: text
+- REQUIRED: text
+- MUST: text
+- STOP: condition
+- DETECT: grep -rn "pattern" path
 
-## IMPORT RULES
+No extra commentary. No examples. No code blocks.
 
-| Case | Rule |
-|-------|------|
-| Inside same package | Relative paths |
-| Cross-branch in app | @/ alias |
-| Cross-package | @hai3/uicore, @hai3/uikit |
-| Index files | Only when aggregating 3+ exports |
-| Redux slices | Import directly (no barrels) |
+## DECISION RULES
+1. Use .ai/GUIDELINES.md to route to the correct file.
+2. Check if the requested rule already exists in another target file.
+3. If the rule belongs to UIKIT, UICORE, EVENTS, STYLING, THEMES, or API, reference that file instead of duplicating.
+4. Modify only the specific rule or section directly impacted by the requested change.
 
-## TYPE RULES
-- type for objects/unions, interface for React props
-- No hardcoded string IDs
-- Resolve type errors at boundary, do not cast
-- Class order: properties → constructor → methods
+## VALIDATION RULES
+Before saving updates:
+- No duplicated rules across files.
+- No unicode characters.
+- No examples or multi-line explanations.
+- Section count remains the same unless the user requested otherwise.
+- File remains under 100 lines.
 
 ## STOP CONDITIONS
-- Editing /core/runtime or /sdk
-- Modifying registry root files
-- Changing contracts in uikit-contracts
-- Adding new top-level dependencies
-- Bypassing rules in EVENTS.md
+Stop and ask the user before:
+- Adding content that belongs in a different target file.
+- Changing routing entries in .ai/GUIDELINES.md.
+- Adding narrative explanation instead of rules.
+- Adding new rule categories.
 
-## PRE-DIFF CHECKLIST
-- [ ] `npm run arch:check` passes
-- [ ] Routed to correct target file
-- [ ] Summarized rules in own words
-- [ ] Registry root files unchanged
-- [ ] Import paths follow rules
-- [ ] Types and dependents compile after change
+## UPDATE POLICY
+- All rules must be minimal and strictly formatted.
+- If repeated errors occur, rewrite the rule to be more strict.
+- Resolve conflicts by clarifying the rule, not duplicating it.
+- Follow UPDATE_GUIDELINES.md for all edits.
 
-## BLOCKLIST
-- Telemetry or tracking code
-- as unknown as type chains
-- Direct slice dispatch
-- Barrel exports hiding imports
-- Manual state sync or prop drilling
-
-## DOC STYLE
-- Short, technical, ASCII only
-- Use -> arrows
-- Use BAD → GOOD diffs
-- PR description must reference rule numbers
-
-## CORRECTION POLICY
-1) Add or update rule in this file (short)
-2) Update the matching target file
-3) Store memory of the correction
-4) Re-validate using .ai/targets/AI.md
-
-## FEATURE CREATION POLICY
-- Reuse existing patterns
-- If adding a 3rd+ similar item, consider index file
-- If new items require central edits, redesign to self-register
+## OUTPUT POLICY
+When updating a file:
+- Modify the file directly in the workspace.
+- Do not output rewritten content unless the user asks for it.
+- Do not generate proposals or drafts unless requested.

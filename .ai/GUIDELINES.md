@@ -50,6 +50,7 @@
 - Changing contracts in uikit-contracts
 - Adding new top-level dependencies
 - Bypassing rules in EVENTS.md
+- Killing MCP server processes (see MCP_TROUBLESHOOTING.md)
 
 ## PRE-DIFF CHECKLIST
 - Routed to correct target file

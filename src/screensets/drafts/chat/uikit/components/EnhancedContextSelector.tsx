@@ -1,12 +1,17 @@
 /**
  * EnhancedContextSelector - Multi-select context dropdown (Presentational)
  * Pure UI component - state managed by parent per UIKIT.md guidelines
- * 
- * @deprecated Use ContextSelector and ContextSelectorContainer instead
+ * Uses base DropdownMenu components from @hai3/uikit
  */
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { ChevronDown, X } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@hai3/uikit';
 import type { Context } from '../../types';
 
 export interface EnhancedContextSelectorProps {
@@ -34,78 +39,51 @@ export const EnhancedContextSelector: React.FC<EnhancedContextSelectorProps> = (
   disabled = false,
   className = '',
 }) => {
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
   return (
-    <div ref={dropdownRef} className={`relative ${className}`}>
-      <button
-        onClick={onToggleOpen}
-        disabled={disabled}
-        className="flex flex-row items-center gap-2 px-3 py-1.5 border border-input rounded-lg hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed [direction:ltr]"
-      >
-        {placeholderLabel && <span className="text-sm" dir="auto">{placeholderLabel}</span>}
-        <ChevronDown size={16} />
-      </button>
-
-      {isOpen && (
-        <div className="absolute bottom-full right-0 mb-2 w-64 bg-popover border border-border rounded-lg shadow-lg z-50">
-          <div className="p-3 border-b border-border">
-            {selectContextLabel && <h3 className="font-medium text-sm">{selectContextLabel}</h3>}
+    <DropdownMenu open={isOpen} onOpenChange={onToggleOpen}>
+      <DropdownMenuTrigger asChild disabled={disabled}>
+        <button
+          className={`flex flex-row items-center gap-2 px-3 py-1.5 border border-input rounded-lg hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed [direction:ltr] ${className}`}
+        >
+          {placeholderLabel && <span className="text-sm" dir="auto">{placeholderLabel}</span>}
+          <ChevronDown size={16} />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-64">
+        {selectContextLabel && (
+          <div className="px-2 py-1.5 text-sm font-medium border-b">
+            {selectContextLabel}
           </div>
-          <div className="max-h-64 overflow-y-auto">
-            {availableContexts.map((context) => {
-              const isSelected = selectedContexts.includes(context.id);
-              return (
-                <div
-                  key={context.id}
-                  onClick={() => {
-                    if (isSelected) {
-                      onRemove(context.id);
-                    } else {
-                      onAdd(context.id);
-                    }
-                  }}
-                  className="px-4 py-2.5 hover:bg-muted cursor-pointer transition-colors flex items-center gap-3"
-                >
-                  <div className={`w-4 h-4 ${context.color} rounded flex-shrink-0`} />
-                  <span className="flex-1 text-sm">{context.name}</span>
-                  {isSelected && (
-                    <div className="w-4 h-4 bg-primary rounded-sm flex items-center justify-center flex-shrink-0">
-                      <div className="w-2 h-2 bg-primary-foreground rounded-sm" />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Selected contexts */}
-      {selectedContexts.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-2">
-          {selectedContexts.map((contextId) => {
-            const context = availableContexts.find((c) => c.id === contextId);
-            if (!context) return null;
+        )}
+        <div className="max-h-64 overflow-y-auto">
+          {availableContexts.map((context) => {
+            const isSelected = selectedContexts.includes(context.id);
             return (
-              <div
-                key={contextId}
-                className="flex items-center gap-2 px-3 py-1 bg-muted rounded-full text-sm"
+              <DropdownMenuItem
+                key={context.id}
+                onSelect={(e) => {
+                  e.preventDefault();
+                  if (isSelected) {
+                    onRemove(context.id);
+                  } else {
+                    onAdd(context.id);
+                  }
+                }}
+                className="flex items-center gap-3 cursor-pointer"
               >
-                <div className={`w-3 h-3 ${context.color} rounded`} />
-                <span>{context.name}</span>
-                <button
-                  onClick={() => onRemove(contextId)}
-                  className="hover:bg-background rounded-full p-0.5 transition-colors"
-                >
-                  <X size={12} />
-                </button>
-              </div>
+                <div className={`w-4 h-4 ${context.color} rounded flex-shrink-0`} />
+                <span className="flex-1 text-sm">{context.name}</span>
+                {isSelected && (
+                  <div className="w-4 h-4 bg-primary rounded-sm flex items-center justify-center flex-shrink-0">
+                    <div className="w-2 h-2 bg-primary-foreground rounded-sm" />
+                  </div>
+                )}
+              </DropdownMenuItem>
             );
           })}
         </div>
-      )}
-    </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
