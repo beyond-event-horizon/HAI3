@@ -26,11 +26,10 @@ chat/
 ├── uikit/
 │   ├── components/            # Screenset-specific UI components
 │   │   ├── ModelSelector.tsx
-│   │   ├── ContextSelector.tsx (deprecated)
+│   │   ├── ContextSelector.tsx
 │   │   ├── TemporaryChatToggle.tsx
 │   │   ├── ChatTitleEditor.tsx
 │   │   ├── EnhancedThreadList.tsx
-│   │   ├── EnhancedContextSelector.tsx
 │   │   └── FileAttachment.tsx
 │   └── icons/
 │       └── MessageSquareIcon.tsx
@@ -126,7 +125,7 @@ chat/
 **Screenset-Specific Components**: Custom components for chat features
 - `EnhancedThreadList` - Thread list with drag-and-drop and inline editing
 - `ChatTitleEditor` - Editable title component
-- `EnhancedContextSelector` - Multi-select context dropdown
+- `ContextSelector` - Multi-select context dropdown
 - `FileAttachment` - File selection and preview components
 - `ModelSelector` - LLM model dropdown
 - `TemporaryChatToggle` - Temporary mode switch
@@ -199,7 +198,7 @@ Potential additions (not in current scope):
 Edit `uikit/components/ModelSelector.tsx` and add to the `MODELS` array.
 
 ### Adding New Contexts
-Edit `uikit/components/EnhancedContextSelector.tsx` and add to the `AVAILABLE_CONTEXTS` array with id, name, and color.
+Edit `uikit/components/ContextSelector.tsx` and add to the `AVAILABLE_CONTEXTS` array with id, name, and color.
 
 ### Modifying Mock Data
 Edit `store/chatStore.ts` constructor to change initial threads/messages.
