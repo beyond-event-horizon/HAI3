@@ -33,9 +33,9 @@ import { TemporaryChatToggle } from '../../uikit/components/TemporaryChatToggle'
 import { ChatTitleEditor } from '../../uikit/components/ChatTitleEditor';
 import { EnhancedThreadList, type EnhancedChatThread } from '../../uikit/components/EnhancedThreadList';
 import {
-  EnhancedContextSelector,
+  ContextSelector,
   SelectedContextsDisplay,
-} from '../../uikit/components/EnhancedContextSelector';
+} from '../../uikit/components/ContextSelector';
 import {
   FileAttachmentButton,
   FileAttachmentPreview,
@@ -535,7 +535,7 @@ const ChatScreenInternal: React.FC = () => {
                   className="w-full pe-20 rounded-lg resize-none overflow-y-auto"
                 />
                 <div className="absolute end-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                  <EnhancedContextSelector
+                  <ContextSelector
                     availableContexts={chat.availableContexts}
                     selectedContexts={currentContext}
                     isOpen={isContextSelectorOpen}
