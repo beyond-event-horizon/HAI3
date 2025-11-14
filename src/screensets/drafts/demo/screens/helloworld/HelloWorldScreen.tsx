@@ -1,13 +1,8 @@
 import React from 'react';
 import { navigateToScreen, useTranslation, uikitRegistry, UiKitComponent, TextLoader } from '@hai3/uicore';
 import { Card, CardContent } from '@hai3/uikit';
-import { CURRENT_THEME_SCREEN_ID } from '../theme/CurrentThemeScreen';
+import { HELLO_WORLD_SCREEN_ID, CURRENT_THEME_SCREEN_ID } from '../screenIds';
 import { DEMO_SCREENSET_ID } from '../../demoScreenset';
-
-/**
- * Hello World Screen ID
- */
-export const HELLO_WORLD_SCREEN_ID = 'helloworld';
 
 /**
  * Hello World Screen
@@ -67,3 +62,6 @@ export const HelloWorldScreen: React.FC = () => {
 };
 
 HelloWorldScreen.displayName = 'HelloWorldScreen';
+
+// Default export for lazy loading
+export default HelloWorldScreen;

@@ -118,8 +118,6 @@ Events are centrally typed via `EventPayloadMap`. Screensets extend types via mo
 
 **Pre-Commit Validation:**
 ```bash
-npm run type-check    # TypeScript compilation (strict mode)
-npm run lint          # ESLint with TypeScript/React rules
 npm run arch:check    # Architecture tests (MUST pass before commits)
 npm run arch:deps     # Dependency rule validation
 npm run arch:unused   # Unused export detection

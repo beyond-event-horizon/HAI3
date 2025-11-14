@@ -1,11 +1,24 @@
 import type { MenuItem } from '../layout/domains/menu/menuSlice';
 
 /**
- * Menu screen item combines menu item with its screen component
+ * Screen loader function type
+ * Returns a Promise resolving to a module with a default export of a React component
+ *
+ * @example
+ * ```typescript
+ * // Correct usage with dynamic import
+ * screen: () => import('./screens/HelloWorldScreen')
+ * ```
+ */
+export type ScreenLoader = () => Promise<{ default: React.ComponentType }>;
+
+/**
+ * Menu screen item combines menu item with its lazy-loaded screen component
+ * All screens MUST be lazy-loaded using dynamic imports for optimal performance
  */
 export interface MenuScreenItem {
   menuItem: MenuItem;
-  screen: React.ComponentType;
+  screen: ScreenLoader;
 }
 
 /**
@@ -54,8 +67,9 @@ class ScreensetRegistry {
 
   /**
    * Get screens map for a screenset
+   * Returns lazy loader functions for each screen
    */
-  getScreens(key: string): { [key: string]: React.ComponentType } {
+  getScreens(key: string): { [key: string]: ScreenLoader } {
     const screenset = this.screensets.get(key);
     if (!screenset) return {};
     return this.buildScreensFromMenu(screenset.menu);
@@ -119,9 +133,10 @@ class ScreensetRegistry {
 
   /**
    * Build screens map from menu screen items
+   * Returns lazy loader functions that will be wrapped with React.lazy in the Screen component
    */
-  private buildScreensFromMenu(menu: MenuScreenItem[]): { [key: string]: React.ComponentType } {
-    const screens: { [key: string]: React.ComponentType } = {};
+  private buildScreensFromMenu(menu: MenuScreenItem[]): { [key: string]: ScreenLoader } {
+    const screens: { [key: string]: ScreenLoader } = {};
     menu.forEach((item) => {
       screens[item.menuItem.id] = item.screen;
     });

@@ -1,12 +1,8 @@
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch, fetchCurrentUser, useTranslation, TextLoader } from '@hai3/uicore';
 import { Button, Card, CardContent, CardFooter } from '@hai3/uikit';
+import { PROFILE_SCREEN_ID } from '../screenIds';
 import { DEMO_SCREENSET_ID } from '../../demoScreenset';
-
-/**
- * Profile Screen ID
- */
-export const PROFILE_SCREEN_ID = 'profile';
 
 /**
  * Profile Screen
@@ -163,3 +159,6 @@ export const ProfileScreen: React.FC = () => {
 };
 
 ProfileScreen.displayName = 'ProfileScreen';
+
+// Default export for lazy loading
+export default ProfileScreen;

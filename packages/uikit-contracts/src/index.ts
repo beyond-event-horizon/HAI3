@@ -225,6 +225,18 @@ export interface SkeletonProps {
 export type SkeletonComponent = ComponentType<SkeletonProps>;
 
 /**
+ * Spinner Component Contract
+ * Used for loading indicators
+ */
+export interface SpinnerProps {
+  className?: string;
+  icon?: ComponentType<{ className?: string }>;
+  size?: string;
+}
+
+export type SpinnerComponent = ComponentType<SpinnerProps>;
+
+/**
  * Sidebar Components Contract
  */
 export interface SidebarProps {
@@ -363,6 +375,7 @@ export enum UiKitComponent {
   DropdownButton = 'DropdownButton',
   Switch = 'Switch',
   Skeleton = 'Skeleton',
+  Spinner = 'Spinner',
   Header = 'Header',
   Sidebar = 'Sidebar',
   SidebarContent = 'SidebarContent',
@@ -393,7 +406,8 @@ export interface UiKitComponentMap {
   [UiKitComponent.DropdownButton]: DropdownButtonComponent;
   [UiKitComponent.Switch]: SwitchComponent;
   [UiKitComponent.Skeleton]: SkeletonComponent;
-  
+  [UiKitComponent.Spinner]: SpinnerComponent;
+
   // Layout components
   [UiKitComponent.Header]: HeaderComponent;
   [UiKitComponent.Sidebar]: SidebarComponent;
@@ -404,10 +418,10 @@ export interface UiKitComponentMap {
   [UiKitComponent.SidebarMenuButton]: SidebarMenuButtonComponent;
   [UiKitComponent.SidebarMenuIcon]: SidebarMenuIconComponent;
   [UiKitComponent.SidebarMenuLabel]: SidebarMenuLabelComponent;
-  
+
   // Domain components
   [UiKitComponent.UserInfo]: UserInfoComponent;
-  
+
   // Dropdown components
   [UiKitComponent.DropdownMenu]: DropdownMenuComponent;
   [UiKitComponent.DropdownMenuTrigger]: DropdownMenuTriggerComponent;
