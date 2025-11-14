@@ -14,8 +14,8 @@ Follow the workflow from `.ai/workflows/UPDATE_GUIDELINES.md`:
 
 ## ROUTE
 
-1. Use `.ai/GUIDELINES.md` routing table to identify correct target file
-2. Read that file
+1. Use .ai/GUIDELINES.md routing table to identify correct target file
+2. CRITICAL: Read that file BEFORE making any changes (never assume rules)
 3. Internally summarize 3-5 key rules (don't write to file)
 
 ## APPLY CHANGE

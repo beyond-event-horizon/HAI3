@@ -2,125 +2,53 @@
 description: Add a new API service following domain-based architecture
 ---
 
-Before starting, read `.ai/targets/API.md` and summarize 3-6 key rules.
+## WORKFLOW
+1. Read .ai/targets/API.md and summarize 3-6 rules
+2. Ask user: domain name, endpoints/methods, base URL
+3. Create service in packages/uicore/src/api/{domain}/
+4. Create mocks in src/api/{domain}/
+5. Register mocks in src/api/index.ts
+6. Validate with npm run arch:check
 
-Ask the user:
-1. Domain name (e.g., "billing", "analytics", "notifications")
-2. API endpoints and methods needed
-3. Base URL for this domain
+## REQUIRED FILES
+- packages/uicore/src/api/{domain}/{Domain}ApiService.ts
+- packages/uicore/src/api/{domain}/api.ts -> export * from './{Domain}ApiService'
+- src/api/{domain}/mocks.ts -> export mockMap
+- src/api/{domain}/extra.ts -> export * from './mocks'
+- src/api/index.ts -> import and register mockMap
 
-Then create the service:
+## SERVICE STRUCTURE
+- REQUIRED: export const {DOMAIN}_DOMAIN = '{domain}' as const
+- REQUIRED: class {Domain}ApiService extends BaseApiService
+- REQUIRED: constructor(useMockApi, mockMap) calls super(baseURL, useMockApi, mockMap)
+- REQUIRED: Typed methods using this.request<T>(method, path, data)
+- REQUIRED: declare module '@hai3/uicore' { interface ApiServicesMap }
+- REQUIRED: apiRegistry.register({DOMAIN}_DOMAIN, {Domain}ApiService)
 
-## 1. Create Service in uicore
+## MOCK STRUCTURE
+- REQUIRED: export const mockResources: Resource[] = [data]
+- REQUIRED: export const {domain}MockMap = new Map<string, any>()
+- REQUIRED: Map keys format 'METHOD:/path' -> data or function
+- REQUIRED: src/api/index.ts exports apiMockMaps with domain entry
 
-In `packages/uicore/src/api/{domain}/`:
+## USAGE
+- REQUIRED: const api = apiRegistry.getService({DOMAIN}_DOMAIN)
+- REQUIRED: Call typed methods on service instance
+- FORBIDDEN: Direct API calls in React components
+- FORBIDDEN: Editing apiRegistry.ts or BaseApiService
 
-**{Domain}ApiService.ts:**
-```typescript
-import { BaseApiService, apiRegistry } from '@hai3/uicore';
+## RULES
+- REQUIRED: ONE service per backend domain (not per entity)
+- REQUIRED: All methods fully typed
+- REQUIRED: Mock data in app layer only
+- REQUIRED: Self-registration pattern
+- FORBIDDEN: Raw .get('/url') calls
+- FORBIDDEN: Modifying registry root files
 
-export const {DOMAIN}_DOMAIN = '{domain}' as const;
-
-export class {Domain}ApiService extends BaseApiService {
-  constructor(useMockApi: boolean, mockMap?: Map<string, any>) {
-    super('https://api.example.com/{domain}', useMockApi, mockMap);
-  }
-
-  async get{Resource}s(): Promise<{Resource}[]> {
-    return this.request<{Resource}[]>('GET', '/{resources}');
-  }
-
-  async get{Resource}(id: string): Promise<{Resource}> {
-    return this.request<{Resource}>('GET', `/{resources}/${id}`);
-  }
-
-  async create{Resource}(data: Create{Resource}Data): Promise<{Resource}> {
-    return this.request<{Resource}>('POST', '/{resources}', data);
-  }
-}
-
-// Module augmentation for type safety
-declare module '@hai3/uicore' {
-  interface ApiServicesMap {
-    [{DOMAIN}_DOMAIN]: {Domain}ApiService;
-  }
-}
-
-// Self-register
-apiRegistry.register({DOMAIN}_DOMAIN, {Domain}ApiService);
-```
-
-**api.ts:**
-```typescript
-export * from './{Domain}ApiService';
-```
-
-## 2. Create App-Level Mocks
-
-In `src/api/{domain}/`:
-
-**mocks.ts:**
-```typescript
-export const mock{Resource}s: {Resource}[] = [
-  // mock data
-];
-
-export const {domain}MockMap = new Map<string, any>([
-  ['GET:/{resources}', mock{Resource}s],
-  ['GET:/{resources}/:id', (id: string) => mock{Resource}s.find(r => r.id === id)],
-  ['POST:/{resources}', (data: any) => ({ id: 'new-id', ...data })],
-]);
-```
-
-**extra.ts:**
-```typescript
-// Any app-specific extensions to the service
-export * from './mocks';
-```
-
-## 3. Register Mocks in App
-
-In `src/api/index.ts`:
-
-```typescript
-import { {domain}MockMap } from './{domain}/extra';
-
-export const apiMockMaps = {
-  // ...
-  [{DOMAIN}_DOMAIN]: {domain}MockMap,
-};
-```
-
-## 4. Usage in Components
-
-```typescript
-import { apiRegistry, {DOMAIN}_DOMAIN } from '@hai3/uicore';
-
-// In component or effect
-const {domain}Api = apiRegistry.getService({DOMAIN}_DOMAIN);
-const {resource}s = await {domain}Api.get{Resource}s();
-```
-
-## Rules to Follow:
-
-- ONE service per backend domain (not per entity)
-- Services extend BaseApiService
-- All methods typed (no raw .get('/url'))
-- Mock data in app layer
-- Self-registration via apiRegistry
-- NO edits to apiRegistry.ts or BaseApiService
-- NO API calls directly in React components
-
-## Validation:
-
-```bash
-npm run build:packages
-npm run arch:check
-```
-
-Verify:
-- Domain constant created
-- BaseApiService extended
-- ApiServicesMap augmented
-- Self-registration present
-- Mocks exported from src/api/index.ts
+## VALIDATION
+- REQUIRED: npm run build:packages passes
+- REQUIRED: npm run arch:check passes
+- DETECT: Domain constant created
+- DETECT: BaseApiService extended
+- DETECT: ApiServicesMap augmented
+- DETECT: Self-registration present

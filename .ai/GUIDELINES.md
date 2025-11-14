@@ -2,9 +2,14 @@
 
 ## AI WORKFLOW (REQUIRED)
 1) Route: select the correct target file from the Routing table.
-2) Summarize: list 3–7 rules from that target file in your own words.
-3) Verify: pass the Pre-diff Checklist before proposing code.
-4) If unsure which target applies → stop and ask.
+2) Read: MUST read the target file before making changes (never assume rules).
+3) Summarize: list 3-7 rules from that target file in your own words.
+4) Verify: pass the Pre-diff Checklist before proposing code.
+5) If unsure which target applies -> stop and ask.
+
+## CRITICAL RULE
+- FORBIDDEN: Making changes based on assumed rules without reading target file first
+- REQUIRED: When user says "follow X.md rules", immediately read X.md before ANY changes
 
 ## ROUTING
 
@@ -42,7 +47,7 @@
 - type for objects/unions, interface for React props
 - No hardcoded string IDs
 - Resolve type errors at boundary, do not cast
-- Class order: properties → constructor → methods
+- Class order: properties -> constructor -> methods
 
 ## STOP CONDITIONS
 - Editing /core/runtime or /sdk
@@ -75,7 +80,7 @@
 ## DOC STYLE
 - Short, technical, ASCII only
 - Use -> arrows
-- Use BAD → GOOD diffs
+- Use BAD -> GOOD diffs
 - PR description must reference rule numbers
 
 ## CORRECTION POLICY
