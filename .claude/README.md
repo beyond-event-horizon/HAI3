@@ -86,6 +86,7 @@ The commands are based on HAI3's structured guidelines:
 ```
 .ai/
 ├── GUIDELINES.md              # Main routing table and invariants
+├── MCP_TROUBLESHOOTING.md     # Chrome MCP connection recovery
 ├── workflows/                 # Process workflows
 │   ├── VALIDATE_CHANGES.md
 │   ├── FIX_RULE_VIOLATION.md
@@ -157,6 +158,7 @@ New to HAI3? Start with these commands:
 - **README.md**: Project overview and mission
 - **QUICK_START.md**: Developer quick start guide
 - **.ai/GUIDELINES.md**: Main AI guidelines with routing table
+- **.ai/MCP_TROUBLESHOOTING.md**: Chrome MCP connection recovery procedures
 - **.ai/targets/\*.md**: Area-specific detailed rules
 
 ## Support
