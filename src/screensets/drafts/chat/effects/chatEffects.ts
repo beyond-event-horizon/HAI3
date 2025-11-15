@@ -33,6 +33,131 @@ import type { Thread, Message } from '../types';
 let dispatch: AppDispatch;
 
 /**
+ * Simulates a streaming backend response
+ * In production, this would be replaced with real API calls
+ */
+const simulateStreamingResponse = (threadId: string): void => {
+  // Simulate initial delay before streaming starts
+  setTimeout(() => {
+    const responses = [
+      'That\'s a great question! Let me help you with that.',
+      'Here\'s what I think about that topic...',
+      `Great question! Let me break this down for you in detail.
+
+**Key Points to Consider:**
+
+1. **Understanding the basics** - It's important to start with a solid foundation. This will help you grasp more complex concepts later.
+
+2. **Practical applications** - Theory is great, but seeing how things work in practice makes all the difference.
+
+3. **Common pitfalls** - Be aware of these common mistakes that many people make when starting out.
+
+Here's a simple example to illustrate:
+
+\`\`\`javascript
+function example() {
+  console.log("This is how it works!");
+  return true;
+}
+\`\`\`
+
+The key takeaway is to practice regularly and don't be afraid to experiment. Remember, everyone starts somewhere, and making mistakes is part of the learning process.`,
+      `I'd be happy to explain that in more detail! This is actually a fascinating topic with several important aspects to consider.
+
+**First**, let's look at the fundamental principles:
+- The core concept revolves around understanding the relationship between different components
+- Each element plays a crucial role in the overall system
+- Timing and coordination are essential for success
+
+**Second**, here are some best practices:
+
+1. Always start with a clear plan
+2. Break down complex problems into smaller, manageable pieces
+3. Test your assumptions early and often
+4. Document your process for future reference
+
+**Example scenario:**
+
+Imagine you're building a house. You wouldn't start with the roof, right? You'd begin with a solid foundation, then build the walls, and finally add the roof. The same principle applies here.
+
+\`\`\`typescript
+interface BuildingBlock {
+  foundation: boolean;
+  walls: number;
+  roof: boolean;
+}
+\`\`\`
+
+Hope this helps clarify things! Let me know if you have any questions.`,
+      `Based on my understanding, here are some key points to consider:
+
+**Overview:**
+This is a multifaceted topic that requires careful consideration of various factors. Let me walk you through the most important aspects.
+
+**Main Considerations:**
+
+1. **Performance** - Efficiency matters, especially at scale
+2. **Maintainability** - Code should be easy to understand and modify
+3. **Security** - Always consider potential vulnerabilities
+4. **User Experience** - The end user should always be your priority
+
+**Detailed Breakdown:**
+
+When approaching this problem, you'll want to think about both the short-term and long-term implications. In the short term, you might be tempted to take shortcuts, but these often lead to technical debt that becomes costly to address later.
+
+For example, consider this pattern:
+
+\`\`\`python
+def process_data(data):
+    # Clean the data
+    cleaned = data.strip()
+    # Transform it
+    transformed = cleaned.upper()
+    # Return result
+    return transformed
+\`\`\`
+
+The important thing is to maintain consistency and follow established patterns in your codebase.`,
+    ];
+
+    const fullContent = responses[Math.floor(Math.random() * responses.length)];
+    const messageId = `msg-${Date.now()}`;
+
+    // Split content into words for streaming
+    const words = fullContent.split(' ');
+    let currentContent = '';
+    let wordIndex = 0;
+
+    // Create initial empty assistant message
+    const assistantMessage: Message = {
+      id: messageId,
+      threadId,
+      type: 'assistant',
+      content: '',
+      timestamp: new Date(),
+    };
+
+    dispatch(addMessage(assistantMessage));
+    eventBus.emit(ChatEvents.StreamingStarted, { messageId });
+
+    // Stream words gradually
+    const streamInterval = setInterval(() => {
+      if (wordIndex < words.length) {
+        currentContent += (wordIndex > 0 ? ' ' : '') + words[wordIndex];
+        wordIndex++;
+
+        // Emit streaming content update event
+        eventBus.emit(ChatEvents.StreamingContentUpdated, { messageId, content: currentContent });
+      } else {
+        // Streaming complete
+        clearInterval(streamInterval);
+        eventBus.emit(ChatEvents.StreamingCompleted);
+      }
+    }, 50 + Math.random() * 50); // Random delay between 50-100ms per word
+  }, 500); // Initial delay before streaming starts
+};
+
+/**
  * Initialize chat effects
  * Called once during app bootstrap
  */
@@ -115,6 +240,9 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
         timestamp: new Date(),
       }
     }));
+
+    // Simulate backend streaming response
+    simulateStreamingResponse(currentThreadId);
   });
 
   eventBus.on(ChatEvents.MessageEditingStarted, ({ messageId, content }) => {
@@ -160,10 +288,20 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
   });
 
   eventBus.on(ChatEvents.MessageRegenerated, ({ messageId }) => {
-    // Clear message content and start regenerating
-    dispatch(updateMessage({ messageId, updates: { content: '' } }));
+    // Get the message and thread info
+    const state = store.getState() as RootState;
+    const message = state.chat.messages.find((m) => m.id === messageId);
+
+    if (!message) {
+      return;
+    }
+
+    // Remove the message and all messages after it
+    dispatch(removeMessage({ messageId }));
     dispatch(removeMessagesAfter({ messageId }));
-    dispatch(setIsStreaming(true));
+
+    // Simulate backend streaming response for regeneration
+    simulateStreamingResponse(message.threadId);
   });
 
   // Model and Context effects
