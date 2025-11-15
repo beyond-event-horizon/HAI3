@@ -41,15 +41,17 @@ export function useTranslation() {
   // Read language and translations ready state from Redux store (Flux pattern: Store → Component)
   const language = useSelector((state: RootState) => state.app.language);
   const translationsReady = useSelector((state: RootState) => state.app.translationsReady);
-  
+  // Subscribe to screen translations version to re-render when screen translations load
+  useSelector((state: RootState) => state.app.screenTranslationsVersion);
+
   // Compute direction from language metadata (convert null to undefined for isRTL)
-  const direction = i18nRegistry.isRTL(language ?? undefined) 
-    ? TextDirection.RightToLeft 
+  const direction = i18nRegistry.isRTL(language ?? undefined)
+    ? TextDirection.RightToLeft
     : TextDirection.LeftToRight;
 
   const t = useCallback((key: string, params?: Record<string, string | number | boolean>) => {
     return i18nRegistry.t(key, params);
-  }, []); // No dependencies - always use current language from registry
+  }, []); // No dependencies - selector subscription triggers re-renders
 
   // Call action (Flux pattern: Component → Action → Event → Effect)
   // Action is a pure function that emits event - effect checks if language changed

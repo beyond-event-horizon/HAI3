@@ -3,7 +3,7 @@ import type { TranslationDictionary, I18nConfig, LanguageMetadata, TranslationLo
 
 /**
  * I18n Registry - Central translation management
- * 
+ *
  * Features:
  * - Namespace-based translations (namespace:key.subkey)
  * - Fallback chain (requested → fallback → key)
@@ -11,8 +11,107 @@ import type { TranslationDictionary, I18nConfig, LanguageMetadata, TranslationLo
  * - Lazy loading with dynamic imports
  * - RTL support
  * - No reload on language change
+ * - Translation loader creation utilities
+ * - Auto-discovery from directory paths
  */
 export class I18nRegistry {
+  /**
+   * Maps Language enum values to their corresponding JSON file names
+   * Used by registerFromDirectory() for auto-discovery
+   */
+  static readonly LANGUAGE_FILE_MAP: Record<Language, string> = {
+    // Western European
+    [Language.English]: 'en.json',
+    [Language.Spanish]: 'es.json',
+    [Language.French]: 'fr.json',
+    [Language.German]: 'de.json',
+    [Language.Italian]: 'it.json',
+    [Language.Portuguese]: 'pt.json',
+    [Language.Dutch]: 'nl.json',
+
+    // Eastern European
+    [Language.Russian]: 'ru.json',
+    [Language.Polish]: 'pl.json',
+    [Language.Ukrainian]: 'uk.json',
+    [Language.Czech]: 'cs.json',
+
+    // Middle East & North Africa (RTL)
+    [Language.Arabic]: 'ar.json',
+    [Language.Hebrew]: 'he.json',
+    [Language.Persian]: 'fa.json',
+    [Language.Urdu]: 'ur.json',
+    [Language.Turkish]: 'tr.json',
+
+    // Asian
+    [Language.ChineseSimplified]: 'zh.json',
+    [Language.ChineseTraditional]: 'zh-TW.json',
+    [Language.Japanese]: 'ja.json',
+    [Language.Korean]: 'ko.json',
+    [Language.Vietnamese]: 'vi.json',
+    [Language.Thai]: 'th.json',
+    [Language.Indonesian]: 'id.json',
+    [Language.Hindi]: 'hi.json',
+    [Language.Bengali]: 'bn.json',
+
+    // Nordic
+    [Language.Swedish]: 'sv.json',
+    [Language.Danish]: 'da.json',
+    [Language.Norwegian]: 'no.json',
+    [Language.Finnish]: 'fi.json',
+
+    // Other
+    [Language.Greek]: 'el.json',
+    [Language.Romanian]: 'ro.json',
+    [Language.Hungarian]: 'hu.json',
+
+    // Additional major languages
+    [Language.Malay]: 'ms.json',
+    [Language.Tagalog]: 'tl.json',
+    [Language.Tamil]: 'ta.json',
+    [Language.Swahili]: 'sw.json',
+  };
+
+  /**
+   * Create a translation loader function from a map of language-specific imports
+   *
+   * This helper eliminates boilerplate when building translation loaders for screensets.
+   * Screensets provide a map of imports (which must be in the same file for Vite to analyze),
+   * and this function returns a loader function compatible with the registry.
+   *
+   * @param translationMap - Map of Language to dynamic import functions
+   * @returns Translation loader function
+   *
+   * @example
+   * ```typescript
+   * // In demoScreenset.tsx
+   * const screensetLoader = I18nRegistry.createLoader({
+   *   [Language.English]: () => import('./i18n/en.json'),
+   *   [Language.Spanish]: () => import('./i18n/es.json'),
+   *   // ... all 36 languages
+   * });
+   *
+   * export const demoScreenset: ScreensetConfig = {
+   *   localization: screensetLoader,
+   *   // ...
+   * };
+   * ```
+   */
+  static createLoader(
+    translationMap: Record<Language, () => Promise<{ default: TranslationDictionary }>>
+  ): TranslationLoader {
+    return async (language: Language): Promise<TranslationDictionary> => {
+      try {
+        const module = await translationMap[language]();
+        return module.default;
+      } catch (error) {
+        console.error(
+          `[i18n] Failed to load ${language} translations (${I18nRegistry.LANGUAGE_FILE_MAP[language]}):`,
+          error
+        );
+        return {};
+      }
+    };
+  }
   private dictionaries = new Map<string, Map<Language, TranslationDictionary>>();
   // namespace → language → translations
   
@@ -128,7 +227,7 @@ export class I18nRegistry {
   /**
    * Register translation loader for a namespace
    * Loader is called on-demand when language changes
-   * 
+   *
    * @param namespace - Namespace identifier (e.g., 'screenset.demo')
    * @param loader - Function that loads translations for a language
    */
@@ -137,18 +236,63 @@ export class I18nRegistry {
   }
 
   /**
+   * Auto-discover translation files in a directory and register them
+   *
+   * This method eliminates the need for manual `Record<Language, ...>` maps by automatically
+   * mapping all 36 languages to their corresponding JSON files (e.g., Language.English → en.json).
+   *
+   * @param namespace - Translation namespace (e.g., 'screenset.demo', 'screen.demo.helloworld')
+   * @param relativePath - Path to i18n directory relative to the caller (e.g., './i18n', './screens/hello/i18n')
+   *
+   * @example
+   * ```typescript
+   * // Register screenset-level translations
+   * i18nRegistry.registerFromDirectory('screenset.demo', './i18n');
+   * ```
+   *
+   * @example
+   * ```typescript
+   * // Register screen-level translations
+   * i18nRegistry.registerFromDirectory('screen.demo.helloworld', './screens/helloworld/i18n');
+   * ```
+   */
+  registerFromDirectory(namespace: string, relativePath: string): void {
+    // Build dynamic import map for all languages
+    const translationMap: Record<Language, () => Promise<{ default: TranslationDictionary }>> =
+      {} as Record<Language, () => Promise<{ default: TranslationDictionary }>>;
+
+    for (const [language, filename] of Object.entries(I18nRegistry.LANGUAGE_FILE_MAP)) {
+      const lang = language as Language;
+      // Use dynamic import with @vite-ignore to allow runtime path resolution
+      translationMap[lang] = () => import(/* @vite-ignore */ `${relativePath}/${filename}`);
+    }
+
+    // Register loader using the static createLoader method
+    this.registerLoader(namespace, I18nRegistry.createLoader(translationMap));
+  }
+
+  /**
    * Load translations for a specific language
    * Calls all registered loaders and registers their translations
-   * 
+   *
    * Note: Usually called automatically by setLanguage()
    * Only call directly for preloading languages before they're selected
-   * 
+   *
+   * IMPORTANT: Only loads screenset-level translations (screenset.*), NOT screen-level (screen.*)
+   * Screen-level translations are loaded lazily by useScreenTranslations hook when screen is active
+   *
    * @param language - Language to load
    */
   async loadLanguage(language: Language): Promise<void> {
     const loadPromises: Promise<void>[] = [];
 
     for (const [namespace, loader] of this.loaders) {
+      // Skip screen-level loaders - they're loaded by useScreenTranslations hook
+      // Only load screenset-level, uikit, app, and other non-screen loaders
+      if (namespace.startsWith('screen.')) {
+        continue;
+      }
+
       const promise = (async () => {
         try {
           const translations = await loader(language);
@@ -157,7 +301,7 @@ export class I18nRegistry {
           console.error(`[i18n] Failed to load translations for namespace '${namespace}', language '${language}':`, error);
         }
       })();
-      
+
       loadPromises.push(promise);
     }
 

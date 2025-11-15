@@ -264,20 +264,54 @@ class RouteRegistry {
 
 **Why**: Screensets register themselves asynchronously; route registry waits until first use.
 
-### 4. Translation Key Format
+### 4. Per-Screen Localization with Lazy Loading
 
-HAI3 uses namespaced i18n keys with lazy loading:
+HAI3 uses a two-level translation system for optimal performance:
 
+**Screenset-Level Translations** (loaded when screenset registers):
 ```typescript
-i18nRegistry.registerLoader('screenset.demo', async (language) => {
-  return (await import(`./translations/${language}.json`)).default;
+// src/screensets/drafts/demo/demoScreenset.tsx
+const screensetTranslations = createTranslationLoader({
+  [Language.English]: () => import('./i18n/en.json'),
+  [Language.Spanish]: () => import('./i18n/es.json'),
+  // ... all 36 languages
 });
 
-// Usage
-t('screenset.demo:screens.hello.title') // Returns translated string
+export const demoScreenset: ScreensetConfig = {
+  id: DEMO_SCREENSET_ID,
+  localization: screensetTranslations, // Screenset-level only
+  // ...
+};
 ```
 
-Format: `'namespace:path.to.key'`
+**Screen-Level Translations** (loaded lazily when screen mounts):
+```typescript
+// src/screensets/drafts/demo/screens/helloworld/HelloWorldScreen.tsx
+import { useScreenTranslations, createTranslationLoader, Language } from '@hai3/uicore';
+
+const translations = createTranslationLoader({
+  [Language.English]: () => import('./i18n/en.json'),
+  [Language.Spanish]: () => import('./i18n/es.json'),
+  // ... all 36 languages
+});
+
+export const HelloWorldScreen: React.FC = () => {
+  // Register translations for this screen (loads current language immediately)
+  useScreenTranslations(DEMO_SCREENSET_ID, HELLO_WORLD_SCREEN_ID, translations);
+
+  const { t } = useTranslation();
+  return <div>{t(`screen.${DEMO_SCREENSET_ID}.${HELLO_WORLD_SCREEN_ID}:title`)}</div>;
+};
+```
+
+**Translation Key Format**: `'namespace:path.to.key'`
+- Screenset: `screenset.demo:name`
+- Screen: `screen.demo.helloworld:title`
+
+**Why this matters:**
+- Only screenset-level and default screen translations load on initial page load
+- Each screen's translations load on-demand when navigating to that screen
+- Dramatically reduces initial bundle size for applications with many screens
 
 ### 5. Module Augmentation for Extensibility
 
@@ -300,10 +334,11 @@ declare module '@hai3/uicore' {
 
 ### Before Making Changes
 
-1. **Read `.ai/GUIDELINES.md`** - Contains routing table for which rules apply to each area
-2. **Run `npm run arch:check`** - MUST pass before committing
-3. **Check dependency rules** - `npm run arch:deps` enforces package isolation
-4. **Follow event-driven flow** - Do NOT dispatch slice actions directly from components/actions
+1. **CRITICAL: Verify MCP connection** - If MCP WebSocket is broken, STOP and fix it first. NEVER skip testing with MCP.
+2. **Read `.ai/GUIDELINES.md`** - Contains routing table for which rules apply to each area
+3. **Run `npm run arch:check`** - MUST pass before committing
+4. **Check dependency rules** - `npm run arch:deps` enforces package isolation
+5. **Follow event-driven flow** - Do NOT dispatch slice actions directly from components/actions
 
 ### Forbidden Patterns
 
@@ -440,14 +475,38 @@ const users = await accountsApi.getUsers();
    export const HOME_SCREEN_ID = 'my-screenset-home';
    ```
 
-3. **Create screen component with default export:**
+3. **Create screenset-level translation files:**
+   ```bash
+   mkdir -p src/screensets/drafts/my-screenset/i18n
+   # Create en.json, es.json, etc. for all 36 languages
+   ```
+
+4. **Create screen component with translations:**
    ```typescript
    // src/screensets/drafts/my-screenset/screens/home/HomeScreen.tsx
    import React from 'react';
+   import { useScreenTranslations, useTranslation, createTranslationLoader, Language } from '@hai3/uicore';
    import { HOME_SCREEN_ID } from '../screenIds';
+   import { MY_SCREENSET_ID } from '../../myScreenset';
+
+   // Create screen-level translation files in ./i18n/en.json, ./i18n/es.json, etc.
+   const translations = createTranslationLoader({
+     [Language.English]: () => import('./i18n/en.json'),
+     [Language.Spanish]: () => import('./i18n/es.json'),
+     // ... all 36 languages
+   });
 
    export const HomeScreen: React.FC = () => {
-     return <div>Home Screen</div>;
+     // Register screen translations (loads current language immediately)
+     useScreenTranslations(MY_SCREENSET_ID, HOME_SCREEN_ID, translations);
+
+     const { t } = useTranslation();
+
+     return (
+       <div>
+         <h1>{t(`screen.${MY_SCREENSET_ID}.${HOME_SCREEN_ID}:title`)}</h1>
+       </div>
+     );
    };
 
    HomeScreen.displayName = 'HomeScreen';
@@ -456,24 +515,32 @@ const users = await accountsApi.getUsers();
    export default HomeScreen;
    ```
 
-4. **Create screenset config with lazy loaders:**
+5. **Create screenset config with localization:**
    ```typescript
    // src/screensets/drafts/my-screenset/myScreenset.tsx
-   import { screensetRegistry, type ScreensetConfig } from '@hai3/uicore';
+   import { screensetRegistry, type ScreensetConfig, createTranslationLoader, Language } from '@hai3/uicore';
    import { HOME_SCREEN_ID } from './screens/screenIds';
 
    export const MY_SCREENSET_ID = 'my-screenset';
+
+   // Screenset-level translations
+   const screensetTranslations = createTranslationLoader({
+     [Language.English]: () => import('./i18n/en.json'),
+     [Language.Spanish]: () => import('./i18n/es.json'),
+     // ... all 36 languages
+   });
 
    export const myScreenset: ScreensetConfig = {
      id: MY_SCREENSET_ID,
      name: 'My Screenset',
      category: 'drafts',
      defaultScreen: HOME_SCREEN_ID,
+     localization: screensetTranslations, // Screenset-level translations
      menu: [
        {
          menuItem: {
            id: HOME_SCREEN_ID,
-           label: 'Home',
+           label: `screen.${MY_SCREENSET_ID}.${HOME_SCREEN_ID}:title`, // Translation key
            icon: 'home-icon-id', // Optional
          },
          screen: () => import('./screens/home/HomeScreen'), // Lazy loader
@@ -549,7 +616,7 @@ When working with AI (Claude, GPT, etc.):
 3. **Follow event-driven patterns** - emit events, don't dispatch directly
 4. **Use registries for extensibility** - never modify registry root files
 5. **Validate with `npm run arch:check`** before finalizing code
-6. **Test changes immediately via Chrome MCP** - never skip visual verification (see `.ai/MCP_TROUBLESHOOTING.md`)
+6. **CRITICAL: Test changes immediately via Chrome MCP** - If MCP connection breaks (WebSocket closed), STOP all development and fix connection first. NEVER continue without testing. (see `.ai/MCP_TROUBLESHOOTING.md`)
 7. **Keep screensets as vertical slices** - no cross-screenset dependencies
 
 ## Common Pitfalls
@@ -573,9 +640,13 @@ When working with AI (Claude, GPT, etc.):
 5. **Forgetting to register translations**
    - Each screenset should register its i18n namespace with `i18nRegistry.registerLoader()`
 
-6. **Killing MCP processes during development**
+6. **CRITICAL: Skipping MCP testing or killing MCP processes**
+   - ❌ Continuing development when MCP WebSocket is closed
    - ❌ `pkill -f chrome-devtools-mcp` (permanently breaks MCP tools for the session)
-   - ✅ Ask user to restart MCP through Claude Code, or start new conversation
+   - ❌ Making multiple code changes without testing each one
+   - ✅ STOP immediately when "WebSocket is not open: readyState 3 (CLOSED)" appears
+   - ✅ Fix MCP connection before any further development
+   - ✅ Test every single code change via MCP before proceeding
    - See `.ai/MCP_TROUBLESHOOTING.md` for recovery procedures
 
 ## Documentation References

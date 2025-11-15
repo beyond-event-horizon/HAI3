@@ -25,10 +25,13 @@
 - DETECT: `grep -rn "use.*Store.*useState\|Set<.*>" src/screensets/*/hooks/`
 
 ## LOCALIZATION RULES
-- Localization folder: `i18n/{lang}.json`.
-- Register loader: `i18nRegistry.registerLoader('screenset.${ID}', loader)`.
-- Loader type: `Record<Language, () => Promise<TranslationModule>>`.
-- All UI text uses `t('screenset.id:key')`. Hardcoded strings are FORBIDDEN.
+- REQUIRED: Two-tier system: screenset-level (`src/screensets/*/i18n/`) + screen-level (`src/screensets/*/screens/*/i18n/`)
+- REQUIRED: Screenset-level contains ONLY menu titles (`screens.*.title`) - NO screen content (defeats lazy loading)
+- REQUIRED: Screen-level contains ALL screen-specific UI text (loaded on-demand per screen)
+- REQUIRED: Use `I18nRegistry.createLoader()` to create translation loaders (not standalone functions)
+- REQUIRED: Use `useScreenTranslations(screensetId, screenId, loader)` in screen components for lazy loading
+- REQUIRED: All UI text uses `t('screenset.id:key')` or `t('screen.screenset.screen:key')`
+- FORBIDDEN: Hardcoded strings, duplicating screen content in both levels
 - DETECT: `grep -R "['\"] [A-Za-z].* " src/screensets`
 
 ## ICON RULES
@@ -55,7 +58,9 @@
 - [ ] No direct slice imports.
 - [ ] Registry imports the screenset root only.
 - [ ] Icons exported and registered.
-- [ ] i18n loader registered under `screenset.${ID}`.
+- [ ] Screenset i18n loader created with `I18nRegistry.createLoader()`
+- [ ] Screen components use `useScreenTranslations()` for lazy loading
+- [ ] Screenset-level translations contain ONLY menu titles (no screen content)
 - [ ] All user-facing strings use `t()`.
 - [ ] Screenset UI Kit components have no `@hai3/uicore` imports or hooks.
 - [ ] Data flow rules from `EVENTS.md` are followed.
