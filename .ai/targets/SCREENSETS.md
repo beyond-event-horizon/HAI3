@@ -25,14 +25,17 @@
 - DETECT: `grep -rn "use.*Store.*useState\|Set<.*>" src/screensets/*/hooks/`
 
 ## LOCALIZATION RULES
-- REQUIRED: Two-tier system: screenset-level (`src/screensets/*/i18n/`) + screen-level (`src/screensets/*/screens/*/i18n/`)
-- REQUIRED: Screenset-level contains ONLY menu titles (`screens.*.title`) - NO screen content (defeats lazy loading)
-- REQUIRED: Screen-level contains ALL screen-specific UI text (loaded on-demand per screen)
-- REQUIRED: Use `I18nRegistry.createLoader()` to create translation loaders (not standalone functions)
-- REQUIRED: Use `useScreenTranslations(screensetId, screenId, loader)` in screen components for lazy loading
-- REQUIRED: All UI text uses `t('screenset.id:key')` or `t('screen.screenset.screen:key')`
-- FORBIDDEN: Hardcoded strings, duplicating screen content in both levels
-- DETECT: `grep -R "['\"] [A-Za-z].* " src/screensets`
+- REQUIRED: Two-tier system: screenset-level + screen-level translations
+- REQUIRED: Screenset-level translations registered via `localization: TranslationLoader` property in `ScreensetConfig`
+- REQUIRED: Screen-level translations registered by screen components using `useScreenTranslations(screensetId, screenId, loader)`
+- REQUIRED: Use `I18nRegistry.createLoader()` to create translation loaders with all 36 languages
+- REQUIRED: Screenset namespace: `screenset.<screenset-id>:key` (e.g., `screenset.demo:screens.hello.title` for menu labels)
+- REQUIRED: Screen namespace: `screen.<screenset-id>.<screen-id>:key` (e.g., `screen.demo.hello:title` for screen content)
+- REQUIRED: Translation files colocated with code: `src/screensets/*/i18n/` (screenset) + `src/screensets/*/screens/*/i18n/` (screens)
+- REQUIRED: All 36 languages provided via explicit imports in createLoader map (Vite analyzes but only loads current language)
+- REQUIRED: Wrap translated text with `<TextLoader>` component for loading states during lazy translation loading
+- FORBIDDEN: Hardcoded strings, path-based loaders (use TranslationLoader functions), missing languages
+- DETECT: `grep -R "['\"] [A-Za-z].* " src/screensets` (find hardcoded strings)
 
 ## ICON RULES
 - Define and register icons inside the screenset file.
@@ -58,9 +61,12 @@
 - [ ] No direct slice imports.
 - [ ] Registry imports the screenset root only.
 - [ ] Icons exported and registered.
-- [ ] Screenset i18n loader created with `I18nRegistry.createLoader()`
-- [ ] Screen components use `useScreenTranslations()` for lazy loading
-- [ ] Screenset-level translations contain ONLY menu titles (no screen content)
+- [ ] Screenset config has `localization: TranslationLoader` property
+- [ ] Screenset loader created with `I18nRegistry.createLoader()` with all 36 languages
+- [ ] Screen components use `useScreenTranslations(screensetId, screenId, loader)` for lazy loading
+- [ ] Screen loaders created with `I18nRegistry.createLoader()` with all 36 languages
+- [ ] Screenset namespace: `screenset.<id>:key`, Screen namespace: `screen.<screenset>.<screen>:key`
+- [ ] Translated text wrapped with `<TextLoader>` component
 - [ ] All user-facing strings use `t()`.
 - [ ] Screenset UI Kit components have no `@hai3/uicore` imports or hooks.
 - [ ] Data flow rules from `EVENTS.md` are followed.

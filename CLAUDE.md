@@ -271,15 +271,17 @@ HAI3 uses a two-level translation system for optimal performance:
 **Screenset-Level Translations** (loaded when screenset registers):
 ```typescript
 // src/screensets/drafts/demo/demoScreenset.tsx
-const screensetTranslations = createTranslationLoader({
+import { I18nRegistry, Language } from '@hai3/uicore';
+
+const screensetTranslations = I18nRegistry.createLoader({
   [Language.English]: () => import('./i18n/en.json'),
   [Language.Spanish]: () => import('./i18n/es.json'),
-  // ... all 36 languages
+  // ... all 36 languages (TypeScript enforces completeness)
 });
 
 export const demoScreenset: ScreensetConfig = {
   id: DEMO_SCREENSET_ID,
-  localization: screensetTranslations, // Screenset-level only
+  localization: screensetTranslations, // TranslationLoader function
   // ...
 };
 ```
@@ -287,20 +289,25 @@ export const demoScreenset: ScreensetConfig = {
 **Screen-Level Translations** (loaded lazily when screen mounts):
 ```typescript
 // src/screensets/drafts/demo/screens/helloworld/HelloWorldScreen.tsx
-import { useScreenTranslations, createTranslationLoader, Language } from '@hai3/uicore';
+import { useScreenTranslations, I18nRegistry, Language, TextLoader } from '@hai3/uicore';
 
-const translations = createTranslationLoader({
+const translations = I18nRegistry.createLoader({
   [Language.English]: () => import('./i18n/en.json'),
   [Language.Spanish]: () => import('./i18n/es.json'),
-  // ... all 36 languages
+  // ... all 36 languages (TypeScript enforces completeness)
 });
 
 export const HelloWorldScreen: React.FC = () => {
-  // Register translations for this screen (loads current language immediately)
+  // Register and load translations for this screen (loads current language only)
   useScreenTranslations(DEMO_SCREENSET_ID, HELLO_WORLD_SCREEN_ID, translations);
 
   const { t } = useTranslation();
-  return <div>{t(`screen.${DEMO_SCREENSET_ID}.${HELLO_WORLD_SCREEN_ID}:title`)}</div>;
+
+  return (
+    <TextLoader skeletonClassName="h-10 w-64">
+      <h1>{t(`screen.${DEMO_SCREENSET_ID}.${HELLO_WORLD_SCREEN_ID}:title`)}</h1>
+    </TextLoader>
+  );
 };
 ```
 
@@ -311,7 +318,12 @@ export const HelloWorldScreen: React.FC = () => {
 **Why this matters:**
 - Only screenset-level and default screen translations load on initial page load
 - Each screen's translations load on-demand when navigating to that screen
+- Only the current language is downloaded (browser network shows 1 file, not 36)
+- Vite dev server logs may show all 36 files, but this is HMR dependency tracking, not actual downloads
 - Dramatically reduces initial bundle size for applications with many screens
+
+**TextLoader Component:**
+Wrap translated text with `<TextLoader>` to show skeleton loaders during lazy translation loading. This prevents flash of untranslated content (FOUC) when navigating to screens for the first time.
 
 ### 5. Module Augmentation for Extensibility
 
