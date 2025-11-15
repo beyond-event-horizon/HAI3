@@ -5,7 +5,7 @@
  * Effects NEVER call actions or emit events (would create circular flow)
  */
 
-import { eventBus, type AppDispatch, store, type RootState } from '@hai3/uicore';
+import { eventBus, type AppDispatch, store, type RootState, apiRegistry } from '@hai3/uicore';
 import { ChatEvents } from '../events/chatEvents';
 import {
   setCurrentThreadId,
@@ -29,132 +29,75 @@ import {
   setIsStreaming,
 } from '../slices/chatSlice';
 import type { Thread, Message } from '../types';
+import { CHAT_DOMAIN } from '@/api/chat/ChatApiService';
+import { ChatRole, type CreateChatCompletionRequest } from '@/api/chat/api';
 
 let dispatch: AppDispatch;
 
 /**
- * Simulates a streaming backend response
- * In production, this would be replaced with real API calls
+ * Stream chat completion from API
+ * Uses ChatApiService with streaming for realistic backend simulation
  */
-const simulateStreamingResponse = (threadId: string): void => {
-  // Simulate initial delay before streaming starts
-  setTimeout(() => {
-    const responses = [
-      'That\'s a great question! Let me help you with that.',
-      'Here\'s what I think about that topic...',
-      `Great question! Let me break this down for you in detail.
+const streamChatCompletion = async (threadId: string, userMessage: string): Promise<void> => {
+  const state = store.getState() as RootState;
+  const currentModel = state.chat.currentModel;
 
-**Key Points to Consider:**
+  // Get chat API service
+  const chatApi = apiRegistry.getService(CHAT_DOMAIN);
 
-1. **Understanding the basics** - It's important to start with a solid foundation. This will help you grasp more complex concepts later.
+  // Build conversation history for the request
+  const messages = state.chat.messages
+    .filter((m) => m.threadId === threadId)
+    .map((m) => ({
+      role: m.type === 'user' ? ChatRole.User : ChatRole.Assistant,
+      content: m.content,
+    }));
 
-2. **Practical applications** - Theory is great, but seeing how things work in practice makes all the difference.
+  // Add the new user message
+  messages.push({
+    role: ChatRole.User,
+    content: userMessage,
+  });
 
-3. **Common pitfalls** - Be aware of these common mistakes that many people make when starting out.
+  const request: CreateChatCompletionRequest = {
+    model: currentModel,
+    messages,
+    stream: true,
+  };
 
-Here's a simple example to illustrate:
+  const messageId = `msg-${Date.now()}`;
 
-\`\`\`javascript
-function example() {
-  console.log("This is how it works!");
-  return true;
-}
-\`\`\`
+  // Create initial empty assistant message
+  const assistantMessage: Message = {
+    id: messageId,
+    threadId,
+    type: 'assistant',
+    content: '',
+    timestamp: new Date(),
+  };
 
-The key takeaway is to practice regularly and don't be afraid to experiment. Remember, everyone starts somewhere, and making mistakes is part of the learning process.`,
-      `I'd be happy to explain that in more detail! This is actually a fascinating topic with several important aspects to consider.
+  dispatch(addMessage(assistantMessage));
+  eventBus.emit(ChatEvents.StreamingStarted, { messageId });
 
-**First**, let's look at the fundamental principles:
-- The core concept revolves around understanding the relationship between different components
-- Each element plays a crucial role in the overall system
-- Timing and coordination are essential for success
-
-**Second**, here are some best practices:
-
-1. Always start with a clear plan
-2. Break down complex problems into smaller, manageable pieces
-3. Test your assumptions early and often
-4. Document your process for future reference
-
-**Example scenario:**
-
-Imagine you're building a house. You wouldn't start with the roof, right? You'd begin with a solid foundation, then build the walls, and finally add the roof. The same principle applies here.
-
-\`\`\`typescript
-interface BuildingBlock {
-  foundation: boolean;
-  walls: number;
-  roof: boolean;
-}
-\`\`\`
-
-Hope this helps clarify things! Let me know if you have any questions.`,
-      `Based on my understanding, here are some key points to consider:
-
-**Overview:**
-This is a multifaceted topic that requires careful consideration of various factors. Let me walk you through the most important aspects.
-
-**Main Considerations:**
-
-1. **Performance** - Efficiency matters, especially at scale
-2. **Maintainability** - Code should be easy to understand and modify
-3. **Security** - Always consider potential vulnerabilities
-4. **User Experience** - The end user should always be your priority
-
-**Detailed Breakdown:**
-
-When approaching this problem, you'll want to think about both the short-term and long-term implications. In the short term, you might be tempted to take shortcuts, but these often lead to technical debt that becomes costly to address later.
-
-For example, consider this pattern:
-
-\`\`\`python
-def process_data(data):
-    # Clean the data
-    cleaned = data.strip()
-    # Transform it
-    transformed = cleaned.upper()
-    # Return result
-    return transformed
-\`\`\`
-
-The important thing is to maintain consistency and follow established patterns in your codebase.`,
-    ];
-
-    const fullContent = responses[Math.floor(Math.random() * responses.length)];
-    const messageId = `msg-${Date.now()}`;
-
-    // Split content into words for streaming
-    const words = fullContent.split(' ');
-    let currentContent = '';
-    let wordIndex = 0;
-
-    // Create initial empty assistant message
-    const assistantMessage: Message = {
-      id: messageId,
-      threadId,
-      type: 'assistant',
-      content: '',
-      timestamp: new Date(),
-    };
-
-    dispatch(addMessage(assistantMessage));
-    eventBus.emit(ChatEvents.StreamingStarted, { messageId });
-
-    // Stream words gradually
-    const streamInterval = setInterval(() => {
-      if (wordIndex < words.length) {
-        currentContent += (wordIndex > 0 ? ' ' : '') + words[wordIndex];
-        wordIndex++;
-
-        // Emit streaming content update event
-        eventBus.emit(ChatEvents.StreamingContentUpdated, { messageId, content: currentContent });
-      } else {
-        // Streaming complete
-        clearInterval(streamInterval);
-        eventBus.emit(ChatEvents.StreamingCompleted);
+  try {
+    // Stream the completion
+    let fullContent = '';
+    for await (const chunk of chatApi.createCompletionStream(request)) {
+      const delta = chunk.choices[0]?.delta;
+      if (delta?.content) {
+        fullContent += delta.content;
+        eventBus.emit(ChatEvents.StreamingContentUpdated, { messageId, content: fullContent });
       }
-    }, 50 + Math.random() * 50); // Random delay between 50-100ms per word
-  }, 500); // Initial delay before streaming starts
+
+      if (chunk.choices[0]?.finish_reason === 'stop') {
+        eventBus.emit(ChatEvents.StreamingCompleted);
+        break;
+      }
+    }
+  } catch (error) {
+    console.error('Chat completion streaming error:', error);
+    eventBus.emit(ChatEvents.StreamingCompleted);
+  }
 };
 
 /**
@@ -208,8 +151,7 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
 
   // Message effects
   eventBus.on(ChatEvents.MessageSent, ({ content }) => {
-    // Draft implementation: Add user message to store
-    // In real implementation, this would also call API and start streaming
+    // Add user message to store and stream API response
     const state = store.getState() as RootState;
     const currentThreadId = state.chat.currentThreadId;
 
@@ -241,8 +183,8 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
       }
     }));
 
-    // Simulate backend streaming response
-    simulateStreamingResponse(currentThreadId);
+    // Stream backend response using API service
+    streamChatCompletion(currentThreadId, content.trim());
   });
 
   eventBus.on(ChatEvents.MessageEditingStarted, ({ messageId, content }) => {
@@ -300,8 +242,17 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
     dispatch(removeMessage({ messageId }));
     dispatch(removeMessagesAfter({ messageId }));
 
-    // Simulate backend streaming response for regeneration
-    simulateStreamingResponse(message.threadId);
+    // Find the last user message to regenerate from
+    const threadMessages = state.chat.messages.filter((m) => m.threadId === message.threadId);
+    const lastUserMessage = threadMessages
+      .slice()
+      .reverse()
+      .find((m) => m.type === 'user');
+
+    if (lastUserMessage) {
+      // Stream backend response using API service for regeneration
+      streamChatCompletion(message.threadId, lastUserMessage.content);
+    }
   });
 
   // Model and Context effects
