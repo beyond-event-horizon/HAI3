@@ -6,7 +6,7 @@
 
 ## SCOPE
 - All code under `packages/uicore/**`
-- UI Core owns domains, routing, providers, registry access, and shared actions/events
+- UI Core owns domains, routing, providers, registry access, i18n system, and shared actions/events
 - Screensets may define their own state and events, but UI Core must not depend on screenset internals
 
 ## CRITICAL RULES
@@ -23,6 +23,7 @@
 - Bootstrap & providers: `packages/uicore/src/app/{HAI3Provider.tsx,store.ts,initEffects.ts}`
 - UI Kit registry accessors: `packages/uicore/src/registry/uikitRegistry.ts`
 - Screenset-driven routing (no hardcoded routes): `packages/uicore/src/routing/**`
+- I18n system: `packages/uicore/src/i18n/{i18nRegistry.ts,types.ts,useTranslation.ts,useScreenTranslations.ts}`
 
 ## STOP CONDITIONS
 - Importing from `@hai3/uikit` inside UI Core
@@ -30,9 +31,17 @@
 - Directly dispatching slice actions from UI components
 - Hardcoding routes or importing screenset internals into UI Core
 
+## I18N RULES
+- REQUIRED: Use `I18nRegistry` class for all translation utilities (static methods: `createLoader()`, `LANGUAGE_FILE_MAP`)
+- REQUIRED: Use `useTranslation()` hook for consuming translations (provides `t()`, `language`, `direction`)
+- REQUIRED: Use `useScreenTranslations()` hook in screen components to register lazy-loaded translations
+- FORBIDDEN: Creating standalone i18n utility files — consolidate into `I18nRegistry` class methods
+- FORBIDDEN: Duplicating screen content in both screenset-level and screen-level translation files
+
 ## PRE-DIFF CHECKLIST
 - [ ] All UI components/icons retrieved through `uikitRegistry`
 - [ ] No direct slice dispatch or prop drilling
 - [ ] `<HAI3Provider>` is still the root wrapper
 - [ ] Routing is generated from screenset registry, not hardcoded
 - [ ] No imports from screenset-private modules
+- [ ] I18n uses `I18nRegistry` class methods (not standalone utilities)

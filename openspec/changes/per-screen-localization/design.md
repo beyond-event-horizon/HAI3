@@ -7,29 +7,80 @@
 ```
 Screenset
 ├── Screenset-Level Translations (screenset.demo)
-│   └── Shared content: models, contexts, common labels
+│   └── Menu titles ONLY: screens.helloworld.title, screens.profile.title
 └── Screen-Level Translations (screen.demo.*)
-    ├── screen.demo.helloworld
-    ├── screen.demo.profile
-    ├── screen.demo.theme
-    └── screen.demo.uikit
+    ├── screen.demo.helloworld  → ALL screen-specific content
+    ├── screen.demo.profile      → ALL screen-specific content
+    ├── screen.demo.theme        → ALL screen-specific content
+    └── screen.demo.uikit        → ALL screen-specific content
 ```
+
+### Critical Design Decision: Content Separation
+
+**Problem Discovered:** Initial implementation duplicated screen content in both screenset-level and screen-level translation files. For example, `src/screensets/drafts/demo/i18n/en.json` contained:
+
+```json
+{
+  "screens": {
+    "helloworld": {
+      "title": "Hello World",
+      "welcome": "Welcome to HAI3 Demo Screenset",  // ❌ Duplicated
+      "description": "This is a simple demo...",     // ❌ Duplicated
+      "go_to_theme": "Go to Theme Screen"            // ❌ Duplicated
+    }
+  }
+}
+```
+
+**Impact:** This defeated the entire purpose of lazy loading - when a user switched languages, ALL screen content for ALL screens would load immediately (36 languages × all screens × full content).
+
+**Solution:** Strict content separation enforced:
+- **Screenset-level** (`src/screensets/drafts/demo/i18n/`): Contains ONLY menu titles needed for navigation menu
+- **Screen-level** (`src/screensets/drafts/demo/screens/helloworld/i18n/`): Contains ALL screen-specific UI text
+
+**Corrected Structure:**
+
+```json
+// src/screensets/drafts/demo/i18n/en.json (screenset-level)
+{
+  "title": "Demo Screenset",
+  "description": "Example screens for HAI3 framework",
+  "screens": {
+    "helloworld": { "title": "Hello World" },        // ✅ Menu title only
+    "profile": { "title": "User Profile" },          // ✅ Menu title only
+    "theme": { "title": "Current Theme" },           // ✅ Menu title only
+    "uikit": { "title": "UI Kit Elements" }          // ✅ Menu title only
+  }
+}
+
+// src/screensets/drafts/demo/screens/helloworld/i18n/en.json (screen-level)
+{
+  "title": "Hello World",
+  "welcome": "Welcome to HAI3 Demo Screenset",      // ✅ Only here
+  "description": "This is a simple demo screen...", // ✅ Only here
+  "navigation_title": "Navigation Example",         // ✅ Only here
+  "navigation_description": "Click the button...",  // ✅ Only here
+  "go_to_theme": "Go to Theme Screen"               // ✅ Only here
+}
+```
+
+**Result:** When switching languages, only menu titles load immediately. Screen content loads on-demand when user navigates to that screen.
 
 ### Directory Structure
 
 ```
 src/screensets/drafts/demo/
-├── i18n/                          # Screenset-level (shared)
-│   ├── en.json
-│   ├── es.json
+├── i18n/                          # Screenset-level (menu titles + shared content ONLY)
+│   ├── en.json                    # Contains: title, description, screens.*.title
+│   ├── es.json                    # NO screen-specific content (to avoid duplication)
 │   └── ... (36 languages)
 ├── screens/
 │   ├── screenIds.ts
 │   ├── helloworld/
 │   │   ├── HelloWorldScreen.tsx
-│   │   └── i18n/                  # Screen-level (colocated)
-│   │       ├── en.json
-│   │       ├── es.json
+│   │   └── i18n/                  # Screen-level (ALL screen-specific content)
+│   │       ├── en.json            # Contains: all screen UI text, labels, descriptions
+│   │       ├── es.json            # Loaded lazily when screen is selected
 │   │       └── ... (36 languages)
 │   ├── profile/
 │   │   ├── ProfileScreen.tsx
@@ -38,6 +89,11 @@ src/screensets/drafts/demo/
 │   └── ...
 └── demoScreenset.tsx              # Registers both levels
 ```
+
+**CRITICAL: Avoiding Duplication**
+- Screenset-level files contain ONLY menu titles (e.g., `screens.helloworld.title`)
+- Screen-level files contain ALL screen-specific content
+- DO NOT duplicate screen content in both levels - defeats lazy loading purpose
 
 ### Namespace Design
 
@@ -63,71 +119,97 @@ t('screenset.demo:models.gpt_5')
 //  ^^^^^^^^^ screenset namespace (unchanged)
 ```
 
-### Auto-Discovery Helper
+### I18nRegistry - Consolidated Translation Management
 
-**Problem:** Manual registration is verbose and error-prone:
+All translation functionality is centralized in the `I18nRegistry` class following SOLID and DRY principles.
+
+**Current approach** - Manual translation loader with explicit imports:
 
 ```typescript
-// Current approach (36 lines of boilerplate)
-const TRANSLATIONS: Record<Language, () => Promise<{ default: TranslationDictionary }>> = {
+// Screenset translation loader (36 lines, but type-safe)
+const screensetLoader = I18nRegistry.createLoader({
   [Language.English]: () => import('./i18n/en.json'),
   [Language.Arabic]: () => import('./i18n/ar.json'),
   [Language.Spanish]: () => import('./i18n/es.json'),
-  // ... 33 more languages
-};
-
-i18nRegistry.registerLoader('screenset.demo', async (language: Language) => {
-  const module = await TRANSLATIONS[language]();
-  return module.default;
+  // ... all 36 languages (required for type safety)
 });
 ```
 
-**Solution:** Auto-discovery helper:
+**Why explicit imports?** Vite requires static import paths for code splitting. Dynamic path construction (`import(\`./i18n/${lang}.json\`)`) breaks Vite's module graph analysis.
 
-```typescript
-// New approach (1 line)
-registerTranslationsFromDirectory('screenset.demo', './i18n');
-```
-
-**Implementation:**
+**I18nRegistry.createLoader()** - Static method that wraps translation imports:
 
 ```typescript
 /**
- * Auto-discovers translation files in a directory and registers them
+ * Create a translation loader from language-specific imports
  *
- * @param namespace - Translation namespace (e.g., 'screen.demo.helloworld')
- * @param relativePath - Path to i18n directory relative to caller (e.g., './i18n')
+ * This static method eliminates boilerplate error handling while maintaining
+ * Vite's static analysis requirements for code splitting.
  *
- * Automatically maps language codes to files:
- * - Language.English → en.json
- * - Language.Spanish → es.json
- * - etc.
+ * @param translationMap - Map of Language to import functions
+ * @returns Translation loader function compatible with i18nRegistry
+ *
+ * @example
+ * const loader = I18nRegistry.createLoader({
+ *   [Language.English]: () => import('./i18n/en.json'),
+ *   [Language.Spanish]: () => import('./i18n/es.json'),
+ * });
  */
-export function registerTranslationsFromDirectory(
-  namespace: string,
-  relativePath: string
-): void {
-  // Create language-to-file mapping
-  const languageFileMap: Record<Language, string> = {
-    [Language.English]: 'en.json',
-    [Language.Arabic]: 'ar.json',
-    // ... all 36 languages
+static createLoader(
+  translationMap: Record<Language, () => Promise<{ default: TranslationDictionary }>>
+): TranslationLoader {
+  return async (language: Language): Promise<TranslationDictionary> => {
+    try {
+      const module = await translationMap[language]();
+      return module.default;
+    } catch (error) {
+      console.error(`[i18n] Failed to load ${language}:`, error);
+      return {}; // Return empty dict on error instead of breaking app
+    }
   };
+}
+```
 
-  // Build dynamic import map
-  const translationMap: Record<Language, () => Promise<{ default: TranslationDictionary }>> =
-    {} as Record<Language, () => Promise<{ default: TranslationDictionary }>>;
+**I18nRegistry.LANGUAGE_FILE_MAP** - Static property for language-to-filename mapping:
 
-  for (const [language, filename] of Object.entries(languageFileMap)) {
+```typescript
+/**
+ * Maps Language enum to JSON filenames
+ * Centralized mapping used by auto-discovery helpers
+ */
+static readonly LANGUAGE_FILE_MAP: Record<Language, string> = {
+  [Language.English]: 'en.json',
+  [Language.Arabic]: 'ar.json',
+  [Language.Spanish]: 'es.json',
+  // ... all 36 languages
+};
+```
+
+**i18nRegistry.registerFromDirectory()** - Instance method for auto-discovery (future use):
+
+```typescript
+/**
+ * Auto-discover translation files in a directory
+ *
+ * NOTE: Currently not used due to Vite static analysis limitations.
+ * Explicit imports in screensets provide better type safety and code splitting.
+ *
+ * @param namespace - Translation namespace (e.g., 'screenset.demo')
+ * @param relativePath - Path to i18n directory (e.g., './i18n')
+ *
+ * @example
+ * i18nRegistry.registerFromDirectory('screenset.demo', './i18n');
+ */
+registerFromDirectory(namespace: string, relativePath: string): void {
+  // Build dynamic import map using LANGUAGE_FILE_MAP
+  const translationMap = {} as Record<Language, () => Promise<{ default: TranslationDictionary }>>;
+
+  for (const [language, filename] of Object.entries(I18nRegistry.LANGUAGE_FILE_MAP)) {
     const lang = language as Language;
     translationMap[lang] = () => import(/* @vite-ignore */ `${relativePath}/${filename}`);
   }
 
-  // Register with i18nRegistry
-  i18nRegistry.registerLoader(namespace, async (language: Language) => {
-    const module = await translationMap[language]();
-    return module.default;
-  });
+  this.registerLoader(namespace, I18nRegistry.createLoader(translationMap));
 }
 ```
 
@@ -211,23 +293,46 @@ class ScreensetRegistry {
 
 ### Loading Behavior
 
-**Before (per-screenset):**
+**Initial Load (app startup):**
 ```
-User navigates to HelloWorld screen
-└─> Screen lazy-loads
-└─> Screenset translations already loaded (all 161 lines × 36 languages)
+App initializes
+├─> Screenset translations load (menu titles only)
+│   └─> Demo: 4 menu titles × 36 languages
+│   └─> Chat: 1 menu title × 36 languages
+└─> Default screen (HelloWorld) loads
+    └─> Screen translations load (HelloWorld content × 1 language)
 ```
 
-**After (per-screen):**
+**Language Switch (user changes from English to Arabic):**
 ```
-User navigates to HelloWorld screen
-├─> Screen lazy-loads
-├─> Screenset translations already loaded (shared ~10 lines × 36 languages)
-└─> Screen translations load (only HelloWorld ~15 lines × current language)
-    └─> i18nRegistry.setLanguage() already called
-    └─> Loader for 'screen.demo.helloworld' executes
-    └─> Imports ./screens/helloworld/i18n/en.json (or current language)
+User selects Arabic
+├─> Mark translationsReady = false (shows skeleton loaders)
+├─> Load screenset translations for Arabic (menu titles only)
+│   └─> Demo: 4 titles
+│   └─> Chat: 1 title
+├─> Mark translationsReady = true
+└─> Current screen translations load automatically
+    └─> HelloWorld Arabic content loads
+    └─> Increment screenTranslationsVersion (triggers re-render)
 ```
+
+**Screen Navigation (user clicks Profile menu item):**
+```
+User navigates to Profile screen
+├─> navigateToScreen('profile') action dispatched
+├─> Screen component lazy-loads
+└─> useScreenTranslations() hook executes
+    ├─> Registers loader for 'screen.demo.profile'
+    └─> Loads current language only
+        └─> Imports ./screens/profile/i18n/ar.json (if Arabic selected)
+        └─> Increment screenTranslationsVersion
+        └─> Component re-renders with translations
+```
+
+**Key Points:**
+- Screenset-level: Loads ALL languages (but only menu titles - minimal data)
+- Screen-level: Loads CURRENT language only (on-demand when screen selected)
+- No duplication between levels ensures minimal data transfer
 
 ### Migration Strategy
 
@@ -238,20 +343,29 @@ User navigates to HelloWorld screen
 **Step 2: Split Translation Files**
 - Extract screen-specific keys from screenset i18n files
 - Create per-screen i18n directories
-- Keep shared content in screenset i18n
+- **CRITICAL:** Keep ONLY menu titles in screenset i18n files
+- **CRITICAL:** Move ALL screen content to screen-level i18n files
+- Avoid duplication between levels
 
-**Step 3: Update Registration**
+**Step 3: Remove Duplication (if exists)**
+- Review all screenset-level translation files
+- Ensure `screens.*.title` contains ONLY the title field
+- Remove any other screen-specific content from screenset files
+- Verify screen-level files contain all screen UI text
+
+**Step 4: Update Registration**
 - Replace manual TRANSLATIONS map with auto-discovery helper
 - Register both screenset and screen namespaces
 
-**Step 4: Update Components**
+**Step 5: Update Components**
 - Change `t('screenset.demo:screens.hello.title')` → `t('screen.demo.hello:title')`
 - Update all screen components (5 total)
 
-**Step 5: Validate**
+**Step 6: Validate**
 - Run type-check (ensures all Language enum values handled)
-- Run in browser (test language switching)
+- Run in browser (test language switching via MCP)
 - Verify lazy loading (check network tab for translation chunks)
+- Verify no duplication (screenset files should be minimal)
 
 ## Trade-offs
 
@@ -261,14 +375,31 @@ User navigates to HelloWorld screen
 - ✅ Flexible - shared content at screenset level, specific at screen level
 - ✅ Optimal loading - only load what's needed
 - ✅ Better DX - translations colocated with screens
+- ✅ Clear content separation - menu titles vs screen content
+- ✅ Prevents duplication - strict rules enforced
 
 **Cons:**
 - ⚠️ Two registration patterns to understand
 - ⚠️ More files to manage
+- ⚠️ Requires discipline to avoid duplication between levels
 
 **Alternative Considered:** Pure per-screen (everything at screen level)
 
 **Why rejected:** Duplicates shared content across screens, no natural place for screenset-level labels
+
+### Critical Issue Resolved: Content Duplication
+
+**Problem:** Initial implementation allowed screen content to exist in both screenset-level and screen-level files, defeating lazy loading.
+
+**Why it happened:** Unclear boundaries - developers naturally copied full screen content to screenset files for easy access.
+
+**Prevention:**
+1. **Strict rule:** Screenset files contain ONLY `screens.*.title` (menu labels)
+2. **Documentation:** Clear examples showing correct split
+3. **Code review:** Check for duplication in translation PRs
+4. **Future:** Build-time validation to detect duplication
+
+**Lesson learned:** Lazy loading only works if content is truly separated. Duplication defeats the entire optimization.
 
 ### Chosen: Colocated Files
 
@@ -303,14 +434,25 @@ User navigates to HelloWorld screen
 
 ### Bundle Size Analysis
 
-**Before:**
-- Demo screenset: 161 lines × 36 languages = 5,796 lines loaded on ANY screen
-- Chat screenset: 63 lines × 36 languages = 2,268 lines loaded on ANY screen
+**Before (with duplication bug):**
+- Demo screenset-level: ~80 lines × 36 languages = 2,880 lines
+  - Contained: title, description, AND all screen content duplicated
+- Demo screen-level: 4 screens × ~15 lines × 36 languages = 2,160 lines
+  - Same content duplicated from screenset-level files
+- **Total loaded on language switch:** 2,880 lines (all unnecessary)
+- **Total duplication waste:** 2,160 lines duplicated across both levels
 
-**After (HelloWorld screen example):**
-- Screenset shared: 10 lines × 36 languages = 360 lines loaded upfront
-- HelloWorld screen: 15 lines × 1 language = 15 lines loaded on-demand
-- Total for HelloWorld: 375 lines vs 5,796 lines (93.5% reduction)
+**After (duplication fixed):**
+- Demo screenset-level: ~8 lines × 36 languages = 288 lines
+  - Contains: title, description, 4 menu titles ONLY
+- HelloWorld screen-level: ~15 lines × 1 language = 15 lines (loaded on-demand)
+- **Total for HelloWorld:** 288 + 15 = 303 lines vs 2,880 lines (89.5% reduction)
+- **Total duplication eliminated:** 2,160 lines removed
+
+**Chat Screenset:**
+- Screenset-level: ~4 lines × 36 languages = 144 lines (title + description + 1 menu title)
+- Chat screen-level: ~25 lines × 1 language = 25 lines (loaded on-demand)
+- **Total for Chat:** 144 + 25 = 169 lines
 
 ### Loading Timeline
 
@@ -360,19 +502,27 @@ If a language file is missing, the dynamic import will fail at runtime with a cl
 
 ## Future Enhancements
 
-1. **Component-Level Translations**
+1. **Build-Time Duplication Detection (HIGH PRIORITY)**
+   - Scan all translation files during build
+   - Detect duplicate keys between screenset-level and screen-level files
+   - Fail build if duplication detected
+   - Report: "Duplicate key 'screens.helloworld.welcome' found in both screenset and screen files"
+   - Prevents regression of duplication bug
+
+2. **Component-Level Translations**
    - Further split screen translations into component-level
    - Example: `component.demo.helloworld.navigationcard:title`
 
-2. **Translation Prefetching**
+3. **Translation Prefetching**
    - Predict next screen navigation
    - Prefetch translations before user clicks
 
-3. **Translation Fallback Chain**
+4. **Translation Fallback Chain**
    - Screen → Screenset → App default
    - Allows partial translations while falling back to higher levels
 
-4. **Build-Time Validation**
+5. **Build-Time Validation**
    - Check all translation files exist for all languages
    - Validate translation keys match component usage
    - Generate TypeScript types from translation keys
+   - Verify screenset files contain only menu titles

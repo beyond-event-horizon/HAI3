@@ -69,7 +69,9 @@ export { AccountsApiService, ACCOUNTS_DOMAIN } from './api/accounts/AccountsApiS
 export * from './api/accounts/api';
 
 // i18n (Internationalization system)
-export { i18nRegistry } from './i18n/i18nRegistry';
+// Use I18nRegistry class for all translation management
+export { i18nRegistry, I18nRegistry } from './i18n/i18nRegistry';
+export { useScreenTranslations } from './i18n/useScreenTranslations';
 export { useTranslation } from './i18n/useTranslation';
 export { TextLoader, type TextLoaderProps } from './i18n/TextLoader';
 export { changeLanguage } from './core/actions/i18nActions';
