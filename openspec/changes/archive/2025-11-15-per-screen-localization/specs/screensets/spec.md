@@ -189,11 +189,9 @@ src/screensets/drafts/demo/
 - Place screen-level translations in `<screenset>/screens/<screen>/i18n/`
 - Provide one file per language in each i18n directory (36 files total)
 
-## MODIFIED Requirements
+### Requirement: Declarative translation registration
 
-### Requirement: Simplified translation registration
-
-Screensets SHALL NO LONGER manually create `Record<Language, ...>` translation maps. Instead, use declarative `localization` fields in config.
+Screensets SHALL use declarative `localization` fields in config to register translations automatically.
 
 #### Scenario: Before (manual registration)
 
@@ -241,31 +239,13 @@ export const demoScreenset: ScreensetConfig = {
 - Automatically register translations for both levels
 - Automatically discover all 36 language files per directory
 
+## MODIFIED Requirements
+
+*No modified requirements - this is net-new functionality*
+
 ## REMOVED Requirements
 
-### Requirement: ~~Manual translation registration~~ (REMOVED)
-
-Screensets SHALL NO LONGER manually register translations using `Record<Language, ...>` maps and direct `i18nRegistry.registerLoader()` calls.
-
-#### Scenario: Old manual registration pattern
-
-```typescript
-// ❌ REMOVED (no longer valid)
-const TRANSLATIONS: Record<Language, () => Promise<{ default: TranslationDictionary }>> = {
-  [Language.English]: () => import('./i18n/en.json'),
-  [Language.Arabic]: () => import('./i18n/ar.json'),
-  // ... 34 more languages
-};
-
-i18nRegistry.registerLoader('screenset.demo', async (language: Language) => {
-  const module = await TRANSLATIONS[language]();
-  return module.default;
-});
-```
-
-**Given** the old manual registration pattern
-**When** migrating to per-screen localization
-**Then** this code MUST be completely removed and replaced with declarative `localization` fields
+*No removed requirements - this is a new spec*
 
 ## Related Capabilities
 

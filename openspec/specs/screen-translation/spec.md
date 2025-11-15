@@ -1,9 +1,8 @@
-# Spec: screen-translation
+# screen-translation Specification
 
-Screen-level translation organization and usage.
-
-## ADDED Requirements
-
+## Purpose
+TBD - created by archiving change per-screen-localization. Update Purpose after archive.
+## Requirements
 ### Requirement: Colocated translation files
 
 Screen translation files SHALL be colocated with screen components in a dedicated i18n subdirectory.
@@ -184,26 +183,3 @@ User navigates: Home → HelloWorld → Profile → HelloWorld
 - Use cached screen translations (already loaded)
 - NOT make new network requests for HelloWorld translations
 
-## MODIFIED Requirements
-
-*No modified requirements - this is net-new functionality*
-
-## REMOVED Requirements
-
-### Requirement: ~~Screenset-level translation keys~~ (DEPRECATED)
-
-Screen components SHALL NO LONGER use `screenset.<id>:screens.<screen-id>.<key>` format.
-
-#### Scenario: Old namespace format no longer valid
-
-```typescript
-// ❌ OLD (no longer valid)
-t('screenset.demo:screens.helloworld.title')
-
-// ✅ NEW (required)
-t('screen.demo.helloworld:title')
-```
-
-**Given** existing code using old screenset-level namespace for screen-specific translations
-**When** migrating to per-screen localization
-**Then** all translation calls MUST be updated to use new screen namespace format

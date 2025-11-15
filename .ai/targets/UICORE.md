@@ -32,11 +32,19 @@
 - Hardcoding routes or importing screenset internals into UI Core
 
 ## I18N RULES
-- REQUIRED: Use `I18nRegistry` class for all translation utilities (static methods: `createLoader()`, `LANGUAGE_FILE_MAP`)
+- REQUIRED: Use `I18nRegistry` class for all translation utilities (static: `createLoader()`, `LANGUAGE_FILE_MAP`)
+- REQUIRED: Use `I18nRegistry.createLoader({ [Language.X]: () => import('...') })` to create translation loaders
+- REQUIRED: Provide all 36 languages in loader map (TypeScript enforces via `Record<Language, ...>`)
 - REQUIRED: Use `useTranslation()` hook for consuming translations (provides `t()`, `language`, `direction`)
-- REQUIRED: Use `useScreenTranslations()` hook in screen components to register lazy-loaded translations
+- REQUIRED: Use `useScreenTranslations(screensetId, screenId, loader)` in screen components for lazy-loaded translations
+- REQUIRED: Use `<TextLoader>` component to wrap translated text for loading states during lazy translation loading
+- REQUIRED: Translation namespace format: `screenset.<id>:key` or `screen.<screenset>.<screen>:key`
+- REQUIRED: Screenset-level translations auto-load on language change via `i18nRegistry.loadLanguage()`
+- REQUIRED: Screen-level translations lazy-load only when screen is active (via `useScreenTranslations` hook)
 - FORBIDDEN: Creating standalone i18n utility files — consolidate into `I18nRegistry` class methods
 - FORBIDDEN: Duplicating screen content in both screenset-level and screen-level translation files
+- FORBIDDEN: Path-based loaders with dynamic imports — use explicit `TranslationLoader` functions
+- DETECT: Vite logs show all 36 files but browser network only loads current language (expected behavior)
 
 ## PRE-DIFF CHECKLIST
 - [ ] All UI components/icons retrieved through `uikitRegistry`
