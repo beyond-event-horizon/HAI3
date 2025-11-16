@@ -3,6 +3,7 @@
  * Pure presentational component for chat message input
  */
 
+import { trim } from 'lodash';
 import { Send, Paperclip } from 'lucide-react';
 import { Button } from '../../base/button';
 import { ButtonVariant, ButtonSize } from '@hai3/uikit-contracts';
@@ -31,7 +32,7 @@ export const ChatInput = ({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      if (!disabled && value.trim()) {
+      if (!disabled && trim(value)) {
         onSend();
       }
     }
@@ -72,7 +73,7 @@ export const ChatInput = ({
       {/* Send button */}
       <Button
         onClick={onSend}
-        disabled={disabled || !value.trim()}
+        disabled={disabled || !trim(value)}
         className="flex-shrink-0"
         aria-label="Send message"
       >

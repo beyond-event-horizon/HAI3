@@ -10,7 +10,7 @@
 - Apply updates using UPDATE_GUIDELINES.md.
 
 ## STRUCTURE
-- Start every file with one of the following headings:
+- Start every file with one of:
   AI WORKFLOW (REQUIRED)
   or
   CRITICAL RULES
@@ -35,10 +35,10 @@ Rules must follow one of these forms:
 No extra commentary. No examples. No code blocks.
 
 ## DECISION RULES
-1. Use .ai/GUIDELINES.md to route to the correct file.
-2. Check if the requested rule already exists in another target file.
-3. If the rule belongs to UIKIT, UICORE, EVENTS, STYLING, THEMES, or API, reference that file instead of duplicating.
-4. Modify only the specific rule or section directly impacted by the requested change.
+1) Use .ai/GUIDELINES.md to route to the correct file.
+2) Check if the requested rule already exists in another target file.
+3) If the rule belongs to UIKIT, UICORE, EVENTS, STYLING, THEMES, or API, reference that file instead of duplicating.
+4) Modify only the specific rule or section directly impacted by the requested change.
 
 ## VALIDATION RULES
 Before saving updates:

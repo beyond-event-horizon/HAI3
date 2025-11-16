@@ -1,4 +1,5 @@
 import React from 'react';
+import { trim, toUpper } from 'lodash';
 import { cn } from '../../lib/utils';
 import { Avatar, AvatarImage, AvatarFallback } from '../../base/avatar';
 import { Skeleton } from '../../base/skeleton';
@@ -23,12 +24,12 @@ export interface UserInfoProps {
 export const UserInfo = React.forwardRef<HTMLDivElement, UserInfoProps>(
   ({ displayName, email, avatarUrl, className, loading }, ref) => {
     const getInitials = (): string => {
-      if (!displayName) return email?.charAt(0).toUpperCase() || '?';
-      const parts = displayName.trim().split(/\s+/);
+      if (!displayName) return toUpper(email?.[0] || '') || '?';
+      const parts = trim(displayName).split(/\s+/);
       if (parts.length >= 2) {
-        return `${parts[0].charAt(0)}${parts[parts.length - 1].charAt(0)}`.toUpperCase();
+        return toUpper(`${parts[0][0]}${parts[parts.length - 1][0]}`);
       }
-      return displayName.substring(0, 2).toUpperCase();
+      return toUpper(displayName.slice(0, 2));
     };
 
     const initials = getInitials();
