@@ -31,7 +31,8 @@
 - App-level deps limited to: @hai3/uicore, @hai3/uikit, react, react-dom
 - Cross-domain communication only via events
 - No string literal identifiers; use constants or enums
-- No any, no unsafe casts
+- No any, no unknown, no unsafe casts
+- REQUIRED: Use lodash for all object/array operations instead of native methods
 
 ## IMPORT RULES
 
@@ -46,7 +47,9 @@
 ## TYPE RULES
 - type for objects/unions, interface for React props
 - No hardcoded string IDs
-- Resolve type errors at boundary, do not cast
+- No unknown types in type definitions
+- No `as unknown as` type casts - indicates poor typing
+- Resolve type errors at boundary, use proper generic types
 - Class order: properties -> constructor -> methods
 
 ## STOP CONDITIONS
@@ -72,10 +75,12 @@
 
 ## BLOCKLIST
 - Telemetry or tracking code
-- as unknown as type chains
-- Direct slice dispatch
+- `as unknown as` type casts (indicates poor typing)
+- `unknown` types in type definitions
+- eslint-disable comments
 - Barrel exports hiding imports
-- Manual state sync or prop drilling
+- Manual state sync or prop drilling (see EVENTS.md)
+- Native methods when lodash equivalent exists (Object.assign, spread for deep ops, array methods)
 
 ## DOC STYLE
 - Short, technical, ASCII only

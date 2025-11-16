@@ -3,7 +3,7 @@
  * Events related to user data and authentication
  */
 
-import type { ApiUser } from '../../../api/accounts/api';
+import type { ApiUser } from '../../../api/services/accounts/api';
 
 export enum UserEvents {
   UserFetchStarted = 'user/userFetchStarted',

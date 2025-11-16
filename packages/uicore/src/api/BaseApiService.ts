@@ -1,201 +1,174 @@
 /**
  * Base API Service
- * Abstract base class for service-specific API clients
+ * Abstract base class for service-specific API clients using protocol registry pattern
  * Follows SOLID principles:
- * - Single Responsibility: HTTP communication and interceptor management
- * - Open/Closed: Open for extension via derived classes, closed for modification
+ * - Single Responsibility: Protocol + plugin lifecycle management
+ * - Open/Closed: Open for extension via protocols/plugins, closed for modification
  * - Liskov Substitution: Derived services are substitutable
- * - Dependency Inversion: Depends on abstract getMockMap(), not concrete implementations
+ * - Dependency Inversion: Depends on ApiProtocol/ApiPlugin interfaces, not concrete implementations
+ * - Composition over Inheritance: Plugins composed dynamically, not inherited
  */
 
-import axios, {
-  type AxiosInstance,
-  type AxiosError,
-  type AxiosRequestConfig,
-  type InternalAxiosRequestConfig,
-} from 'axios';
-import type { ApiError } from './accounts/api';
-
-/**
- * Base API Service Configuration
- */
-export interface BaseApiServiceConfig {
-  baseURL: string;
-  timeout?: number;
-  headers?: Record<string, string>;
-  useMockApi?: boolean;
-  mockDelay?: number;
-  mockMap?: Readonly<Record<string, unknown>>;
-}
+import { sortBy, forEach, reverse } from 'lodash';
+import { ApiProtocol, type MockMap } from './protocols/ApiProtocol';
+import type { ApiServiceConfig } from './ApiServiceConfig';
+import type { ApiPlugin } from './plugins/ApiPlugin';
 
 /**
  * Abstract Base API Service
- * Template for creating service-specific API clients
+ * Manages protocol and plugin lifecycle using registry pattern (Open/Closed Principle)
  */
 export abstract class BaseApiService {
-  protected client: AxiosInstance;
-  protected config: BaseApiServiceConfig;
+  private readonly protocols: Map<string, ApiProtocol> = new Map();
+  private readonly plugins: Map<new (...args: never[]) => ApiPlugin, ApiPlugin> = new Map();
 
-  constructor(config: BaseApiServiceConfig) {
-    this.config = config;
-    this.client = axios.create({
-      baseURL: config.baseURL,
-      timeout: config.timeout ?? 30000,
-      headers: {
-        'Content-Type': 'application/json',
-        ...config.headers,
-      },
+  constructor(
+    protected readonly config: Readonly<ApiServiceConfig>,
+    ...protocols: ApiProtocol[]
+  ) {
+    // Initialize and register each protocol
+    protocols.forEach((protocol) => {
+      protocol.initialize(
+        this.config,
+        () => this.getMockMap(),
+        () => this.getPluginsInOrder()
+      );
+      // Store by constructor name - no instanceof checks (Open/Closed compliance)
+      this.protocols.set(protocol.constructor.name, protocol);
     });
+  }
 
-    this.setupInterceptors();
+  /**
+   * Type-safe protocol accessor
+   * Returns protocol instance by type
+   * Open/Closed Principle: No modification needed for new protocols
+   *
+   * @param type - Protocol class constructor
+   * @returns Protocol instance
+   * @throws Error if protocol not registered
+   */
+  protected protocol<T extends ApiProtocol>(type: new (...args: never[]) => T): T {
+    const name = type.name;
+    const protocol = this.protocols.get(name);
+    if (!protocol) {
+      throw new Error(`Protocol ${name} not registered`);
+    }
+    return protocol as T;
   }
 
   /**
    * Get mock response map
-   * Returns mockMap from config if provided, otherwise empty
-   * Apps provide mocks via config, not hardcoded in services
+   * Override in derived classes to provide mock data
    */
-  protected getMockMap(): Record<string, unknown> {
-    return this.config.mockMap ?? {};
-  }
-
-  /**
-   * Make GET request
-   */
-  protected async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
-    const response = await this.client.get<T>(url, config);
-    return response.data;
-  }
-
-  /**
-   * Make POST request
-   */
-  protected async post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
-    const response = await this.client.post<T>(url, data, config);
-    return response.data;
-  }
-
-  /**
-   * Make PUT request
-   */
-  protected async put<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
-    const response = await this.client.put<T>(url, data, config);
-    return response.data;
-  }
-
-  /**
-   * Make PATCH request
-   */
-  protected async patch<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
-    const response = await this.client.patch<T>(url, data, config);
-    return response.data;
-  }
-
-  /**
-   * Make DELETE request
-   */
-  protected async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
-    const response = await this.client.delete<T>(url, config);
-    return response.data;
+  protected getMockMap(): Readonly<MockMap> {
+    return {};
   }
 
   /**
    * Get current configuration
    */
-  getConfig(): Readonly<BaseApiServiceConfig> {
-    return Object.freeze({ ...this.config });
+  getConfig(): Readonly<ApiServiceConfig> {
+    return this.config;
   }
 
   /**
-   * Setup axios interceptors
+   * Register plugin (auto-sorts by priority)
+   * Uses constructor as key (type-safe, no strings)
+   *
+   * @param plugin - Plugin instance to register
    */
-  private setupInterceptors(): void {
-    // Request interceptor (for auth tokens, logging, mocks)
-    this.client.interceptors.request.use(
-      async (config: InternalAxiosRequestConfig) => {
-        // Handle mock API
-        if (this.config.useMockApi) {
-          const mockResponse = this.getMockResponse(config.url, config.method);
-          if (mockResponse) {
-            await this.simulateDelay();
-            // Return rejected promise that will be caught by response interceptor
-            return Promise.reject({
-              config,
-              response: {
-                data: mockResponse,
-                status: 200,
-                statusText: 'OK (MOCKED)',
-                headers: {},
-                config,
-              },
-              isAxiosError: false,
-              _isMocked: true,
-            });
-          }
-        }
-
-        // Add auth token if available
-        const token = this.getAuthToken();
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-      },
-      (error) => Promise.reject(error)
-    );
-
-    // Response interceptor (for error handling, logging)
-    this.client.interceptors.response.use(
-      (response) => response,
-      (error: AxiosError<ApiError> & { _isMocked?: boolean }) => {
-        // Handle mocked responses
-        if (error._isMocked && error.response) {
-          return Promise.resolve(error.response);
-        }
-
-        // Transform axios error to ApiError
-        const apiError: ApiError = {
-          code: error.response?.data?.code || error.code || 'UNKNOWN_ERROR',
-          message: error.response?.data?.message || error.message || 'An unknown error occurred',
-          details: error.response?.data?.details,
-        };
-        return Promise.reject(apiError);
-      }
-    );
+  registerPlugin(plugin: ApiPlugin): void {
+    const constructor = plugin.constructor as new (...args: never[]) => ApiPlugin;
+    this.plugins.set(constructor, plugin);
+    this.sortPlugins();
+    plugin.initialize?.();
   }
 
   /**
-   * Get auth token from storage
-   * Can be overridden by derived classes for custom token retrieval
+   * Unregister plugin by constructor
+   * Type-safe: pass the class, not a string
+   *
+   * @param pluginClass - Plugin class constructor
    */
-  protected getAuthToken(): string | null {
-    // TODO: Implement token storage (localStorage, sessionStorage, cookie, etc.)
-    return null;
+  unregisterPlugin<T extends ApiPlugin>(pluginClass: new (...args: never[]) => T): void {
+    const plugin = this.plugins.get(pluginClass);
+    if (plugin) {
+      plugin.destroy();
+      this.plugins.delete(pluginClass);
+    }
   }
 
   /**
-   * Get mock response for endpoint
+   * Get plugin instance by constructor
+   * Returns undefined if not registered
+   *
+   * @param pluginClass - Plugin class constructor
+   * @returns Plugin instance or undefined
    */
-  private getMockResponse(url: string | undefined, method: string | undefined): unknown {
-    if (!url || !method) return null;
-
-    const key = `${method.toUpperCase()} ${url}`;
-    const mockMap = this.getMockMap();
-    return mockMap[key] || null;
+  getPlugin<T extends ApiPlugin>(pluginClass: new (...args: never[]) => T): T | undefined {
+    return this.plugins.get(pluginClass) as T | undefined;
   }
 
   /**
-   * Simulate network delay for mocks
+   * Check if plugin is registered
+   *
+   * @param pluginClass - Plugin class constructor
+   * @returns True if plugin is registered
    */
-  /**
-   * Update mock API setting
-   */
-  setUseMockApi(useMockApi: boolean): void {
-    this.config.useMockApi = useMockApi;
+  hasPlugin<T extends ApiPlugin>(pluginClass: new (...args: never[]) => T): boolean {
+    return this.plugins.has(pluginClass);
   }
 
-  private async simulateDelay(): Promise<void> {
-    const delay = this.config.mockDelay ?? 500;
-    return new Promise((resolve) => setTimeout(resolve, delay));
+  /**
+   * Sort plugins by priority (descending)
+   * Called after adding new plugin
+   * Uses lodash for array operations
+   */
+  private sortPlugins(): void {
+    // Convert Map entries to array
+    const entries = Array.from(this.plugins.entries());
+
+    // Use lodash sortBy with negative priority for descending order
+    const sorted = sortBy(entries, ([, plugin]) => -(plugin.priority ?? 0));
+
+    // Clear and rebuild map using lodash forEach
+    this.plugins.clear();
+    forEach(sorted, ([constructor, plugin]) => {
+      this.plugins.set(constructor, plugin);
+    });
+  }
+
+  /**
+   * Get plugins in priority order
+   * Returns array of plugins (Map values converted to array)
+   */
+  protected getPluginsInOrder(): ApiPlugin[] {
+    // Convert Map values to array (Map-specific operation, acceptable)
+    return Array.from(this.plugins.values());
+  }
+
+  /**
+   * Get plugins in reverse priority order (for response/error handlers)
+   * Uses lodash reverse on array
+   */
+  protected getPluginsReversed(): ApiPlugin[] {
+    const plugins = this.getPluginsInOrder();
+    // Use lodash reverse (creates new array, doesn't mutate)
+    return reverse([...plugins]);
+  }
+
+  /**
+   * Cleanup all protocols and plugins
+   * Call when service is no longer needed
+   * Note: Map.forEach() is acceptable - lodash doesn't provide better Map iteration
+   */
+  destroy(): void {
+    // Cleanup protocols (Map.forEach is acceptable for Map iteration)
+    this.protocols.forEach((p) => p.cleanup());
+    this.protocols.clear();
+
+    // Cleanup plugins (Map.forEach is acceptable for Map iteration)
+    this.plugins.forEach((p) => p.destroy());
+    this.plugins.clear();
   }
 }

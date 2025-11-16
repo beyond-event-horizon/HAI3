@@ -24,8 +24,9 @@ import {
   Skeleton,
 } from '@hai3/uikit';
 import { ButtonVariant, ButtonSize } from '@hai3/uikit-contracts';
-import { TextLoader, useAppSelector, useTranslation, useScreenTranslations, I18nRegistry, Language } from '@hai3/uicore';
+import { TextLoader, useAppSelector, useAppDispatch, useTranslation, useScreenTranslations, I18nRegistry, Language } from '@hai3/uicore';
 import * as chatActions from '../../actions/chatActions';
+import { ChatRole } from '@/api/services/chat/api';
 import type { AttachedFile } from '../../types';
 import '../../chatStore'; // Import for module augmentation side effect
 import { CHAT_SCREEN_ID } from '../screenIds';
@@ -91,6 +92,7 @@ const ChatScreenInternal: React.FC = () => {
   // Register translations for this screen
   useScreenTranslations(CHAT_SCREENSET_ID, CHAT_SCREEN_ID, translations);
 
+  const dispatch = useAppDispatch();
   const { t, translationsReady } = useTranslation();
   const tk = (key: string) => t(`screen.chat.chat:${key}`);
   
@@ -127,6 +129,18 @@ const ChatScreenInternal: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [currentMessages.length, currentThreadId]);
 
+  // SSE connection cleanup (TODO: track connection IDs in Redux for proper cleanup)
+  useEffect(() => {
+    return () => {
+      // When implementing proper connection tracking:
+      // const chatApi = apiRegistry.getService(CHAT_DOMAIN);
+      // if (activeConnectionId) {
+      //   chatApi.disconnectStream(activeConnectionId);
+      // }
+      // Note: SseProtocol.cleanup() will close all connections when service is destroyed
+    };
+  }, []);
+
   // Get current thread
   const currentThread = useMemo(
     () => threads.find((t) => t.id === currentThreadId) || { isTemporary: false, title: 'New Chat' },
@@ -148,10 +162,19 @@ const ChatScreenInternal: React.FC = () => {
   }, []);
 
   const handleSendMessage = useCallback(() => {
-    if (!isStreaming && (inputValue.trim() || attachedFiles.length > 0)) {
-      chatActions.sendMessage(inputValue);
+    if (!isStreaming && (inputValue.trim() || attachedFiles.length > 0) && currentThreadId) {
+      // Build conversation messages for API request
+      const conversationMessages = messages
+        .filter((m) => m.threadId === currentThreadId)
+        .map((m) => ({
+          role: m.type === 'user' ? ChatRole.User : ChatRole.Assistant,
+          content: m.content,
+        }));
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      dispatch(chatActions.sendMessage(inputValue, currentThreadId, currentModel, conversationMessages) as any);
     }
-  }, [inputValue, isStreaming, attachedFiles.length]);
+  }, [dispatch, inputValue, isStreaming, attachedFiles.length, currentThreadId, currentModel, messages]);
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -215,11 +238,20 @@ const ChatScreenInternal: React.FC = () => {
   const handleKeyPress = useCallback((e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      if (!isStreaming && (inputValue.trim() || attachedFiles.length > 0)) {
-        chatActions.sendMessage(inputValue);
+      if (!isStreaming && (inputValue.trim() || attachedFiles.length > 0) && currentThreadId) {
+        // Build conversation messages for API request
+        const conversationMessages = messages
+          .filter((m) => m.threadId === currentThreadId)
+          .map((m) => ({
+            role: m.type === 'user' ? ChatRole.User : ChatRole.Assistant,
+            content: m.content,
+          }));
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        dispatch(chatActions.sendMessage(inputValue, currentThreadId, currentModel, conversationMessages) as any);
       }
     }
-  }, [isStreaming, inputValue, attachedFiles.length]);
+  }, [dispatch, isStreaming, inputValue, attachedFiles.length, currentThreadId, currentModel, messages]);
 
   const handleCopyMessage = useCallback((content: string) => {
     navigator.clipboard.writeText(content);

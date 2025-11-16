@@ -32,6 +32,7 @@
     "@hai3/uicore": "^0.1.0",
     "@hai3/uikit": "^0.1.0",
     "@hai3/uikit-contracts": "^0.1.0",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -40,6 +41,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.20",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.18.0",

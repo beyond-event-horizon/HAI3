@@ -8,7 +8,10 @@
  * - api.ts (types)
  */
 
-import { BaseApiService, type BaseApiServiceConfig } from '../BaseApiService';
+import { BaseApiService } from '../../BaseApiService';
+import { RestProtocol } from '../../protocols';
+import { apiRegistry } from '../../apiRegistry';
+import type { MockMap } from '../../protocols/ApiProtocol';
 import type { GetCurrentUserResponse } from './api';
 
 /**
@@ -26,18 +29,27 @@ export const ACCOUNTS_DOMAIN = 'accounts' as const;
  * - Permissions and roles
  */
 export class AccountsApiService extends BaseApiService {
-  constructor(config: Omit<BaseApiServiceConfig, 'baseURL'>) {
-    super({
-      ...config,
-      baseURL: '/api/accounts',
-    });
+  constructor() {
+    super(
+      { baseURL: '/api/accounts' },
+      new RestProtocol({
+        timeout: 30000,
+      })
+    );
+  }
+
+  /**
+   * Get mock map from registry
+   */
+  protected getMockMap(): MockMap {
+    return apiRegistry.getMockMap(ACCOUNTS_DOMAIN);
   }
 
   /**
    * Get current authenticated user
    */
   async getCurrentUser(): Promise<GetCurrentUserResponse> {
-    return this.get<GetCurrentUserResponse>('/user/current');
+    return this.protocol(RestProtocol).get<GetCurrentUserResponse>('/user/current');
   }
 
   // Future methods for accounts domain:
@@ -48,12 +60,11 @@ export class AccountsApiService extends BaseApiService {
 }
 
 // Register service type in ApiServicesMap via module augmentation
-declare module '../apiRegistry' {
+declare module '../../apiRegistry' {
   interface ApiServicesMap {
     [ACCOUNTS_DOMAIN]: AccountsApiService;
   }
 }
 
 // Self-register with API registry
-import { apiRegistry } from '../apiRegistry';
 apiRegistry.register(ACCOUNTS_DOMAIN, AccountsApiService);

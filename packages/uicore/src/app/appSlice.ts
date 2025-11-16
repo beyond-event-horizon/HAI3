@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { ApiUser } from '../api/accounts/api';
+import type { ApiUser } from '../api/services/accounts/api';
 import { Language } from '../i18n/types';
 
 /**

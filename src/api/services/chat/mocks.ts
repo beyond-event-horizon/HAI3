@@ -3,7 +3,8 @@
  * Simulated responses for chat completions
  */
 
-import { ChatRole, type CreateChatCompletionResponse } from './api';
+import type { MockMap, JsonValue } from '@hai3/uicore';
+import { ChatRole, type CreateChatCompletionResponse, type CreateChatCompletionRequest } from './api';
 
 /**
  * Sample assistant responses for mock chat completions
@@ -123,8 +124,13 @@ function generateMockCompletion(requestModel: string): CreateChatCompletionRespo
  * Type-safe mapping of endpoints to response factories
  */
 export const chatMockMap = {
-  'POST /completions': (requestData?: unknown) => {
-    const request = requestData as { model: string } | undefined;
+  'POST /completions': (requestData?: JsonValue) => {
+    const request = requestData as CreateChatCompletionRequest | undefined;
     return generateMockCompletion(request?.model || 'gpt-3.5-turbo');
   },
-} as const;
+  // SSE streaming endpoint - returns completion that SseProtocol will stream word-by-word
+  'GET /completions/stream': (requestData?: JsonValue) => {
+    const request = requestData as CreateChatCompletionRequest | undefined;
+    return generateMockCompletion(request?.model || 'gpt-3.5-turbo');
+  },
+} satisfies MockMap;
