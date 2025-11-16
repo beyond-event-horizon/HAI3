@@ -1,6 +1,7 @@
 {
   "title": "צ'אט",
   "description": "Full-featured chat interface with threads and messages",
+  "new_chat": "שיחה חדשה",
   "screens": {
     "chat": {
       "title": "צ'אט"

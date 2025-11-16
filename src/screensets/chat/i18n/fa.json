@@ -1,6 +1,7 @@
 {
   "title": "چت",
   "description": "Full-featured chat interface with threads and messages",
+  "new_chat": "گفتگوی جدید",
   "screens": {
     "chat": {
       "title": "چت"

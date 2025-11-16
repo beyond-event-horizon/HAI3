@@ -1,6 +1,7 @@
 {
   "title": "Obrolan",
   "description": "Full-featured chat interface with threads and messages",
+  "new_chat": "Obrolan baru",
   "screens": {
     "chat": {
       "title": "Obrolan"

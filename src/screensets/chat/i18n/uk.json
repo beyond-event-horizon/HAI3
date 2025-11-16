@@ -1,6 +1,7 @@
 {
   "title": "Чат",
   "description": "Full-featured chat interface with threads and messages",
+  "new_chat": "Новий чат",
   "screens": {
     "chat": {
       "title": "Чат"

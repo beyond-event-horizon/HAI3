@@ -1,6 +1,7 @@
 {
   "title": "چیٹ",
   "description": "Full-featured chat interface with threads and messages",
+  "new_chat": "نیا چیٹ",
   "screens": {
     "chat": {
       "title": "چیٹ"

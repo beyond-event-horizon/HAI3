@@ -18,12 +18,12 @@ export const selectThread = (threadId: string): void => {
   eventBus.emit(ChatEvents.ThreadSelected, { threadId });
 };
 
-export const createDraftThread = (isTemporary: boolean): void => {
+export const createDraftThread = (title: string, isTemporary: boolean): void => {
   // Generate draft ID
   const draftId = `draft-${Date.now()}`;
 
   // Emit event to create local draft thread (not saved to backend)
-  eventBus.emit(ChatEvents.DraftThreadCreated, { threadId: draftId, isTemporary });
+  eventBus.emit(ChatEvents.DraftThreadCreated, { threadId: draftId, title, isTemporary });
 };
 
 export const createThread = (isTemporary: boolean, title: string) => {

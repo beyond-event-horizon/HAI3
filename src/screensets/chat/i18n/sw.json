@@ -1,6 +1,7 @@
 {
   "title": "Mazungumzo",
   "description": "Full-featured chat interface with threads and messages",
+  "new_chat": "Mazungumzo mapya",
   "screens": {
     "chat": {
       "title": "Mazungumzo"
