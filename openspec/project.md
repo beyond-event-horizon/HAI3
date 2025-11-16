@@ -18,6 +18,9 @@ The framework is built on clean architecture principles with dependency inversio
 - **Vite 6** - Build tool and dev server
 - **Redux Toolkit** - State management with Redux DevTools
 - **Tailwind CSS 3** - Utility-first styling with custom theme tokens
+- **axios** - HTTP client for REST protocol
+- **EventSource API** - Native browser SSE support for streaming protocol
+- **lodash** - Utility library for object/array operations
 
 ### Component Libraries
 - **shadcn/ui** - Base component library
@@ -255,18 +258,37 @@ declare module '@hai3/uicore' {
 
 ### API Services (Domain-Based)
 
-API services use registry pattern:
+API services use registry pattern with protocol composition:
 
 ```typescript
 export const DOMAIN_NAME = 'domainName';
-export class DomainApiService extends BaseApiService { }
+export class DomainApiService extends BaseApiService {
+  constructor() {
+    super(
+      { baseURL: '/api/domain' },
+      new RestProtocol({ timeout: 30000 }),
+      new SseProtocol({ withCredentials: true })
+    );
+  }
+
+  protected getMockMap(): MockMap {
+    return apiRegistry.getMockMap(DOMAIN_NAME);
+  }
+}
 apiRegistry.register(DOMAIN_NAME, DomainApiService);
 ```
 
-**Mock vs Real Mode:**
-- Services can toggle between mock and real implementations
-- Controlled via `ApiEvents.ModeChanged` event
-- Mock data in `src/api/<domain>/mocks.ts`
+**Protocol System:**
+- Services compose multiple protocols (RestProtocol for HTTP, SseProtocol for streaming)
+- Protocols are registered in constructor and accessed via type-safe `protocol()` method
+- Each protocol has specific configuration (timeout, withCredentials, etc.)
+- Follows Open/Closed Principle - new protocols can be added without modifying BaseApiService
+
+**Plugin-Based Mocking:**
+- MockPlugin intercepts requests with high priority (100) when registered
+- Mock data defined in `src/api/<domain>/mocks.ts` and registered via `apiRegistry.registerMocks()`
+- Plugins use composition, not inheritance or mode flags
+- SSE mocking simulates streaming by splitting responses into word-by-word chunks with 50ms delays
 
 ### Theme System
 
