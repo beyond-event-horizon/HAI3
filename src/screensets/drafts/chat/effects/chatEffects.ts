@@ -27,6 +27,8 @@ import {
   removeFileFromList,
   setInputValue,
   setIsStreaming,
+  setMessages,
+  setAvailableContexts,
 } from '../slices/chatSlice';
 import type { Thread, Message } from '../types';
 
@@ -44,16 +46,31 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
     dispatch(setCurrentThreadId(threadId));
   });
 
-  eventBus.on(ChatEvents.ThreadCreated, ({ isTemporary }) => {
-    const newThread: Thread = {
-      id: `thread-${Date.now()}`,
-      title: 'New Chat',
+  eventBus.on(ChatEvents.DraftThreadCreated, ({ threadId, isTemporary }) => {
+    // Create a local draft thread (not saved to backend yet)
+    const draftThread: Thread = {
+      id: threadId,
+      title: '', // Empty title for draft
       preview: '',
-      timestamp: new Date(),
+      timestamp: new Date().toISOString(),
       isTemporary,
+      isDraft: true, // Mark as draft
     };
-    dispatch(addThread(newThread));
-    dispatch(setCurrentThreadId(newThread.id));
+    dispatch(addThread(draftThread));
+    dispatch(setCurrentThreadId(threadId));
+  });
+
+  eventBus.on(ChatEvents.ThreadCreated, ({ thread }) => {
+    // Effect ONLY updates Redux - thread object comes from action/API
+    // If this is replacing a draft thread, remove the draft first
+    const state = store.getState() as RootState;
+    const draftThread = state.chat.threads.find((t) => t.isDraft);
+    if (draftThread) {
+      dispatch(removeThread({ threadId: draftThread.id }));
+    }
+
+    dispatch(addThread(thread));
+    dispatch(setCurrentThreadId(thread.id));
   });
 
   eventBus.on(ChatEvents.ThreadDeleted, ({ threadId }) => {
@@ -82,26 +99,19 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
   });
 
   // Message effects
+  eventBus.on(ChatEvents.MessageCreated, ({ message }) => {
+    // Effect ONLY updates Redux - message object comes from action/API
+    dispatch(addMessage(message));
+  });
+
   eventBus.on(ChatEvents.MessageSent, ({ content }) => {
-    // Add user message to store - API call is in action!
+    // Handle UI updates after message is sent
     const state = store.getState() as RootState;
     const currentThreadId = state.chat.currentThreadId;
 
     if (!currentThreadId || !content.trim()) {
       return;
     }
-
-    // Create user message
-    const userMessage: Message = {
-      id: `msg-${Date.now()}`,
-      threadId: currentThreadId,
-      type: 'user',
-      content: content.trim(),
-      timestamp: new Date(),
-    };
-
-    // Add message to store
-    dispatch(addMessage(userMessage));
 
     // Clear input
     dispatch(setInputValue(''));
@@ -111,7 +121,7 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
       threadId: currentThreadId,
       updates: {
         preview: content.trim().substring(0, 100),
-        timestamp: new Date(),
+        timestamp: new Date().toISOString(),
       }
     }));
   });
@@ -202,7 +212,7 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
       threadId: state.chat.currentThreadId!,
       type: 'assistant',
       content: '',
-      timestamp: new Date(),
+      timestamp: new Date().toISOString(),
     };
 
     dispatch(addMessage(assistantMessage));
@@ -222,6 +232,24 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
 
   eventBus.on(ChatEvents.StreamingCompleted, ({ messageId: _messageId }) => {
     dispatch(setIsStreaming(false));
+  });
+
+  // Data fetch effects
+  eventBus.on(ChatEvents.DataFetchSucceeded, ({ threads, messages, contexts }) => {
+    // Store data as-is (timestamps are ISO strings, Redux-serializable)
+    dispatch(setThreads(threads));
+    dispatch(setMessages(messages));
+    dispatch(setAvailableContexts(contexts));
+
+    // Set current thread to the first one if available
+    if (threads.length > 0 && !(store.getState() as RootState).chat.currentThreadId) {
+      dispatch(setCurrentThreadId(threads[0].id));
+    }
+  });
+
+  eventBus.on(ChatEvents.DataFetchFailed, ({ error }) => {
+    console.error('Failed to load chat data:', error);
+    // Could show an error message to user here
   });
 };
 

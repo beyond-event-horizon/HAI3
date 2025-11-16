@@ -23,13 +23,13 @@ export interface RequestConfig {
 }
 
 /**
- * API Plugin Interface
- * Implement this interface to create custom plugins (mock, logging, retry, cache, etc.)
+ * API Plugin Abstract Class
+ * Extend this class to create custom plugins (mock, logging, retry, cache, etc.)
+ * Enforces implementation of required lifecycle methods
  */
-export interface ApiPlugin {
+export abstract class ApiPlugin {
   /**
    * Plugin priority (higher = executes first)
-   * Default: 0
    * Suggested values:
    * - Mock: 100 (highest - intercepts before real requests)
    * - Auth: 80 (adds tokens before logging)
@@ -37,44 +37,54 @@ export interface ApiPlugin {
    * - Retry: 30 (retries failed requests)
    * - Cache: 20 (caches successful responses)
    */
-  priority?: number;
+  priority: number = 0;
 
   /**
    * Request hook - called before request is sent
    * Can modify request config or short-circuit by returning a Response
    *
    * @param config - Request configuration
-   * @returns Modified config OR Response to short-circuit
+   * @returns Modified config OR Response to short-circuit (pass through by default)
    */
-  onRequest?(config: RequestConfig): Promise<RequestConfig | Response>;
+  async onRequest(config: RequestConfig): Promise<RequestConfig | Response> {
+    return config;
+  }
 
   /**
    * Response hook - called after successful response
    * Can transform response data
    *
    * @param response - Response from server
-   * @returns Modified response
+   * @returns Modified response (pass through by default)
    */
-  onResponse?(response: Response): Promise<Response>;
+  async onResponse(response: Response): Promise<Response> {
+    return response;
+  }
 
   /**
    * Error hook - called when request fails
    * Can transform error or provide fallback response
    *
    * @param error - Error that occurred
-   * @returns Modified error OR Response as fallback
+   * @returns Modified error OR Response as fallback (rethrow by default)
    */
-  onError?(error: Error): Promise<Error | Response>;
+  async onError(error: Error): Promise<Error | Response> {
+    throw error;
+  }
 
   /**
    * Initialize hook - called when plugin is registered
    * Use for setup (e.g., loading config, connecting to services)
+   * Override if needed
    */
-  initialize?(): void;
+  initialize(): void {
+    // Default: no initialization needed
+  }
 
   /**
    * Destroy hook - called when plugin is unregistered
    * REQUIRED: Clean up resources (connections, timers, listeners)
+   * MUST be implemented by subclasses
    */
-  destroy(): void;
+  abstract destroy(): void;
 }

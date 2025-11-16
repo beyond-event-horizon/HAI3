@@ -95,6 +95,11 @@ const ChatScreenInternal: React.FC = () => {
   const dispatch = useAppDispatch();
   const { t, translationsReady } = useTranslation();
   const tk = (key: string) => t(`screen.chat.chat:${key}`);
+
+  // Fetch chat data on mount
+  useEffect(() => {
+    void dispatch(chatActions.fetchChatData());
+  }, [dispatch]);
   
   const [isMenuCollapsed, setIsMenuCollapsed] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -154,12 +159,14 @@ const ChatScreenInternal: React.FC = () => {
 
   const handleNewThread = useCallback(() => {
     const isTemporary = currentThread?.isTemporary || false;
-    chatActions.createThread(isTemporary);
+    // Create draft thread locally (no API call yet)
+    // Thread will be created on backend when user sends first message
+    chatActions.createDraftThread(isTemporary);
   }, [currentThread]);
 
   const handleDeleteThread = useCallback((threadId: string) => {
-    chatActions.deleteThread(threadId);
-  }, []);
+    void dispatch(chatActions.deleteThread(threadId));
+  }, [dispatch]);
 
   const handleSendMessage = useCallback(() => {
     if (!isStreaming && (inputValue.trim() || attachedFiles.length > 0) && currentThreadId) {
@@ -171,10 +178,10 @@ const ChatScreenInternal: React.FC = () => {
           content: m.content,
         }));
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      dispatch(chatActions.sendMessage(inputValue, currentThreadId, currentModel, conversationMessages) as any);
+      const isTemporary = currentThread?.isTemporary || false;
+      void dispatch(chatActions.sendMessage(inputValue, currentThreadId, currentModel, conversationMessages, isTemporary));
     }
-  }, [dispatch, inputValue, isStreaming, attachedFiles.length, currentThreadId, currentModel, messages]);
+  }, [dispatch, inputValue, isStreaming, attachedFiles.length, currentThreadId, currentModel, messages, currentThread]);
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -210,11 +217,11 @@ const ChatScreenInternal: React.FC = () => {
 
   const handleTitleSave = useCallback((newTitle: string) => {
     if (currentThreadId && newTitle.trim()) {
-      chatActions.updateThreadTitle(currentThreadId, newTitle.trim());
+      void dispatch(chatActions.updateThreadTitle(currentThreadId, newTitle.trim()));
     }
     setIsTitleEditing(false);
     setEditedTitle('');
-  }, [currentThreadId]);
+  }, [currentThreadId, dispatch]);
 
   const handleTitleCancel = useCallback(() => {
     setIsTitleEditing(false);
@@ -222,8 +229,8 @@ const ChatScreenInternal: React.FC = () => {
   }, []);
 
   const handleThreadTitleEdit = useCallback((threadId: string, newTitle: string) => {
-    chatActions.updateThreadTitle(threadId, newTitle);
-  }, []);
+    void dispatch(chatActions.updateThreadTitle(threadId, newTitle));
+  }, [dispatch]);
 
   const handleTemporaryToggle = useCallback((isTemporary: boolean) => {
     if (currentThreadId) {
@@ -247,11 +254,11 @@ const ChatScreenInternal: React.FC = () => {
             content: m.content,
           }));
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        dispatch(chatActions.sendMessage(inputValue, currentThreadId, currentModel, conversationMessages) as any);
+        const isTemporary = currentThread?.isTemporary || false;
+        void dispatch(chatActions.sendMessage(inputValue, currentThreadId, currentModel, conversationMessages, isTemporary));
       }
     }
-  }, [dispatch, isStreaming, inputValue, attachedFiles.length, currentThreadId, currentModel, messages]);
+  }, [dispatch, isStreaming, inputValue, attachedFiles.length, currentThreadId, currentModel, messages, currentThread]);
 
   const handleCopyMessage = useCallback((content: string) => {
     navigator.clipboard.writeText(content);

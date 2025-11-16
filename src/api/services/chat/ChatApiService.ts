@@ -13,6 +13,16 @@ import type {
   CreateChatCompletionRequest,
   CreateChatCompletionResponse,
   ChatCompletionChunk,
+  GetThreadsResponse,
+  GetMessagesResponse,
+  GetContextsResponse,
+  CreateThreadRequest,
+  CreateThreadResponse,
+  CreateMessageRequest,
+  CreateMessageResponse,
+  UpdateThreadRequest,
+  UpdateThreadResponse,
+  DeleteThreadResponse,
 } from './api';
 
 /**
@@ -92,6 +102,55 @@ export class ChatApiService extends BaseApiService {
    */
   disconnectStream(connectionId: string): void {
     this.protocol(SseProtocol).disconnect(connectionId);
+  }
+
+  /**
+   * Get all threads
+   */
+  async getThreads(): Promise<GetThreadsResponse> {
+    return this.protocol(RestProtocol).get<GetThreadsResponse>('/threads');
+  }
+
+  /**
+   * Get all messages
+   */
+  async getMessages(): Promise<GetMessagesResponse> {
+    return this.protocol(RestProtocol).get<GetMessagesResponse>('/messages');
+  }
+
+  /**
+   * Get available contexts
+   */
+  async getContexts(): Promise<GetContextsResponse> {
+    return this.protocol(RestProtocol).get<GetContextsResponse>('/contexts');
+  }
+
+  /**
+   * Create a new thread
+   */
+  async createThread(request: CreateThreadRequest): Promise<CreateThreadResponse> {
+    return this.protocol(RestProtocol).post<CreateThreadResponse, CreateThreadRequest>('/threads', request);
+  }
+
+  /**
+   * Create a new message
+   */
+  async createMessage(request: CreateMessageRequest): Promise<CreateMessageResponse> {
+    return this.protocol(RestProtocol).post<CreateMessageResponse, CreateMessageRequest>('/messages', request);
+  }
+
+  /**
+   * Update a thread
+   */
+  async updateThread(threadId: string, request: UpdateThreadRequest): Promise<UpdateThreadResponse> {
+    return this.protocol(RestProtocol).patch<UpdateThreadResponse, UpdateThreadRequest>(`/threads/${threadId}`, request);
+  }
+
+  /**
+   * Delete a thread
+   */
+  async deleteThread(threadId: string): Promise<DeleteThreadResponse> {
+    return this.protocol(RestProtocol).delete<DeleteThreadResponse>(`/threads/${threadId}`);
   }
 }
 

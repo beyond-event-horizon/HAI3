@@ -87,3 +87,106 @@ export interface ApiError {
   message: string;
   details?: Record<string, string | number | boolean | null>;
 }
+
+/**
+ * Chat Thread (API response)
+ */
+export interface Thread {
+  id: string;
+  title: string;
+  preview: string;
+  timestamp: string; // ISO date string from API
+  isTemporary: boolean;
+}
+
+/**
+ * Chat Message (API response)
+ */
+export interface Message {
+  id: string;
+  threadId: string;
+  type: 'user' | 'assistant';
+  content: string;
+  timestamp: string; // ISO date string from API
+}
+
+/**
+ * Context for chat
+ */
+export interface Context {
+  id: string;
+  name: string;
+  color: string;
+}
+
+/**
+ * Get threads response
+ */
+export type GetThreadsResponse = Thread[];
+
+/**
+ * Get messages response
+ */
+export type GetMessagesResponse = Message[];
+
+/**
+ * Get contexts response
+ */
+export type GetContextsResponse = Context[];
+
+/**
+ * Create thread request
+ * Thread title is generated from firstMessage if provided
+ */
+export interface CreateThreadRequest {
+  title?: string; // Optional - generated from firstMessage if not provided
+  firstMessage?: string; // API generates smart title from this
+  isTemporary: boolean;
+}
+
+/**
+ * Create thread response
+ */
+export type CreateThreadResponse = Thread;
+
+/**
+ * Create message request
+ */
+export interface CreateMessageRequest {
+  threadId: string;
+  type: 'user' | 'assistant';
+  content: string;
+}
+
+/**
+ * Create message response
+ */
+export type CreateMessageResponse = Message;
+
+/**
+ * Update thread request
+ */
+export interface UpdateThreadRequest {
+  title: string;
+}
+
+/**
+ * Update thread response
+ */
+export type UpdateThreadResponse = Thread;
+
+/**
+ * Delete thread request
+ * (threadId passed as URL parameter)
+ */
+export interface DeleteThreadRequest {
+  threadId: string;
+}
+
+/**
+ * Delete thread response
+ */
+export interface DeleteThreadResponse {
+  success: boolean;
+  threadId: string;
+}
