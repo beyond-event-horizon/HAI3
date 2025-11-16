@@ -127,6 +127,20 @@ export const sendMessage = (
           // Clear input
           eventBus.emit(ChatEvents.MessageSent, { content });
 
+          // Create empty assistant message via API before streaming
+          return chatApi.createMessage({
+            threadId: userMessage.threadId,
+            type: 'assistant',
+            content: '',
+          });
+        })
+        .then((assistantMessage) => {
+          // Emit MessageCreated event with API-created message
+          eventBus.emit(ChatEvents.MessageCreated, { message: assistantMessage });
+
+          // Signal streaming started
+          eventBus.emit(ChatEvents.StreamingStarted, { messageId: assistantMessage.id });
+
           // Build messages array for completion
           const messages = [
             {
@@ -134,10 +148,6 @@ export const sendMessage = (
               content: content.trim(),
             },
           ];
-
-          // Start streaming for assistant response
-          const assistantMessageId = `msg-${Date.now()}`;
-          eventBus.emit(ChatEvents.StreamingStarted, { messageId: assistantMessageId });
 
           // Start SSE stream
           chatApi.createCompletionStream(
@@ -150,17 +160,17 @@ export const sendMessage = (
               const delta = chunk.choices?.[0]?.delta;
               if (delta?.content) {
                 eventBus.emit(ChatEvents.StreamingContentUpdated, {
-                  messageId: assistantMessageId,
+                  messageId: assistantMessage.id,
                   content: delta.content,
                 });
               }
 
               if (chunk.choices?.[0]?.finish_reason === 'stop') {
-                eventBus.emit(ChatEvents.StreamingCompleted, { messageId: assistantMessageId });
+                eventBus.emit(ChatEvents.StreamingCompleted, { messageId: assistantMessage.id });
               }
             },
             () => {
-              eventBus.emit(ChatEvents.StreamingCompleted, { messageId: assistantMessageId });
+              eventBus.emit(ChatEvents.StreamingCompleted, { messageId: assistantMessage.id });
             }
           );
         })
@@ -178,6 +188,21 @@ export const sendMessage = (
           eventBus.emit(ChatEvents.MessageCreated, { message: userMessage });
           eventBus.emit(ChatEvents.MessageSent, { content });
 
+          // Create empty assistant message via API before streaming
+          return chatApi.createMessage({
+            threadId,
+            type: 'assistant',
+            content: '',
+          });
+        })
+        .then((assistantMessage) => {
+          // Emit MessageCreated event with API-created message
+          eventBus.emit(ChatEvents.MessageCreated, { message: assistantMessage });
+
+          // Signal streaming started
+          eventBus.emit(ChatEvents.StreamingStarted, { messageId: assistantMessage.id });
+
+          // Build messages array for completion (conversation history + new user message)
           const messages = [
             ...conversationMessages,
             {
@@ -185,9 +210,6 @@ export const sendMessage = (
               content: content.trim(),
             },
           ];
-
-          const assistantMessageId = `msg-${Date.now()}`;
-          eventBus.emit(ChatEvents.StreamingStarted, { messageId: assistantMessageId });
 
           chatApi.createCompletionStream(
             {
@@ -199,17 +221,17 @@ export const sendMessage = (
               const delta = chunk.choices?.[0]?.delta;
               if (delta?.content) {
                 eventBus.emit(ChatEvents.StreamingContentUpdated, {
-                  messageId: assistantMessageId,
+                  messageId: assistantMessage.id,
                   content: delta.content,
                 });
               }
 
               if (chunk.choices?.[0]?.finish_reason === 'stop') {
-                eventBus.emit(ChatEvents.StreamingCompleted, { messageId: assistantMessageId });
+                eventBus.emit(ChatEvents.StreamingCompleted, { messageId: assistantMessage.id });
               }
             },
             () => {
-              eventBus.emit(ChatEvents.StreamingCompleted, { messageId: assistantMessageId });
+              eventBus.emit(ChatEvents.StreamingCompleted, { messageId: assistantMessage.id });
             }
           );
         })
@@ -252,8 +274,60 @@ export const toggleMessageViewMode = (messageId: string): void => {
   eventBus.emit(ChatEvents.MessageViewModeToggled, { messageId });
 };
 
-export const regenerateMessage = (messageId: string): void => {
-  eventBus.emit(ChatEvents.MessageRegenerated, { messageId });
+export const regenerateMessage = (
+  messageId: string,
+  threadId: string,
+  model: string,
+  conversationMessages: Array<{ role: ChatRole; content: string }>
+) => {
+  return (_dispatch: AppDispatch): void => {
+    const chatApi = apiRegistry.getService(CHAT_DOMAIN);
+
+    // Remove the message being regenerated (and all after it)
+    eventBus.emit(ChatEvents.MessageRegenerated, { messageId });
+
+    // Create empty assistant message via API before streaming
+    chatApi.createMessage({
+      threadId,
+      type: 'assistant',
+      content: '',
+    })
+      .then((assistantMessage) => {
+        // Emit MessageCreated event with API-created message
+        eventBus.emit(ChatEvents.MessageCreated, { message: assistantMessage });
+
+        // Signal streaming started
+        eventBus.emit(ChatEvents.StreamingStarted, { messageId: assistantMessage.id });
+
+        // Call streaming API with conversation history (excluding regenerated message)
+        chatApi.createCompletionStream(
+          {
+            model,
+            messages: conversationMessages,
+            stream: true,
+          },
+          (chunk) => {
+            const delta = chunk.choices?.[0]?.delta;
+            if (delta?.content) {
+              eventBus.emit(ChatEvents.StreamingContentUpdated, {
+                messageId: assistantMessage.id,
+                content: delta.content,
+              });
+            }
+
+            if (chunk.choices?.[0]?.finish_reason === 'stop') {
+              eventBus.emit(ChatEvents.StreamingCompleted, { messageId: assistantMessage.id });
+            }
+          },
+          () => {
+            eventBus.emit(ChatEvents.StreamingCompleted, { messageId: assistantMessage.id });
+          }
+        );
+      })
+      .catch((error) => {
+        console.error('Failed to regenerate message:', error);
+      });
+  };
 };
 
 /**
