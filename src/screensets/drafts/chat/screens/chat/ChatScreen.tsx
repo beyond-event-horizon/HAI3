@@ -294,8 +294,22 @@ const ChatScreenInternal: React.FC = () => {
   }, []);
 
   const handleRegenerateMessage = useCallback((messageId: string) => {
-    chatActions.regenerateMessage(messageId);
-  }, []);
+    // Find the message being regenerated
+    const messageIndex = currentMessages.findIndex(m => m.id === messageId);
+    if (messageIndex === -1) return;
+
+    const message = currentMessages[messageIndex];
+
+    // Build conversation history up to (but not including) the message being regenerated
+    const conversationMessages = currentMessages
+      .slice(0, messageIndex)
+      .map(m => ({
+        role: m.type === 'user' ? ChatRole.User : ChatRole.Assistant,
+        content: m.content,
+      }));
+
+    void dispatch(chatActions.regenerateMessage(messageId, message.threadId, currentModel, conversationMessages));
+  }, [currentMessages, currentModel, dispatch]);
 
   const handleDeleteMessage = useCallback((messageId: string) => {
     chatActions.deleteMessage(messageId);

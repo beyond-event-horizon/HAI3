@@ -30,7 +30,7 @@ import {
   setMessages,
   setAvailableContexts,
 } from '../slices/chatSlice';
-import type { Thread, Message } from '../types';
+import type { Thread } from '../types';
 
 let dispatch: AppDispatch;
 
@@ -203,19 +203,8 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
   });
 
   // Streaming effects (Effects ONLY update Redux - no API calls!)
-  eventBus.on(ChatEvents.StreamingStarted, ({ messageId }) => {
-    const state = store.getState() as RootState;
-
-    // Create empty assistant message
-    const assistantMessage: Message = {
-      id: messageId,
-      threadId: state.chat.currentThreadId!,
-      type: 'assistant',
-      content: '',
-      timestamp: new Date().toISOString(),
-    };
-
-    dispatch(addMessage(assistantMessage));
+  eventBus.on(ChatEvents.StreamingStarted, ({ messageId: _messageId }) => {
+    // Effect ONLY sets streaming flag - message is created via API and MessageCreated event
     dispatch(setIsStreaming(true));
   });
 
