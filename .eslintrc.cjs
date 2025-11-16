@@ -7,11 +7,12 @@ module.exports = {
     'plugin:react-hooks/recommended'
   ],
   parser: '@typescript-eslint/parser',
-  parserOptions: { 
-    ecmaVersion: 'latest', 
+  parserOptions: {
+    ecmaVersion: 'latest',
     sourceType: 'module'
   },
   plugins: ['@typescript-eslint', 'react-hooks', 'unused-imports'],
+  noInlineConfig: true, // Disallow ALL inline eslint-disable comments
   ignorePatterns: [
     'dist', 
     '.eslintrc.js', 

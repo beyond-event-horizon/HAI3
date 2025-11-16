@@ -4,7 +4,8 @@
  * Uses composition pattern - instantiated/destroyed dynamically
  */
 
-import type { ApiPlugin, RequestConfig } from './ApiPlugin';
+import { ApiPlugin } from './ApiPlugin';
+import type { RequestConfig } from './ApiPlugin';
 import type { MockMap } from '../protocols/ApiProtocol';
 
 /**
@@ -19,15 +20,53 @@ export interface MockPluginConfig {
  * Mock Plugin Implementation
  * High priority (100) ensures it intercepts requests before real API calls
  */
-export class MockPlugin implements ApiPlugin {
+export class MockPlugin extends ApiPlugin {
   priority = 100; // Highest priority - intercepts early
 
   private readonly mockMap: Readonly<MockMap>;
   private readonly delay: number;
 
   constructor(config: MockPluginConfig) {
+    super();
     this.mockMap = config.mockMap;
     this.delay = config.delay ?? 500;
+  }
+
+  /**
+   * Match URL pattern with parameters (e.g., /threads/:id matches /threads/123)
+   */
+  private matchUrlPattern(pattern: string, url: string): boolean {
+    // Convert pattern with :param to regex
+    const regexPattern = pattern
+      .replace(/:[^/]+/g, '[^/]+')  // Replace :param with regex
+      .replace(/\//g, '\\/');        // Escape slashes
+
+    const regex = new RegExp(`^${regexPattern}$`);
+    return regex.test(url);
+  }
+
+  /**
+   * Find matching mock factory for the request
+   * Supports both exact matches and URL patterns (e.g., /threads/:id)
+   */
+  private findMockFactory(method: string, url: string): ((data?: import('../protocols/ApiProtocol').JsonValue) => unknown) | undefined {
+    const mockKey = `${method.toUpperCase()} ${url}`;
+
+    // Try exact match first
+    const mockFactory = this.mockMap[mockKey];
+    if (mockFactory) {
+      return mockFactory;
+    }
+
+    // Try pattern matching
+    for (const [key, factory] of Object.entries(this.mockMap)) {
+      const [keyMethod, keyUrl] = key.split(' ', 2);
+      if (keyMethod === method.toUpperCase() && this.matchUrlPattern(keyUrl, url)) {
+        return factory;
+      }
+    }
+
+    return undefined;
   }
 
   /**
@@ -35,15 +74,14 @@ export class MockPlugin implements ApiPlugin {
    * Short-circuits request by returning Response directly
    */
   async onRequest(config: RequestConfig): Promise<RequestConfig | Response> {
-    const mockKey = `${config.method.toUpperCase()} ${config.url}`;
-    const mockFactory = this.mockMap[mockKey];
+    const mockFactory = this.findMockFactory(config.method, config.url);
 
     if (mockFactory) {
       // Simulate network delay
       await this.simulateDelay();
 
-      // Get mock data from factory
-      const mockData = mockFactory();
+      // Get mock data from factory, passing request data
+      const mockData = mockFactory(config.data as import('../protocols/ApiProtocol').JsonValue | undefined);
 
       // Return mock response (short-circuits the request chain)
       return new Response(JSON.stringify(mockData), {

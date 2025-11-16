@@ -3,8 +3,16 @@
  * Simulated responses for chat completions
  */
 
+import { trim, upperFirst, truncate } from 'lodash';
 import type { MockMap, JsonValue } from '@hai3/uicore';
-import { ChatRole, type CreateChatCompletionResponse, type CreateChatCompletionRequest } from './api';
+import {
+  ChatRole,
+  type CreateChatCompletionResponse,
+  type CreateChatCompletionRequest,
+  type CreateThreadRequest,
+  type CreateMessageRequest,
+  type UpdateThreadRequest,
+} from './api';
 
 /**
  * Sample assistant responses for mock chat completions
@@ -91,6 +99,34 @@ The important thing is to maintain consistency and follow established patterns i
 ];
 
 /**
+ * Generate a smart thread title from the first message
+ * Mimics ChatGPT/Claude behavior - creates concise titles from user input
+ * Uses lodash for all string operations (required by GUIDELINES.md)
+ */
+function generateSmartTitle(firstMessage: string): string {
+  const maxLength = 50;
+
+  // Trim whitespace using lodash
+  let title = trim(firstMessage);
+
+  // Remove question marks and common prefixes (no lodash equivalent for regex)
+  title = title
+    .replace(/^(how do i|how to|what is|what are|can you|please|help me)\s+/gi, '')
+    .replace(/\?+$/, '');
+
+  // Capitalize first letter using lodash
+  title = upperFirst(title);
+
+  // Truncate with ellipsis using lodash
+  title = truncate(title, {
+    length: maxLength,
+    omission: '...',
+  });
+
+  return title || 'New Chat';
+}
+
+/**
  * Generate a mock chat completion response
  */
 function generateMockCompletion(requestModel: string): CreateChatCompletionResponse {
@@ -120,6 +156,198 @@ function generateMockCompletion(requestModel: string): CreateChatCompletionRespo
 }
 
 /**
+ * Mock threads data
+ */
+const now = Date.now();
+export const mockThreads = [
+  {
+    id: 'thread-1',
+    title: 'React Best Practices',
+    preview: 'What are the best practices for React hooks?',
+    timestamp: new Date(now - 3600000).toISOString(),
+    isTemporary: false,
+  },
+  {
+    id: 'thread-2',
+    title: 'TypeScript Generics',
+    preview: 'Can you explain TypeScript generics?',
+    timestamp: new Date(now - 7200000).toISOString(),
+    isTemporary: false,
+  },
+  {
+    id: 'thread-3',
+    title: 'CSS Grid Layout',
+    preview: 'How to create a responsive grid with CSS Grid?',
+    timestamp: new Date(now - 10800000).toISOString(),
+    isTemporary: false,
+  },
+  {
+    id: 'thread-4',
+    title: 'Temporary Chat',
+    preview: 'This is a temporary conversation',
+    timestamp: new Date(now - 14400000).toISOString(),
+    isTemporary: true,
+  },
+];
+
+/**
+ * Mock messages data
+ */
+export const mockMessages = [
+  {
+    id: 'msg-1',
+    threadId: 'thread-1',
+    type: 'user',
+    content: 'What are the best practices for React hooks?',
+    timestamp: new Date(now - 3600000).toISOString(),
+  },
+  {
+    id: 'msg-2',
+    threadId: 'thread-1',
+    type: 'assistant',
+    content: `Here are some best practices for React hooks:
+
+1. **Only call hooks at the top level** - Don't call hooks inside loops, conditions, or nested functions.
+
+2. **Only call hooks from React functions** - Call them from React function components or custom hooks.
+
+3. **Use the ESLint plugin** - Install and configure \`eslint-plugin-react-hooks\` to catch common mistakes.
+
+4. **Custom hooks should start with "use"** - This naming convention helps identify hooks and allows linting tools to work properly.
+
+Example of a custom hook:
+\`\`\`typescript
+function useWindowSize() {
+  const [size, setSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    function updateSize() {
+      setSize({ width: window.innerWidth, height: window.innerHeight });
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+
+  return size;
+}
+\`\`\`
+
+5. **Optimize with useMemo and useCallback** - But only when necessary to prevent unnecessary re-renders.`,
+    timestamp: new Date(now - 3590000).toISOString(),
+  },
+  {
+    id: 'msg-3',
+    threadId: 'thread-2',
+    type: 'user',
+    content: 'Can you explain TypeScript generics?',
+    timestamp: new Date(now - 7200000).toISOString(),
+  },
+  {
+    id: 'msg-4',
+    threadId: 'thread-2',
+    type: 'assistant',
+    content: `TypeScript generics allow you to create reusable components that work with multiple types.
+
+Here's a simple example:
+\`\`\`typescript
+function identity<T>(arg: T): T {
+  return arg;
+}
+
+// Usage
+const output1 = identity<string>("hello");
+const output2 = identity<number>(42);
+\`\`\`
+
+Generics are especially useful for:
+- Type-safe collections
+- Reusable utility functions
+- Component props that accept various types`,
+    timestamp: new Date(now - 7190000).toISOString(),
+  },
+  {
+    id: 'msg-5',
+    threadId: 'thread-3',
+    type: 'user',
+    content: 'How to create a responsive grid with CSS Grid?',
+    timestamp: new Date(now - 10800000).toISOString(),
+  },
+  {
+    id: 'msg-6',
+    threadId: 'thread-3',
+    type: 'assistant',
+    content: `CSS Grid is a powerful layout system for creating responsive designs. Here's a comprehensive example:
+
+\`\`\`css
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.grid-item {
+  background: #f0f0f0;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+\`\`\`
+
+Key features:
+- **auto-fit**: Automatically fits as many columns as possible
+- **minmax()**: Sets minimum and maximum column width
+- **gap**: Spacing between grid items
+- **1fr**: Flexible fraction unit for equal distribution
+
+This creates a responsive grid that adapts to screen size without media queries!`,
+    timestamp: new Date(now - 10790000).toISOString(),
+  },
+  {
+    id: 'msg-7',
+    threadId: 'thread-4',
+    type: 'user',
+    content: 'What is a temporary chat?',
+    timestamp: new Date(now - 14400000).toISOString(),
+  },
+  {
+    id: 'msg-8',
+    threadId: 'thread-4',
+    type: 'assistant',
+    content: `A temporary chat is a conversation that won't be saved to your history. It's useful for:
+
+- **Privacy**: Sensitive questions that you don't want stored
+- **Testing**: Trying out prompts without cluttering your history
+- **Quick queries**: One-off questions that don't need to be saved
+
+Temporary chats are marked with a clock icon (⏱️) and will be automatically deleted when you close the session or after a certain period of inactivity.
+
+You can enable temporary mode using the toggle near the input field.`,
+    timestamp: new Date(now - 14390000).toISOString(),
+  },
+];
+
+/**
+ * Mock available contexts
+ */
+export const mockContexts = [
+  { id: 'context-1', name: 'Context 1', color: 'bg-yellow-400' },
+  { id: 'work-1', name: 'Work 1', color: 'bg-gray-800' },
+  { id: 'hobby', name: 'Hobby', color: 'bg-blue-600' },
+  { id: 'test', name: 'Test', color: 'bg-cyan-400' },
+  { id: 'cooking', name: 'Cooking', color: 'bg-purple-400' },
+  { id: 'books', name: 'Books', color: 'bg-yellow-600' },
+  { id: 'private', name: 'Private docs', color: 'bg-red-500' },
+];
+
+/**
  * Mock responses for chat service endpoints
  * Type-safe mapping of endpoints to response factories
  */
@@ -132,5 +360,61 @@ export const chatMockMap = {
   'GET /completions/stream': (requestData?: JsonValue) => {
     const request = requestData as CreateChatCompletionRequest | undefined;
     return generateMockCompletion(request?.model || 'gpt-3.5-turbo');
+  },
+  // Get all threads
+  'GET /threads': () => mockThreads,
+  // Get all messages
+  'GET /messages': () => mockMessages,
+  // Get available contexts
+  'GET /contexts': () => mockContexts,
+  // Create a new thread
+  'POST /threads': (requestData?: JsonValue) => {
+    const request = requestData as CreateThreadRequest | undefined;
+
+    // Generate title from firstMessage if provided, otherwise use provided title
+    const title = request?.firstMessage
+      ? generateSmartTitle(request.firstMessage)
+      : (request?.title || 'New Chat');
+
+    return {
+      id: `thread-${Date.now()}`,
+      title,
+      preview: request?.firstMessage?.substring(0, 100) || '',
+      timestamp: new Date().toISOString(),
+      isTemporary: request?.isTemporary || false,
+    };
+  },
+  // Create a new message
+  'POST /messages': (requestData?: JsonValue) => {
+    const request = requestData as CreateMessageRequest | undefined;
+    return {
+      id: `msg-${Date.now()}`,
+      threadId: request?.threadId || '',
+      type: request?.type || 'user',
+      content: request?.content || '',
+      timestamp: new Date().toISOString(),
+    };
+  },
+  // Update a thread (pattern matches /threads/any-id)
+  'PATCH /threads/:id': (requestData?: JsonValue) => {
+    const request = requestData as UpdateThreadRequest | undefined;
+    // In a real implementation, we'd update the thread in a data store
+    // For mocks, we just return the updated thread
+    return {
+      id: 'thread-updated',
+      title: request?.title || 'Updated Thread',
+      preview: '',
+      timestamp: new Date().toISOString(),
+      isTemporary: false,
+    };
+  },
+  // Delete a thread (pattern matches /threads/any-id)
+  'DELETE /threads/:id': () => {
+    // In a real implementation, we'd delete the thread from a data store
+    // For mocks, we just return success
+    return {
+      success: true,
+      threadId: 'thread-deleted',
+    };
   },
 } satisfies MockMap;

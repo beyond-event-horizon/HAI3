@@ -35,10 +35,10 @@ export const Footer: React.FC = () => {
   useEffect(() => {
     const options = buildScreensetOptions();
     const themes = themeRegistry.getThemeNames();
-    
+
     // Update local state
     setScreensetOptions(options);
-    
+
     // Set initial theme if not set
     if (!theme && themes.length > 0) {
       dispatch(changeTheme(themes[0]));
@@ -46,8 +46,7 @@ export const Footer: React.FC = () => {
 
     // DO NOT set initial screenset here - AppRouter handles "/" route redirect
     // Setting screenset here causes race condition with URL-based navigation (RouterSync)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Run only once on mount
+  }, [theme, dispatch]); // Run when theme or dispatch changes (dispatch is stable)
 
   // No side effects here - actions emit events, effects handle them
 

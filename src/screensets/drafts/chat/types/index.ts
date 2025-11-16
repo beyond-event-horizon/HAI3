@@ -22,7 +22,7 @@ export interface Message {
   threadId: string;
   type: 'user' | 'assistant';
   content: string;
-  timestamp: Date;
+  timestamp: string; // ISO date string (Redux-serializable)
   files?: AttachedFile[];
   liked?: boolean;
   disliked?: boolean;
@@ -33,6 +33,7 @@ export interface Thread {
   id: string;
   title: string;
   preview: string;
-  timestamp: Date;
+  timestamp: string; // ISO date string (Redux-serializable)
   isTemporary: boolean;
+  isDraft?: boolean; // True for local draft threads (not saved to backend yet)
 }

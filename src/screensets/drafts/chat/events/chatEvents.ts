@@ -5,7 +5,7 @@
  */
 
 import '@hai3/uicore';
-import type { AttachedFile } from '../types';
+import type { AttachedFile, Thread, Message, Context } from '../types';
 import type { EnhancedChatThread } from '../uikit/components/EnhancedThreadList';
 
 /**
@@ -15,6 +15,7 @@ import type { EnhancedChatThread } from '../uikit/components/EnhancedThreadList'
 export enum ChatEvents {
   // Thread events
   ThreadSelected = 'chat/threadSelected',
+  DraftThreadCreated = 'chat/draftThreadCreated', // Local draft thread (not saved to backend)
   ThreadCreated = 'chat/threadCreated',
   ThreadDeleted = 'chat/threadDeleted',
   ThreadTitleUpdated = 'chat/threadTitleUpdated',
@@ -23,6 +24,7 @@ export enum ChatEvents {
 
   // Message events
   MessageSent = 'chat/messageSent',
+  MessageCreated = 'chat/messageCreated',
   MessageEditingStarted = 'chat/messageEditingStarted',
   MessageEditedContentUpdated = 'chat/messageEditedContentUpdated',
   MessageEditSaved = 'chat/messageEditSaved',
@@ -49,6 +51,11 @@ export enum ChatEvents {
   StreamingStarted = 'chat/streamingStarted',
   StreamingContentUpdated = 'chat/streamingContentUpdated',
   StreamingCompleted = 'chat/streamingCompleted',
+
+  // Data fetch events
+  DataFetchStarted = 'chat/dataFetchStarted',
+  DataFetchSucceeded = 'chat/dataFetchSucceeded',
+  DataFetchFailed = 'chat/dataFetchFailed',
 }
 
 /**
@@ -59,7 +66,8 @@ declare module '@hai3/uicore' {
   interface EventPayloadMap {
     // Thread events
     'chat/threadSelected': { threadId: string };
-    'chat/threadCreated': { isTemporary: boolean };
+    'chat/draftThreadCreated': { threadId: string; isTemporary: boolean }; // Draft thread created locally
+    'chat/threadCreated': { thread: Thread };
     'chat/threadDeleted': { threadId: string };
     'chat/threadTitleUpdated': { threadId: string; newTitle: string };
     'chat/threadsReordered': { threads: EnhancedChatThread[] };
@@ -67,6 +75,7 @@ declare module '@hai3/uicore' {
     
     // Message events
     'chat/messageSent': { content: string };
+    'chat/messageCreated': { message: Message };
     'chat/messageEditingStarted': { messageId: string; content: string };
     'chat/messageEditedContentUpdated': { content: string };
     'chat/messageEditSaved': { messageId: string; content: string };
@@ -93,5 +102,10 @@ declare module '@hai3/uicore' {
     'chat/streamingStarted': { messageId: string };
     'chat/streamingContentUpdated': { messageId: string; content: string };
     'chat/streamingCompleted': { messageId: string };
+
+    // Data fetch events
+    'chat/dataFetchStarted': Record<string, never>;
+    'chat/dataFetchSucceeded': { threads: Thread[]; messages: Message[]; contexts: Context[] };
+    'chat/dataFetchFailed': { error: string };
   }
 }
