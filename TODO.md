@@ -1,12 +1,9 @@
 ## TODO
-- Screenset is not selected when opening the app by URL. Example: Chat screenset is not selected when opening the app by URL: /chat
 - Rename Menu to MainMenu. Update file names, variables names, etc. everywhere.
 - Chat: review and decide if we need dedicated UI-kit / UI-core component and what to do with Theme
 - Build test: ensure there are no custom colors (e.g. bg-green-500, text-gray-700)
 - arch:check - skip folders starting with "." , e.g. ".HAI3-poc.old"
 - Global "full screen" toggle (as overlay on the top of the screen)
 - Add LTR/RTL toggle on ui kit screen
-- Add translations to other languages
 - Make "inheritColor" to be the default option in the TextLoader
 - Move lucide icons to the screensets ui kit
-- Support specifying localization dicts path in screenset config instead of registering each dictionary in screens
