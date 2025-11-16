@@ -379,7 +379,7 @@ export const chatMockMap = {
     return {
       id: `thread-${Date.now()}`,
       title,
-      preview: request?.firstMessage?.substring(0, 100) || '',
+      preview: truncate(request?.firstMessage || '', { length: 100, omission: '' }),
       timestamp: new Date().toISOString(),
       isTemporary: request?.isTemporary || false,
     };

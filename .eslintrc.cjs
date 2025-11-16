@@ -50,6 +50,27 @@ module.exports = {
         selector: "CallExpression[callee.name='dispatch'] > MemberExpression[object.name='store']",
         message: 'FLUX VIOLATION: Components must not call store.dispatch directly. Use actions instead. See EVENTS.md.',
       },
+      // Lodash enforcement: Detect common native methods that should use lodash
+      {
+        selector: "CallExpression[callee.property.name='trim']",
+        message: 'LODASH VIOLATION: Use lodash trim() instead of native .trim(). Import { trim } from \'lodash\'. See GUIDELINES.md line 35.',
+      },
+      {
+        selector: "CallExpression[callee.property.name='charAt']",
+        message: 'LODASH VIOLATION: Use lodash string methods instead of native .charAt(). See GUIDELINES.md line 35.',
+      },
+      {
+        selector: "CallExpression[callee.property.name='substring']",
+        message: 'LODASH VIOLATION: Use lodash truncate() or other string methods instead of native .substring(). See GUIDELINES.md line 35.',
+      },
+      {
+        selector: "CallExpression[callee.property.name='toUpperCase']",
+        message: 'LODASH VIOLATION: Use lodash upperCase() or upperFirst() instead of native .toUpperCase(). See GUIDELINES.md line 35.',
+      },
+      {
+        selector: "CallExpression[callee.property.name='toLowerCase']",
+        message: 'LODASH VIOLATION: Use lodash lowerCase() or lowerFirst() instead of native .toLowerCase(). See GUIDELINES.md line 35.',
+      },
     ],
   },
   overrides: [
@@ -204,6 +225,14 @@ module.exports = {
             message: 'FLUX VIOLATION: Actions must return void, not Promise<void>. Use fire-and-forget pattern with .then()/.catch(). See EVENTS.md.',
           },
           {
+            selector: "FunctionDeclaration[async=true]",
+            message: 'FLUX VIOLATION: Actions must NOT use async keyword. Use fire-and-forget pattern: return void and handle promises with .then()/.catch(). See EVENTS.md.',
+          },
+          {
+            selector: "ArrowFunctionExpression[async=true]",
+            message: 'FLUX VIOLATION: Actions must NOT use async keyword. Use fire-and-forget pattern: return void and handle promises with .then()/.catch(). See EVENTS.md.',
+          },
+          {
             selector: "FunctionDeclaration:has(Identifier[name='getState'])",
             message: 'FLUX VIOLATION: Actions are PURE FUNCTIONS. They must NOT access store via getState(). Pass all required parameters from the calling component. See EVENTS.md.',
           },
@@ -266,10 +295,10 @@ module.exports = {
     },
     
     // Flux Architecture: Effects cannot emit events
-    // 
+    //
     // Effects should only listen to events and update slices
     // Emitting events from effects creates circular flow: Effect → Event → Effect
-    // 
+    //
     // CORRECT: Action → emits event → Effect → updates slice
     // WRONG:   Effect → emits event (potential infinite loop)
     {
@@ -282,6 +311,65 @@ module.exports = {
             // Catch: eventBus.emit(...)
             selector: "CallExpression[callee.object.name='eventBus'][callee.property.name='emit']",
             message: 'FLUX VIOLATION: Effects cannot emit events (creates circular flow). Effects should only listen to events and update slices. If you need to trigger another action, refactor the original action to emit both events. See EVENTS.md.',
+          },
+        ],
+      },
+    },
+
+    // Data Layer: No hardcoded i18n values in types, interfaces, or mock data
+    //
+    // Translation keys should only be used in UI components, not in data structures
+    // Hardcoding translated strings in entity data causes language-switching bugs
+    //
+    // CORRECT: Generate smart, content-based values in API/mocks (e.g., title from first message)
+    // WRONG:   { title: t('new_chat_title') } in entity data
+    {
+      files: ['**/types/**/*', '**/api/**/*', '**/mocks.ts', '**/*.types.ts'],
+      excludedFiles: ['**/*.test.*', '**/*.spec.*', '**/*.tsx', '**/*.jsx'],
+      rules: {
+        'no-restricted-syntax': [
+          'error',
+          {
+            // Catch: t('...') or t("...") in data files
+            selector: "CallExpression[callee.name='t']",
+            message: 'I18N VIOLATION: Translation function t() should NOT be used in types, interfaces, or data structures. Generates language-switching bugs. Use smart content-based generation instead. See SCREENSETS.md (Draft Entity Pattern).',
+          },
+        ],
+      },
+    },
+
+    // Mock Data: Strict lodash enforcement
+    //
+    // Mock data factories must use lodash for ALL string/array/object operations
+    // This ensures consistency with the codebase standards
+    {
+      files: ['**/mocks.ts', '**/mock*.ts'],
+      rules: {
+        'no-restricted-syntax': [
+          'error',
+          {
+            selector: "CallExpression[callee.property.name='trim']",
+            message: 'MOCK DATA VIOLATION: Use lodash trim() instead of native .trim() in mock data factories. Import { trim } from \'lodash\'. See API.md (Mock Data Rules).',
+          },
+          {
+            selector: "CallExpression[callee.property.name='charAt']",
+            message: 'MOCK DATA VIOLATION: Use lodash string methods instead of native .charAt() in mock data. See API.md (Mock Data Rules).',
+          },
+          {
+            selector: "CallExpression[callee.property.name='substring']",
+            message: 'MOCK DATA VIOLATION: Use lodash truncate() or other methods instead of native .substring() in mock data. See API.md (Mock Data Rules).',
+          },
+          {
+            selector: "CallExpression[callee.property.name='toUpperCase']",
+            message: 'MOCK DATA VIOLATION: Use lodash upperCase() or upperFirst() instead of native .toUpperCase() in mock data. See API.md (Mock Data Rules).',
+          },
+          {
+            selector: "CallExpression[callee.property.name='toLowerCase']",
+            message: 'MOCK DATA VIOLATION: Use lodash lowerCase() or lowerFirst() instead of native .toLowerCase() in mock data. See API.md (Mock Data Rules).',
+          },
+          {
+            selector: "CallExpression[callee.property.name='slice']",
+            message: 'MOCK DATA VIOLATION: Use lodash slice() instead of native .slice() in mock data. Import { slice } from \'lodash\'. See API.md (Mock Data Rules).',
           },
         ],
       },

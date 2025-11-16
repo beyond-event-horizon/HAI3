@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Loader2 } from "lucide-react"
+import { trim } from "lodash"
 
 import { cn } from "../lib/utils"
 
@@ -12,7 +13,7 @@ const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(
   ({ className, icon: Icon = Loader2, size = "size-4", ...props }, ref) => {
     // Extract text-* color classes for the icon, keep other classes for wrapper
     const textColorClasses = className?.match(/\btext-\S+/g)?.join(' ') || '';
-    const wrapperClasses = className?.replace(/\btext-\S+/g, '').trim() || '';
+    const wrapperClasses = trim(className?.replace(/\btext-\S+/g, '') || '');
     
     return (
       <div

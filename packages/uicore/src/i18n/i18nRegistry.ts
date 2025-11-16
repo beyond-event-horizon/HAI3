@@ -1,3 +1,4 @@
+import { split } from 'lodash';
 import { Language, TextDirection, SUPPORTED_LANGUAGES, I18N_NAMESPACE_SEPARATOR, I18N_PATH_SEPARATOR, I18N_DEFAULT_NAMESPACE, HTML_LANG_ATTRIBUTE, HTML_DIR_ATTRIBUTE } from './types';
 import type { TranslationDictionary, I18nConfig, LanguageMetadata, TranslationLoader } from './types';
 
@@ -326,13 +327,13 @@ export class I18nRegistry {
    * 'button.submit' → { namespace: 'app', path: 'button.submit' }
    */
   private parseKey(key: string): { namespace: string; path: string } {
-    const colonIndex = key.indexOf(I18N_NAMESPACE_SEPARATOR);
-    if (colonIndex === -1) {
+    const parts = split(key, I18N_NAMESPACE_SEPARATOR, 2);
+    if (parts.length === 1) {
       return { namespace: I18N_DEFAULT_NAMESPACE, path: key };
     }
     return {
-      namespace: key.substring(0, colonIndex),
-      path: key.substring(colonIndex + 1),
+      namespace: parts[0],
+      path: parts[1],
     };
   }
 

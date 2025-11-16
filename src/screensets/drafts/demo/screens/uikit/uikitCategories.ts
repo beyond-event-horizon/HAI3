@@ -3,6 +3,8 @@
  * Organized grouping of all UI Kit elements
  */
 
+import { toLower } from 'lodash';
+
 export interface UIKitCategory {
   id: string;
   label: string;
@@ -146,7 +148,7 @@ export function getCategoryIdForElement(elementName: string): string | undefined
  * Get normalized element ID (for DOM IDs)
  */
 export function getElementId(elementName: string): string {
-  return `element-${elementName.toLowerCase().replace(/\s+/g, '-')}`;
+  return `element-${toLower(elementName).replace(/\s+/g, '-')}`;
 }
 
 /**
