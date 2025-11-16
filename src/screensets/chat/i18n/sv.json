@@ -1,6 +1,7 @@
 {
   "title": "Chatt",
   "description": "Full-featured chat interface with threads and messages",
+  "new_chat": "Ny chatt",
   "screens": {
     "chat": {
       "title": "Chatt"

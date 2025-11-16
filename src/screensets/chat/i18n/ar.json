@@ -1,6 +1,7 @@
 {
   "title": "دردشة",
   "description": "Full-featured chat interface with threads and messages",
+  "new_chat": "محادثة جديدة",
   "screens": {
     "chat": {
       "title": "دردشة"

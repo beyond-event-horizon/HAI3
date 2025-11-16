@@ -159,10 +159,12 @@ const ChatScreenInternal: React.FC = () => {
 
   const handleNewThread = useCallback(() => {
     const isTemporary = currentThread?.isTemporary || false;
+    // Get localized "New chat" title
+    const newChatTitle = t(`screenset.${CHAT_SCREENSET_ID}:new_chat`);
     // Create draft thread locally (no API call yet)
     // Thread will be created on backend when user sends first message
-    chatActions.createDraftThread(isTemporary);
-  }, [currentThread]);
+    chatActions.createDraftThread(newChatTitle, isTemporary);
+  }, [currentThread, t]);
 
   const handleDeleteThread = useCallback((threadId: string) => {
     void dispatch(chatActions.deleteThread(threadId));

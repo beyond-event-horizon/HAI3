@@ -1,6 +1,7 @@
 {
   "title": "Trò chuyện",
   "description": "Full-featured chat interface with threads and messages",
+  "new_chat": "Trò chuyện mới",
   "screens": {
     "chat": {
       "title": "Trò chuyện"

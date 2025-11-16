@@ -66,7 +66,7 @@ declare module '@hai3/uicore' {
   interface EventPayloadMap {
     // Thread events
     'chat/threadSelected': { threadId: string };
-    'chat/draftThreadCreated': { threadId: string; isTemporary: boolean }; // Draft thread created locally
+    'chat/draftThreadCreated': { threadId: string; title: string; isTemporary: boolean }; // Draft thread created locally
     'chat/threadCreated': { thread: Thread };
     'chat/threadDeleted': { threadId: string };
     'chat/threadTitleUpdated': { threadId: string; newTitle: string };

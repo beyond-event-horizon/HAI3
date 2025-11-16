@@ -46,11 +46,11 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
     dispatch(setCurrentThreadId(threadId));
   });
 
-  eventBus.on(ChatEvents.DraftThreadCreated, ({ threadId, isTemporary }) => {
+  eventBus.on(ChatEvents.DraftThreadCreated, ({ threadId, title, isTemporary }) => {
     // Create a local draft thread (not saved to backend yet)
     const draftThread: Thread = {
       id: threadId,
-      title: '', // Empty title for draft
+      title, // Localized "New chat" title
       preview: '',
       timestamp: new Date().toISOString(),
       isTemporary,
