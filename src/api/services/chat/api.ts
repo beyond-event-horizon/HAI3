@@ -85,5 +85,5 @@ export interface ChatCompletionChunk {
 export interface ApiError {
   code: string;
   message: string;
-  details?: unknown;
+  details?: Record<string, string | number | boolean | null>;
 }

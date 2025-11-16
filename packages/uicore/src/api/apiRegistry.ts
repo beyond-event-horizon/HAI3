@@ -2,15 +2,15 @@
  * API Registry
  * Central registry for all API service instances
  * Follows Open/Closed Principle: services self-register without modifying registry
- * 
+ *
  * Pattern:
  * 1. Services self-register at module level
  * 2. Registry stores services by domain name
  * 3. Type-safe access via getService(domain) - type inferred from ApiServicesMap
- * 
+ *
  * Type Safety: ApiServicesMap ensures domain name matches service type at compile time
  * Services use module augmentation to add their types to the map
- * 
+ *
  * Services organized by backend domain/bounded context:
  * - accounts: Users, tenants, authentication, permissions
  * - billing: Invoices, payments, subscriptions (screenset-provided)
@@ -18,13 +18,15 @@
  */
 
 import type { BaseApiService } from './BaseApiService';
+import type { MockMap } from './protocols/ApiProtocol';
+import { MockPlugin } from './plugins/MockPlugin';
 
 /**
  * API Services Map
  * Maps domain string constants to service types
  * Services extend this interface via module augmentation
  * Keys must be string literals, not numbers
- * 
+ *
  * @example
  * declare module '@hai3/uicore' {
  *   interface ApiServicesMap {
@@ -41,6 +43,7 @@ export interface ApiServicesMap {
 
 /**
  * API Services Configuration
+ * Global configuration for all API services
  */
 export interface ApiServicesConfig {
   useMockApi: boolean;
@@ -49,9 +52,9 @@ export interface ApiServicesConfig {
 
 /**
  * Service Constructor Type
- * Defines the shape of service class constructors
+ * Services now use no-arg constructors (configure themselves)
  */
-type ServiceConstructor<T extends BaseApiService = BaseApiService> = new (config: Omit<import('./BaseApiService').BaseApiServiceConfig, 'baseURL'>) => T;
+type ServiceConstructor<T extends BaseApiService = BaseApiService> = new () => T;
 
 /**
  * API Registry
@@ -61,9 +64,9 @@ type ServiceConstructor<T extends BaseApiService = BaseApiService> = new (config
 class ApiRegistry {
   private services: Map<string, BaseApiService> = new Map();
   private serviceClasses: Map<string, ServiceConstructor> = new Map();
-  private mockMaps: Map<string, Readonly<Record<string, unknown>>> = new Map();
-  private config: ApiServicesConfig | null = null;
+  private mockMaps: Map<string, Readonly<MockMap>> = new Map();
   private initialized: boolean = false;
+  private config: Readonly<ApiServicesConfig> = { useMockApi: true };
 
   /**
    * Register mock data for a service
@@ -72,7 +75,7 @@ class ApiRegistry {
    */
   registerMocks<K extends string & keyof ApiServicesMap>(
     domain: K,
-    mockMap: Readonly<Record<string, unknown>>
+    mockMap: Readonly<MockMap>
   ): void {
     this.mockMaps.set(domain, mockMap);
   }
@@ -88,42 +91,41 @@ class ApiRegistry {
     serviceClass: ServiceConstructor<ApiServicesMap[K]>
   ): void {
     this.serviceClasses.set(domain, serviceClass);
-    
+
     // If already initialized, instantiate immediately
-    if (this.initialized && this.config) {
-      const service = new serviceClass({
-        useMockApi: this.config.useMockApi,
-        mockDelay: this.config.mockDelay,
-        mockMap: this.mockMaps.get(domain),
-      });
+    if (this.initialized) {
+      const service = new serviceClass();
       this.services.set(domain, service);
     }
   }
 
   /**
    * Initialize all registered API services
-   * Instantiates all services with config
+   * Instantiates all services and sets up mock mode
    * Must be called before accessing any services
    */
-  initialize(config: ApiServicesConfig): void {
-    this.config = config;
+  initialize(config?: ApiServicesConfig): void {
+    if (config) {
+      this.config = config;
+    }
     this.initialized = true;
-    
+
     // Instantiate all registered service classes
     this.serviceClasses.forEach((ServiceClass, domain) => {
-      const service = new ServiceClass({
-        useMockApi: config.useMockApi,
-        mockDelay: config.mockDelay,
-        mockMap: this.mockMaps.get(domain),
-      });
+      const service = new ServiceClass();
       this.services.set(domain, service);
     });
+
+    // Set mock mode after services are instantiated
+    if (this.config.useMockApi) {
+      this.setMockMode(true);
+    }
   }
 
   /**
    * Get service by domain with type safety
    * Type is automatically inferred from ApiServicesMap
-   * 
+   *
    * @example
    * const accounts = apiRegistry.getService(ACCOUNTS_DOMAIN);
    * const user = await accounts.getCurrentUser(); // Full type safety!
@@ -132,14 +134,14 @@ class ApiRegistry {
     if (!this.initialized) {
       throw new Error('API services not initialized. Call initialize() first.');
     }
-    
+
     const service = this.services.get(domain);
     if (!service) {
       throw new Error(
         `Service '${domain}' not found. Available services: ${Array.from(this.services.keys()).join(', ')}`
       );
     }
-    
+
     return service as ApiServicesMap[K];
   }
 
@@ -158,26 +160,46 @@ class ApiRegistry {
   }
 
   /**
-   * Get current configuration
+   * Get mock map for a domain
+   * Used by services to access their mock data
    */
-  getConfig(): Readonly<ApiServicesConfig> | null {
-    return this.config ? Object.freeze({ ...this.config }) : null;
+  getMockMap(domain: string): MockMap {
+    return (this.mockMaps.get(domain) as MockMap) || {};
   }
 
   /**
-   * Update mock API mode without re-initialization
-   * Faster than re-initializing - just updates config
+   * Get current global API configuration
+   * Used by services/protocols to read useMockApi, mockDelay, etc.
+   */
+  getConfig(): Readonly<ApiServicesConfig> {
+    return this.config;
+  }
+
+  /**
+   * Set mock mode dynamically using plugin composition
+   * Registers/unregisters MockPlugin on all services
+   *
+   * @param useMockApi - Whether to use mock API
    */
   setMockMode(useMockApi: boolean): void {
-    if (!this.initialized || !this.config) {
-      throw new Error('API services not initialized. Call initialize() first.');
-    }
-    
-    this.config.useMockApi = useMockApi;
-    
-    // Update all service configs
-    this.services.forEach((service) => {
-      service.setUseMockApi(useMockApi);
+    // Update config
+    this.config = { ...this.config, useMockApi };
+
+    // Update plugins on all existing services
+    this.services.forEach((service, domain) => {
+      if (useMockApi) {
+        // Register MockPlugin if not already present
+        if (!service.hasPlugin(MockPlugin)) {
+          const mockMap = this.getMockMap(domain);
+          const mockDelay = this.config.mockDelay;
+          service.registerPlugin(new MockPlugin({ mockMap, delay: mockDelay }));
+        }
+      } else {
+        // Unregister MockPlugin if present
+        if (service.hasPlugin(MockPlugin)) {
+          service.unregisterPlugin(MockPlugin);
+        }
+      }
     });
   }
 }

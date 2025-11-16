@@ -2,12 +2,12 @@
  * Accounts Domain - API Types
  * Type definitions for accounts service endpoints
  * (users, tenants, authentication, permissions)
- * 
+ *
  * NOTE: These types are used for backend generation
  * Keep them clean, typed, and well-documented
  */
 
-import type { Language } from '../../i18n/types';
+import type { Language } from '../../../i18n/types';
 
 /**
  * User Extra Properties
@@ -55,5 +55,5 @@ export interface GetCurrentUserResponse {
 export interface ApiError {
   code: string;
   message: string;
-  details?: Record<string, unknown>;
+  details?: Record<string, string | number | boolean | null>;
 }

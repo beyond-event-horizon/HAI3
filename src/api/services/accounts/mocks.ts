@@ -2,7 +2,13 @@
  * Mock data for accounts service
  */
 
-import { UserRole, Language, type ApiUser, type GetCurrentUserResponse } from '@hai3/uicore';
+import {
+  UserRole,
+  Language,
+  type ApiUser,
+  type GetCurrentUserResponse,
+  type MockMap,
+} from '@hai3/uicore';
 import './extra';
 
 export const mockDemoUser: ApiUser = {
@@ -22,8 +28,8 @@ export const mockDemoUser: ApiUser = {
 
 /**
  * Mock responses for accounts service endpoints
- * Type-safe mapping of endpoints to responses
+ * Type-safe mapping of endpoints to response factories
  */
 export const accountsMockMap = {
-  'GET /user/current': { user: mockDemoUser } satisfies GetCurrentUserResponse,
-} as const;
+  'GET /user/current': () => ({ user: mockDemoUser } satisfies GetCurrentUserResponse),
+} satisfies MockMap;

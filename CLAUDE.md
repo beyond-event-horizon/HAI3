@@ -347,22 +347,39 @@ declare module '@hai3/uicore' {
 ### Before Making Changes
 
 1. **CRITICAL: Verify MCP connection** - If MCP WebSocket is broken, STOP and fix it first. NEVER skip testing with MCP.
-2. **Read `.ai/GUIDELINES.md`** - Contains routing table for which rules apply to each area
-3. **Run `npm run arch:check`** - MUST pass before committing
-4. **Check dependency rules** - `npm run arch:deps` enforces package isolation
-5. **Follow event-driven flow** - Do NOT dispatch slice actions directly from components/actions
+2. **CRITICAL: Use Chrome DevTools MCP native tools for EVERYTHING** - ALWAYS use the appropriate native MCP tool for every browser interaction:
+   - Navigation: `mcp__chrome-devtools__navigate_page`, `mcp__chrome-devtools__wait_for`
+   - Page info: `mcp__chrome-devtools__take_snapshot`, `mcp__chrome-devtools__take_screenshot`, `mcp__chrome-devtools__list_console_messages`, `mcp__chrome-devtools__list_network_requests`
+   - Interaction: `mcp__chrome-devtools__click`, `mcp__chrome-devtools__fill`, `mcp__chrome-devtools__fill_form`, `mcp__chrome-devtools__hover`, `mcp__chrome-devtools__press_key`
+   - Tabs/Pages: `mcp__chrome-devtools__list_pages`, `mcp__chrome-devtools__select_page`, `mcp__chrome-devtools__new_page`, `mcp__chrome-devtools__close_page`
+   - Advanced: `mcp__chrome-devtools__emulate`, `mcp__chrome-devtools__resize_page`, `mcp__chrome-devtools__handle_dialog`
+   - **ONLY use `mcp__chrome-devtools__evaluate_script` as an absolute last resort when NO native tool can accomplish the task**
+3. **Read `.ai/GUIDELINES.md`** - Contains routing table for which rules apply to each area
+4. **Run `npm run arch:check`** - MUST pass before committing
+5. **Check dependency rules** - `npm run arch:deps` enforces package isolation
+6. **Follow event-driven flow** - Do NOT dispatch slice actions directly from components/actions
 
 ### Forbidden Patterns
 
+- ❌ Using `mcp__chrome-devtools__evaluate_script` for ANY task that has a dedicated native MCP tool (navigation, clicking, typing, snapshots, screenshots, console logs, etc.)
 - ❌ Direct slice dispatch from components: `dispatch(setMenuItems([]))`
 - ❌ Importing package internals: `import '@hai3/uikit/src/internal'`
 - ❌ Circular dependencies between packages
 - ❌ `any` types or `as unknown as T` chains
 - ❌ Central constants files (define IDs where used)
 - ❌ Barrel exports hiding imports (only use index.ts when aggregating 3+ exports)
+- ❌ Native methods when lodash equivalent exists: `Object.assign()`, spread operator for deep object merging, native array methods
 
 ### Required Patterns
 
+- ✅ **ALWAYS choose the appropriate native Chrome DevTools MCP tool**:
+  - Get page structure: `mcp__chrome-devtools__take_snapshot()` NOT `evaluate_script('document.body.innerHTML')`
+  - Click elements: `mcp__chrome-devtools__click(uid)` using UIDs from snapshot NOT `evaluate_script('element.click()')`
+  - Fill inputs: `mcp__chrome-devtools__fill(uid, value)` NOT `evaluate_script('input.value = ...')`
+  - Navigate: `mcp__chrome-devtools__navigate_page(type, url)` NOT `evaluate_script('window.location.href = ...')`
+  - Console logs: `mcp__chrome-devtools__list_console_messages()` NOT `evaluate_script('console.log')`
+  - Screenshots: `mcp__chrome-devtools__take_screenshot()` NOT any script-based solution
+- ✅ Use lodash for all object/array operations: `assign()` instead of `Object.assign()`, `merge()` for deep merging, `cloneDeep()` for cloning
 - ✅ Event-driven actions: `navigateToScreen()` emits event → effect updates slice
 - ✅ Self-registration: Services/screensets register themselves at module import
 - ✅ Type-safe events: Use `EventPayloadMap` for all event types
@@ -628,7 +645,7 @@ When working with AI (Claude, GPT, etc.):
 3. **Follow event-driven patterns** - emit events, don't dispatch directly
 4. **Use registries for extensibility** - never modify registry root files
 5. **Validate with `npm run arch:check`** before finalizing code
-6. **CRITICAL: Test changes immediately via Chrome MCP** - If MCP connection breaks (WebSocket closed), STOP all development and fix connection first. NEVER continue without testing. (see `.ai/MCP_TROUBLESHOOTING.md`)
+6. **CRITICAL: Test changes immediately via Chrome DevTools MCP** - If MCP connection breaks (WebSocket closed), STOP all development and fix connection first. NEVER continue without testing. (see `.ai/MCP_TROUBLESHOOTING.md`)
 7. **Keep screensets as vertical slices** - no cross-screenset dependencies
 
 ## Common Pitfalls
@@ -652,13 +669,13 @@ When working with AI (Claude, GPT, etc.):
 5. **Forgetting to register translations**
    - Each screenset should register its i18n namespace with `i18nRegistry.registerLoader()`
 
-6. **CRITICAL: Skipping MCP testing or killing MCP processes**
+6. **CRITICAL: Skipping Chrome DevTools MCP testing or killing MCP processes**
    - ❌ Continuing development when MCP WebSocket is closed
    - ❌ `pkill -f chrome-devtools-mcp` (permanently breaks MCP tools for the session)
    - ❌ Making multiple code changes without testing each one
    - ✅ STOP immediately when "WebSocket is not open: readyState 3 (CLOSED)" appears
    - ✅ Fix MCP connection before any further development
-   - ✅ Test every single code change via MCP before proceeding
+   - ✅ Test every single code change via Chrome DevTools MCP before proceeding
    - See `.ai/MCP_TROUBLESHOOTING.md` for recovery procedures
 
 ## Documentation References
@@ -678,6 +695,7 @@ When working with AI (Claude, GPT, etc.):
 - **TypeScript 5**: Type safety with strict mode
 - **Vite 6**: Build tool and dev server
 - **Redux Toolkit**: State management
+- **Lodash**: Utility library for object/array operations (preferred over native methods)
 - **Tailwind CSS 3**: Utility-first styling
 - **shadcn/ui + Radix UI**: Component library foundation
 - **tsup**: Package bundler for workspace packages

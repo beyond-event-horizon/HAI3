@@ -64,9 +64,15 @@ export { setSelectedScreen } from './layout/layoutSlice'; // Direct action (Menu
 
 // API (SOLID architecture with domain-driven, self-registering services)
 export { apiRegistry, type ApiServicesConfig, type ApiServicesMap } from './api/apiRegistry';
-export { BaseApiService, type BaseApiServiceConfig } from './api/BaseApiService';
-export { AccountsApiService, ACCOUNTS_DOMAIN } from './api/accounts/AccountsApiService'; // Triggers self-registration
-export * from './api/accounts/api';
+export { BaseApiService } from './api/BaseApiService';
+export { ApiProtocol, type JsonValue, type JsonObject, type JsonPrimitive, type MockMap, type MockResponseFactory, type JsonCompatible } from './api/protocols/ApiProtocol';
+export { RestProtocol, type RestProtocolConfig } from './api/protocols/RestProtocol';
+export { SseProtocol, type SseProtocolConfig } from './api/protocols/SseProtocol';
+export type { ApiPlugin, RequestConfig } from './api/plugins/ApiPlugin';
+export { MockPlugin, type MockPluginConfig } from './api/plugins/MockPlugin';
+export type { ApiServiceConfig } from './api/ApiServiceConfig';
+export { AccountsApiService, ACCOUNTS_DOMAIN } from './api/services/accounts/AccountsApiService'; // Triggers self-registration
+export * from './api/services/accounts/api';
 
 // i18n (Internationalization system)
 // Use I18nRegistry class for all translation management

@@ -5,17 +5,20 @@
  */
 
 import { apiRegistry, ACCOUNTS_DOMAIN } from '@hai3/uicore';
-import { CHAT_DOMAIN, ChatApiService } from './chat/ChatApiService';
+import { CHAT_DOMAIN } from './services/chat/ChatApiService';
 
 // Import all extras to apply module augmentations
-import './accounts/extra';
+import './services/accounts/extra';
 
-// Import and self-register all mocks
-import { accountsMockMap } from './accounts/mocks';
-import { chatMockMap } from './chat/mocks';
+// Import services to trigger self-registration
+import './services/chat/ChatApiService';
 
+// Import and register all mocks
+import { accountsMockMap } from './services/accounts/mocks';
+import { chatMockMap } from './services/chat/mocks';
+
+// Register mock maps
 apiRegistry.registerMocks(ACCOUNTS_DOMAIN, accountsMockMap);
-apiRegistry.register(CHAT_DOMAIN, ChatApiService);
 apiRegistry.registerMocks(CHAT_DOMAIN, chatMockMap);
 
 // Future services: import and register their mocks here

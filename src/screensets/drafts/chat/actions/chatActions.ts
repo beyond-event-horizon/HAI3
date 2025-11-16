@@ -1,13 +1,15 @@
 /**
  * Chat Actions
- * Pure functions that emit events
- * Following Flux: Actions return void and emit events, never dispatch directly
+ * Emit events AND interact with APIs (Flux pattern)
+ * Following Flux: Actions emit events for effects to update Redux, and call APIs
  */
 
-import { eventBus } from '@hai3/uicore';
+import { eventBus, apiRegistry, type AppDispatch } from '@hai3/uicore';
 import { ChatEvents } from '../events/chatEvents';
 import type { AttachedFile } from '../types';
 import type { EnhancedChatThread } from '../uikit/components/EnhancedThreadList';
+import { CHAT_DOMAIN } from '@/api/services/chat/ChatApiService';
+import { ChatRole } from '@/api/services/chat/api';
 
 /**
  * Thread Actions
@@ -39,8 +41,63 @@ export const toggleThreadTemporary = (threadId: string, isTemporary: boolean): v
 /**
  * Message Actions
  */
-export const sendMessage = (content: string): void => {
-  eventBus.emit(ChatEvents.MessageSent, { content });
+export const sendMessage = (
+  content: string,
+  threadId: string,
+  model: string,
+  conversationMessages: Array<{ role: ChatRole; content: string }>
+) => {
+  return (_dispatch: AppDispatch): void => {
+    if (!threadId || !content.trim()) {
+      return;
+    }
+
+    // 1. Emit event for effects to handle UI updates
+    eventBus.emit(ChatEvents.MessageSent, { content });
+
+    // 2. Action interacts with API (NOT effect!)
+    const chatApi = apiRegistry.getService(CHAT_DOMAIN);
+    const messageId = `msg-${Date.now()}`;
+
+    // Build messages array from conversation history
+    const messages = [
+      ...conversationMessages,
+      {
+        role: ChatRole.User,
+        content: content.trim(),
+      },
+    ];
+
+    // Emit streaming started
+    eventBus.emit(ChatEvents.StreamingStarted, { messageId });
+
+    // Start SSE stream - callbacks emit events
+    chatApi.createCompletionStream(
+      {
+        model,
+        messages,
+        stream: true,
+      },
+      (chunk) => {
+        // API callback emits event for each chunk
+        const delta = chunk.choices?.[0]?.delta;
+        if (delta?.content) {
+          eventBus.emit(ChatEvents.StreamingContentUpdated, {
+            messageId,
+            content: delta.content,
+          });
+        }
+
+        if (chunk.choices?.[0]?.finish_reason === 'stop') {
+          eventBus.emit(ChatEvents.StreamingCompleted, { messageId });
+        }
+      },
+      () => {
+        // Stream completed callback
+        eventBus.emit(ChatEvents.StreamingCompleted, { messageId });
+      }
+    );
+  };
 };
 
 export const startEditingMessage = (messageId: string, content: string): void => {

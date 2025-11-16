@@ -15,22 +15,26 @@ import {
   I18nEvents,
 } from '../core/events/eventTypes';
 import { setUser, setError, setLoading, setUseMockApi, setLanguage, setTranslationsReady } from './appSlice';
-import { apiRegistry } from '../api/apiRegistry';
 import { i18nRegistry } from '../i18n/i18nRegistry';
+import { apiRegistry } from '../api/apiRegistry';
 
 /**
  * Initialize app effects
  * Call this once during app setup
  */
 export function initAppEffects(store: Store): void {
+  // Note: Mock mode is initialized in apiRegistry.initialize() in main.tsx
+  // This ensures services are instantiated before plugins are registered
+
   // User fetch started - set loading state
   eventBus.on(UserEvents.UserFetchStarted, () => {
     store.dispatch(setLoading(true));
   });
   
-  // User fetch succeeded - update user and clear loading
+  // User fetch succeeded - update user and clear loading/error
   eventBus.on(UserEvents.UserFetched, ({ user }) => {
     store.dispatch(setUser(user));
+    store.dispatch(setError(null));
     store.dispatch(setLoading(false));
   });
 
@@ -43,6 +47,7 @@ export function initAppEffects(store: Store): void {
   // API configuration events
   eventBus.on(ApiEvents.ApiModeChanged, ({ useMockApi }) => {
     store.dispatch(setUseMockApi(useMockApi));
+    // Reinitialize all API services with new mock mode
     apiRegistry.setMockMode(useMockApi);
   });
 

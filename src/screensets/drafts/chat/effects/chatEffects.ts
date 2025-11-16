@@ -5,7 +5,7 @@
  * Effects NEVER call actions or emit events (would create circular flow)
  */
 
-import { eventBus, type AppDispatch, store, type RootState, apiRegistry } from '@hai3/uicore';
+import { eventBus, type AppDispatch, store, type RootState } from '@hai3/uicore';
 import { ChatEvents } from '../events/chatEvents';
 import {
   setCurrentThreadId,
@@ -29,76 +29,8 @@ import {
   setIsStreaming,
 } from '../slices/chatSlice';
 import type { Thread, Message } from '../types';
-import { CHAT_DOMAIN } from '@/api/chat/ChatApiService';
-import { ChatRole, type CreateChatCompletionRequest } from '@/api/chat/api';
 
 let dispatch: AppDispatch;
-
-/**
- * Stream chat completion from API
- * Uses ChatApiService with streaming for realistic backend simulation
- */
-const streamChatCompletion = async (threadId: string, userMessage: string): Promise<void> => {
-  const state = store.getState() as RootState;
-  const currentModel = state.chat.currentModel;
-
-  // Get chat API service
-  const chatApi = apiRegistry.getService(CHAT_DOMAIN);
-
-  // Build conversation history for the request
-  const messages = state.chat.messages
-    .filter((m) => m.threadId === threadId)
-    .map((m) => ({
-      role: m.type === 'user' ? ChatRole.User : ChatRole.Assistant,
-      content: m.content,
-    }));
-
-  // Add the new user message
-  messages.push({
-    role: ChatRole.User,
-    content: userMessage,
-  });
-
-  const request: CreateChatCompletionRequest = {
-    model: currentModel,
-    messages,
-    stream: true,
-  };
-
-  const messageId = `msg-${Date.now()}`;
-
-  // Create initial empty assistant message
-  const assistantMessage: Message = {
-    id: messageId,
-    threadId,
-    type: 'assistant',
-    content: '',
-    timestamp: new Date(),
-  };
-
-  dispatch(addMessage(assistantMessage));
-  eventBus.emit(ChatEvents.StreamingStarted, { messageId });
-
-  try {
-    // Stream the completion
-    let fullContent = '';
-    for await (const chunk of chatApi.createCompletionStream(request)) {
-      const delta = chunk.choices[0]?.delta;
-      if (delta?.content) {
-        fullContent += delta.content;
-        eventBus.emit(ChatEvents.StreamingContentUpdated, { messageId, content: fullContent });
-      }
-
-      if (chunk.choices[0]?.finish_reason === 'stop') {
-        eventBus.emit(ChatEvents.StreamingCompleted);
-        break;
-      }
-    }
-  } catch (error) {
-    console.error('Chat completion streaming error:', error);
-    eventBus.emit(ChatEvents.StreamingCompleted);
-  }
-};
 
 /**
  * Initialize chat effects
@@ -151,7 +83,7 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
 
   // Message effects
   eventBus.on(ChatEvents.MessageSent, ({ content }) => {
-    // Add user message to store and stream API response
+    // Add user message to store - API call is in action!
     const state = store.getState() as RootState;
     const currentThreadId = state.chat.currentThreadId;
 
@@ -182,9 +114,6 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
         timestamp: new Date(),
       }
     }));
-
-    // Stream backend response using API service
-    streamChatCompletion(currentThreadId, content.trim());
   });
 
   eventBus.on(ChatEvents.MessageEditingStarted, ({ messageId, content }) => {
@@ -208,16 +137,16 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
   });
 
   eventBus.on(ChatEvents.MessageLiked, ({ messageId }) => {
-    dispatch(updateMessage({ 
-      messageId, 
-      updates: { liked: true, disliked: false } 
+    dispatch(updateMessage({
+      messageId,
+      updates: { liked: true, disliked: false }
     }));
   });
 
   eventBus.on(ChatEvents.MessageDisliked, ({ messageId }) => {
-    dispatch(updateMessage({ 
-      messageId, 
-      updates: { disliked: true, liked: false } 
+    dispatch(updateMessage({
+      messageId,
+      updates: { disliked: true, liked: false }
     }));
   });
 
@@ -230,29 +159,10 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
   });
 
   eventBus.on(ChatEvents.MessageRegenerated, ({ messageId }) => {
-    // Get the message and thread info
-    const state = store.getState() as RootState;
-    const message = state.chat.messages.find((m) => m.id === messageId);
-
-    if (!message) {
-      return;
-    }
-
     // Remove the message and all messages after it
+    // The action will handle calling the API to regenerate
     dispatch(removeMessage({ messageId }));
     dispatch(removeMessagesAfter({ messageId }));
-
-    // Find the last user message to regenerate from
-    const threadMessages = state.chat.messages.filter((m) => m.threadId === message.threadId);
-    const lastUserMessage = threadMessages
-      .slice()
-      .reverse()
-      .find((m) => m.type === 'user');
-
-    if (lastUserMessage) {
-      // Stream backend response using API service for regeneration
-      streamChatCompletion(message.threadId, lastUserMessage.content);
-    }
   });
 
   // Model and Context effects
@@ -282,16 +192,35 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
     dispatch(setInputValue(value));
   });
 
-  // Streaming effects
-  eventBus.on(ChatEvents.StreamingStarted, ({ messageId: _messageId }) => {
+  // Streaming effects (Effects ONLY update Redux - no API calls!)
+  eventBus.on(ChatEvents.StreamingStarted, ({ messageId }) => {
+    const state = store.getState() as RootState;
+
+    // Create empty assistant message
+    const assistantMessage: Message = {
+      id: messageId,
+      threadId: state.chat.currentThreadId!,
+      type: 'assistant',
+      content: '',
+      timestamp: new Date(),
+    };
+
+    dispatch(addMessage(assistantMessage));
     dispatch(setIsStreaming(true));
   });
 
   eventBus.on(ChatEvents.StreamingContentUpdated, ({ messageId, content }) => {
-    dispatch(updateMessage({ messageId, updates: { content } }));
+    // Append new content to existing message
+    const state = store.getState() as RootState;
+    const message = state.chat.messages.find(m => m.id === messageId);
+
+    if (message) {
+      const newContent = message.content + content;
+      dispatch(updateMessage({ messageId, updates: { content: newContent } }));
+    }
   });
 
-  eventBus.on(ChatEvents.StreamingCompleted, () => {
+  eventBus.on(ChatEvents.StreamingCompleted, ({ messageId: _messageId }) => {
     dispatch(setIsStreaming(false));
   });
 };

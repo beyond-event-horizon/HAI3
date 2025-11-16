@@ -92,6 +92,6 @@ declare module '@hai3/uicore' {
     // Streaming events
     'chat/streamingStarted': { messageId: string };
     'chat/streamingContentUpdated': { messageId: string; content: string };
-    'chat/streamingCompleted': void;
+    'chat/streamingCompleted': { messageId: string };
   }
 }

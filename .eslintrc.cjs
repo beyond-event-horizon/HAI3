@@ -203,12 +203,12 @@ module.exports = {
             message: 'FLUX VIOLATION: Actions must return void, not Promise<void>. Use fire-and-forget pattern with .then()/.catch(). See EVENTS.md.',
           },
           {
-            selector: "CallExpression[callee.name='getState']",
-            message: 'FLUX VIOLATION: Actions are pure functions and cannot access store state via getState(). Move state checks to effects. See EVENTS.md.',
+            selector: "FunctionDeclaration:has(Identifier[name='getState'])",
+            message: 'FLUX VIOLATION: Actions are PURE FUNCTIONS. They must NOT access store via getState(). Pass all required parameters from the calling component. See EVENTS.md.',
           },
           {
-            selector: "ArrowFunctionExpression > Identifier.params[name='getState']",
-            message: 'FLUX VIOLATION: Actions are pure functions and cannot use getState parameter. Move state checks to effects. See EVENTS.md.',
+            selector: "ArrowFunctionExpression:has(Identifier[name='getState'])",
+            message: 'FLUX VIOLATION: Actions are PURE FUNCTIONS. They must NOT access store via getState(). Pass all required parameters from the calling component. See EVENTS.md.',
           },
         ],
       },
