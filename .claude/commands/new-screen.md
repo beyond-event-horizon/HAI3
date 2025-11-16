@@ -5,7 +5,7 @@ description: Add a new screen to an existing screenset
 Before starting, read `.ai/targets/SCREENSETS.md` and summarize 3-5 key rules.
 
 Ask the user for:
-1. Screenset path (e.g., `src/screensets/drafts/chat`)
+1. Screenset path (e.g., `src/screensets/chat`)
 2. Screen name (e.g., "settings", "history")
 3. Whether this screen should be added to the menu
 
@@ -16,7 +16,7 @@ Then add the screen following this structure:
 Update the screenset's `screens/screenIds.ts` file:
 
 ```typescript
-// src/screensets/{category}/{screenset}/screens/screenIds.ts
+// src/screensets/{screenset}/screens/screenIds.ts
 export const EXISTING_SCREEN_ID = '{screenset}-existing';
 export const NEW_SCREEN_ID = '{screenset}-{new-screen}'; // Add this
 ```
@@ -24,7 +24,7 @@ export const NEW_SCREEN_ID = '{screenset}-{new-screen}'; // Add this
 ## 2. Create Screen Directory Structure
 
 ```
-src/screensets/{category}/{screenset}/screens/{screen-name}/
+src/screensets/{screenset}/screens/{screen-name}/
 ├── {ScreenName}Screen.tsx    # Screen component with default export
 └── i18n/                      # REQUIRED: Screen-level translations
     ├── en.json                # All 36 languages required
@@ -53,7 +53,7 @@ Repeat for all 36 languages (es.json, fr.json, de.json, etc.).
 ## 4. Create Screen Component
 
 ```typescript
-// src/screensets/{category}/{screenset}/screens/{screen-name}/{ScreenName}Screen.tsx
+// src/screensets/{screenset}/screens/{screen-name}/{ScreenName}Screen.tsx
 import React from 'react';
 import { useScreenTranslations, useTranslation, I18nRegistry, Language, TextLoader } from '@hai3/uicore';
 import { NEW_SCREEN_ID } from '../screenIds';
@@ -122,8 +122,8 @@ export default {ScreenName}Screen;
 Add the new screen to the screenset's menu array:
 
 ```typescript
-// src/screensets/{category}/{screenset}/{screenset}Screenset.tsx
-import { screensetRegistry, type ScreensetConfig, I18nRegistry, Language } from '@hai3/uicore';
+// src/screensets/{screenset}/{screenset}Screenset.tsx
+import { screensetRegistry, ScreensetCategory, type ScreensetConfig, I18nRegistry, Language } from '@hai3/uicore';
 import { EXISTING_SCREEN_ID, NEW_SCREEN_ID } from './screens/screenIds'; // Import new ID
 
 export const SCREENSET_ID = '{screenset}';
@@ -133,7 +133,7 @@ export const SCREENSET_ID = '{screenset}';
 export const {screenset}Screenset: ScreensetConfig = {
   id: SCREENSET_ID,
   name: 'Screenset Display Name',
-  category: '{category}',
+  category: ScreensetCategory.Drafts, // Use ScreensetCategory enum
   defaultScreen: EXISTING_SCREEN_ID,
   localization: screensetTranslations,
   menu: [
@@ -158,7 +158,7 @@ screensetRegistry.register({screenset}Screenset);
 Add the menu label to screenset-level translation files:
 
 ```json
-// src/screensets/{category}/{screenset}/i18n/en.json
+// src/screensets/{screenset}/i18n/en.json
 {
   "name": "Screenset Display Name",
   "description": "Screenset description",

@@ -30,8 +30,9 @@ src/
 │   └── hooks/          # Typed Redux hooks
 ├── uikit/              # Reusable UI components
 │   └── layout/         # Layout components (Header, Footer, Menu, etc.)
-├── screensets/         # Application screens
-│   └── drafts/         # Draft screens for development
+├── screensets/         # Screensets (category in config)
+│   ├── demo/           # Demo screenset
+│   └── chat/           # Chat screenset
 ├── styles/             # Global styles and themes
 └── lib/                # Utility functions
 ```
@@ -40,8 +41,8 @@ src/
 
 1. **Create a new screen file**
    ```bash
-   # Create in src/screensets/drafts/
-   touch src/screensets/drafts/MyScreen.tsx
+   # Create in a screenset directory
+   touch src/screensets/my-screenset/MyScreen.tsx
    ```
 
 2. **Write your screen component**
@@ -60,7 +61,7 @@ src/
 
 3. **Use it in App.tsx**
    ```typescript
-   import { MyScreen } from '@/screensets/drafts/MyScreen';
+   import { MyScreen } from '@/screensets/my-screenset/MyScreen';
 
    // In your CoreLayout children
    <MyScreen />
@@ -306,7 +307,7 @@ npm install             # Reinstall dependencies
 - Read [AI Guidelines](./.ai/GUIDELINES.md) for AI coding rules and patterns
 - Review [MANIFEST.md](./docs/MANIFEST.md) for project philosophy
 - Explore the existing components in `src/uikit/layout/`
-- Build your first screen in `src/screensets/drafts/`
+- Build your first screen in `src/screensets/my-screenset/`
 
 ## Getting Help
 

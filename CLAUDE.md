@@ -138,17 +138,19 @@ A **screenset** is a self-contained domain with:
 - Icons (optional)
 - Redux slices (optional)
 
-Screensets live in three categories:
+Screensets are stored in a flat structure:
 ```
 src/screensets/
-├── drafts/        # AI-generated initial layouts
-├── mockups/       # Designer-refined versions
-└── production/    # Engineer-finalized, production-ready
+├── demo/          # Demo screenset
+├── chat/          # Chat screenset
+└── another/       # Another screenset
 ```
+
+Category information (Drafts, Mockups, Production) is tracked via the `ScreensetCategory` enum in the screenset configuration, not in folder structure.
 
 **Screenset Registration Pattern:**
 ```typescript
-// src/screensets/drafts/demo/demoScreenset.tsx
+// src/screensets/demo/demoScreenset.tsx
 export const DEMO_SCREENSET_ID = 'demo';
 
 export const demoScreenset: ScreensetConfig = {
@@ -270,7 +272,7 @@ HAI3 uses a two-level translation system for optimal performance:
 
 **Screenset-Level Translations** (loaded when screenset registers):
 ```typescript
-// src/screensets/drafts/demo/demoScreenset.tsx
+// src/screensets/demo/demoScreenset.tsx
 import { I18nRegistry, Language } from '@hai3/uicore';
 
 const screensetTranslations = I18nRegistry.createLoader({
@@ -288,7 +290,7 @@ export const demoScreenset: ScreensetConfig = {
 
 **Screen-Level Translations** (loaded lazily when screen mounts):
 ```typescript
-// src/screensets/drafts/demo/screens/helloworld/HelloWorldScreen.tsx
+// src/screensets/demo/screens/helloworld/HelloWorldScreen.tsx
 import { useScreenTranslations, I18nRegistry, Language, TextLoader } from '@hai3/uicore';
 
 const translations = I18nRegistry.createLoader({
@@ -495,24 +497,24 @@ const users = await accountsApi.getUsers();
 
 1. **Create directory structure:**
    ```bash
-   mkdir -p src/screensets/drafts/my-screenset/screens/home
+   mkdir -p src/screensets/my-screenset/screens/home
    ```
 
 2. **Create screen IDs file:**
    ```typescript
-   // src/screensets/drafts/my-screenset/screens/screenIds.ts
+   // src/screensets/my-screenset/screens/screenIds.ts
    export const HOME_SCREEN_ID = 'my-screenset-home';
    ```
 
 3. **Create screenset-level translation files:**
    ```bash
-   mkdir -p src/screensets/drafts/my-screenset/i18n
+   mkdir -p src/screensets/my-screenset/i18n
    # Create en.json, es.json, etc. for all 36 languages
    ```
 
 4. **Create screen component with translations:**
    ```typescript
-   // src/screensets/drafts/my-screenset/screens/home/HomeScreen.tsx
+   // src/screensets/my-screenset/screens/home/HomeScreen.tsx
    import React from 'react';
    import { useScreenTranslations, useTranslation, createTranslationLoader, Language } from '@hai3/uicore';
    import { HOME_SCREEN_ID } from '../screenIds';
@@ -546,8 +548,8 @@ const users = await accountsApi.getUsers();
 
 5. **Create screenset config with localization:**
    ```typescript
-   // src/screensets/drafts/my-screenset/myScreenset.tsx
-   import { screensetRegistry, type ScreensetConfig, createTranslationLoader, Language } from '@hai3/uicore';
+   // src/screensets/my-screenset/myScreenset.tsx
+   import { screensetRegistry, ScreensetCategory, type ScreensetConfig, createTranslationLoader, Language } from '@hai3/uicore';
    import { HOME_SCREEN_ID } from './screens/screenIds';
 
    export const MY_SCREENSET_ID = 'my-screenset';
@@ -562,7 +564,7 @@ const users = await accountsApi.getUsers();
    export const myScreenset: ScreensetConfig = {
      id: MY_SCREENSET_ID,
      name: 'My Screenset',
-     category: 'drafts',
+     category: ScreensetCategory.Drafts,
      defaultScreen: HOME_SCREEN_ID,
      localization: screensetTranslations, // Screenset-level translations
      menu: [
@@ -580,13 +582,13 @@ const users = await accountsApi.getUsers();
    screensetRegistry.register(myScreenset);
    ```
 
-5. **Import in screenset registry:**
+6. **Import in screenset registry:**
    ```typescript
    // src/screensets/screensetRegistry.tsx
-   import './drafts/my-screenset/myScreenset';
+   import './my-screenset/myScreenset';
    ```
 
-6. **Run app and switch screenset via UI selector**
+7. **Run app and switch screenset via UI selector**
 
 **Key Points:**
 - Screen IDs are in separate `screenIds.ts` to prevent circular dependencies
@@ -710,9 +712,8 @@ HAI3/
 │   └── uicore/                  # Core layout/state/events
 ├── src/                         # Application code
 │   ├── screensets/              # Screenset variants
-│   │   ├── drafts/              # AI-generated
-│   │   ├── mockups/             # Human-refined
-│   │   └── production/          # Production-ready
+│   │   ├── demo/                # Demo screenset (category: Drafts)
+│   │   ├── chat/                # Chat screenset (category: Mockups)
 │   ├── themes/                  # Theme definitions + registry
 │   ├── api/                     # API service definitions
 │   └── App.tsx                  # Root component

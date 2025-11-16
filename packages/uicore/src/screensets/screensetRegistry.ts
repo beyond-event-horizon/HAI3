@@ -3,6 +3,19 @@ import type { Language, TranslationDictionary } from '../i18n/types';
 import { i18nRegistry } from '../i18n/i18nRegistry';
 
 /**
+ * Screenset Category Enum
+ * Defines the three-stage development workflow categories for screensets
+ */
+export enum ScreensetCategory {
+  /** AI-generated initial layouts */
+  Drafts = 'drafts',
+  /** Designer-refined versions */
+  Mockups = 'mockups',
+  /** Engineer-finalized, production-ready screens */
+  Production = 'production',
+}
+
+/**
  * Screen loader function type
  * Returns a Promise resolving to a module with a default export of a React component
  *
@@ -38,7 +51,7 @@ export interface MenuScreenItem {
 export interface ScreensetConfig {
   id: string;
   name: string;
-  category: string;
+  category: ScreensetCategory;
   /** Translation loader for screenset-level translations */
   localization: TranslationLoader;
   menu: MenuScreenItem[];
@@ -105,7 +118,7 @@ class ScreensetRegistry {
   /**
    * Get all screensets for a category
    */
-  getByCategory(category: string): ScreensetConfig[] {
+  getByCategory(category: ScreensetCategory): ScreensetConfig[] {
     return Array.from(this.screensets.values()).filter((s) => s.category === category);
   }
 
@@ -119,7 +132,7 @@ class ScreensetRegistry {
   /**
    * Get screenset metadata for selector
    */
-  getMetadataByCategory(category: string): Array<{ id: string; name: string }> {
+  getMetadataByCategory(category: ScreensetCategory): Array<{ id: string; name: string }> {
     return this.getByCategory(category).map((s) => ({
       id: s.id,
       name: s.name,
@@ -129,8 +142,8 @@ class ScreensetRegistry {
   /**
    * Get all categories
    */
-  getCategories(): string[] {
-    const categories = new Set<string>();
+  getCategories(): ScreensetCategory[] {
+    const categories = new Set<ScreensetCategory>();
     this.screensets.forEach((s) => categories.add(s.category));
     return Array.from(categories).sort();
   }

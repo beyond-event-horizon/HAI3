@@ -10,7 +10,7 @@ Screensets SHALL specify screen localization paths declaratively in the menu con
 #### Scenario: Demo screenset with 4 screens
 
 ```typescript
-// src/screensets/drafts/demo/demoScreenset.tsx
+// src/screensets/demo/demoScreenset.tsx
 
 import { type ScreensetConfig } from '@hai3/uicore';
 
@@ -160,7 +160,7 @@ Screensets SHALL organize translation files in a two-tier structure: screenset-l
 #### Scenario: Demo screenset directory structure
 
 ```
-src/screensets/drafts/demo/
+src/screensets/demo/
 ├── i18n/                          # Screenset-level (shared)
 │   ├── en.json                    # ~10 lines (shared labels)
 │   ├── es.json

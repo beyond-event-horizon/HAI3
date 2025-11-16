@@ -199,9 +199,9 @@ HAI3/                               # Repository root
 ├── src/                            # App source code
 │   ├── App.tsx                     # Root React component
 │   ├── main.tsx                    # App entry; mounts React and providers
-│   ├── screensets/                 # Screen-set variants (drafts, etc.)
-│   │   ├── drafts/                 # AI-generated drafts
-│   │   │   └── demo/               # Example draft screenset
+│   ├── screensets/                 # Screensets (category in config)
+│   │   ├── demo/                   # Demo screenset (Drafts)
+│   │   ├── chat/                   # Chat screenset (Mockups)
 │   │   └── screensetRegistry.tsx   # Registry to switch screen-sets
 │   └── themes/                     # Theme tokens and registries
 │       ├── dark.ts                 # Dark theme
