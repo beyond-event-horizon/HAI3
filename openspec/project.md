@@ -111,7 +111,7 @@ Screensets are self-contained domains with:
 - Icons (optional)
 - Redux slices (optional)
 
-Organized in three categories: `drafts/`, `mockups/`, `production/`
+Stored in flat structure under `screensets/`; category tracked via `ScreensetCategory` enum (Drafts, Mockups, Production)
 
 #### 5. Type-Safe Event Bus
 

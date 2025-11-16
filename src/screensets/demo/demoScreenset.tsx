@@ -1,18 +1,15 @@
-/**
- * Chat Screenset
- * Full-featured chat interface with threads, messages, and LLM controls
- */
-
-import { type ScreensetConfig, uikitRegistry, registerSlice, I18nRegistry, Language } from '@hai3/uicore';
-import { CHAT_SCREEN_ID } from './screens/screenIds';
-import { MessageSquareIcon, MESSAGE_SQUARE_ICON_ID } from './uikit/icons/MessageSquareIcon';
-import { chatReducer, initializeChatEffects } from './chatStore';
+import { type ScreensetConfig, ScreensetCategory, uikitRegistry, I18nRegistry, Language } from '@hai3/uicore';
+import { HELLO_WORLD_SCREEN_ID, CURRENT_THEME_SCREEN_ID, PROFILE_SCREEN_ID, UI_KIT_ELEMENTS_SCREEN_ID } from './screens/screenIds';
+import { WorldIcon, WORLD_ICON_ID } from './uikit/icons/WorldIcon';
+import { PaletteIcon, PALETTE_ICON_ID } from './uikit/icons/PaletteIcon';
+import { UserIcon, USER_ICON_ID } from './uikit/icons/UserIcon';
+import { ShadcnIcon, SHADCN_ICON_ID } from './uikit/icons/ShadcnIcon';
 
 /**
- * Chat Screenset ID
+ * Demo Screenset ID
  * Well-known constant defined where it belongs
  */
-export const CHAT_SCREENSET_ID = 'chat';
+export const DEMO_SCREENSET_ID = 'demo';
 
 /**
  * Screenset-level translations
@@ -63,35 +60,56 @@ const screensetTranslations = I18nRegistry.createLoader({
  * Screen-level translations are registered by each screen component when it mounts
  */
 uikitRegistry.registerIcons({
-  [MESSAGE_SQUARE_ICON_ID]: <MessageSquareIcon />,
+  [WORLD_ICON_ID]: <WorldIcon />,
+  [PALETTE_ICON_ID]: <PaletteIcon />,
+  [USER_ICON_ID]: <UserIcon />,
+  [SHADCN_ICON_ID]: <ShadcnIcon />,
 });
 
 /**
- * Register chat slice dynamically with uicore store
- * Screensets can add their state without modifying uicore package
- */
-registerSlice('chat', chatReducer, initializeChatEffects);
-
-/**
- * Chat Screenset Configuration
- * Self-contained - knows about its own screens, icons, and structure
- * Chat state is now part of global uicore store via dynamic registration
+ * Demo Screenset Configuration
+ * Self-contained - knows about its own screens, icons, translations, and structure
  * All screens are lazy-loaded for optimal performance
+ * Translations are declaratively configured and auto-registered
  */
-export const chatScreenset: ScreensetConfig = {
-  id: CHAT_SCREENSET_ID,
-  name: 'Chat',
-  category: 'drafts',
-  defaultScreen: CHAT_SCREEN_ID,
+export const demoScreenset: ScreensetConfig = {
+  id: DEMO_SCREENSET_ID,
+  name: 'Demo',
+  category: ScreensetCategory.Drafts,
+  defaultScreen: HELLO_WORLD_SCREEN_ID,
   localization: screensetTranslations,
   menu: [
     {
       menuItem: {
-        id: CHAT_SCREEN_ID,
-        label: `screenset.${CHAT_SCREENSET_ID}:screens.${CHAT_SCREEN_ID}.title`,
-        icon: MESSAGE_SQUARE_ICON_ID,
+        id: HELLO_WORLD_SCREEN_ID,
+        label: `screenset.${DEMO_SCREENSET_ID}:screens.${HELLO_WORLD_SCREEN_ID}.title`,
+        icon: WORLD_ICON_ID,
       },
-      screen: () => import('./screens/chat/ChatScreen'),
+      screen: () => import('./screens/helloworld/HelloWorldScreen'),
+    },
+    {
+      menuItem: {
+        id: CURRENT_THEME_SCREEN_ID,
+        label: `screenset.${DEMO_SCREENSET_ID}:screens.${CURRENT_THEME_SCREEN_ID}.title`,
+        icon: PALETTE_ICON_ID,
+      },
+      screen: () => import('./screens/theme/CurrentThemeScreen'),
+    },
+    {
+      menuItem: {
+        id: PROFILE_SCREEN_ID,
+        label: `screenset.${DEMO_SCREENSET_ID}:screens.${PROFILE_SCREEN_ID}.title`,
+        icon: USER_ICON_ID,
+      },
+      screen: () => import('./screens/profile/ProfileScreen'),
+    },
+    {
+      menuItem: {
+        id: UI_KIT_ELEMENTS_SCREEN_ID,
+        label: `screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.title`,
+        icon: SHADCN_ICON_ID,
+      },
+      screen: () => import('./screens/uikit/UIKitElementsScreen'),
     },
   ],
 };
