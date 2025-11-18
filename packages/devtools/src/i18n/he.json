@@ -1,0 +1,10 @@
+{
+  "title": "כלי פיתוח HAI3",
+  "controls": {
+    "heading": "בקרות פיתוח",
+    "screenset": "ערכת מסכים:",
+    "theme": "ערכת נושא:",
+    "language": "שפה:",
+    "mockApi": "API מדומה"
+  }
+}

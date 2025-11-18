@@ -1,0 +1,10 @@
+{
+  "title": "HAI3 DevTools",
+  "controls": {
+    "heading": "மேம்பாட்டு கட்டுப்பாடுகள்",
+    "screenset": "திரைத்தொகுப்பு:",
+    "theme": "தீம்:",
+    "language": "மொழி:",
+    "mockApi": "போலி API"
+  }
+}

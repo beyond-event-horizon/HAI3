@@ -1,0 +1,10 @@
+{
+  "title": "HAI3 DevTools",
+  "controls": {
+    "heading": "Kawalan Pembangunan",
+    "screenset": "Set Skrin:",
+    "theme": "Tema:",
+    "language": "Bahasa:",
+    "mockApi": "API Palsu"
+  }
+}

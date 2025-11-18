@@ -1,0 +1,10 @@
+{
+  "title": "HAI3 DevTools",
+  "controls": {
+    "heading": "Geliştirme Kontrolleri",
+    "screenset": "Ekran Seti:",
+    "theme": "Tema:",
+    "language": "Dil:",
+    "mockApi": "Sahte API"
+  }
+}

@@ -20,6 +20,7 @@
 | packages/uicore | .ai/targets/UICORE.md |
 | packages/uikit | .ai/targets/UIKIT.md |
 | packages/uikit-contracts | .ai/targets/UIKIT_CONTRACTS.md |
+| packages/devtools | .ai/targets/DEVTOOLS.md |
 | src/screensets | .ai/targets/SCREENSETS.md |
 | src/themes | .ai/targets/THEMES.md |
 | Styling anywhere | .ai/targets/STYLING.md |

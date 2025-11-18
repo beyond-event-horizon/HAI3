@@ -1,0 +1,10 @@
+{
+  "title": "HAI3 DevTools",
+  "controls": {
+    "heading": "Елементи Керування Розробкою",
+    "screenset": "Набір Екранів:",
+    "theme": "Тема:",
+    "language": "Мова:",
+    "mockApi": "Тестовий API"
+  }
+}

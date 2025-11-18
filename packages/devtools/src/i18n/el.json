@@ -1,0 +1,10 @@
+{
+  "title": "HAI3 DevTools",
+  "controls": {
+    "heading": "Στοιχεία Ελέγχου Ανάπτυξης",
+    "screenset": "Σετ Οθόνης:",
+    "theme": "Θέμα:",
+    "language": "Γλώσσα:",
+    "mockApi": "Εικονικό API"
+  }
+}
