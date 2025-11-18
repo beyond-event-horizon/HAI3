@@ -1,0 +1,10 @@
+{
+  "title": "HAI3 DevTools",
+  "controls": {
+    "heading": "Kehitysohjaimet",
+    "screenset": "Näyttösarja:",
+    "theme": "Teema:",
+    "language": "Kieli:",
+    "mockApi": "Mock API"
+  }
+}

@@ -1,54 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useAppSelector, useAppDispatch } from '../../../hooks/useRedux';
-import { ThemeSelector } from '../../../components/ThemeSelector';
-import { ScreensetSelector } from '../../../components/ScreensetSelector';
-import { ApiModeToggle } from '../../../components/ApiModeToggle';
-import { LanguageSelector } from '../../../components/LanguageSelector';
-import { changeTheme, selectScreenset } from '../../../core/actions';
-import { themeRegistry } from '../../../theme/themeRegistry';
-import { buildScreensetOptions } from './footerHelpers';
+import React from 'react';
+import { useAppSelector } from '../../../hooks/useRedux';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
 import { UiKitComponent, ButtonVariant } from '@hai3/uikit-contracts';
-import type { ScreensetOption } from './footerSlice';
 
 /**
- * Core Footer component (dev tool, not for production)
+ * Core Footer component (production-ready)
+ * All dev tools moved to @hai3/devtools package
  */
 
 export const Footer: React.FC = () => {
-  const dispatch = useAppDispatch();
   const visible = useAppSelector((state) => state.footer.visible);
-  const theme = useAppSelector((state) => state.layout.theme);
-  const currentScreenset = useAppSelector((state) => state.layout.currentScreenset);
-  
-  // Screenset options in local state - no need for Redux (purely UI)
-  const [screensetOptions, setScreensetOptions] = useState<ScreensetOption[]>([]);
 
-  // Dev-only footer content (not configurable)
+  // Production footer content
   const copyright = '© 2025 HAI3 Framework';
   const links = [
     { label: 'Documentation', href: '#docs' },
     { label: 'GitHub', href: '#github' },
   ];
-
-  // Build screenset options and theme list on mount
-  useEffect(() => {
-    const options = buildScreensetOptions();
-    const themes = themeRegistry.getThemeNames();
-
-    // Update local state
-    setScreensetOptions(options);
-
-    // Set initial theme if not set
-    if (!theme && themes.length > 0) {
-      dispatch(changeTheme(themes[0]));
-    }
-
-    // DO NOT set initial screenset here - AppRouter handles "/" route redirect
-    // Setting screenset here causes race condition with URL-based navigation (RouterSync)
-  }, [theme, dispatch]); // Run when theme or dispatch changes (dispatch is stable)
-
-  // No side effects here - actions emit events, effects handle them
 
   if (!visible) return null;
 
@@ -71,18 +39,6 @@ export const Footer: React.FC = () => {
             ))}
           </nav>
         )}
-      </div>
-      <div className="flex items-center gap-4">
-        <ApiModeToggle />
-        <LanguageSelector />
-        {screensetOptions.length > 0 && (
-          <ScreensetSelector
-            options={screensetOptions}
-            currentValue={currentScreenset}
-            onChange={(value: string) => dispatch(selectScreenset(value))}
-          />
-        )}
-        <ThemeSelector />
       </div>
     </footer>
   );

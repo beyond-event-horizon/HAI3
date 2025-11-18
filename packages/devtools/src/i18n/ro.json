@@ -1,0 +1,10 @@
+{
+  "title": "HAI3 DevTools",
+  "controls": {
+    "heading": "Controale de Dezvoltare",
+    "screenset": "Set de Ecrane:",
+    "theme": "Temă:",
+    "language": "Limbă:",
+    "mockApi": "API Simulat"
+  }
+}

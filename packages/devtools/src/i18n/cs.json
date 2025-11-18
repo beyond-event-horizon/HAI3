@@ -1,0 +1,10 @@
+{
+  "title": "HAI3 DevTools",
+  "controls": {
+    "heading": "Vývojové Ovládací Prvky",
+    "screenset": "Sada Obrazovek:",
+    "theme": "Téma:",
+    "language": "Jazyk:",
+    "mockApi": "Simulované API"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "title": "HAI3 DevTools",
+  "controls": {
+    "heading": "Mga Kontrol sa Pag-unlad",
+    "screenset": "Hanay ng Screen:",
+    "theme": "Tema:",
+    "language": "Wika:",
+    "mockApi": "Mock API"
+  }
+}

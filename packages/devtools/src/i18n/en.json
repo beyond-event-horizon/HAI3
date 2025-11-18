@@ -1,0 +1,10 @@
+{
+  "title": "HAI3 DevTools",
+  "controls": {
+    "heading": "Development Controls",
+    "screenset": "Screenset:",
+    "theme": "Theme:",
+    "language": "Language:",
+    "mockApi": "Mock API"
+  }
+}

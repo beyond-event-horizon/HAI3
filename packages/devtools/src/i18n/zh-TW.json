@@ -1,0 +1,10 @@
+{
+  "title": "HAI3 開發工具",
+  "controls": {
+    "heading": "開發控制項",
+    "screenset": "螢幕集:",
+    "theme": "主題:",
+    "language": "語言:",
+    "mockApi": "模擬 API"
+  }
+}

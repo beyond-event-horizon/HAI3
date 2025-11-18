@@ -9,13 +9,13 @@ import { Screen } from './domains/screen/Screen';
 import { Popup } from './domains/popup/Popup';
 import { Overlay } from './domains/overlay/Overlay';
 import { bootstrapApp } from '../core/actions/appActions';
+import { themeRegistry } from '../theme/themeRegistry';
+import { changeTheme } from '../core/actions';
 
 /**
  * Layout component for HAI3 UI-Core
  * Pure structural orchestrator - all configuration is managed via Redux in each domain
  * Each domain component is completely self-contained and manages its own state
- * 
- * Note: Theme application should be done at app level where themes are defined
  */
 
 export interface LayoutProps {
@@ -26,9 +26,16 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   // Bootstrap application on mount
-  // Fetches user and initializes language
+  // Initializes theme and fetches user
   // Components render with skeletons until data arrives
   useEffect(() => {
+    // Apply first registered theme as default
+    const themeNames = themeRegistry.getThemeNames();
+    if (themeNames.length > 0) {
+      dispatch(changeTheme(themeNames[0]));
+    }
+
+    // Fetch user and initialize language
     dispatch(bootstrapApp());
   }, [dispatch]);
 

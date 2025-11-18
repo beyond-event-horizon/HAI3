@@ -1,0 +1,10 @@
+{
+  "title": "HAI3 DevTools",
+  "controls": {
+    "heading": "Fejlesztési Vezérlők",
+    "screenset": "Képernyőkészlet:",
+    "theme": "Téma:",
+    "language": "Nyelv:",
+    "mockApi": "Teszt API"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "title": "HAI3 DevTools",
+  "controls": {
+    "heading": "Điều Khiển Phát Triển",
+    "screenset": "Bộ Màn Hình:",
+    "theme": "Chủ Đề:",
+    "language": "Ngôn Ngữ:",
+    "mockApi": "API Giả Lập"
+  }
+}
