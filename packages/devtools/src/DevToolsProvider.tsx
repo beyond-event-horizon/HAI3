@@ -10,9 +10,7 @@ import './i18n'; // Register DevTools translations on module import
  */
 interface DevToolsContextValue {
   collapsed: boolean;
-  visible: boolean;
   toggleCollapsed: () => void;
-  toggleVisibility: () => void;
   portalContainer: HTMLElement | null;
   setPortalContainer: (container: HTMLElement | null) => void;
 }
@@ -35,7 +33,6 @@ export const DevToolsProvider: React.FC<DevToolsProviderProps> = ({ children }) 
   const [collapsed, setCollapsed] = useState(() =>
     loadDevToolsState(STORAGE_KEYS.COLLAPSED, false)
   );
-  const [visible, setVisible] = useState(true);
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
 
   // Initialize persistence effects on mount
@@ -52,17 +49,11 @@ export const DevToolsProvider: React.FC<DevToolsProviderProps> = ({ children }) 
     });
   }, []);
 
-  const toggleVisibility = useCallback(() => {
-    setVisible((prev) => !prev);
-  }, []);
-
   return (
     <DevToolsContext.Provider
       value={{
         collapsed,
-        visible,
         toggleCollapsed,
-        toggleVisibility,
         portalContainer,
         setPortalContainer,
       }}

@@ -65,8 +65,7 @@
 ## 6. Keyboard Shortcuts
 
 - [x] 6.1 Create `packages/devtools/src/hooks/useKeyboardShortcut.ts` - Keyboard event hook
-  - Listen for `Ctrl+Shift+D` (Windows/Linux)
-  - Listen for `Cmd+Shift+D` (macOS)
+  - Listen for `Shift+`` ` ``** (tilde key, all platforms)
   - Toggle panel visibility
   - Prevent default browser behavior
 - [x] 6.2 Integrate keyboard shortcut hook in DevToolsOverlay
@@ -158,7 +157,7 @@
 - [x] 13.1 Manual testing: Drag panel to all corners of viewport
 - [x] 13.2 Manual testing: Resize panel to min/max dimensions
 - [x] 13.3 Manual testing: Collapse and expand panel
-- [x] 13.4 Manual testing: Press keyboard shortcut (Ctrl+Shift+D)
+- [x] 13.4 Manual testing: Press keyboard shortcut (Shift+`)
 - [x] 13.5 Manual testing: Change theme, screenset, language, API mode
 - [x] 13.6 Manual testing: Reload page and verify state persistence
 - [x] 13.7 Manual testing: Clear localStorage and verify defaults
@@ -182,8 +181,7 @@
   - Keyboard shortcuts reference
   - Tree-shaking verification details
 - [x] 14.4 Document keyboard shortcuts in README
-  - Ctrl+Shift+D (Windows/Linux)
-  - Cmd+Shift+D (macOS)
+  - Shift+` (tilde key, all platforms)
 
 ## 15. Cleanup
 

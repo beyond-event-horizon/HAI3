@@ -18,7 +18,6 @@ export interface Size {
  * DevTools panel state
  */
 export interface DevToolsState {
-  visible: boolean;
   collapsed: boolean;
   position: Position;
   size: Size;
@@ -37,10 +36,19 @@ export const PANEL_CONSTRAINTS = {
 } as const;
 
 /**
+ * Collapsed button size (circular)
+ */
+export const BUTTON_SIZE = {
+  width: 48,
+  height: 48,
+} as const;
+
+/**
  * LocalStorage keys
  */
 export const STORAGE_KEYS = {
   POSITION: 'hai3:devtools:position',
   SIZE: 'hai3:devtools:size',
   COLLAPSED: 'hai3:devtools:collapsed',
+  BUTTON_POSITION: 'hai3:devtools:buttonPosition',
 } as const;

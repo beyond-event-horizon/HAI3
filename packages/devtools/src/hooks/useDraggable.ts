@@ -8,9 +8,10 @@ import { DevToolsEvents } from '../events/devtoolsEvents';
 
 interface UseDraggableProps {
   panelSize: Size;
+  storageKey?: string;
 }
 
-export const useDraggable = ({ panelSize }: UseDraggableProps) => {
+export const useDraggable = ({ panelSize, storageKey = STORAGE_KEYS.POSITION }: UseDraggableProps) => {
   // Calculate default position (bottom-right with margin)
   const getDefaultPosition = (): Position => ({
     x: window.innerWidth - panelSize.width - 20,
@@ -18,7 +19,7 @@ export const useDraggable = ({ panelSize }: UseDraggableProps) => {
   });
 
   const [position, setPosition] = useState<Position>(() =>
-    loadDevToolsState(STORAGE_KEYS.POSITION, getDefaultPosition())
+    loadDevToolsState(storageKey, getDefaultPosition())
   );
   const [isDragging, setIsDragging] = useState(false);
   const dragStartPos = useRef<Position>({ x: 0, y: 0 });
@@ -48,7 +49,12 @@ export const useDraggable = ({ panelSize }: UseDraggableProps) => {
 
       const newPosition = { x: newX, y: newY };
       setPosition(newPosition);
-      eventBus.emit(DevToolsEvents.PositionChanged, { position: newPosition });
+
+      // Emit appropriate event based on storage key
+      const eventName = storageKey === STORAGE_KEYS.BUTTON_POSITION
+        ? DevToolsEvents.ButtonPositionChanged
+        : DevToolsEvents.PositionChanged;
+      eventBus.emit(eventName, { position: newPosition });
     };
 
     const handleMouseUp = () => {
@@ -62,7 +68,7 @@ export const useDraggable = ({ panelSize }: UseDraggableProps) => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isDragging, panelSize.width, panelSize.height]);
+  }, [isDragging, panelSize.width, panelSize.height, storageKey]);
 
   return {
     position,

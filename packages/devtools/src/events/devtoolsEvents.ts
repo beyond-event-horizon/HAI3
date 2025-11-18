@@ -13,8 +13,8 @@ export interface SizeChangedPayload {
   size: Size;
 }
 
-export interface VisibilityToggledPayload {
-  visible: boolean;
+export interface ButtonPositionChangedPayload {
+  position: Position;
 }
 
 /**
@@ -24,7 +24,7 @@ export interface VisibilityToggledPayload {
 export const DevToolsEvents = {
   PositionChanged: 'devtools/positionChanged',
   SizeChanged: 'devtools/sizeChanged',
-  VisibilityToggled: 'devtools/visibilityToggled',
+  ButtonPositionChanged: 'devtools/buttonPositionChanged',
 } as const;
 
 /**
@@ -35,6 +35,6 @@ declare module '@hai3/uicore' {
   interface EventPayloadMap {
     'devtools/positionChanged': PositionChangedPayload;
     'devtools/sizeChanged': SizeChangedPayload;
-    'devtools/visibilityToggled': VisibilityToggledPayload;
+    'devtools/buttonPositionChanged': ButtonPositionChangedPayload;
   }
 }
