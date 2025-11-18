@@ -13,7 +13,7 @@ export const DevToolsPanel: React.FC = () => {
   const portalRef = React.useRef<HTMLDivElement>(null);
 
   // Initialize hooks
-  const { size, isResizing, handleMouseDown: handleResizeMouseDown } = useResizable();
+  const { size, isResizing: _isResizing, handleMouseDown: handleResizeMouseDown } = useResizable();
 
   const { position, isDragging, handleMouseDown: handleDragMouseDown } = useDraggable({
     panelSize: size,

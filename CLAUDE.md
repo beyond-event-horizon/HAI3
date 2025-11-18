@@ -74,14 +74,14 @@ HAI3 uses **dependency inversion** to achieve clean architecture:
 │  - Registers components/screensets/themes   │
 └──────────────┬──────────────────────────────┘
                │ depends on
-      ┌────────┴────────┐
-      ▼                 ▼
-┌──────────┐      ┌──────────┐
-│  uicore  │      │  uikit   │
-│  Layout  │      │  React   │
-│  Redux   │      │  Comps   │
-│  Events  │      │          │
-└────┬─────┘      └────┬─────┘
+      ┌────────┴────────┬────────────┐
+      ▼                 ▼            ▼ (dev only)
+┌──────────┐      ┌──────────┐  ┌──────────┐
+│  uicore  │      │  uikit   │  │ devtools │
+│  Layout  │      │  React   │  │  DevUI   │
+│  Redux   │◄─────┤  Comps   │◄─┤  (auto)  │
+│  Events  │      │          │  │          │
+└────┬─────┘      └────┬─────┘  └──────────┘
      │                 │
      └────────┬────────┘
               ▼
@@ -95,9 +95,12 @@ HAI3 uses **dependency inversion** to achieve clean architecture:
 - **uikit-contracts**: Pure TypeScript interfaces (Theme, ButtonComponent, etc.) - no implementation
 - **uikit**: React components implementing contracts - NO dependency on uicore
 - **uicore**: Layout orchestration, Redux store, event bus, registries - depends ONLY on contracts
+- **devtools**: Development-only package - auto-detected by HAI3Provider in dev mode, tree-shaken in production
 - **App**: Registers uikit implementations with uicore at runtime via `uikitRegistry`
 
 **Why this matters**: uicore can define what components it needs (contracts) without knowing HOW they're implemented. Apps can swap component libraries by registering different implementations.
+
+**DevTools**: The `@hai3/devtools` package provides a floating development panel with theme/screenset/language selectors and API mode toggle. It's automatically loaded by `HAI3Provider` in development mode and completely excluded from production builds through tree-shaking.
 
 ### Event-Driven Flux Pattern
 

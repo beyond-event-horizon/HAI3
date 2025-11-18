@@ -37,6 +37,14 @@ module.exports = {
       caughtErrorsIgnorePattern: '^_'
     }],
     '@typescript-eslint/no-explicit-any': 'error',
+    // STRICT: Ban ALL TypeScript suppression directives - no exceptions
+    // Use proper TypeScript syntax: type guards, ambient declarations, type assertions, etc.
+    '@typescript-eslint/ban-ts-comment': ['error', {
+      'ts-expect-error': true, // Banned - use proper types
+      'ts-ignore': true,       // Banned - use proper types
+      'ts-nocheck': true,      // Banned - use proper types
+      'ts-check': false        // Allow (enables checking in JS files)
+    }],
     'prefer-const': 'error',
     'react-hooks/exhaustive-deps': 'error',
     'no-console': 'off', // Allow console statements for development
@@ -143,15 +151,42 @@ module.exports = {
         'no-restricted-imports': [
           'error',
           {
-            paths: ['@hai3/uicore', '@hai3/uikit', 'src/**'],
+            paths: ['@hai3/uicore', '@hai3/uikit', '@hai3/devtools', 'src/**'],
             patterns: [
               {
                 group: ['@/*'],
                 message: 'Use relative imports within packages. @/ aliases are only allowed in app code (src/).',
               },
               {
-                group: ['../../uicore/**', '../../../packages/uicore/**', '../../uikit/**', '../../../packages/uikit/**', '../../../src/**'],
+                group: ['../../uicore/**', '../../../packages/uicore/**', '../../uikit/**', '../../../packages/uikit/**', '../../devtools/**', '../../../packages/devtools/**', '../../../src/**'],
                 message: 'Contracts cannot import from other packages. Must remain pure types/enums only.',
+              },
+            ],
+          },
+        ],
+      },
+    },
+
+    // DevTools: Development-only package
+    {
+      files: ['packages/devtools/**/*'],
+      rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            paths: ['src/**'],
+            patterns: [
+              {
+                group: ['@/*'],
+                message: 'Use relative imports within packages. @/ aliases are only allowed in app code (src/).',
+              },
+              {
+                group: ['../../../src/**', '../../src/**', './src/**'],
+                message: 'DevTools cannot import app code. DevTools is a development-only package that must remain independent.',
+              },
+              {
+                group: ['../../uikit-contracts/**', '../../../packages/uikit-contracts/**', '../../uikit/**', '../../../packages/uikit/**', '../../uicore/**', '../../../packages/uicore/**'],
+                message: 'DevTools should import peer dependencies via package names (@hai3/*), not relative paths.',
               },
             ],
           },
@@ -171,6 +206,26 @@ module.exports = {
               group: ['**/packages/*/src/**', '../packages/**'],
               message: 'App cannot import package internals. Use @hai3/uicore, @hai3/uikit, @hai3/uikit-contracts.',
             }],
+          },
+        ],
+      },
+    },
+
+    // App: DevTools should only be imported via HAI3Provider (auto-detection)
+    {
+      files: ['src/**/*'],
+      excludedFiles: ['src/main.tsx', '**/HAI3Provider.tsx'],
+      rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            paths: ['@hai3/devtools'],
+            patterns: [
+              {
+                group: ['@hai3/devtools', '@hai3/devtools/**'],
+                message: 'DEVTOOLS VIOLATION: DevTools should not be imported directly in app code. HAI3Provider auto-detects and loads DevTools in development mode. See CLAUDE.md.',
+              },
+            ],
           },
         ],
       },
