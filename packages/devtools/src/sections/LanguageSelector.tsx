@@ -54,7 +54,7 @@ export function LanguageSelector({
             }
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" container={portalContainer}>
+        <DropdownMenuContent align="end" container={portalContainer} className="z-[99999] pointer-events-auto">
           {languages.map((lang) => (
             <DropdownMenuItem
               key={lang.code}

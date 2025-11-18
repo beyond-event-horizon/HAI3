@@ -1,22 +1,23 @@
 import { useEffect } from 'react';
-import { upperCase } from 'lodash';
 
 /**
- * Hook to register a keyboard shortcut (Ctrl+Shift+D / Cmd+Shift+D)
+ * Hook to register a keyboard shortcut (Shift+`)
+ * Uses physical key location for reliable cross-browser/keyboard detection
  */
 export const useKeyboardShortcut = (handler: () => void) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const isMac = upperCase(navigator.platform).indexOf('MAC') >= 0;
-      const modifierKey = isMac ? e.metaKey : e.ctrlKey;
-
-      if (modifierKey && e.shiftKey && e.key === 'D') {
-        e.preventDefault(); // Prevent browser bookmark dialog
+      // Use e.code for physical key location (works across all keyboard layouts)
+      // Backquote key with Shift modifier
+      if (e.shiftKey && e.code === 'Backquote') {
+        e.preventDefault(); // Prevent any potential conflicts
         handler();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [handler]);
 };

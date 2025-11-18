@@ -9,7 +9,7 @@ Development tools overlay for HAI3 applications - provides runtime controls for 
 - **Language Selector**: Test internationalization with 36 supported languages
 - **API Mode Toggle**: Switch between mock and real API implementations
 - **Draggable & Resizable**: Position the panel anywhere on screen
-- **Keyboard Shortcut**: Toggle with `Ctrl+Shift+D` (Windows/Linux) or `Cmd+Shift+D` (macOS)
+- **Keyboard Shortcut**: Toggle with `Shift+`` ` ``** (tilde key, works on all platforms)
 - **State Persistence**: Panel position, size, and collapsed state saved to localStorage
 - **Fully Localized**: All labels and controls available in 36 languages
 - **Glassmorphic Design**: Modern, semi-transparent overlay with backdrop blur
@@ -64,8 +64,7 @@ export const App = () => {
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl+Shift+D` (Win/Linux) | Toggle DevTools panel |
-| `Cmd+Shift+D` (macOS) | Toggle DevTools panel |
+| `Shift+`` ` ``** (All platforms) | Toggle DevTools panel |
 
 ## Panel Controls
 

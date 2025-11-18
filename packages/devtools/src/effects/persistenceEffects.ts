@@ -30,9 +30,18 @@ export const initPersistenceEffects = (): (() => void) => {
     }
   );
 
+  // Button position changed listener
+  const buttonPositionSubscription = eventBus.on(
+    DevToolsEvents.ButtonPositionChanged,
+    ({ position }) => {
+      saveDevToolsState(STORAGE_KEYS.BUTTON_POSITION, position);
+    }
+  );
+
   // Return cleanup function to unsubscribe all listeners
   return () => {
     positionSubscription.unsubscribe();
     sizeSubscription.unsubscribe();
+    buttonPositionSubscription.unsubscribe();
   };
 };

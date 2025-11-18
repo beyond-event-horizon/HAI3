@@ -50,7 +50,7 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
             {formatThemeName(currentTheme)}
           </DropdownButton>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" container={portalContainer}>
+        <DropdownMenuContent align="end" container={portalContainer} className="z-[99999] pointer-events-auto">
           {availableThemes.map((themeName) => (
             <DropdownMenuItem
               key={themeName}

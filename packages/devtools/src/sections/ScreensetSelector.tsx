@@ -73,13 +73,13 @@ export const ScreensetSelector: React.FC<ScreensetSelectorProps> = ({
             {formatName(getCurrentDisplay())}
           </DropdownButton>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" container={portalContainer}>
+        <DropdownMenuContent align="end" container={portalContainer} className="z-[99999] pointer-events-auto">
           {options.map((categoryGroup) => (
             <DropdownMenuSub key={categoryGroup.category}>
               <DropdownMenuSubTrigger disabled={categoryGroup.screensets.length === 0}>
                 {formatName(categoryGroup.category)}
               </DropdownMenuSubTrigger>
-              <DropdownMenuSubContent container={portalContainer}>
+              <DropdownMenuSubContent container={portalContainer} className="z-[99999] pointer-events-auto">
                 {categoryGroup.screensets.map((item) => (
                   <DropdownMenuItem
                     key={item.id}

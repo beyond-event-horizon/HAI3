@@ -1,11 +1,12 @@
 import React from 'react';
 import { useTranslation } from '@hai3/uicore';
 import { Card } from '@hai3/uikit';
-import { Button, ButtonVariant } from '@hai3/uikit';
+import { Button, ButtonVariant, ButtonSize } from '@hai3/uikit';
 import { useDraggable } from './hooks/useDraggable';
 import { useResizable } from './hooks/useResizable';
 import { useDevToolsContext } from './DevToolsProvider';
 import { ControlPanel } from './sections/ControlPanel';
+import { STORAGE_KEYS } from './types';
 
 export const DevToolsPanel: React.FC = () => {
   const { toggleCollapsed, setPortalContainer } = useDevToolsContext();
@@ -17,6 +18,7 @@ export const DevToolsPanel: React.FC = () => {
 
   const { position, isDragging, handleMouseDown: handleDragMouseDown } = useDraggable({
     panelSize: size,
+    storageKey: STORAGE_KEYS.POSITION,
   });
 
   // Register portal container with context on mount
@@ -30,7 +32,7 @@ export const DevToolsPanel: React.FC = () => {
       {/* High z-index portal container for dropdowns */}
       <div
         ref={portalRef}
-        className="devtools-portal-container fixed z-[10001] pointer-events-none"
+        className="devtools-portal-container fixed z-[99999] pointer-events-none"
       />
 
       <div
@@ -42,7 +44,7 @@ export const DevToolsPanel: React.FC = () => {
           height: `${size.height}px`,
         }}
       >
-      <Card className="h-full w-full flex flex-col glassmorphic-panel overflow-hidden">
+      <Card className="h-full w-full flex flex-col overflow-hidden bg-white/20 dark:bg-black/50 backdrop-blur-md backdrop-saturate-[180%] border border-white/30 dark:border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
         {/* Header with drag handle */}
         <div
           className="devtools-header px-4 py-3 border-b border-border/50 select-none flex items-center justify-between"
@@ -52,7 +54,7 @@ export const DevToolsPanel: React.FC = () => {
           <h2 className="text-sm font-semibold text-foreground">{t('devtools:title')}</h2>
           <Button
             variant={ButtonVariant.Ghost}
-            size="sm"
+            size={ButtonSize.Sm}
             onClick={toggleCollapsed}
             className="h-7 w-7 p-0"
           >
@@ -91,30 +93,6 @@ export const DevToolsPanel: React.FC = () => {
           </svg>
         </div>
       </Card>
-
-      <style>{`
-        .glassmorphic-panel {
-          background: rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(16px) saturate(180%);
-          -webkit-backdrop-filter: blur(16px) saturate(180%);
-          border: 1px solid rgba(255, 255, 255, 0.18);
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        .dark .glassmorphic-panel {
-          background: rgba(0, 0, 0, 0.4);
-          border-color: rgba(255, 255, 255, 0.12);
-        }
-
-        .devtools-portal-container > * {
-          pointer-events: auto;
-        }
-
-        /* Bump z-index for all Radix UI dropdown portals globally when DevTools is present */
-        body:has(.devtools-panel) [data-radix-popper-content-wrapper] {
-          z-index: 10002 !important;
-        }
-      `}</style>
     </div>
     </>
   );
