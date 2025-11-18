@@ -8,9 +8,13 @@ import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screens/screenIds';
 /**
  * Layout Elements Component
  * Contains Card, Dialog, and Sheet demonstrations
+ * Uses parent screen (UIKitElementsScreen) translations
  */
 export const LayoutElements: React.FC = () => {
   const { t } = useTranslation();
+  
+  // Helper function to access parent screen's translations
+  const tk = (key: string) => t(`screen.${DEMO_SCREENSET_ID}.${UI_KIT_ELEMENTS_SCREEN_ID}:${key}`);
 
   return (
     <>
@@ -18,7 +22,7 @@ export const LayoutElements: React.FC = () => {
       <div data-element-id="element-card" className="flex flex-col gap-4">
         <TextLoader skeletonClassName="h-8 w-24">
           <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_heading`)}
+            {tk('card_heading')}
           </h2>
         </TextLoader>
         <div className="flex flex-col gap-6 p-6 border border-border rounded-lg bg-background overflow-hidden">
@@ -26,26 +30,26 @@ export const LayoutElements: React.FC = () => {
           <div className="flex flex-col gap-2">
             <TextLoader skeletonClassName="h-4 w-24" inheritColor>
               <label className="text-xs text-muted-foreground">
-                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_basic_label`)}
+                {tk('card_basic_label')}
               </label>
             </TextLoader>
             <Card className="w-full max-w-sm">
               <CardHeader>
                 <CardTitle>
                   <TextLoader skeletonClassName="h-6 w-32" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_basic_title`)}
+                    {tk('card_basic_title')}
                   </TextLoader>
                 </CardTitle>
                 <CardDescription>
                   <TextLoader skeletonClassName="h-4 w-48" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_basic_description`)}
+                    {tk('card_basic_description')}
                   </TextLoader>
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <TextLoader skeletonClassName="h-4 w-full" inheritColor>
                   <p className="text-sm">
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_basic_content`)}
+                    {tk('card_basic_content')}
                   </p>
                 </TextLoader>
               </CardContent>
@@ -56,7 +60,7 @@ export const LayoutElements: React.FC = () => {
           <div className="flex flex-col gap-2">
             <TextLoader skeletonClassName="h-4 w-24" inheritColor>
               <label className="text-xs text-muted-foreground">
-                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_title`)}
+                {tk('card_user_title')}
               </label>
             </TextLoader>
             <Card className="w-full max-w-sm">
@@ -69,12 +73,12 @@ export const LayoutElements: React.FC = () => {
                   <div className="flex flex-col">
                     <CardTitle className="text-lg">
                       <TextLoader skeletonClassName="h-5 w-24" inheritColor>
-                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_name`)}
+                        {tk('card_user_name')}
                       </TextLoader>
                     </CardTitle>
                     <CardDescription>
                       <TextLoader skeletonClassName="h-4 w-40" inheritColor>
-                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_email`)}
+                        {tk('card_user_email')}
                       </TextLoader>
                     </CardDescription>
                   </div>
@@ -85,13 +89,13 @@ export const LayoutElements: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <Badge variant="secondary">
                       <TextLoader skeletonClassName="h-3.5 w-20" inheritColor>
-                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_role`)}
+                        {tk('card_user_role')}
                       </TextLoader>
                     </Badge>
                   </div>
                   <TextLoader skeletonClassName="h-4 w-full" inheritColor>
                     <p className="text-sm text-muted-foreground">
-                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_bio`)}
+                      {tk('card_user_bio')}
                     </p>
                   </TextLoader>
                 </div>
@@ -99,12 +103,12 @@ export const LayoutElements: React.FC = () => {
               <CardFooter className="gap-2">
                 <Button variant={ButtonVariant.Default} size={ButtonSize.Sm} className="flex-1">
                   <TextLoader skeletonClassName="h-5 w-16" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_follow`)}
+                    {tk('card_user_follow')}
                   </TextLoader>
                 </Button>
                 <Button variant={ButtonVariant.Outline} size={ButtonSize.Sm} className="flex-1">
                   <TextLoader skeletonClassName="h-5 w-20" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_user_message`)}
+                    {tk('card_user_message')}
                   </TextLoader>
                 </Button>
               </CardFooter>
@@ -115,24 +119,24 @@ export const LayoutElements: React.FC = () => {
           <div className="flex flex-col gap-2">
             <TextLoader skeletonClassName="h-4 w-32" inheritColor>
               <label className="text-xs text-muted-foreground">
-                {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_title`)}
+                {tk('card_form_title')}
               </label>
             </TextLoader>
             <Card className="w-full max-w-sm">
               <CardHeader>
                 <CardTitle>
                   <TextLoader skeletonClassName="h-6 w-48" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_login_title`)}
+                    {tk('card_form_login_title')}
                   </TextLoader>
                 </CardTitle>
                 <CardDescription>
                   <div className="flex items-center justify-between">
                     <TextLoader skeletonClassName="h-4 w-56" inheritColor>
-                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_login_description`)}
+                      {tk('card_form_login_description')}
                     </TextLoader>
                     <Button variant={ButtonVariant.Link} size={ButtonSize.Sm} className="h-auto p-0">
                       <TextLoader skeletonClassName="h-4 w-16" inheritColor>
-                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_signup`)}
+                        {tk('card_form_signup')}
                       </TextLoader>
                     </Button>
                   </div>
@@ -144,13 +148,13 @@ export const LayoutElements: React.FC = () => {
                     <div className="grid gap-2">
                       <TextLoader skeletonClassName="h-4 w-12" inheritColor>
                         <label htmlFor="email" className="text-sm font-medium">
-                          {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_email_label`)}
+                          {tk('card_form_email_label')}
                         </label>
                       </TextLoader>
                       <FormInput
                         id="email"
                         type="email"
-                        placeholder={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_email_placeholder`)}
+                        placeholder={tk('card_form_email_placeholder')}
                         required
                       />
                     </div>
@@ -158,7 +162,7 @@ export const LayoutElements: React.FC = () => {
                       <div className="flex items-center">
                         <TextLoader skeletonClassName="h-4 w-16" inheritColor>
                           <label htmlFor="password" className="text-sm font-medium">
-                            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_password_label`)}
+                            {tk('card_form_password_label')}
                           </label>
                         </TextLoader>
                         <TextLoader skeletonClassName="h-4 w-32 ml-auto" inheritColor>
@@ -166,7 +170,7 @@ export const LayoutElements: React.FC = () => {
                             href="#"
                             className="ml-auto inline-block text-sm underline-offset-4 hover:underline text-primary"
                           >
-                            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_forgot_password`)}
+                            {tk('card_form_forgot_password')}
                           </a>
                         </TextLoader>
                       </div>
@@ -182,12 +186,12 @@ export const LayoutElements: React.FC = () => {
               <CardFooter className="flex-col gap-2">
                 <Button type="submit" variant={ButtonVariant.Default} className="w-full">
                   <TextLoader skeletonClassName="h-5 w-16" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_login_button`)}
+                    {tk('card_form_login_button')}
                   </TextLoader>
                 </Button>
                 <Button variant={ButtonVariant.Outline} className="w-full">
                   <TextLoader skeletonClassName="h-5 w-32" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.card_form_login_google`)}
+                    {tk('card_form_login_google')}
                   </TextLoader>
                 </Button>
               </CardFooter>
@@ -200,7 +204,7 @@ export const LayoutElements: React.FC = () => {
       <div data-element-id="element-dialog" className="flex flex-col gap-4">
         <TextLoader skeletonClassName="h-8 w-24">
           <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_heading`)}
+            {tk('dialog_heading')}
           </h2>
         </TextLoader>
         <div className="flex items-center justify-center gap-4 p-6 border border-border rounded-lg bg-background overflow-hidden">
@@ -210,7 +214,7 @@ export const LayoutElements: React.FC = () => {
               <DialogTrigger asChild>
                 <Button variant={ButtonVariant.Outline}>
                   <TextLoader skeletonClassName="h-5 w-24" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_open_dialog`)}
+                    {tk('dialog_open_dialog')}
                   </TextLoader>
                 </Button>
               </DialogTrigger>
@@ -218,12 +222,12 @@ export const LayoutElements: React.FC = () => {
                 <DialogHeader>
                   <DialogTitle>
                     <TextLoader skeletonClassName="h-6 w-32" inheritColor>
-                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_edit_profile_title`)}
+                      {tk('dialog_edit_profile_title')}
                     </TextLoader>
                   </DialogTitle>
                   <DialogDescription>
                     <TextLoader skeletonClassName="h-4 w-full" inheritColor>
-                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_edit_profile_description`)}
+                      {tk('dialog_edit_profile_description')}
                     </TextLoader>
                   </DialogDescription>
                 </DialogHeader>
@@ -231,27 +235,27 @@ export const LayoutElements: React.FC = () => {
                   <div className="grid gap-3">
                     <TextLoader skeletonClassName="h-4 w-12" inheritColor>
                       <label htmlFor="name-1" className="text-sm font-medium">
-                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_name_label`)}
+                        {tk('dialog_name_label')}
                       </label>
                     </TextLoader>
                     <FormInput
                       id="name-1"
                       name="name"
                       type="text"
-                      defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_name_placeholder`)}
+                      defaultValue={tk('dialog_name_placeholder')}
                     />
                   </div>
                   <div className="grid gap-3">
                     <TextLoader skeletonClassName="h-4 w-20" inheritColor>
                       <label htmlFor="username-1" className="text-sm font-medium">
-                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_username_label`)}
+                        {tk('dialog_username_label')}
                       </label>
                     </TextLoader>
                     <FormInput
                       id="username-1"
                       name="username"
                       type="text"
-                      defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_username_placeholder`)}
+                      defaultValue={tk('dialog_username_placeholder')}
                     />
                   </div>
                 </div>
@@ -259,13 +263,13 @@ export const LayoutElements: React.FC = () => {
                   <DialogClose asChild>
                     <Button variant={ButtonVariant.Outline}>
                       <TextLoader skeletonClassName="h-5 w-16" inheritColor>
-                        {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_cancel`)}
+                        {tk('dialog_cancel')}
                       </TextLoader>
                     </Button>
                   </DialogClose>
                   <Button type="submit">
                     <TextLoader skeletonClassName="h-5 w-28" inheritColor>
-                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_save_changes`)}
+                      {tk('dialog_save_changes')}
                     </TextLoader>
                   </Button>
                 </DialogFooter>
@@ -278,7 +282,7 @@ export const LayoutElements: React.FC = () => {
             <DialogTrigger asChild>
               <Button variant={ButtonVariant.Outline}>
                 <TextLoader skeletonClassName="h-5 w-40" inheritColor>
-                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_custom_close_button`)}
+                  {tk('dialog_custom_close_button')}
                 </TextLoader>
               </Button>
             </DialogTrigger>
@@ -286,12 +290,12 @@ export const LayoutElements: React.FC = () => {
               <DialogHeader>
                 <DialogTitle>
                   <TextLoader skeletonClassName="h-6 w-24" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_share_title`)}
+                    {tk('dialog_share_title')}
                   </TextLoader>
                 </DialogTitle>
                 <DialogDescription>
                   <TextLoader skeletonClassName="h-4 w-full" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_share_description`)}
+                    {tk('dialog_share_description')}
                   </TextLoader>
                 </DialogDescription>
               </DialogHeader>
@@ -299,13 +303,13 @@ export const LayoutElements: React.FC = () => {
                 <div className="grid flex-1 gap-2">
                   <TextLoader skeletonClassName="h-4 w-12 sr-only" inheritColor>
                     <label htmlFor="link" className="sr-only">
-                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_link_label`)}
+                      {tk('dialog_link_label')}
                     </label>
                   </TextLoader>
                   <FormInput
                     id="link"
                     type="text"
-                    defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_link_value`)}
+                    defaultValue={tk('dialog_link_value')}
                   />
                 </div>
               </div>
@@ -313,7 +317,7 @@ export const LayoutElements: React.FC = () => {
                 <DialogClose asChild>
                   <Button type="button" variant={ButtonVariant.Secondary}>
                     <TextLoader skeletonClassName="h-5 w-12" inheritColor>
-                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.dialog_close`)}
+                      {tk('dialog_close')}
                     </TextLoader>
                   </Button>
                 </DialogClose>
@@ -327,7 +331,7 @@ export const LayoutElements: React.FC = () => {
       <div data-element-id="element-sheet" className="flex flex-col gap-4">
         <TextLoader skeletonClassName="h-8 w-24">
           <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_heading`)}
+            {tk('sheet_heading')}
           </h2>
         </TextLoader>
         <div className="flex items-center justify-center gap-4 p-6 border border-border rounded-lg bg-background overflow-hidden">
@@ -335,7 +339,7 @@ export const LayoutElements: React.FC = () => {
             <SheetTrigger asChild>
               <Button variant={ButtonVariant.Outline}>
                 <TextLoader skeletonClassName="h-5 w-16" inheritColor>
-                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_open`)}
+                  {tk('sheet_open')}
                 </TextLoader>
               </Button>
             </SheetTrigger>
@@ -343,12 +347,12 @@ export const LayoutElements: React.FC = () => {
               <SheetHeader>
                 <SheetTitle>
                   <TextLoader skeletonClassName="h-6 w-32" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_edit_profile_title`)}
+                    {tk('sheet_edit_profile_title')}
                   </TextLoader>
                 </SheetTitle>
                 <SheetDescription>
                   <TextLoader skeletonClassName="h-4 w-full" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_edit_profile_description`)}
+                    {tk('sheet_edit_profile_description')}
                   </TextLoader>
                 </SheetDescription>
               </SheetHeader>
@@ -356,38 +360,38 @@ export const LayoutElements: React.FC = () => {
                 <div className="grid gap-3">
                   <TextLoader skeletonClassName="h-4 w-12" inheritColor>
                     <label htmlFor="sheet-demo-name" className="text-sm font-medium">
-                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_name_label`)}
+                      {tk('sheet_name_label')}
                     </label>
                   </TextLoader>
                   <FormInput
                     id="sheet-demo-name"
                     type="text"
-                    defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_name_placeholder`)}
+                    defaultValue={tk('sheet_name_placeholder')}
                   />
                 </div>
                 <div className="grid gap-3">
                   <TextLoader skeletonClassName="h-4 w-20" inheritColor>
                     <label htmlFor="sheet-demo-username" className="text-sm font-medium">
-                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_username_label`)}
+                      {tk('sheet_username_label')}
                     </label>
                   </TextLoader>
                   <FormInput
                     id="sheet-demo-username"
                     type="text"
-                    defaultValue={t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_username_placeholder`)}
+                    defaultValue={tk('sheet_username_placeholder')}
                   />
                 </div>
               </div>
               <SheetFooter>
                 <Button type="submit">
                   <TextLoader skeletonClassName="h-5 w-28" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_save_changes`)}
+                    {tk('sheet_save_changes')}
                   </TextLoader>
                 </Button>
                 <SheetClose asChild>
                   <Button variant={ButtonVariant.Outline}>
                     <TextLoader skeletonClassName="h-5 w-16" inheritColor>
-                      {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.sheet_close`)}
+                      {tk('sheet_close')}
                     </TextLoader>
                   </Button>
                 </SheetClose>

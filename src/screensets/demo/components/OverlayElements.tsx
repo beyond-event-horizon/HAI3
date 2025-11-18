@@ -8,9 +8,13 @@ import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screens/screenIds';
 /**
  * Overlay Elements Component
  * Contains Tooltip demonstrations
+ * Uses parent screen (UIKitElementsScreen) translations
  */
 export const OverlayElements: React.FC = () => {
   const { t } = useTranslation();
+  
+  // Helper function to access parent screen's translations
+  const tk = (key: string) => t(`screen.${DEMO_SCREENSET_ID}.${UI_KIT_ELEMENTS_SCREEN_ID}:${key}`);
 
   return (
     <>
@@ -18,7 +22,7 @@ export const OverlayElements: React.FC = () => {
       <div data-element-id="element-tooltip" className="flex flex-col gap-4">
         <TextLoader skeletonClassName="h-8 w-24">
           <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_heading`)}
+            {tk('tooltip_heading')}
           </h2>
         </TextLoader>
         <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
@@ -27,13 +31,13 @@ export const OverlayElements: React.FC = () => {
               <TooltipTrigger asChild>
                 <Button variant={ButtonVariant.Outline}>
                   <TextLoader skeletonClassName="h-6 w-16" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_hover_me`)}
+                    {tk('tooltip_hover_me')}
                   </TextLoader>
                 </Button>
               </TooltipTrigger>
               <TooltipContent className="bg-primary text-primary-foreground">
                 <TextLoader skeletonClassName="h-3.5 w-28" inheritColor>
-                  <p>{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_text`)}</p>
+                  <p>{tk('tooltip_text')}</p>
                 </TextLoader>
               </TooltipContent>
             </Tooltip>
@@ -50,7 +54,7 @@ export const OverlayElements: React.FC = () => {
               </TooltipTrigger>
               <TooltipContent className="bg-green-500 text-white">
                 <TextLoader skeletonClassName="h-3.5 w-36" inheritColor>
-                  <p>{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_icon_text`)}</p>
+                  <p>{tk('tooltip_icon_text')}</p>
                 </TextLoader>
               </TooltipContent>
             </Tooltip>
@@ -59,13 +63,13 @@ export const OverlayElements: React.FC = () => {
               <TooltipTrigger asChild>
                 <span className="text-sm text-muted-foreground underline cursor-help">
                   <TextLoader skeletonClassName="h-3.5 w-32" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_hover_info`)}
+                    {tk('tooltip_hover_info')}
                   </TextLoader>
                 </span>
               </TooltipTrigger>
               <TooltipContent side="top" className="bg-destructive text-destructive-foreground">
                 <TextLoader skeletonClassName="h-3.5 w-24" inheritColor>
-                  <p>{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_top_text`)}</p>
+                  <p>{tk('tooltip_top_text')}</p>
                 </TextLoader>
               </TooltipContent>
             </Tooltip>
@@ -74,13 +78,13 @@ export const OverlayElements: React.FC = () => {
               <TooltipTrigger asChild>
                 <span className="text-sm text-muted-foreground underline cursor-help">
                   <TextLoader skeletonClassName="h-3.5 w-24" inheritColor>
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_different_side`)}
+                    {tk('tooltip_different_side')}
                   </TextLoader>
                 </span>
               </TooltipTrigger>
               <TooltipContent side="right" className="bg-muted text-muted-foreground">
                 <TextLoader skeletonClassName="h-3.5 w-44" inheritColor>
-                  <p>{t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.tooltip_right_text`)}</p>
+                  <p>{tk('tooltip_right_text')}</p>
                 </TextLoader>
               </TooltipContent>
             </Tooltip>

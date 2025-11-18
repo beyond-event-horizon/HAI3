@@ -8,9 +8,13 @@ import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screens/screenIds';
 /**
  * Data Display Elements Component
  * Contains Avatar and Badge demonstrations
+ * Uses parent screen (UIKitElementsScreen) translations
  */
 export const DataDisplayElements: React.FC = () => {
   const { t } = useTranslation();
+  
+  // Helper function to access parent screen's translations
+  const tk = (key: string) => t(`screen.${DEMO_SCREENSET_ID}.${UI_KIT_ELEMENTS_SCREEN_ID}:${key}`);
 
   return (
     <>
@@ -18,7 +22,7 @@ export const DataDisplayElements: React.FC = () => {
       <div data-element-id="element-avatar" className="flex flex-col gap-4">
         <TextLoader skeletonClassName="h-8 w-24">
           <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.avatar_heading`)}
+            {tk('avatar_heading')}
           </h2>
         </TextLoader>
         <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background">
@@ -62,7 +66,7 @@ export const DataDisplayElements: React.FC = () => {
       <div data-element-id="element-badge" className="flex flex-col gap-4">
         <TextLoader skeletonClassName="h-8 w-24">
           <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.badge_heading`)}
+            {tk('badge_heading')}
           </h2>
         </TextLoader>
         <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">

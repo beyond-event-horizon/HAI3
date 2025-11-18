@@ -8,9 +8,14 @@ import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screens/screenIds';
 /**
  * Media Elements Component
  * Contains Slider demonstrations
+ * Uses parent screen (UIKitElementsScreen) translations
  */
 export const MediaElements: React.FC = () => {
   const { t } = useTranslation();
+  
+  // Helper function to access parent screen's translations
+  const tk = (key: string) => t(`screen.${DEMO_SCREENSET_ID}.${UI_KIT_ELEMENTS_SCREEN_ID}:${key}`);
+  
   const [sliderValue, setSliderValue] = useState([50]);
   const [customSliderValue, setCustomSliderValue] = useState([50]);
 
@@ -20,7 +25,7 @@ export const MediaElements: React.FC = () => {
       <div data-element-id="element-slider" className="flex flex-col gap-4">
         <TextLoader skeletonClassName="h-8 w-24">
           <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.slider_heading`)}
+            {tk('slider_heading')}
           </h2>
         </TextLoader>
         <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
@@ -28,7 +33,7 @@ export const MediaElements: React.FC = () => {
             <div className="flex flex-col gap-2">
               <TextLoader skeletonClassName="h-5 w-20" inheritColor>
                 <label className="text-sm font-medium">
-                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.slider_volume_label`)}
+                  {tk('slider_volume_label')}
                 </label>
               </TextLoader>
               <Slider

@@ -8,9 +8,14 @@ import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screens/screenIds';
 /**
  * Feedback Elements Component
  * Contains Progress, Spinner, and Skeleton demonstrations
+ * Uses parent screen (UIKitElementsScreen) translations
  */
 export const FeedbackElements: React.FC = () => {
   const { t } = useTranslation();
+  
+  // Helper function to access parent screen's translations
+  const tk = (key: string) => t(`screen.${DEMO_SCREENSET_ID}.${UI_KIT_ELEMENTS_SCREEN_ID}:${key}`);
+  
   const [progressValue, setProgressValue] = useState(33);
 
   return (
@@ -19,7 +24,7 @@ export const FeedbackElements: React.FC = () => {
       <div data-element-id="element-progress" className="flex flex-col gap-4">
         <TextLoader skeletonClassName="h-8 w-24">
           <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.progress_heading`)}
+            {tk('progress_heading')}
           </h2>
         </TextLoader>
         <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
@@ -27,7 +32,7 @@ export const FeedbackElements: React.FC = () => {
             <div className="flex flex-col gap-2">
               <TextLoader skeletonClassName="h-5 w-32" inheritColor>
                 <label className="text-sm font-medium">
-                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.progress_primary_label`)}
+                  {tk('progress_primary_label')}
                 </label>
               </TextLoader>
               <Progress value={progressValue} className="bg-primary/20" />
@@ -38,7 +43,7 @@ export const FeedbackElements: React.FC = () => {
                     onClick={() => setProgressValue((prev) => Math.min(100, prev + 10))}
                     className="text-primary hover:underline"
                   >
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.progress_increase`)}
+                    {tk('progress_increase')}
                   </button>
                 </TextLoader>
               </div>
@@ -47,7 +52,7 @@ export const FeedbackElements: React.FC = () => {
             <div className="flex flex-col gap-2">
               <TextLoader skeletonClassName="h-4 w-36" inheritColor>
                 <label className="text-sm font-medium">
-                  {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.progress_destructive_label`)}
+                  {tk('progress_destructive_label')}
                 </label>
               </TextLoader>
               <Progress 
@@ -61,7 +66,7 @@ export const FeedbackElements: React.FC = () => {
                     onClick={() => setProgressValue((prev) => Math.max(0, prev - 10))}
                     className="text-destructive hover:underline"
                   >
-                    {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.progress_decrease`)}
+                    {tk('progress_decrease')}
                   </button>
                 </TextLoader>
               </div>
@@ -74,7 +79,7 @@ export const FeedbackElements: React.FC = () => {
       <div data-element-id="element-spinner" className="flex flex-col gap-4">
         <TextLoader skeletonClassName="h-8 w-24">
           <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.spinner_heading`)}
+            {tk('spinner_heading')}
           </h2>
         </TextLoader>
         <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
@@ -102,7 +107,7 @@ export const FeedbackElements: React.FC = () => {
       <div data-element-id="element-skeleton" className="flex flex-col gap-4">
         <TextLoader skeletonClassName="h-8 w-24">
           <h2 className="text-2xl font-semibold">
-            {t(`screenset.${DEMO_SCREENSET_ID}:screens.${UI_KIT_ELEMENTS_SCREEN_ID}.skeleton_heading`)}
+            {tk('skeleton_heading')}
           </h2>
         </TextLoader>
         <div className="flex items-center justify-center p-6 border border-border rounded-lg bg-background overflow-hidden">
