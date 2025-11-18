@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { TextLoader } from '@hai3/uicore';
 
 export interface MenuItemButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
@@ -37,7 +38,9 @@ export const MenuItemButton = forwardRef<HTMLButtonElement, MenuItemButtonProps>
       className={`${baseStyles} ${stateStyles} ${className}`.trim()}
       {...props}
     >
-      {children}
+      <TextLoader skeletonClassName="h-4 w-20" inheritColor>
+        {children}
+      </TextLoader>
     </button>
   );
 });

@@ -8,6 +8,7 @@ import { toLower } from 'lodash';
 export interface UIKitCategory {
   id: string;
   label: string;
+  translationKey: string;
   elements: string[];
 }
 
@@ -15,6 +16,7 @@ export const UIKIT_CATEGORIES: UIKitCategory[] = [
   {
     id: 'layout',
     label: 'Layout & Structure',
+    translationKey: 'category_layout',
     elements: [
       'Card',
       'Dialog',
@@ -30,6 +32,7 @@ export const UIKIT_CATEGORIES: UIKitCategory[] = [
   {
     id: 'navigation',
     label: 'Navigation',
+    translationKey: 'category_navigation',
     elements: [
       'Navigation Menu',
       'Breadcrumb',
@@ -41,6 +44,7 @@ export const UIKIT_CATEGORIES: UIKitCategory[] = [
   {
     id: 'forms',
     label: 'Forms & Inputs',
+    translationKey: 'category_forms',
     elements: [
       'Input',
       'Input Group',
@@ -62,6 +66,7 @@ export const UIKIT_CATEGORIES: UIKitCategory[] = [
   {
     id: 'actions',
     label: 'Actions & Buttons',
+    translationKey: 'category_actions',
     elements: [
       'Button',
       'Button Group',
@@ -73,6 +78,7 @@ export const UIKIT_CATEGORIES: UIKitCategory[] = [
   {
     id: 'feedback',
     label: 'Feedback & Status',
+    translationKey: 'category_feedback',
     elements: [
       'Alert',
       'Alert Dialog',
@@ -87,6 +93,7 @@ export const UIKIT_CATEGORIES: UIKitCategory[] = [
   {
     id: 'data-display',
     label: 'Data Display',
+    translationKey: 'category_data_display',
     elements: [
       'Table',
       'Data Table',
@@ -101,6 +108,7 @@ export const UIKIT_CATEGORIES: UIKitCategory[] = [
   {
     id: 'overlays',
     label: 'Overlays & Popovers',
+    translationKey: 'category_overlays',
     elements: [
       'Popover',
       'Tooltip',
@@ -112,6 +120,7 @@ export const UIKIT_CATEGORIES: UIKitCategory[] = [
   {
     id: 'media',
     label: 'Media & Content',
+    translationKey: 'category_media',
     elements: [
       'Carousel',
       'Slider',
@@ -120,6 +129,7 @@ export const UIKIT_CATEGORIES: UIKitCategory[] = [
   {
     id: 'disclosure',
     label: 'Disclosure',
+    translationKey: 'category_disclosure',
     elements: [
       'Accordion',
       'Collapsible',

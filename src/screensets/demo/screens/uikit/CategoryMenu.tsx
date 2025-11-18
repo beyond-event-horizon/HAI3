@@ -1,7 +1,10 @@
 import React from 'react';
+import { useTranslation, TextLoader } from '@hai3/uicore';
 import { UIKIT_CATEGORIES, IMPLEMENTED_ELEMENTS, getElementId } from './uikitCategories';
 import { ExpandableButton } from '../../uikit/icons/ExpandableButton';
 import { MenuItemButton } from '../../uikit/icons/MenuItemButton';
+import { DEMO_SCREENSET_ID } from '../../demoScreenset';
+import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screenIds';
 
 interface CategoryMenuProps {
   selectedCategory: string | null;
@@ -13,6 +16,7 @@ interface CategoryMenuProps {
 /**
  * Category Menu Component
  * Navigation menu with collapsible categories for UI Kit elements
+ * Uses parent screen (UIKitElementsScreen) translations
  */
 export const CategoryMenu: React.FC<CategoryMenuProps> = ({
   selectedCategory,
@@ -20,13 +24,19 @@ export const CategoryMenu: React.FC<CategoryMenuProps> = ({
   activeElementId,
   onElementClick,
 }) => {
+  const { t } = useTranslation();
+  
+  // Helper function to access parent screen's translations
+  const tk = (key: string) => t(`screen.${DEMO_SCREENSET_ID}.${UI_KIT_ELEMENTS_SCREEN_ID}:${key}`);
 
   return (
     <nav className="w-64 border-r border-border pr-4">
       <div className="sticky top-4">
-        <h3 className="mb-4 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-          Categories
-        </h3>
+        <TextLoader skeletonClassName="h-4 w-20">
+          <h3 className="mb-4 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+            {tk('categories_heading')}
+          </h3>
+        </TextLoader>
         <div className="space-y-1">
           {UIKIT_CATEGORIES.map((category) => {
             const isExpanded = selectedCategory === category.id;
@@ -45,7 +55,7 @@ export const CategoryMenu: React.FC<CategoryMenuProps> = ({
                   showChevron={hasImplemented}
                   disabled={!hasImplemented}
                 >
-                  {category.label}
+                  {tk(category.translationKey)}
                 </ExpandableButton>
                 
                 {isExpanded && (
@@ -57,13 +67,15 @@ export const CategoryMenu: React.FC<CategoryMenuProps> = ({
                       const elementId = getElementId(element);
                       const isActiveElement = activeElementId === elementId;
                       
+                      const elementTranslationKey = `element_${element.toLowerCase().replace(/\s+/g, '_')}`;
+                      
                       return (
                         <MenuItemButton
                           key={element}
                           isActive={isActiveElement}
                           onClick={() => onElementClick?.(elementId)}
                         >
-                          {element}
+                          {tk(elementTranslationKey)}
                         </MenuItemButton>
                       );
                     })}
@@ -75,13 +87,15 @@ export const CategoryMenu: React.FC<CategoryMenuProps> = ({
         </div>
         
         <div className="mt-6 p-3 bg-muted/50 rounded-md">
-          <p className="text-xs text-muted-foreground">
-            <span className="font-semibold">{IMPLEMENTED_ELEMENTS.length}</span> of{' '}
-            <span className="font-semibold">
-              {UIKIT_CATEGORIES.reduce((acc, cat) => acc + cat.elements.length, 0)}
-            </span>{' '}
-            elements implemented
-          </p>
+          <TextLoader skeletonClassName="h-4 w-full">
+            <p className="text-xs text-muted-foreground">
+              <span className="font-semibold">{IMPLEMENTED_ELEMENTS.length}</span> {tk('of')}{' '}
+              <span className="font-semibold">
+                {UIKIT_CATEGORIES.reduce((acc, cat) => acc + cat.elements.length, 0)}
+              </span>{' '}
+              {tk('elements_implemented')}
+            </p>
+          </TextLoader>
         </div>
       </div>
     </nav>

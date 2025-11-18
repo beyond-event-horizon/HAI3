@@ -1,4 +1,5 @@
 import React from 'react';
+import { TextLoader } from '@hai3/uicore';
 
 export interface ExpandableButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
@@ -63,7 +64,9 @@ export const ExpandableButton: React.FC<ExpandableButtonProps> = ({
       {...props}
     >
       <span className="flex items-center gap-2">
-        {children}
+        <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+          {children}
+        </TextLoader>
         {badge !== undefined && (
           <span className="text-xs text-muted-foreground">
             ({badge})
