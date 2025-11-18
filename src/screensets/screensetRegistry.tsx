@@ -1,6 +1,7 @@
 import { screensetRegistry } from '@hai3/uicore';
 import { demoScreenset } from './demo/demoScreenset';
 import { chatScreenset } from './chat/chatScreenset';
+import { chatCopyScreenset } from './chat-copy/chatCopyScreenset';
 
 /**
  * Screenset Registry
@@ -24,6 +25,7 @@ import { chatScreenset } from './chat/chatScreenset';
  */
 screensetRegistry.register(demoScreenset);
 screensetRegistry.register(chatScreenset);
+screensetRegistry.register(chatCopyScreenset);
 
 // Add more screensets here and they'll auto-register
 // import { anotherScreenset } from './another/anotherScreenset';
