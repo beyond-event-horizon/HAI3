@@ -1,5 +1,10 @@
 {
-  "title": "HAI3 DevTools",
+  "title": "Zana za Utengenezaji wa HAI3",
+  "aria": {
+    "openButton": "Fungua Zana za Utengenezaji (Shift+`) au buruta ili kuhamisha",
+    "collapseButton": "Kunja paneli ya zana za utengenezaji",
+    "resizeHandle": "Badilisha ukubwa wa paneli ya zana"
+  },
   "controls": {
     "heading": "Vidhibiti vya Maendeleo",
     "screenset": "Seti ya Skrini:",

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useTranslation } from '@hai3/uicore';
 import { useDraggable } from './hooks/useDraggable';
 import { BUTTON_SIZE, STORAGE_KEYS } from './types';
 import { GlassmorphicButton } from './uikit/composite/GlassmorphicButton';
@@ -9,6 +10,7 @@ interface CollapsedButtonProps {
 }
 
 export const CollapsedButton: React.FC<CollapsedButtonProps> = ({ toggleCollapsed }) => {
+  const { t } = useTranslation();
   const { position, isDragging, handleMouseDown } = useDraggable({
     panelSize: BUTTON_SIZE,
     storageKey: STORAGE_KEYS.BUTTON_POSITION,
@@ -44,7 +46,7 @@ export const CollapsedButton: React.FC<CollapsedButtonProps> = ({ toggleCollapse
         icon={<DevToolsIcon className="w-6 h-6 text-foreground" />}
         onMouseDown={handleButtonMouseDown}
         onClick={handleButtonClick}
-        title="Open DevTools (Shift+`) or drag to move"
+        title={t('devtools:aria.openButton')}
         isDragging={isDragging}
       />
     </div>

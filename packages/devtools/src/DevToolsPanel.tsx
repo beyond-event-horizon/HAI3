@@ -57,6 +57,8 @@ export const DevToolsPanel: React.FC = () => {
             size={ButtonSize.Sm}
             onClick={toggleCollapsed}
             className="h-7 w-7 p-0"
+            aria-label={t('devtools:aria.collapseButton')}
+            title={t('devtools:aria.collapseButton')}
           >
             <svg
               className="w-4 h-4"
@@ -81,11 +83,15 @@ export const DevToolsPanel: React.FC = () => {
 
         {/* Resize handle */}
         <div
-          className="devtools-resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-nwse-resize"
+          className="devtools-resize-handle absolute bottom-1 right-1 w-5 h-5 cursor-nwse-resize"
           onMouseDown={handleResizeMouseDown}
+          role="button"
+          aria-label={t('devtools:aria.resizeHandle')}
+          title={t('devtools:aria.resizeHandle')}
+          tabIndex={0}
         >
           <svg
-            className="w-4 h-4 text-muted-foreground/50"
+            className="w-5 h-5 text-muted-foreground/70 hover:text-muted-foreground transition-colors"
             fill="currentColor"
             viewBox="0 0 24 24"
           >

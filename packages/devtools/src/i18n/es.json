@@ -1,5 +1,10 @@
 {
-  "title": "HAI3 DevTools",
+  "title": "Herramientas de Desarrollo HAI3",
+  "aria": {
+    "openButton": "Abrir Herramientas de Desarrollo (Shift+`) o arrastrar para mover",
+    "collapseButton": "Contraer panel de herramientas de desarrollo",
+    "resizeHandle": "Cambiar tamaño del panel de herramientas"
+  },
   "controls": {
     "heading": "Controles de Desarrollo",
     "screenset": "Conjunto de Pantallas:",

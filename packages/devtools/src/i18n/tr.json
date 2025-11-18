@@ -1,5 +1,10 @@
 {
-  "title": "HAI3 DevTools",
+  "title": "HAI3 Geliştirici Araçları",
+  "aria": {
+    "openButton": "Geliştirici Araçlarını Aç (Shift+`) veya taşımak için sürükle",
+    "collapseButton": "Geliştirici araçları panelini daralt",
+    "resizeHandle": "Araç panelini yeniden boyutlandır"
+  },
   "controls": {
     "heading": "Geliştirme Kontrolleri",
     "screenset": "Ekran Seti:",

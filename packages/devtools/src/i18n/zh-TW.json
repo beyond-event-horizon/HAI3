@@ -1,5 +1,10 @@
 {
   "title": "HAI3 開發工具",
+  "aria": {
+    "openButton": "開啟開發工具 (Shift+`) 或拖曳移動",
+    "collapseButton": "收合開發工具面板",
+    "resizeHandle": "調整工具面板大小"
+  },
   "controls": {
     "heading": "開發控制項",
     "screenset": "螢幕集:",

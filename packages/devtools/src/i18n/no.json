@@ -1,10 +1,15 @@
 {
-  "title": "HAI3 DevTools",
+  "title": "HAI3 Utviklingsverktøy",
+  "aria": {
+    "openButton": "Åpne Utviklingsverktøy (Shift+`) eller dra for å flytte",
+    "collapseButton": "Skjul utviklingsverktøypanelet",
+    "resizeHandle": "Endre størrelse på verktøypanelet"
+  },
   "controls": {
     "heading": "Utviklingskontroller",
     "screenset": "Skjermsett:",
     "theme": "Tema:",
     "language": "Språk:",
-    "mockApi": "Mock API"
+    "mockApi": "Mock-API"
   }
 }

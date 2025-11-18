@@ -35,6 +35,10 @@ export const useResizable = () => {
 
     const startState = resizeStartRef.current;
 
+    // Prevent text selection during resize
+    document.body.style.userSelect = 'none';
+    document.body.style.cursor = 'nwse-resize';
+
     const handleMouseMove = (e: MouseEvent) => {
       // Calculate delta from initial mouse position
       const deltaX = e.clientX - startState.mouseX;
@@ -60,6 +64,9 @@ export const useResizable = () => {
     const handleMouseUp = () => {
       setIsResizing(false);
       resizeStartRef.current = null;
+      // Restore text selection
+      document.body.style.userSelect = '';
+      document.body.style.cursor = '';
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -68,6 +75,9 @@ export const useResizable = () => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+      // Ensure cleanup on unmount
+      document.body.style.userSelect = '';
+      document.body.style.cursor = '';
     };
   }, [isResizing]);
 

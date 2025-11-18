@@ -4,10 +4,9 @@
  *
  * This package should ONLY be imported in development mode
  * Use conditional imports to ensure it's tree-shaken in production
+ *
+ * Translations are registered automatically when DevToolsProvider is imported
  */
-
-// Register DevTools translations on module import
-import './i18n';
 
 export { DevToolsOverlay } from './DevToolsOverlay';
 export { DevToolsProvider, useDevToolsContext } from './DevToolsProvider';

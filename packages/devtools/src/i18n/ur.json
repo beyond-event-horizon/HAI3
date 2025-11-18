@@ -1,10 +1,15 @@
 {
   "title": "HAI3 ڈویلپمنٹ ٹولز",
+  "aria": {
+    "openButton": "ڈویلپمنٹ ٹولز کھولیں (Shift+`) یا منتقل کرنے کے لیے گھسیٹیں",
+    "collapseButton": "ڈویلپمنٹ ٹولز پینل کو سکیڑیں",
+    "resizeHandle": "ٹولز پینل کا سائز تبدیل کریں"
+  },
   "controls": {
-    "heading": "ترقیاتی کنٹرولز",
+    "heading": "ڈویلپمنٹ کنٹرولز",
     "screenset": "اسکرین سیٹ:",
     "theme": "تھیم:",
     "language": "زبان:",
-    "mockApi": "ماک API"
+    "mockApi": "فرضی API"
   }
 }

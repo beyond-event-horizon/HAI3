@@ -1,10 +1,15 @@
 {
-  "title": "HAI3 DevTools",
+  "title": "HAI3 Ontwikkeltools",
+  "aria": {
+    "openButton": "Open Ontwikkeltools (Shift+`) of sleep om te verplaatsen",
+    "collapseButton": "Ontwikkeltools paneel inklappen",
+    "resizeHandle": "Formaat van tools paneel wijzigen"
+  },
   "controls": {
-    "heading": "Ontwikkelingscontroles",
-    "screenset": "Schermenset:",
+    "heading": "Ontwikkelingsbesturing",
+    "screenset": "Schermset:",
     "theme": "Thema:",
     "language": "Taal:",
-    "mockApi": "Mock API"
+    "mockApi": "Nep-API"
   }
 }
