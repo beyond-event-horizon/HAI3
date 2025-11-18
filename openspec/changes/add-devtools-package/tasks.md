@@ -248,3 +248,66 @@
 - [x] 20.4 Verify rem-based units throughout
 - [x] 20.5 Verify glassmorphic styling uses appropriate values
 - [x] 20.6 Fix unused parameter in useResizable hook
+
+## 21. UIKit Component Structure
+
+- [x] 21.1 Create `packages/devtools/src/uikit/icons/DevToolsIcon.tsx` - Settings/sliders icon component
+  - Export DEVTOOLS_ICON_ID constant
+  - SVG icon with configurable className prop
+  - Follow screenset icon pattern
+- [x] 21.2 Create `packages/devtools/src/uikit/composite/GlassmorphicButton.tsx` - Reusable glassmorphic button
+  - Accept icon as React.ReactNode prop
+  - Circular button with glassmorphic styling (Tailwind only)
+  - Support dragging cursor states (grab/grabbing)
+  - Use ButtonVariant.Ghost to prevent default button background
+- [x] 21.3 Update CollapsedButton to use GlassmorphicButton
+  - Pass DevToolsIcon as icon prop
+  - Keep drag and click handling logic
+
+## 22. Independent Button Positioning
+
+- [x] 22.1 Add BUTTON_SIZE constant to types.ts (48x48)
+- [x] 22.2 Add BUTTON_POSITION storage key to STORAGE_KEYS
+- [x] 22.3 Add ButtonPositionChangedPayload to devtoolsEvents.ts
+- [x] 22.4 Add ButtonPositionChanged event to DevToolsEvents
+- [x] 22.5 Update useDraggable hook to accept optional storageKey parameter
+  - Emit appropriate event based on storage key
+  - Support both panel and button positioning
+- [x] 22.6 Create CollapsedButton component separate from DevToolsOverlay
+  - Use useDraggable with BUTTON_POSITION storage key
+  - Implement click vs drag distinction (5px threshold)
+  - Independent positioning from panel
+- [x] 22.7 Update persistenceEffects to handle ButtonPositionChanged event
+- [x] 22.8 Test independent button/panel drag behavior
+
+## 23. Pure Tailwind Glassmorphism
+
+- [x] 23.1 Convert panel glassmorphic styling from CSS to Tailwind classes
+  - bg-white/20 dark:bg-black/50 (background opacity)
+  - backdrop-blur-md (16px blur)
+  - backdrop-saturate-[180%] (color saturation)
+  - border-white/30 dark:border-white/20 (border with opacity)
+  - shadow-[0_8px_32px_rgba(0,0,0,0.2)] (custom shadow)
+- [x] 23.2 Apply same glassmorphic styling to GlassmorphicButton
+- [x] 23.3 Remove any CSS files for glassmorphic styles
+- [x] 23.4 Verify glassmorphic effect works with backdrop content
+  - Test with text behind button
+  - Test with panel over content
+
+## 24. Dropdown Portal and Z-Index Management
+
+- [x] 24.1 Add portal container div to DevToolsPanel
+  - Fixed positioning with z-[99999]
+  - pointer-events-none to allow click-through
+  - Register with DevToolsContext via setPortalContainer
+- [x] 24.2 Pass portalContainer to all dropdown components
+  - ThemeSelector: container={portalContainer}
+  - LanguageSelector: container={portalContainer}
+  - ScreensetSelector: container={portalContainer} on both main and sub menus
+- [x] 24.3 Override dropdown z-index to appear above panel
+  - Add className="z-[99999] pointer-events-auto" to all DropdownMenuContent
+  - Ensure dropdowns escape panel's stacking context
+- [x] 24.4 Test dropdown visibility
+  - Verify Theme selector dropdown appears above panel
+  - Verify Language selector dropdown appears above panel
+  - Verify Screenset selector nested menus appear above panel

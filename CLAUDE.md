@@ -741,3 +741,4 @@ HAI3/
 - **Discussions**: Architecture questions on Discord
 - **Contributing**: See CONTRIBUTING.md for guidelines
 - **License**: Apache License 2.0
+- Always read thoroughly and follow ".ai/targets/AI.md" when modifying any document in ".ai" folder

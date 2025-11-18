@@ -54,8 +54,8 @@ The system SHALL allow users to collapse the DevToolsPanel to minimize visual ob
 #### Scenario: User collapses panel
 - **WHEN** user clicks the collapse button in panel header
 - **THEN** the full panel disappears
-- **AND** a small circular button (40px diameter) appears in the bottom-right corner
-- **AND** the button displays a recognizable icon (e.g., wrench or dev tools icon)
+- **AND** a circular glassmorphic button (48px diameter) appears
+- **AND** the button displays a settings/sliders icon (DevToolsIcon)
 
 #### Scenario: User expands collapsed panel
 - **WHEN** user clicks the circular button in bottom-right corner
@@ -72,9 +72,9 @@ The system SHALL allow users to collapse the DevToolsPanel to minimize visual ob
 The system SHALL provide keyboard shortcuts for toggling the DevToolsPanel visibility.
 
 #### Scenario: User presses keyboard shortcut
-- **WHEN** user presses `Ctrl+Shift+D` on Windows/Linux or `Cmd+Shift+D` on macOS
-- **THEN** if panel is visible, it becomes hidden
-- **AND** if panel is hidden, it becomes visible
+- **WHEN** user presses `Shift+`` ` ``** (tilde key)
+- **THEN** if panel is collapsed, it expands
+- **AND** if panel is expanded, it collapses
 - **AND** focus returns to the previously focused element after toggle
 
 ### Requirement: Theme Control Section
@@ -168,15 +168,16 @@ The system SHALL use UIKit components via direct imports from `@hai3/uikit` for 
 
 ### Requirement: Glassmorphic Styling
 
-The system SHALL style the DevToolsPanel with modern glassmorphism design patterns.
+The system SHALL style the DevToolsPanel with modern glassmorphism design patterns using pure Tailwind classes.
 
 #### Scenario: Panel has glassmorphic appearance
 - **WHEN** DevToolsPanel is rendered
-- **THEN** the panel background has 80% opacity
-- **AND** the panel has backdrop-filter blur effect (16px blur)
-- **AND** the panel has a subtle border with low opacity
-- **AND** the panel has rounded corners (12px border-radius)
-- **AND** the panel casts a soft shadow for depth
+- **THEN** the panel background uses `bg-white/20` (light) or `bg-black/50` (dark) for transparency
+- **AND** the panel has backdrop-filter blur using `backdrop-blur-md` (16px blur)
+- **AND** the panel has color saturation boost using `backdrop-saturate-[180%]`
+- **AND** the panel has a subtle border using `border-white/30` (light) or `border-white/20` (dark)
+- **AND** the panel casts a custom shadow using `shadow-[0_8px_32px_rgba(0,0,0,0.2)]`
+- **AND** no external CSS files are used for glassmorphic effects
 
 ### Requirement: Package Independence
 
@@ -229,3 +230,127 @@ The system SHALL load the devtools package only in development mode using condit
 - **THEN** the import uses dynamic `import()` syntax for code-splitting
 - **AND** devtools bundle is loaded as a separate chunk
 - **AND** main bundle does not include devtools code even in development
+
+### Requirement: Glassmorphic Button Component
+
+The system SHALL provide a reusable GlassmorphicButton component for the collapsed toggle button.
+
+#### Scenario: Button uses Ghost variant to prevent background conflicts
+- **WHEN** GlassmorphicButton is rendered
+- **THEN** it uses ButtonVariant.Ghost to avoid default button backgrounds
+- **AND** glassmorphic styling (transparency, blur) works correctly
+- **AND** background content is visible through the button with blur effect
+
+#### Scenario: Button accepts icon as prop
+- **WHEN** GlassmorphicButton is instantiated
+- **THEN** it accepts an icon prop of type React.ReactNode
+- **AND** the icon is rendered centered within the circular button
+- **AND** any icon component can be passed (not hardcoded)
+
+#### Scenario: Button supports drag cursor states
+- **WHEN** isDragging prop is true
+- **THEN** cursor changes to 'grabbing'
+- **AND** when isDragging is false, cursor shows 'grab'
+
+### Requirement: Independent Button and Panel Positioning
+
+The system SHALL maintain separate positions for the collapsed button and expanded panel.
+
+#### Scenario: Button position is independent
+- **WHEN** user drags the collapsed button
+- **THEN** button position is saved to `hai3:devtools:buttonPosition`
+- **AND** panel position (`hai3:devtools:position`) remains unchanged
+- **AND** expanding panel does not move to button's position
+
+#### Scenario: Panel position is independent
+- **WHEN** user drags the expanded panel
+- **THEN** panel position is saved to `hai3:devtools:position`
+- **AND** button position (`hai3:devtools:buttonPosition`) remains unchanged
+- **AND** collapsing panel shows button at its own saved position
+
+#### Scenario: Drag hook supports both positioning modes
+- **WHEN** useDraggable hook is called with storageKey parameter
+- **THEN** it emits the appropriate event (PositionChanged or ButtonPositionChanged)
+- **AND** persistence effect saves to the correct localStorage key
+- **AND** multiple draggable elements can coexist with independent positions
+
+### Requirement: Click vs Drag Distinction
+
+The system SHALL distinguish between clicks and drags on the collapsed button.
+
+#### Scenario: Small movement is treated as click
+- **WHEN** user presses mouse down on collapsed button
+- **AND** moves mouse less than 5 pixels
+- **AND** releases mouse button
+- **THEN** panel expands (button click behavior)
+- **AND** button position does not change
+
+#### Scenario: Large movement is treated as drag
+- **WHEN** user presses mouse down on collapsed button
+- **AND** moves mouse 5 pixels or more
+- **THEN** button follows cursor (drag behavior)
+- **AND** panel does not expand on mouse release
+
+### Requirement: Pure Tailwind Glassmorphism
+
+The system SHALL implement all glassmorphic styling using Tailwind utility classes without external CSS files.
+
+#### Scenario: Panel uses Tailwind glassmorphic classes
+- **WHEN** DevToolsPanel is rendered
+- **THEN** background uses `bg-white/20 dark:bg-black/50`
+- **AND** backdrop blur uses `backdrop-blur-md` (16px)
+- **AND** color saturation uses `backdrop-saturate-[180%]`
+- **AND** border uses `border-white/30 dark:border-white/20`
+- **AND** shadow uses `shadow-[0_8px_32px_rgba(0,0,0,0.2)]`
+- **AND** no external CSS files are imported
+
+#### Scenario: Button uses matching glassmorphic classes
+- **WHEN** GlassmorphicButton is rendered
+- **THEN** styling matches panel's glassmorphic classes
+- **AND** blur effect works when positioned over content
+- **AND** background content is visible with appropriate blur
+
+### Requirement: Dropdown Portal and Z-Index Management
+
+The system SHALL render dropdown menus in a high-z-index portal to appear above the glassmorphic panel.
+
+#### Scenario: Portal container is created
+- **WHEN** DevToolsPanel mounts
+- **THEN** a portal container div is rendered with `z-[99999]`
+- **AND** portal container has `fixed` positioning
+- **AND** portal container has `pointer-events-none` to allow click-through
+- **AND** portal container reference is registered with DevToolsContext
+
+#### Scenario: Dropdowns render in portal
+- **WHEN** ThemeSelector, LanguageSelector, or ScreensetSelector are rendered
+- **THEN** they pass `container={portalContainer}` to DropdownMenuContent
+- **AND** dropdown content renders inside the portal container
+- **AND** dropdown content has `className="z-[99999] pointer-events-auto"`
+
+#### Scenario: Dropdowns appear above panel
+- **WHEN** user opens a dropdown (theme, language, screenset)
+- **THEN** dropdown menu is visible above the glassmorphic panel
+- **AND** dropdown is not obscured by panel's backdrop-blur stacking context
+- **AND** dropdown menu is interactive (clicks work)
+
+#### Scenario: Nested dropdowns work correctly
+- **WHEN** user hovers over screenset category to open submenu
+- **THEN** submenu renders in portal with `container={portalContainer}`
+- **AND** submenu appears above both main menu and panel
+- **AND** submenu has same z-index override as main dropdown
+
+### Requirement: UIKit Component Organization
+
+The system SHALL organize DevTools-specific UIKit components following screenset patterns.
+
+#### Scenario: Icons are in uikit/icons folder
+- **WHEN** DevToolsIcon is defined
+- **THEN** it is located in `packages/devtools/src/uikit/icons/`
+- **AND** it exports a constant DEVTOOLS_ICON_ID
+- **AND** it follows the same pattern as screenset icons
+
+#### Scenario: Composite components are in uikit/composite folder
+- **WHEN** GlassmorphicButton is defined
+- **THEN** it is located in `packages/devtools/src/uikit/composite/`
+- **AND** it follows the same pattern as screenset composite components
+- **AND** it can be reused in different contexts within devtools
