@@ -21,7 +21,7 @@ apiRegistry.initialize({
 });
 
 /**
- * Render application with conditional DevTools in development
+ * Render application
  * Bootstrap happens automatically when Layout mounts
  *
  * Flow:
@@ -29,23 +29,12 @@ apiRegistry.initialize({
  * 2. Components show skeleton loaders (translationsReady = false)
  * 3. User fetched → language set → translations loaded
  * 4. Components re-render with actual text (translationsReady = true)
- * 5. In DEV mode: DevToolsOverlay loads conditionally (tree-shaken in production)
+ * 5. In DEV mode: HAI3Provider auto-loads DevToolsOverlay if @hai3/devtools is installed
  */
-(async () => {
-  let DevToolsOverlay: React.ComponentType | null = null;
-
-  // Conditionally load DevTools in development mode only
-  if (import.meta.env.DEV) {
-    const devtools = await import('@hai3/devtools');
-    DevToolsOverlay = devtools.DevToolsOverlay;
-  }
-
-  ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-      <HAI3Provider>
-        <App />
-        {DevToolsOverlay && <DevToolsOverlay />}
-      </HAI3Provider>
-    </React.StrictMode>
-  );
-})();
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <HAI3Provider>
+      <App />
+    </HAI3Provider>
+  </React.StrictMode>
+);
