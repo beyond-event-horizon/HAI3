@@ -44,11 +44,16 @@ export const BUTTON_SIZE = {
 } as const;
 
 /**
- * LocalStorage keys
+ * LocalStorage key prefix for DevTools
+ */
+export const STORAGE_PREFIX = 'hai3:devtools:' as const;
+
+/**
+ * LocalStorage keys (composable with shared prefix)
  */
 export const STORAGE_KEYS = {
-  POSITION: 'hai3:devtools:position',
-  SIZE: 'hai3:devtools:size',
-  COLLAPSED: 'hai3:devtools:collapsed',
-  BUTTON_POSITION: 'hai3:devtools:buttonPosition',
+  POSITION: `${STORAGE_PREFIX}position`,
+  SIZE: `${STORAGE_PREFIX}size`,
+  COLLAPSED: `${STORAGE_PREFIX}collapsed`,
+  BUTTON_POSITION: `${STORAGE_PREFIX}buttonPosition`,
 } as const;

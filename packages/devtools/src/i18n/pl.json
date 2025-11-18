@@ -1,10 +1,15 @@
 {
-  "title": "HAI3 DevTools",
+  "title": "Narzędzia programistyczne HAI3",
+  "aria": {
+    "openButton": "Otwórz narzędzia programistyczne (Shift+`) lub przeciągnij, aby przenieść",
+    "collapseButton": "Zwiń panel narzędzi programistycznych",
+    "resizeHandle": "Zmień rozmiar panelu narzędzi"
+  },
   "controls": {
-    "heading": "Kontrolki Deweloperskie",
-    "screenset": "Zestaw Ekranów:",
+    "heading": "Kontrolki programistyczne",
+    "screenset": "Zestaw ekranów:",
     "theme": "Motyw:",
     "language": "Język:",
-    "mockApi": "API Testowe"
+    "mockApi": "Fikcyjne API"
   }
 }

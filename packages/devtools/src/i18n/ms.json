@@ -1,5 +1,10 @@
 {
-  "title": "HAI3 DevTools",
+  "title": "Alat Pembangun HAI3",
+  "aria": {
+    "openButton": "Buka Alat Pembangun (Shift+`) atau seret untuk alih",
+    "collapseButton": "Runtuhkan panel alat pembangun",
+    "resizeHandle": "Ubah saiz panel alat"
+  },
   "controls": {
     "heading": "Kawalan Pembangunan",
     "screenset": "Set Skrin:",

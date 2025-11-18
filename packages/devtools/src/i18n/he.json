@@ -1,5 +1,10 @@
 {
   "title": "כלי פיתוח HAI3",
+  "aria": {
+    "openButton": "פתח כלי פיתוח (Shift+`) או גרור להזזה",
+    "collapseButton": "כווץ חלונית כלי פיתוח",
+    "resizeHandle": "שנה גודל חלונית כלים"
+  },
   "controls": {
     "heading": "בקרות פיתוח",
     "screenset": "ערכת מסכים:",

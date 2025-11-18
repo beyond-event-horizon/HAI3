@@ -1,9 +1,14 @@
 {
-  "title": "HAI3 DevTools",
+  "title": "Vývojářské nástroje HAI3",
+  "aria": {
+    "openButton": "Otevřít vývojářské nástroje (Shift+`) nebo přetáhnout pro přesun",
+    "collapseButton": "Sbalit panel vývojářských nástrojů",
+    "resizeHandle": "Změnit velikost panelu nástrojů"
+  },
   "controls": {
-    "heading": "Vývojové Ovládací Prvky",
-    "screenset": "Sada Obrazovek:",
-    "theme": "Téma:",
+    "heading": "Vývojářské ovládací prvky",
+    "screenset": "Sada obrazovek:",
+    "theme": "Motiv:",
     "language": "Jazyk:",
     "mockApi": "Simulované API"
   }

@@ -1,5 +1,10 @@
 {
-  "title": "HAI3 DevTools",
+  "title": "Strumenti di Sviluppo HAI3",
+  "aria": {
+    "openButton": "Apri Strumenti di Sviluppo (Shift+`) o trascina per spostare",
+    "collapseButton": "Comprimi pannello strumenti di sviluppo",
+    "resizeHandle": "Ridimensiona pannello strumenti"
+  },
   "controls": {
     "heading": "Controlli di Sviluppo",
     "screenset": "Set di Schermate:",

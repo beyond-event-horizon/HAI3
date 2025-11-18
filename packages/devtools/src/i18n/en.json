@@ -1,5 +1,10 @@
 {
   "title": "HAI3 DevTools",
+  "aria": {
+    "openButton": "Open DevTools (Shift+`) or drag to move",
+    "collapseButton": "Collapse DevTools panel",
+    "resizeHandle": "Resize DevTools panel"
+  },
   "controls": {
     "heading": "Development Controls",
     "screenset": "Screenset:",
