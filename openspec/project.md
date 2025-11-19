@@ -258,24 +258,67 @@ declare module '@hai3/uicore' {
 
 ### API Services (Domain-Based)
 
-API services use registry pattern with protocol composition:
+API services follow a **vertical slice architecture** with clear separation between framework and screenset code:
+
+**Framework Services (uicore package):**
+- Service class definitions in `packages/uicore/src/api/services/`
+- Core services used by framework itself (AccountsApiService, etc.)
+- Auto-register at module import
+
+**Screenset Services:**
+- Service class definitions in `src/screensets/<screenset>/api/`
+- Screenset-specific services (ChatApiService, etc.)
+- Auto-register at module import
+
+**Screenset Extensions:**
+- Mocks: `src/screensets/<screenset>/api/mocks.ts` or `api/<domain>/mocks.ts`
+- Module augmentation: `src/screensets/<screenset>/api/<domain>/extra.ts`
+- Each screenset owns extensions for services it uses
 
 ```typescript
-export const DOMAIN_NAME = 'domainName';
-export class DomainApiService extends BaseApiService {
+// Example: Framework service (in uicore)
+export const ACCOUNTS_DOMAIN = 'accounts';
+export class AccountsApiService extends BaseApiService {
   constructor() {
     super(
-      { baseURL: '/api/domain' },
+      { baseURL: '/api/accounts' },
+      new RestProtocol({ timeout: 30000 })
+    );
+  }
+
+  protected getMockMap(): MockMap {
+    return apiRegistry.getMockMap(ACCOUNTS_DOMAIN);
+  }
+}
+apiRegistry.register(ACCOUNTS_DOMAIN, AccountsApiService);
+```
+
+```typescript
+// Example: Screenset service (in screenset)
+export const CHAT_DOMAIN = 'chat';
+export class ChatApiService extends BaseApiService {
+  constructor() {
+    super(
+      { baseURL: '/api/chat' },
       new RestProtocol({ timeout: 30000 }),
       new SseProtocol({ withCredentials: true })
     );
   }
 
   protected getMockMap(): MockMap {
-    return apiRegistry.getMockMap(DOMAIN_NAME);
+    return apiRegistry.getMockMap(CHAT_DOMAIN);
   }
 }
-apiRegistry.register(DOMAIN_NAME, DomainApiService);
+apiRegistry.register(CHAT_DOMAIN, ChatApiService);
+```
+
+```typescript
+// Example: Screenset registers mocks
+// src/screensets/demo/demoScreenset.tsx
+import './api/accounts/extra';
+import { accountsMockMap } from './api/accounts/mocks';
+
+apiRegistry.registerMocks(ACCOUNTS_DOMAIN, accountsMockMap);
 ```
 
 **Protocol System:**
@@ -286,9 +329,15 @@ apiRegistry.register(DOMAIN_NAME, DomainApiService);
 
 **Plugin-Based Mocking:**
 - MockPlugin intercepts requests with high priority (100) when registered
-- Mock data defined in `src/api/<domain>/mocks.ts` and registered via `apiRegistry.registerMocks()`
+- Mock data defined in screenset `api/` directories and registered via `apiRegistry.registerMocks()`
 - Plugins use composition, not inheritance or mode flags
 - SSE mocking simulates streaming by splitting responses into word-by-word chunks with 50ms delays
+
+**Key Principles:**
+- Framework services stay in uicore, screenset services stay in screensets
+- Mocks and extensions always belong to the screenset that uses them
+- Intentional duplication enables complete vertical slice independence
+- Each screenset is self-contained with all its API code
 
 ### Theme System
 

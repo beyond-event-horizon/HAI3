@@ -1,9 +1,13 @@
-import { type ScreensetConfig, ScreensetCategory, uikitRegistry, I18nRegistry, Language } from '@hai3/uicore';
+import { type ScreensetConfig, ScreensetCategory, uikitRegistry, I18nRegistry, Language, apiRegistry, ACCOUNTS_DOMAIN } from '@hai3/uicore';
 import { HELLO_WORLD_SCREEN_ID, CURRENT_THEME_SCREEN_ID, PROFILE_SCREEN_ID, UI_KIT_ELEMENTS_SCREEN_ID } from './screens/screenIds';
 import { WorldIcon, WORLD_ICON_ID } from './uikit/icons/WorldIcon';
 import { PaletteIcon, PALETTE_ICON_ID } from './uikit/icons/PaletteIcon';
 import { UserIcon, USER_ICON_ID } from './uikit/icons/UserIcon';
 import { ShadcnIcon, SHADCN_ICON_ID } from './uikit/icons/ShadcnIcon';
+
+// Import module augmentation and mocks for accounts service
+import './api/accounts/extra';
+import { accountsMockMap } from './api/accounts/mocks';
 
 /**
  * Demo Screenset ID
@@ -53,6 +57,13 @@ const screensetTranslations = I18nRegistry.createLoader({
   [Language.ChineseSimplified]: () => import('./i18n/zh.json'),
   [Language.ChineseTraditional]: () => import('./i18n/zh-TW.json'),
 });
+
+/**
+ * Register mock data for accounts service
+ * Demo screenset uses the accounts service (defined in uicore) for the profile screen
+ * The screenset owns the mocks and module augmentation (extras)
+ */
+apiRegistry.registerMocks(ACCOUNTS_DOMAIN, accountsMockMap);
 
 /**
  * Register screenset-specific icons

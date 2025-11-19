@@ -13,11 +13,13 @@ Then follow the workflow in `.ai/workflows/DUPLICATE_SCREENSET.md` exactly:
 
 ## STEP 1: Copy
 - Execute: `cp -r src/screensets/SOURCE src/screensets/TARGET`
+- Verify `api/` directory copied (if exists)
 
 ## STEP 2: Update IDs
 - Update `screenIds.ts` - rename all SCREEN_ID constants
 - Update main screenset file - rename SCREENSET_ID constant
 - Update icon IDs - append suffix to avoid conflicts
+- Update API domain constant in `api/ChatApiService.ts` (e.g., 'chat' to 'chat-copy')
 - Set category to the specified ScreensetCategory value
 
 ## STEP 3: Redux State
@@ -27,14 +29,16 @@ Then follow the workflow in `.ai/workflows/DUPLICATE_SCREENSET.md` exactly:
 - Update module augmentation - new state key in RootState
 - FORBIDDEN: Duplicate state keys
 
-## STEP 4: Events
+## STEP 4: Events & API
 - Rename events file
 - Update enum name (SourceEvents to TargetEvents)
 - Replace all event string prefixes (`source/` to `target/`)
 - Update EventPayloadMap with new event names
 - Rename effects file and update all listeners
 - Rename actions file and update all emits
-- FORBIDDEN: Any references to old event names
+- Update `api/ChatApiService.ts` domain constant to be unique
+- Update ApiServicesMap module augmentation with new domain
+- FORBIDDEN: Any references to old event names or old domain constants
 
 ## STEP 5: Components
 - Update all screen component imports

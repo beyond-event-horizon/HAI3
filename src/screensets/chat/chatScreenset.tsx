@@ -3,16 +3,24 @@
  * Full-featured chat interface with threads, messages, and LLM controls
  */
 
-import { type ScreensetConfig, ScreensetCategory, uikitRegistry, registerSlice, I18nRegistry, Language } from '@hai3/uicore';
+import { type ScreensetConfig, ScreensetCategory, uikitRegistry, registerSlice, I18nRegistry, Language, apiRegistry } from '@hai3/uicore';
 import { CHAT_SCREEN_ID } from './screens/screenIds';
 import { MessageSquareIcon, MESSAGE_SQUARE_ICON_ID } from './uikit/icons/MessageSquareIcon';
 import { chatReducer, initializeChatEffects } from './chatStore';
+
+// Import for side effect - register API service
+import { CHAT_DOMAIN } from './api/ChatApiService';
+import './api/ChatApiService';
+import { chatMockMap } from './api/mocks';
 
 /**
  * Chat Screenset ID
  * Well-known constant defined where it belongs
  */
 export const CHAT_SCREENSET_ID = 'chat';
+
+// Register mock data for API service
+apiRegistry.registerMocks(CHAT_DOMAIN, chatMockMap);
 
 /**
  * Screenset-level translations

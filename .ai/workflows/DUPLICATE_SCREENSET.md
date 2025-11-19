@@ -2,9 +2,10 @@
 
 ## WORKFLOW: Duplicate Screenset
 
-REQUIRED: Copy entire screenset directory
-REQUIRED: Update all IDs (screenset, screen, icon, slice, events)
+REQUIRED: Copy entire screenset directory including api/
+REQUIRED: Update all IDs (screenset, screen, icon, slice, events, API domain)
 REQUIRED: Update Redux slice name and module augmentation
+REQUIRED: Update API domain constant to be unique
 REQUIRED: Update all event names with new namespace prefix
 REQUIRED: Update all translation keys in all 36 language files
 REQUIRED: Register in screensetRegistry.tsx
@@ -21,12 +22,14 @@ Ask the user for:
 ## STEP 1: Copy
 
 REQUIRED: cp -r src/screensets/SOURCE src/screensets/TARGET
+REQUIRED: Verify api/ directory copied (if exists)
 
 ## STEP 2: Update IDs
 
 REQUIRED: Update screenIds.ts - rename all SCREEN_ID constants
 REQUIRED: Update main screenset file - rename SCREENSET_ID
 REQUIRED: Update icon IDs - append suffix to avoid conflicts
+REQUIRED: Update API domain constant (e.g., 'chat' to 'chat-copy')
 REQUIRED: Set category to correct ScreensetCategory value
 
 ## STEP 3: Redux State
@@ -37,7 +40,7 @@ REQUIRED: Rename State interface
 REQUIRED: Update module augmentation - new state key in RootState
 FORBIDDEN: Duplicate state keys
 
-## STEP 4: Events
+## STEP 4: Events & API
 
 REQUIRED: Rename events file
 REQUIRED: Update enum name
@@ -45,7 +48,9 @@ REQUIRED: Replace all event string prefixes (source/ to target/)
 REQUIRED: Update EventPayloadMap with new event names
 REQUIRED: Rename effects file and update listeners
 REQUIRED: Rename actions file and update emits
-FORBIDDEN: Any references to old event names
+REQUIRED: Update api/ChatApiService.ts domain constant
+REQUIRED: Update ApiServicesMap module augmentation
+FORBIDDEN: Any references to old event names or old domain constants
 
 ## STEP 5: Components
 

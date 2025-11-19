@@ -470,29 +470,109 @@ changeTheme('dark'); // Emits ThemeEvents.Changed → layoutEffects applies them
 
 ## Working with API Services
 
-API services use domain-based organization:
+HAI3 uses a vertical slice architecture for API services with a clear separation:
+
+**Framework Services (in uicore package):**
+- Service class definitions stay in `packages/uicore/src/api/services/` (e.g., AccountsApiService)
+- These are core services used by the framework itself (Layout, Header, etc.)
+- Registration happens automatically when the service module loads
+
+**Screenset Extensions (in screenset folders):**
+- Mocks and module augmentation live in `src/screensets/<screenset>/api/`
+- Each screenset owns the extensions for services it uses
+- Enables complete vertical slice independence
+
+**Example - Framework Service with Screenset Extensions:**
 
 ```typescript
-// Define domain
+// packages/uicore/src/api/services/accounts/AccountsApiService.ts
+// Service definition stays in uicore (framework level)
 export const ACCOUNTS_DOMAIN = 'accounts';
 
-// Create service
 export class AccountsApiService extends BaseApiService {
-  async getUsers(): Promise<User[]> { /* ... */ }
+  async getCurrentUser(): Promise<GetCurrentUserResponse> { /* ... */ }
 }
 
-// Register (happens at module import)
+// Auto-registers at module import
 apiRegistry.register(ACCOUNTS_DOMAIN, AccountsApiService);
+```
 
-// Usage in components
+```typescript
+// src/screensets/demo/api/accounts/extra.ts
+// Module augmentation owned by demo screenset
+declare module '@hai3/uicore' {
+  interface UserExtra {
+    department: string;
+  }
+}
+```
+
+```typescript
+// src/screensets/demo/api/accounts/mocks.ts
+// Mock data owned by demo screenset
+export const accountsMockMap = {
+  'GET /user/current': () => ({ user: mockDemoUser }),
+} satisfies MockMap;
+```
+
+```typescript
+// src/screensets/demo/demoScreenset.tsx
+// Screenset registers mocks for framework services it uses
+import './api/accounts/extra';
+import { accountsMockMap } from './api/accounts/mocks';
+
+apiRegistry.registerMocks(ACCOUNTS_DOMAIN, accountsMockMap);
+```
+
+**Example - Screenset-Specific Service:**
+
+```typescript
+// src/screensets/chat/api/ChatApiService.ts
+// Service definition owned by chat screenset
+export const CHAT_DOMAIN = 'chat';
+
+export class ChatApiService extends BaseApiService {
+  async getThreads(): Promise<Thread[]> { /* ... */ }
+}
+
+// Auto-registers at module import
+apiRegistry.register(CHAT_DOMAIN, ChatApiService);
+```
+
+```typescript
+// src/screensets/chat/api/mocks.ts
+// Mock data owned by chat screenset
+export const chatMockMap = {
+  'GET /threads': () => ({ threads: mockThreads }),
+} satisfies MockMap;
+```
+
+```typescript
+// src/screensets/chat/chatScreenset.tsx
+// Screenset registers its own service mocks
+import './api/ChatApiService';
+import { chatMockMap } from './api/mocks';
+
+apiRegistry.registerMocks(CHAT_DOMAIN, chatMockMap);
+```
+
+**Usage in Components:**
+
+```typescript
 const accountsApi = apiRegistry.getService(ACCOUNTS_DOMAIN);
-const users = await accountsApi.getUsers();
+const user = await accountsApi.getCurrentUser();
 ```
 
 **Mock vs Real API:**
 - Services can switch between mock and real implementations
-- Toggle via `ApiEvents.ModeChanged` event
-- Mock data defined in `src/api/<domain>/mocks.ts`
+- Toggle via DevTools or `ApiEvents.ModeChanged` event
+- Mock data defined in `src/screensets/<screenset>/api/mocks.ts`
+
+**Key Principles:**
+- **Service class** location: Framework services in uicore, screenset services in screensets
+- **Mocks and extensions** location: Always in the screenset that uses them
+- **Intentional duplication**: If multiple screensets need the same service, duplicate it
+- **Complete independence**: Each screenset is self-contained with all its API code
 
 ## Creating a New Screenset
 

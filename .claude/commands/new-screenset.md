@@ -9,6 +9,7 @@ Ask the user for:
 2. Category: drafts | mockups | production
 3. Initial screens to include
 4. Whether state management is needed (slices/actions/events/effects)
+5. Whether API services are needed (screenset-specific or using framework services)
 
 Then create the screenset following this structure:
 
@@ -24,6 +25,13 @@ src/screensets/{category}/{name}/
 │       └── i18n/            # REQUIRED: Screen-level translations
 │           ├── en.json      # All 36 languages required
 │           └── ...
+├── api/                     # Optional: if API services needed
+│   ├── {Domain}ApiService.ts  # Screenset-specific API service
+│   ├── api.ts               # TypeScript types/interfaces
+│   ├── mocks.ts             # Mock data
+│   └── {domain}/            # Optional: for framework service extensions
+│       ├── mocks.ts         # Mocks for framework services
+│       └── extra.ts         # Module augmentation
 ├── slices/                  # Optional: if state needed
 │   └── {name}Slice.ts
 ├── actions/                 # Optional: if actions needed
@@ -173,7 +181,65 @@ export const {name}Screenset: ScreensetConfig = {
 screensetRegistry.register({name}Screenset);
 ```
 
-## 6. State Management (Optional)
+## 6. API Services (Optional)
+
+If the screenset needs API services, create them following the vertical slice pattern:
+
+### For Screenset-Specific Services:
+```typescript
+// src/screensets/{name}/api/{Name}ApiService.ts
+export const {NAME}_DOMAIN = '{name}' as const;
+
+export class {Name}ApiService extends BaseApiService {
+  constructor() {
+    super(
+      { baseURL: '/api/{name}' },
+      new RestProtocol({ timeout: 30000 })
+    );
+  }
+
+  protected getMockMap(): MockMap {
+    return apiRegistry.getMockMap({NAME}_DOMAIN);
+  }
+}
+
+apiRegistry.register({NAME}_DOMAIN, {Name}ApiService);
+
+declare module '@hai3/uicore' {
+  interface ApiServicesMap {
+    [{NAME}_DOMAIN]: {Name}ApiService;
+  }
+}
+```
+
+### Register in Screenset Config:
+```typescript
+// src/screensets/{name}/{name}Screenset.tsx
+import './api/{Name}ApiService'; // Trigger service registration
+import { {name}MockMap } from './api/mocks';
+
+apiRegistry.registerMocks({NAME}_DOMAIN, {name}MockMap);
+```
+
+### For Framework Service Extensions:
+If the screenset uses a framework service (e.g., accounts), create mocks/extras:
+
+```typescript
+// src/screensets/{name}/api/accounts/mocks.ts
+export const accountsMockMap = {
+  'GET /user/current': () => ({ user: mockUser }),
+} satisfies MockMap;
+```
+
+```typescript
+// src/screensets/{name}/{name}Screenset.tsx
+import './api/accounts/extra';
+import { accountsMockMap } from './api/accounts/mocks';
+
+apiRegistry.registerMocks(ACCOUNTS_DOMAIN, accountsMockMap);
+```
+
+## 7. State Management (Optional)
 
 If the screenset needs state, create slices/actions/events/effects:
 
@@ -401,7 +467,7 @@ npm run dev         # Test in browser
 
 ## References
 
-- `.ai/targets/SCREENSETS.md` - Screenset rules
+- `.ai/targets/SCREENSETS.md` - Screenset rules (includes API service patterns)
 - `.ai/targets/EVENTS.md` - Event-driven architecture
-- `.ai/targets/API.md` - API service patterns
+- `.ai/targets/API.md` - API base classes (framework-level)
 - `CLAUDE.md` - Overall architecture guide
