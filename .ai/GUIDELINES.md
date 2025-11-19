@@ -13,7 +13,8 @@
 
 ## ROUTING
 - Data flow / events -> .ai/targets/EVENTS.md
-- API layer -> .ai/targets/API.md
+- API services (screenset-owned) -> .ai/targets/SCREENSETS.md
+- API base classes (uicore) -> .ai/targets/API.md
 - packages/uicore -> .ai/targets/UICORE.md
 - packages/uikit -> .ai/targets/UIKIT.md
 - packages/uikit-contracts -> .ai/targets/UIKIT_CONTRACTS.md

@@ -6,7 +6,7 @@
 
 ## SCOPE
 - Applies to all screensets under src/screensets/**.
-- Each screenset may define its own actions, events, slices, effects, and localization.
+- Each screenset may define its own actions, events, slices, effects, localization, and API services.
 
 ## CRITICAL RULES
 - Manual styling is FORBIDDEN. Use @hai3/uikit components only.
@@ -47,6 +47,15 @@
 - FORBIDDEN: Hardcoded strings, path-based loaders, or missing languages.
 - DETECT: grep -R "['\"] [A-Za-z].* " src/screensets
 
+## API SERVICE RULES
+- REQUIRED: API services in src/screensets/*/api/ directory (ChatApiService.ts, api.ts, mocks.ts).
+- REQUIRED: Import API service in screenset root for self-registration.
+- REQUIRED: Unique domain constant per screenset (e.g., 'chat', 'chat-copy').
+- REQUIRED: Actions import from local ../api/ directory, not centralized src/api/.
+- FORBIDDEN: Centralized src/api/ directory (deleted - screensets own API services).
+- FORBIDDEN: Sharing API services between screensets (duplication is intentional).
+- DETECT: grep -rn "@/api/services" src/
+
 ## ICON RULES
 - Define and register icons inside the screenset file.
 - Export icon IDs as constants.
@@ -71,6 +80,9 @@
 - [ ] No direct slice imports.
 - [ ] Registry imports the screenset root only.
 - [ ] Icons exported and registered.
+- [ ] API service in src/screensets/*/api/ with unique domain constant.
+- [ ] API service imported in screenset root file.
+- [ ] Actions import from ../api/, not @/api/services/.
 - [ ] Screenset config has localization: TranslationLoader.
 - [ ] Screenset loader created with I18nRegistry.createLoader() with all 36 languages.
 - [ ] Screen components use useScreenTranslations(screensetId, screenId, loader).

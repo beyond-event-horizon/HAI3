@@ -1,15 +1,17 @@
-# API Guidelines
+# API Base Classes Guidelines
 
 ## AI WORKFLOW (REQUIRED)
 1) Summarize 3-6 rules from this file before proposing changes.
 2) STOP if you intend to modify BaseApiService or apiRegistry.ts.
+3) For screenset API services, see SCREENSETS.md.
 
 ## SCOPE
-- Core API layer: packages/uicore/src/api/**
+- Core API infrastructure: packages/uicore/src/api/**
   - plugins/  -> request and response interceptors (ApiPlugin, MockPlugin)
   - protocols/ -> communication protocols (RestProtocol, SseProtocol)
-  - services/  -> domain services (accounts, etc.)
-- App-level API extensions: src/api/services/**
+  - apiRegistry.ts -> service registry (read-only)
+  - BaseApiService -> abstract base class
+- DEPRECATED: src/api/ (deleted - API services now in screensets)
 
 ## CRITICAL RULES
 - One domain service per backend domain (no entity-based services).
@@ -24,14 +26,10 @@
 - Adding generic helpers like get("/endpoint").
 - Creating UserService, InvoiceService, or other entity-style services.
 
-## ADDING A SERVICE
-- Create: packages/uicore/src/api/services/<domain>/{ServiceNameApiService.ts,api.ts}.
-- Define domain constant: export const DOMAIN = "domain" as const.
-- Extend BaseApiService and set baseURL.
-- Add module augmentation for ApiServicesMap.
-- Register service: apiRegistry.register(DOMAIN, ServiceName).
-- In app: add src/api/services/<domain>/{extra.ts,mocks.ts}.
-- In app: import service in src/api/apiRegistry.ts only to trigger registration.
+## ADDING A SERVICE (DEPRECATED)
+- FORBIDDEN: Creating services in packages/uicore/src/api/services/.
+- FORBIDDEN: Creating services in src/api/services/ (directory deleted).
+- REQUIRED: Create services in src/screensets/*/api/. See SCREENSETS.md.
 
 ## USAGE RULES
 - Access only via apiRegistry.getService(DOMAIN).methodName().

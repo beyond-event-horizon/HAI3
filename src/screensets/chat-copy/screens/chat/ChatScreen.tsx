@@ -26,7 +26,7 @@ import {
 import { ButtonVariant, ButtonSize } from '@hai3/uikit-contracts';
 import { TextLoader, useAppSelector, useAppDispatch, useTranslation, useScreenTranslations, I18nRegistry, Language } from '@hai3/uicore';
 import * as chatCopyActions from '../../actions/chatCopyActions';
-import { ChatRole } from '@/api/services/chat/api';
+import { ChatRole } from '../../api/api';
 import type { AttachedFile } from '../../types';
 import '../../chatCopyStore'; // Import for module augmentation side effect
 import { CHAT_COPY_SCREEN_ID } from '../screenIds';

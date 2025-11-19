@@ -8,8 +8,8 @@ import { eventBus, apiRegistry, type AppDispatch } from '@hai3/uicore';
 import { ChatEvents } from '../events/chatEvents';
 import type { AttachedFile } from '../types';
 import type { EnhancedChatThread } from '../uikit/components/EnhancedThreadList';
-import { CHAT_DOMAIN } from '@/api/services/chat/ChatApiService';
-import { ChatRole } from '@/api/services/chat/api';
+import { CHAT_DOMAIN } from '../api/ChatApiService';
+import { ChatRole } from '../api/api';
 
 /**
  * Thread Actions

@@ -10,8 +10,7 @@ import '@hai3/uikit/styles'; // Tailwind CSS
 import { App } from './App';
 import '@/uikit/uikitRegistry'; // Auto-registers UI Kit (components + icons)
 import '@/themes/themeRegistry'; // Auto-registers themes
-import '@/screensets/screensetRegistry'; // Auto-registers screensets (includes i18n loaders)
-import '@/api/apiRegistry'; // Auto-registers API extensions + mocks
+import '@/screensets/screensetRegistry'; // Auto-registers screensets (includes API services + mocks + i18n loaders)
 
 // Initialize API services
 const initialUseMockApi = store.getState().app.useMockApi;
