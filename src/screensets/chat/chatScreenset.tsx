@@ -6,7 +6,7 @@
 import { type ScreensetConfig, ScreensetCategory, uikitRegistry, registerSlice, I18nRegistry, Language, apiRegistry, screensetRegistry } from '@hai3/uicore';
 import { CHAT_SCREENSET_ID, CHAT_SCREEN_ID } from './ids';
 import { MessageSquareIcon, MESSAGE_SQUARE_ICON_ID } from './uikit/icons/MessageSquareIcon';
-import { chatReducer, initializeChatEffects } from './chatStore';
+import chatReducer, { initializeChatEffects } from './slices/chatSlice';
 
 // Import for side effect - register API service
 import { CHAT_DOMAIN } from './api/ChatApiService';

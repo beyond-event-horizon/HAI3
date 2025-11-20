@@ -5,9 +5,11 @@
  */
 
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '@hai3/uicore';
 import type { Message, Thread, AttachedFile, Context } from '../types';
 import { DEFAULT_MODEL } from '../constants/modelConstants';
 import { CHAT_COPY_SCREENSET_ID } from '../ids';
+import '../events/chatCopyEvents'; // Import to trigger module augmentation
 
 export interface ChatCopyState {
   threads: Thread[];
@@ -175,3 +177,22 @@ export const {
 const chatCopyReducer = chatCopySlice.reducer;
 Object.defineProperty(chatCopyReducer, 'name', { value: CHAT_COPY_SCREENSET_ID });
 export default chatCopyReducer;
+
+// Module augmentation - extends uicore RootState with chatCopy slice
+declare module '@hai3/uicore' {
+  interface RootState {
+    [CHAT_COPY_SCREENSET_ID]: ChatCopyState;
+  }
+}
+
+/**
+ * Type-safe selector for chat copy state
+ * Usage in components: const chatCopy = useAppSelector(selectChatCopyState);
+ * Usage in effects: const chatCopy = selectChatCopyState(store.getState());
+ */
+export const selectChatCopyState = (state: RootState): ChatCopyState => {
+  return state[CHAT_COPY_SCREENSET_ID];
+};
+
+// Re-export effects for registration
+export { initializeChatCopyEffects } from '../effects/chatCopyEffects';
