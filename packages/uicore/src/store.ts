@@ -68,9 +68,15 @@ export const store = {
  * Register a dynamic slice from a screenset
  * Allows screensets to add their state to the global store without modifying uicore
  *
- * @param sliceName - Name of the slice (e.g., 'chat')
- * @param reducer - Reducer function for the slice
+ * CONVENTION ENFORCEMENT: Slice name MUST equal state key (sliceName parameter)
+ * This ensures screenset self-containment - when you duplicate a screenset and change
+ * the screenset ID constant, everything auto-updates via template literals.
+ *
+ * @param sliceName - Name of the slice AND state key (e.g., 'chat')
+ * @param reducer - Reducer function for the slice (slice.name must match sliceName)
  * @param initEffects - Optional function to initialize effects with store.dispatch
+ *
+ * @throws Error if slice name doesn't match state key (convention violation)
  */
 export function registerSlice(
   sliceName: string,
@@ -81,6 +87,20 @@ export function registerSlice(
   if (dynamicReducers[sliceName]) {
     console.warn(`Slice "${sliceName}" is already registered. Skipping.`);
     return;
+  }
+
+  // ENFORCE CONVENTION: Slice name must equal state key
+  // Extract the actual slice name from the reducer (set in createSlice({ name: ... }))
+  // Redux Toolkit reducers have a 'name' property from the slice configuration
+  const reducerWithName = reducer as Reducer & { name?: string };
+  const actualSliceName = reducerWithName.name;
+
+  if (actualSliceName && actualSliceName !== sliceName) {
+    throw new Error(
+      `Screenset convention violation: Slice name "${actualSliceName}" must match state key "${sliceName}".\n` +
+      `This is required for screenset self-containment.\n` +
+      `Fix: Update createSlice({ name: ${actualSliceName} }) to use your SCREENSET_ID constant instead of a hardcoded string.`
+    );
   }
 
   // Add to dynamic reducers
