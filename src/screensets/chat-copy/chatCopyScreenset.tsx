@@ -3,7 +3,7 @@
  * Full-featured chat interface with threads, messages, and LLM controls
  */
 
-import { type ScreensetConfig, ScreensetCategory, uikitRegistry, registerSlice, I18nRegistry, Language, apiRegistry } from '@hai3/uicore';
+import { type ScreensetConfig, ScreensetCategory, uikitRegistry, registerSlice, I18nRegistry, Language, apiRegistry, screensetRegistry } from '@hai3/uicore';
 import { CHAT_COPY_SCREEN_ID } from './screens/screenIds';
 import { MessageSquareIcon, MESSAGE_SQUARE_COPY_ICON_ID } from './uikit/icons/MessageSquareIcon';
 import { chatCopyReducer, initializeChatCopyEffects } from './chatCopyStore';
@@ -103,3 +103,10 @@ export const chatCopyScreenset: ScreensetConfig = {
     },
   ],
 };
+
+/**
+ * Self-register screenset
+ * Auto-discovered via Vite glob import in screensetRegistry.tsx
+ * This side effect runs when the module is imported
+ */
+screensetRegistry.register(chatCopyScreenset);

@@ -1,4 +1,4 @@
-import { type ScreensetConfig, ScreensetCategory, uikitRegistry, I18nRegistry, Language, apiRegistry, ACCOUNTS_DOMAIN } from '@hai3/uicore';
+import { type ScreensetConfig, ScreensetCategory, uikitRegistry, I18nRegistry, Language, apiRegistry, ACCOUNTS_DOMAIN, screensetRegistry } from '@hai3/uicore';
 import { HELLO_WORLD_SCREEN_ID, CURRENT_THEME_SCREEN_ID, PROFILE_SCREEN_ID, UI_KIT_ELEMENTS_SCREEN_ID } from './screens/screenIds';
 import { WorldIcon, WORLD_ICON_ID } from './uikit/icons/WorldIcon';
 import { PaletteIcon, PALETTE_ICON_ID } from './uikit/icons/PaletteIcon';
@@ -124,3 +124,10 @@ export const demoScreenset: ScreensetConfig = {
     },
   ],
 };
+
+/**
+ * Self-register screenset
+ * Auto-discovered via Vite glob import in screensetRegistry.tsx
+ * This side effect runs when the module is imported
+ */
+screensetRegistry.register(demoScreenset);
