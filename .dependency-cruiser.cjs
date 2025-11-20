@@ -84,6 +84,37 @@ module.exports = {
       comment: 'UI Kit cannot depend on DevTools. UI Kit must remain pure.'
     },
     
+    // ============ SCREENSET ISOLATION RULES ============
+    {
+      name: 'no-cross-screenset-imports',
+      severity: 'error',
+      from: { path: '^src/screensets/([^/]+)/' },
+      to: {
+        path: '^src/screensets/(?!\\1/)[^/]+/',
+        pathNot: '^src/screensets/screensetRegistry\\.tsx$'
+      },
+      comment: 'Screensets must not import from other screensets (vertical slice isolation). Each screenset is self-contained.'
+    },
+    {
+      name: 'screensets-use-workspace-packages',
+      severity: 'error',
+      from: { path: '^src/screensets/' },
+      to: {
+        path: '^packages/.*/src/',
+      },
+      comment: 'Screensets must import via @hai3/* workspace names, not direct package paths.'
+    },
+    {
+      name: 'no-circular-screenset-deps',
+      severity: 'warn',
+      from: { path: '^src/screensets/([^/]+)/' },
+      to: {
+        path: '^src/screensets/\\1/',
+        circular: true
+      },
+      comment: 'Avoid circular dependencies within screenset modules. May indicate tight coupling.'
+    },
+
     // ============ FLUX ARCHITECTURE RULES ============
     // Note: ESLint handles precise Flux violations (actions/components importing slices).
     // Dependency-cruiser focuses on architectural boundaries (folders, circular deps).
