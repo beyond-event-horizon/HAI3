@@ -1,72 +1,171 @@
 ## ADDED Requirements
 
-### Requirement: Redux slice name convention
+### Requirement: Centralized screenset IDs
 
-Screensets SHALL use the screenset ID as the Redux slice name to enable self-containment.
+Screensets SHALL define all unique identifiers (screenset ID, screen IDs) in a single `ids.ts` file to enable easy duplication.
 
-#### Scenario: Chat screenset slice name matches ID
-
-```typescript
-// src/screensets/chat/slices/chatSlice.ts
-import { createSlice } from '@reduxjs/toolkit';
-import { CHAT_SCREENSET_ID } from '../chatScreenset';
-
-export const chatSlice = createSlice({
-  name: CHAT_SCREENSET_ID, // 'chat' - matches screenset ID exactly
-  initialState: { /* ... */ },
-  reducers: { /* ... */ },
-});
-```
-
-**Given** a screenset with ID `'chat'`
-**When** creating the Redux slice
-**Then** the slice name MUST be `'chat'` (matching the screenset ID exactly)
-
-#### Scenario: Enforced validation in registerSlice
+#### Scenario: Chat screenset IDs file
 
 ```typescript
-// packages/uicore/src/store/registerSlice.ts
-export function registerSlice<K extends string>(
-  key: K,
-  reducer: Reducer,
-  initEffects?: () => void
-): void {
-  const sliceName = (reducer as any).name;
+// src/screensets/chat/ids.ts
+/**
+ * Chat Screenset IDs
+ *
+ * ALL unique identifiers for this screenset in one place.
+ * When duplicating this screenset, ONLY change the values in this file.
+ * Everything else (events, icons, API domains, translations) will auto-update via template literals.
+ */
 
-  if (sliceName !== key) {
-    throw new Error(
-      `Slice name "${sliceName}" must match state key "${key}". ` +
-      `Required for screenset self-containment.`
-    );
-  }
+/**
+ * Screenset ID
+ * Used for: Redux slice name, event namespace, icon namespace, API domain, translations
+ */
+export const CHAT_SCREENSET_ID = 'chat';
 
-  // ... register slice
-}
+/**
+ * Screen IDs
+ * Used for: Screen routing, screen-level translations
+ */
+export const CHAT_SCREEN_ID = 'chat';
 ```
 
-**Given** a screenset attempting to register a slice
-**When** `registerSlice('chat', chatReducer)` is called
-**Then** the system SHALL throw an error if `chatReducer.name !== 'chat'`
+**Given** a screenset with multiple IDs
+**When** organizing the screenset structure
+**Then** all IDs MUST be defined in a central `ids.ts` file
+**And** the file SHALL document what each ID is used for
+**And** duplication SHALL only require changing values in this one file
 
-#### Scenario: RootState augmentation matches slice name
+### Requirement: Enum pattern for RootState augmentation
+
+Screensets SHALL use enum pattern with template literals for RootState augmentation to enable automatic updates when screenset ID changes.
+
+#### Scenario: Chat screenset enum state key
 
 ```typescript
 // src/screensets/chat/chatStore.ts
-import { ChatState } from './slices/chatSlice';
+import { CHAT_SCREENSET_ID } from './ids';
 
-declare module '@hai3/uicore' {
-  interface RootState {
-    chat: ChatState; // Key 'chat' matches CHAT_SCREENSET_ID
-  }
+/**
+ * State key enum for type-safe module augmentation
+ * Uses template literal to compute key from CHAT_SCREENSET_ID at compile time
+ * When CHAT_SCREENSET_ID changes (e.g., during screenset duplication),
+ * this enum value automatically updates, and so does the RootState augmentation
+ */
+export enum ChatStateKeys {
+  State = `${CHAT_SCREENSET_ID}`
 }
 
-// Registration enforces the match
-registerSlice('chat', chatReducer, initChatEffects);
+// Module augmentation - extends uicore RootState with chat slice
+// Uses enum key so it auto-updates when CHAT_SCREENSET_ID changes
+declare module '@hai3/uicore' {
+  interface RootState {
+    [ChatStateKeys.State]: ChatState;
+  }
+}
 ```
 
 **Given** a screenset with ID `'chat'`
-**When** augmenting the RootState interface
-**Then** the state key MUST be `'chat'` (matching both screenset ID and slice name)
+**When** augmenting RootState
+**Then** the system SHALL use an enum with template literal computed from screenset ID
+**And** the enum value SHALL be used as the interface property key
+**And** changing `CHAT_SCREENSET_ID` SHALL automatically update the enum and augmentation
+
+#### Scenario: Type-safe state selector
+
+```typescript
+// src/screensets/chat/chatStore.ts
+/**
+ * Type-safe selector for chat state
+ * Works everywhere (components and effects) thanks to proper RootState typing
+ */
+export const selectChatState = (state: RootState): ChatState => {
+  return state[ChatStateKeys.State];  // Fully type-safe, no casts!
+};
+
+// Usage in components
+const chat = useAppSelector(selectChatState);
+
+// Usage in effects
+const chat = selectChatState(store.getState());
+```
+
+**Given** a screenset with enum-based state key
+**When** creating a state selector
+**Then** the selector SHALL use the enum key to access state
+**And** NO type casting SHALL be required
+**And** the selector SHALL work in both components and effects
+
+### Requirement: Explicit RootState definition in uicore
+
+The uicore store SHALL define RootState explicitly as an interface (not computed from store), then type store.getState() to return RootState, enabling module augmentation to work everywhere.
+
+#### Scenario: Explicit RootState interface
+
+```typescript
+// packages/uicore/src/store.ts
+
+// Base RootState interface - defined explicitly for module augmentation
+// Screensets can extend this via module augmentation to add their slices
+export interface RootState {
+  app: ReturnType<typeof appReducer>;
+  layout: ReturnType<typeof layoutReducer>;
+  header: ReturnType<typeof headerReducer>;
+  footer: ReturnType<typeof footerReducer>;
+  menu: ReturnType<typeof menuReducer>;
+  sidebar: ReturnType<typeof sidebarReducer>;
+  screen: ReturnType<typeof screenReducer>;
+  popup: ReturnType<typeof popupReducer>;
+  overlay: ReturnType<typeof overlayReducer>;
+}
+```
+
+**Given** a Redux store with static and dynamic reducers
+**When** defining RootState
+**Then** RootState MUST be an explicit interface (not `extends ReturnType<typeof store.getState>`)
+**And** each property type SHALL be derived from the reducer's return type
+
+#### Scenario: Store wrapper with typed getState
+
+```typescript
+// packages/uicore/src/store.ts
+
+const _internalStore = configureStore({
+  reducer: staticReducers,
+});
+
+// Export store typed to return RootState (enables module augmentation to work everywhere)
+// We create a wrapper object that delegates to the internal store but types getState correctly
+export const store = {
+  ..._internalStore,
+  getState: (): RootState => _internalStore.getState() as RootState,
+};
+```
+
+**Given** a configured Redux store
+**When** exporting the store
+**Then** the store SHALL be wrapped to override getState() return type
+**And** getState() SHALL return RootState (enabling augmentation to work)
+**And** ONE cast SHALL be allowed in the wrapper (unavoidable TypeScript limitation)
+
+#### Scenario: Module augmentation works in effects
+
+```typescript
+// src/screensets/chat/effects/chatEffects.ts
+import { store } from '@hai3/uicore';
+import { selectChatState } from '../chatStore';
+
+eventBus.on(ChatEvents.ThreadCreated, ({ thread }) => {
+  const chat = selectChatState(store.getState());  // ✅ Type-safe, no casts!
+  const draftThread = chat.threads.find((t) => t.isDraft);
+  // ...
+});
+```
+
+**Given** a Redux effect accessing state
+**When** calling `store.getState()`
+**Then** the return type SHALL be RootState (including augmented slices)
+**And** NO unsafe casts SHALL be required in effects
+**And** state selectors SHALL work identically in components and effects
 
 ### Requirement: Event namespace convention
 
@@ -313,21 +412,18 @@ mv src/screensets/chat src/screensets/.archived/chat
 
 ### Requirement: Screenset duplication procedure
 
-Duplicating a screenset SHALL require only copying the folder and updating the screenset ID and screen IDs, with all other naming and registration automatically handled.
+Duplicating a screenset SHALL require only copying the folder and updating the IDs in a single `ids.ts` file, with all other naming and registration automatically handled.
 
-#### Scenario: 3-step duplication process
+#### Scenario: 2-step duplication process
 
 ```bash
 # Step 1: Copy folder
 cp -r src/screensets/chat src/screensets/chat-copy
 
-# Step 2: Update screenset ID constant
-# src/screensets/chat-copy/chatCopyScreenset.tsx
+# Step 2: Update ALL IDs in one file
+# src/screensets/chat-copy/ids.ts
 export const CHAT_COPY_SCREENSET_ID = 'chat-copy'; // Changed from 'chat'
-
-# Step 3: Update screen IDs
-# src/screensets/chat-copy/screens/screenIds.ts
-export const CHAT_COPY_SCREEN_ID = 'chat-copy-screen'; // Changed from 'chat-screen'
+export const CHAT_COPY_SCREEN_ID = 'chat-copy';     // Changed from 'chat'
 
 # That's it! Auto-discovery handles the rest.
 ```
@@ -336,36 +432,36 @@ export const CHAT_COPY_SCREEN_ID = 'chat-copy-screen'; // Changed from 'chat-scr
 **When** duplicating to create `src/screensets/chat-copy`
 **Then** the developer SHALL only need to:
 1. Copy the screenset folder
-2. Change the `SCREENSET_ID` constant
-3. Change screen ID constants in `screens/screenIds.ts`
+2. Change ALL ID values in `ids.ts` (screenset ID + screen IDs)
 
 **And** auto-discovery SHALL automatically:
 - Import the new screenset (via glob pattern)
 - Execute the registration side effect
 - Make the screenset available in the UI
 
-**And** all derived names SHALL automatically update:
-- Redux slice name (via `createSlice({ name: SCREENSET_ID })`)
-- RootState key (via `registerSlice(SCREENSET_ID, ...)`)
-- Event namespace (via template literal `${SCREENSET_ID}/...`)
-- Icon IDs (via template literal `${SCREENSET_ID}:...`)
-- API domain (via `const DOMAIN = SCREENSET_ID`)
-- Translation namespace (already auto-derived)
+**And** all derived names SHALL automatically update via template literals and enums:
+- Redux slice name (via `createSlice({ name: CHAT_COPY_SCREENSET_ID })`)
+- RootState key (via enum `ChatCopyStateKeys.State = \`${CHAT_COPY_SCREENSET_ID}\``)
+- Event namespace (via enum `ChatCopyEvents.ThreadSelected = \`${CHAT_COPY_SCREENSET_ID}/threadSelected\``)
+- Icon IDs (via template literal `\`${CHAT_COPY_SCREENSET_ID}:message-square\``)
+- API domain (via `const CHAT_COPY_DOMAIN = CHAT_COPY_SCREENSET_ID`)
+- Translation namespaces (via template literals in config)
 
 #### Scenario: Validation after duplication
 
 ```bash
-# After 4-step duplication process
+# After 2-step duplication process
 npm run type-check  # TypeScript validates all type constraints
 npm run arch:check  # Architecture rules validate dependencies
 npm run dev         # Test via Chrome DevTools MCP
 ```
 
-**Given** a screenset duplicated using the 4-step process
+**Given** a screenset duplicated using the 2-step process
 **When** running validation commands
 **Then** TypeScript MUST compile without errors
 **And** architecture checks MUST pass
 **And** the new screenset MUST be accessible via the UI
+**And** NO manual fixes SHALL be required (everything auto-updates from ids.ts)
 
 ### Requirement: Automated enforcement via linting
 
