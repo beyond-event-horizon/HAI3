@@ -7,7 +7,7 @@
 
 import { eventBus, type AppDispatch, store } from '@hai3/uicore';
 import { ChatEvents } from '../events/chatEvents';
-import { selectChatState } from '../chatStore';
+import { selectChatState } from '../slices/chatSlice';
 import {
   setCurrentThreadId,
   addThread,

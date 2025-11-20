@@ -5,9 +5,11 @@
  */
 
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '@hai3/uicore';
 import type { Message, Thread, AttachedFile, Context } from '../types';
 import { DEFAULT_MODEL } from '../constants/modelConstants';
 import { CHAT_SCREENSET_ID } from '../ids';
+import '../events/chatEvents'; // Import to trigger module augmentation
 
 export interface ChatState {
   threads: Thread[];
@@ -175,3 +177,22 @@ export const {
 const chatReducer = chatSlice.reducer;
 Object.defineProperty(chatReducer, 'name', { value: CHAT_SCREENSET_ID });
 export default chatReducer;
+
+// Module augmentation - extends uicore RootState with chat slice
+declare module '@hai3/uicore' {
+  interface RootState {
+    [CHAT_SCREENSET_ID]: ChatState;
+  }
+}
+
+/**
+ * Type-safe selector for chat state
+ * Usage in components: const chat = useAppSelector(selectChatState);
+ * Usage in effects: const chat = selectChatState(store.getState());
+ */
+export const selectChatState = (state: RootState): ChatState => {
+  return state[CHAT_SCREENSET_ID];
+};
+
+// Re-export effects for registration
+export { initializeChatEffects } from '../effects/chatEffects';

@@ -28,7 +28,7 @@ import { TextLoader, useAppSelector, useAppDispatch, useTranslation, useScreenTr
 import * as chatActions from '../../actions/chatActions';
 import { ChatRole } from '../../api/api';
 import type { AttachedFile } from '../../types';
-import { selectChatState } from '../../chatStore';
+import { selectChatState } from '../../slices/chatSlice';
 import { CHAT_SCREENSET_ID, CHAT_SCREEN_ID } from '../../ids';
 import { ModelSelector } from '../../uikit/components/ModelSelector';
 import { TemporaryChatToggle } from '../../uikit/components/TemporaryChatToggle';
