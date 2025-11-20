@@ -7,6 +7,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Message, Thread, AttachedFile, Context } from '../types';
 import { DEFAULT_MODEL } from '../constants/modelConstants';
+import { CHAT_COPY_SCREENSET_ID } from '../ids';
 
 export interface ChatCopyState {
   threads: Thread[];
@@ -38,7 +39,7 @@ const initialState: ChatCopyState = {
 };
 
 export const chatCopySlice = createSlice({
-  name: 'chatCopy',
+  name: CHAT_COPY_SCREENSET_ID,
   initialState,
   reducers: {
     // Thread management
@@ -170,4 +171,7 @@ export const {
   resetChatCopy,
 } = chatCopySlice.actions;
 
-export default chatCopySlice.reducer;
+// Export reducer with proper name for validation
+const chatCopyReducer = chatCopySlice.reducer;
+Object.defineProperty(chatCopyReducer, 'name', { value: CHAT_COPY_SCREENSET_ID });
+export default chatCopyReducer;

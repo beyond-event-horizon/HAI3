@@ -1,9 +1,11 @@
 import React from 'react';
+import { DEMO_SCREENSET_ID } from '../../ids';
+
 
 /**
  * User Icon ID
  */
-export const USER_ICON_ID = 'user';
+export const USER_ICON_ID = `${DEMO_SCREENSET_ID}:user` as const;
 
 /**
  * User Icon

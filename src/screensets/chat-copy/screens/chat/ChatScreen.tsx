@@ -29,8 +29,7 @@ import * as chatCopyActions from '../../actions/chatCopyActions';
 import { ChatRole } from '../../api/api';
 import type { AttachedFile } from '../../types';
 import '../../chatCopyStore'; // Import for module augmentation side effect
-import { CHAT_COPY_SCREEN_ID } from '../screenIds';
-import { CHAT_COPY_SCREENSET_ID } from '../../chatCopyScreenset';
+import { CHAT_COPY_SCREENSET_ID, CHAT_COPY_SCREEN_ID } from '../../ids';
 import { ModelSelector } from '../../uikit/components/ModelSelector';
 import { TemporaryChatToggle } from '../../uikit/components/TemporaryChatToggle';
 import { ChatTitleEditor } from '../../uikit/components/ChatTitleEditor';
@@ -94,7 +93,7 @@ const ChatScreenInternal: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const { t, translationsReady } = useTranslation();
-  const tk = (key: string) => t(`screen.chat-copy.chat-copy:${key}`);
+  const tk = (key: string) => t(`screen.${CHAT_COPY_SCREENSET_ID}.${CHAT_COPY_SCREEN_ID}:${key}`);
 
   // Fetch chat data on mount
   useEffect(() => {

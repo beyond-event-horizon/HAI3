@@ -1,8 +1,8 @@
 import React from 'react';
 import { navigateToScreen, useTranslation, uikitRegistry, UiKitComponent, TextLoader, useScreenTranslations, I18nRegistry, Language } from '@hai3/uicore';
 import { Card, CardContent } from '@hai3/uikit';
-import { HELLO_WORLD_SCREEN_ID, CURRENT_THEME_SCREEN_ID } from '../screenIds';
-import { DEMO_SCREENSET_ID } from '../../demoScreenset';
+import { HELLO_WORLD_SCREEN_ID, CURRENT_THEME_SCREEN_ID } from "../../ids";
+import { DEMO_SCREENSET_ID } from "../../ids";
 
 /**
  * Hello World screen translations (loaded lazily when screen mounts)

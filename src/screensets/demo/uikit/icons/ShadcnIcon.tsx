@@ -1,10 +1,12 @@
 import React from 'react';
+import { DEMO_SCREENSET_ID } from '../../ids';
+
 
 /**
  * Shadcn Icon ID
- * Well-known constant defined where it belongs
+ * Uses template literal with DEMO_SCREENSET_ID for auto-updating namespace
  */
-export const SHADCN_ICON_ID = 'shadcn';
+export const SHADCN_ICON_ID = `${DEMO_SCREENSET_ID}:shadcn` as const;
 
 /**
  * Shadcn Icon

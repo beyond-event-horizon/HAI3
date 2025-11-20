@@ -1,10 +1,12 @@
 import React from 'react';
+import { DEMO_SCREENSET_ID } from '../../ids';
+
 
 /**
  * Palette Icon ID
- * Well-known constant defined where it belongs
+ * Uses template literal with DEMO_SCREENSET_ID for auto-updating namespace
  */
-export const PALETTE_ICON_ID = 'palette';
+export const PALETTE_ICON_ID = `${DEMO_SCREENSET_ID}:palette` as const;
 
 /**
  * Palette Icon

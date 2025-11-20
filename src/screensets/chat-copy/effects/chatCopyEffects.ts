@@ -5,8 +5,9 @@
  * Effects NEVER call actions or emit events (would create circular flow)
  */
 
-import { eventBus, type AppDispatch, store, type RootState } from '@hai3/uicore';
+import { eventBus, type AppDispatch, store } from '@hai3/uicore';
 import { ChatCopyEvents } from '../events/chatCopyEvents';
+import { selectChatCopyState } from '../chatCopyStore';
 import {
   setCurrentThreadId,
   addThread,
@@ -63,8 +64,8 @@ export const initializeChatCopyEffects = (appDispatch: AppDispatch): void => {
   eventBus.on(ChatCopyEvents.ThreadCreated, ({ thread }) => {
     // Effect ONLY updates Redux - thread object comes from action/API
     // If this is replacing a draft thread, remove the draft first
-    const state = store.getState() as RootState;
-    const draftThread = state.chatCopy.threads.find((t) => t.isDraft);
+    const chatCopy = selectChatCopyState(store.getState());
+    const draftThread = chatCopy.threads.find((t) => t.isDraft);
     if (draftThread) {
       dispatch(removeThread({ threadId: draftThread.id }));
     }
@@ -106,8 +107,8 @@ export const initializeChatCopyEffects = (appDispatch: AppDispatch): void => {
 
   eventBus.on(ChatCopyEvents.MessageSent, ({ content }) => {
     // Handle UI updates after message is sent
-    const state = store.getState() as RootState;
-    const currentThreadId = state.chatCopy.currentThreadId;
+    const chatCopy = selectChatCopyState(store.getState());
+    const currentThreadId = chatCopy.currentThreadId;
 
     if (!currentThreadId || !content.trim()) {
       return;
@@ -210,8 +211,8 @@ export const initializeChatCopyEffects = (appDispatch: AppDispatch): void => {
 
   eventBus.on(ChatCopyEvents.StreamingContentUpdated, ({ messageId, content }) => {
     // Append new content to existing message
-    const state = store.getState() as RootState;
-    const message = state.chatCopy.messages.find(m => m.id === messageId);
+    const chatCopy = selectChatCopyState(store.getState());
+    const message = chatCopy.messages.find(m => m.id === messageId);
 
     if (message) {
       const newContent = message.content + content;
@@ -231,7 +232,8 @@ export const initializeChatCopyEffects = (appDispatch: AppDispatch): void => {
     dispatch(setAvailableContexts(contexts));
 
     // Set current thread to the first one if available
-    if (threads.length > 0 && !(store.getState() as RootState).chat.currentThreadId) {
+    const chatCopy = selectChatCopyState(store.getState());
+    if (threads.length > 0 && !chatCopy.currentThreadId) {
       dispatch(setCurrentThreadId(threads[0].id));
     }
   });

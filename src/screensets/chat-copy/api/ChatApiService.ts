@@ -24,13 +24,14 @@ import type {
   UpdateThreadResponse,
   DeleteThreadResponse,
 } from './api';
+import { CHAT_COPY_SCREENSET_ID } from '../ids';
 
 /**
  * Chat Copy domain identifier
- * Per GUIDELINES.md: Define constants where used, not in central file
- * Note: Uses separate domain to maintain screenset independence
+ * Uses template literal with CHAT_COPY_SCREENSET_ID for auto-updating namespace
+ * When CHAT_COPY_SCREENSET_ID changes, this domain automatically updates
  */
-export const CHAT_DOMAIN = 'chat-copy' as const;
+export const CHAT_DOMAIN = `${CHAT_COPY_SCREENSET_ID}:chat` as const;
 
 /**
  * Chat API Service

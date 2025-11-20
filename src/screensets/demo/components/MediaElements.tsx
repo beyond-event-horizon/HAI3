@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Slider, SliderTrack, SliderRange, SliderThumb } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { StarIcon } from '../uikit/icons/StarIcon';
-import { DEMO_SCREENSET_ID } from '../demoScreenset';
-import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screens/screenIds';
+import { DEMO_SCREENSET_ID } from "../ids";
+import { UI_KIT_ELEMENTS_SCREEN_ID } from "../ids";
 
 /**
  * Media Elements Component

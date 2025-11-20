@@ -4,20 +4,14 @@
  */
 
 import { type ScreensetConfig, ScreensetCategory, uikitRegistry, registerSlice, I18nRegistry, Language, apiRegistry, screensetRegistry } from '@hai3/uicore';
-import { CHAT_COPY_SCREEN_ID } from './screens/screenIds';
+import { CHAT_COPY_SCREENSET_ID, CHAT_COPY_SCREEN_ID } from './ids';
 import { MessageSquareIcon, MESSAGE_SQUARE_COPY_ICON_ID } from './uikit/icons/MessageSquareIcon';
-import { chatCopyReducer, initializeChatCopyEffects } from './chatCopyStore';
+import { chatCopyReducer, initializeChatCopyEffects, ChatCopyStateKeys } from './chatCopyStore';
 
 // Import for side effect - register API service
 import { CHAT_DOMAIN } from './api/ChatApiService';
 import './api/ChatApiService';
 import { chatMockMap } from './api/mocks';
-
-/**
- * Chat Copy Screenset ID
- * Well-known constant defined where it belongs
- */
-export const CHAT_COPY_SCREENSET_ID = 'chat-copy';
 
 // Register mock data for API service
 apiRegistry.registerMocks(CHAT_DOMAIN, chatMockMap);
@@ -78,7 +72,7 @@ uikitRegistry.registerIcons({
  * Register chat copy slice dynamically with uicore store
  * Screensets can add their state without modifying uicore package
  */
-registerSlice('chatCopy', chatCopyReducer, initializeChatCopyEffects);
+registerSlice(ChatCopyStateKeys.State, chatCopyReducer, initializeChatCopyEffects);
 
 /**
  * Chat Copy Screenset Configuration

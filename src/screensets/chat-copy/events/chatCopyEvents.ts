@@ -7,55 +7,56 @@
 import '@hai3/uicore';
 import type { AttachedFile, Thread, Message, Context } from '../types';
 import type { EnhancedChatThread } from '../uikit/components/EnhancedThreadList';
+import { CHAT_COPY_SCREENSET_ID } from '../ids';
 
 /**
  * Chat Copy event enum
- * All chat copy events use the 'chat-copy/' prefix for namespace isolation
+ * All chat copy events use template literals with CHAT_COPY_SCREENSET_ID for auto-updating namespace
  */
 export enum ChatCopyEvents {
   // Thread events
-  ThreadSelected = 'chat-copy/threadSelected',
-  DraftThreadCreated = 'chat-copy/draftThreadCreated', // Local draft thread (not saved to backend)
-  ThreadCreated = 'chat-copy/threadCreated',
-  ThreadDeleted = 'chat-copy/threadDeleted',
-  ThreadTitleUpdated = 'chat-copy/threadTitleUpdated',
-  ThreadsReordered = 'chat-copy/threadsReordered',
-  ThreadTemporaryToggled = 'chat-copy/threadTemporaryToggled',
+  ThreadSelected = `${CHAT_COPY_SCREENSET_ID}/threadSelected`,
+  DraftThreadCreated = `${CHAT_COPY_SCREENSET_ID}/draftThreadCreated`, // Local draft thread (not saved to backend)
+  ThreadCreated = `${CHAT_COPY_SCREENSET_ID}/threadCreated`,
+  ThreadDeleted = `${CHAT_COPY_SCREENSET_ID}/threadDeleted`,
+  ThreadTitleUpdated = `${CHAT_COPY_SCREENSET_ID}/threadTitleUpdated`,
+  ThreadsReordered = `${CHAT_COPY_SCREENSET_ID}/threadsReordered`,
+  ThreadTemporaryToggled = `${CHAT_COPY_SCREENSET_ID}/threadTemporaryToggled`,
 
   // Message events
-  MessageSent = 'chat-copy/messageSent',
-  MessageCreated = 'chat-copy/messageCreated',
-  MessageEditingStarted = 'chat-copy/messageEditingStarted',
-  MessageEditedContentUpdated = 'chat-copy/messageEditedContentUpdated',
-  MessageEditSaved = 'chat-copy/messageEditSaved',
-  MessageEditCancelled = 'chat-copy/messageEditCancelled',
-  MessageLiked = 'chat-copy/messageLiked',
-  MessageDisliked = 'chat-copy/messageDisliked',
-  MessageDeleted = 'chat-copy/messageDeleted',
-  MessageViewModeToggled = 'chat-copy/messageViewModeToggled',
-  MessageRegenerated = 'chat-copy/messageRegenerated',
+  MessageSent = `${CHAT_COPY_SCREENSET_ID}/messageSent`,
+  MessageCreated = `${CHAT_COPY_SCREENSET_ID}/messageCreated`,
+  MessageEditingStarted = `${CHAT_COPY_SCREENSET_ID}/messageEditingStarted`,
+  MessageEditedContentUpdated = `${CHAT_COPY_SCREENSET_ID}/messageEditedContentUpdated`,
+  MessageEditSaved = `${CHAT_COPY_SCREENSET_ID}/messageEditSaved`,
+  MessageEditCancelled = `${CHAT_COPY_SCREENSET_ID}/messageEditCancelled`,
+  MessageLiked = `${CHAT_COPY_SCREENSET_ID}/messageLiked`,
+  MessageDisliked = `${CHAT_COPY_SCREENSET_ID}/messageDisliked`,
+  MessageDeleted = `${CHAT_COPY_SCREENSET_ID}/messageDeleted`,
+  MessageViewModeToggled = `${CHAT_COPY_SCREENSET_ID}/messageViewModeToggled`,
+  MessageRegenerated = `${CHAT_COPY_SCREENSET_ID}/messageRegenerated`,
 
   // Model and Context events
-  ModelChanged = 'chat-copy/modelChanged',
-  ContextAdded = 'chat-copy/contextAdded',
-  ContextRemoved = 'chat-copy/contextRemoved',
+  ModelChanged = `${CHAT_COPY_SCREENSET_ID}/modelChanged`,
+  ContextAdded = `${CHAT_COPY_SCREENSET_ID}/contextAdded`,
+  ContextRemoved = `${CHAT_COPY_SCREENSET_ID}/contextRemoved`,
 
   // File events
-  FileAttached = 'chat-copy/fileAttached',
-  FileRemoved = 'chat-copy/fileRemoved',
+  FileAttached = `${CHAT_COPY_SCREENSET_ID}/fileAttached`,
+  FileRemoved = `${CHAT_COPY_SCREENSET_ID}/fileRemoved`,
 
   // Input events
-  InputValueChanged = 'chat-copy/inputValueChanged',
+  InputValueChanged = `${CHAT_COPY_SCREENSET_ID}/inputValueChanged`,
 
   // Streaming
-  StreamingStarted = 'chat-copy/streamingStarted',
-  StreamingContentUpdated = 'chat-copy/streamingContentUpdated',
-  StreamingCompleted = 'chat-copy/streamingCompleted',
+  StreamingStarted = `${CHAT_COPY_SCREENSET_ID}/streamingStarted`,
+  StreamingContentUpdated = `${CHAT_COPY_SCREENSET_ID}/streamingContentUpdated`,
+  StreamingCompleted = `${CHAT_COPY_SCREENSET_ID}/streamingCompleted`,
 
   // Data fetch events
-  DataFetchStarted = 'chat-copy/dataFetchStarted',
-  DataFetchSucceeded = 'chat-copy/dataFetchSucceeded',
-  DataFetchFailed = 'chat-copy/dataFetchFailed',
+  DataFetchStarted = `${CHAT_COPY_SCREENSET_ID}/dataFetchStarted`,
+  DataFetchSucceeded = `${CHAT_COPY_SCREENSET_ID}/dataFetchSucceeded`,
+  DataFetchFailed = `${CHAT_COPY_SCREENSET_ID}/dataFetchFailed`,
 }
 
 /**
@@ -65,47 +66,47 @@ export enum ChatCopyEvents {
 declare module '@hai3/uicore' {
   interface EventPayloadMap {
     // Thread events
-    'chat-copy/threadSelected': { threadId: string };
-    'chat-copy/draftThreadCreated': { threadId: string; title: string; isTemporary: boolean }; // Draft thread created locally
-    'chat-copy/threadCreated': { thread: Thread };
-    'chat-copy/threadDeleted': { threadId: string };
-    'chat-copy/threadTitleUpdated': { threadId: string; newTitle: string };
-    'chat-copy/threadsReordered': { threads: EnhancedChatThread[] };
-    'chat-copy/threadTemporaryToggled': { threadId: string; isTemporary: boolean };
+    'chatCopy/threadSelected': { threadId: string };
+    'chatCopy/draftThreadCreated': { threadId: string; title: string; isTemporary: boolean }; // Draft thread created locally
+    'chatCopy/threadCreated': { thread: Thread };
+    'chatCopy/threadDeleted': { threadId: string };
+    'chatCopy/threadTitleUpdated': { threadId: string; newTitle: string };
+    'chatCopy/threadsReordered': { threads: EnhancedChatThread[] };
+    'chatCopy/threadTemporaryToggled': { threadId: string; isTemporary: boolean };
 
     // Message events
-    'chat-copy/messageSent': { content: string };
-    'chat-copy/messageCreated': { message: Message };
-    'chat-copy/messageEditingStarted': { messageId: string; content: string };
-    'chat-copy/messageEditedContentUpdated': { content: string };
-    'chat-copy/messageEditSaved': { messageId: string; content: string };
-    'chat-copy/messageEditCancelled': void;
-    'chat-copy/messageLiked': { messageId: string };
-    'chat-copy/messageDisliked': { messageId: string };
-    'chat-copy/messageDeleted': { messageId: string };
-    'chat-copy/messageViewModeToggled': { messageId: string };
-    'chat-copy/messageRegenerated': { messageId: string };
+    'chatCopy/messageSent': { content: string };
+    'chatCopy/messageCreated': { message: Message };
+    'chatCopy/messageEditingStarted': { messageId: string; content: string };
+    'chatCopy/messageEditedContentUpdated': { content: string };
+    'chatCopy/messageEditSaved': { messageId: string; content: string };
+    'chatCopy/messageEditCancelled': void;
+    'chatCopy/messageLiked': { messageId: string };
+    'chatCopy/messageDisliked': { messageId: string };
+    'chatCopy/messageDeleted': { messageId: string };
+    'chatCopy/messageViewModeToggled': { messageId: string };
+    'chatCopy/messageRegenerated': { messageId: string };
 
     // Model and context events
-    'chat-copy/modelChanged': { model: string };
-    'chat-copy/contextAdded': { contextId: string };
-    'chat-copy/contextRemoved': { contextId: string };
+    'chatCopy/modelChanged': { model: string };
+    'chatCopy/contextAdded': { contextId: string };
+    'chatCopy/contextRemoved': { contextId: string };
 
     // File events
-    'chat-copy/fileAttached': { file: AttachedFile };
-    'chat-copy/fileRemoved': { fileId: string };
+    'chatCopy/fileAttached': { file: AttachedFile };
+    'chatCopy/fileRemoved': { fileId: string };
 
     // Input events
-    'chat-copy/inputValueChanged': { value: string };
+    'chatCopy/inputValueChanged': { value: string };
 
     // Streaming events
-    'chat-copy/streamingStarted': { messageId: string };
-    'chat-copy/streamingContentUpdated': { messageId: string; content: string };
-    'chat-copy/streamingCompleted': { messageId: string };
+    'chatCopy/streamingStarted': { messageId: string };
+    'chatCopy/streamingContentUpdated': { messageId: string; content: string };
+    'chatCopy/streamingCompleted': { messageId: string };
 
     // Data fetch events
-    'chat-copy/dataFetchStarted': Record<string, never>;
-    'chat-copy/dataFetchSucceeded': { threads: Thread[]; messages: Message[]; contexts: Context[] };
-    'chat-copy/dataFetchFailed': { error: string };
+    'chatCopy/dataFetchStarted': Record<string, never>;
+    'chatCopy/dataFetchSucceeded': { threads: Thread[]; messages: Message[]; contexts: Context[] };
+    'chatCopy/dataFetchFailed': { error: string };
   }
 }

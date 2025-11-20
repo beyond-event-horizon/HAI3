@@ -8,8 +8,8 @@ import { FeedbackElements } from '../../components/FeedbackElements';
 import { MediaElements } from '../../components/MediaElements';
 import { FormElements } from '../../components/FormElements';
 import { OverlayElements } from '../../components/OverlayElements';
-import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screenIds';
-import { DEMO_SCREENSET_ID } from '../../demoScreenset';
+import { UI_KIT_ELEMENTS_SCREEN_ID } from "../../ids";
+import { DEMO_SCREENSET_ID } from "../../ids";
 import { UIKIT_CATEGORIES, IMPLEMENTED_ELEMENTS, getElementId } from './uikitCategories';
 
 /**

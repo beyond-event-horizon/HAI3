@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAppSelector, useTranslation, TextLoader, useScreenTranslations, I18nRegistry, Language } from '@hai3/uicore';
-import { CURRENT_THEME_SCREEN_ID } from '../screenIds';
-import { DEMO_SCREENSET_ID } from '../../demoScreenset';
+import { CURRENT_THEME_SCREEN_ID } from "../../ids";
+import { DEMO_SCREENSET_ID } from "../../ids";
 
 /**
  * Theme screen translations (loaded lazily when screen mounts)

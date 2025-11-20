@@ -1,10 +1,11 @@
 import React from 'react';
+import { DEMO_SCREENSET_ID } from '../../ids';
 
 /**
  * World Icon ID
- * Well-known constant defined where it belongs
+ * Uses template literal with DEMO_SCREENSET_ID for auto-updating namespace
  */
-export const WORLD_ICON_ID = 'world';
+export const WORLD_ICON_ID = `${DEMO_SCREENSET_ID}:world` as const;
 
 /**
  * World Icon
