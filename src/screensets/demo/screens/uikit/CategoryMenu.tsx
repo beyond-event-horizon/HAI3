@@ -3,8 +3,8 @@ import { useTranslation, TextLoader } from '@hai3/uicore';
 import { UIKIT_CATEGORIES, IMPLEMENTED_ELEMENTS, getElementId } from './uikitCategories';
 import { ExpandableButton } from '../../uikit/icons/ExpandableButton';
 import { MenuItemButton } from '../../uikit/icons/MenuItemButton';
-import { DEMO_SCREENSET_ID } from '../../demoScreenset';
-import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screenIds';
+import { DEMO_SCREENSET_ID } from "../../ids";
+import { UI_KIT_ELEMENTS_SCREEN_ID } from "../../ids";
 
 interface CategoryMenuProps {
   selectedCategory: string | null;

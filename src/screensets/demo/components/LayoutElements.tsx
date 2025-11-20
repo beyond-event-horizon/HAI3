@@ -2,8 +2,8 @@ import React from 'react';
 import { Button, ButtonVariant, ButtonSize, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Sheet, SheetTrigger, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, Avatar, AvatarImage, AvatarFallback, Badge } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { FormInput } from '../uikit/icons/FormInput';
-import { DEMO_SCREENSET_ID } from '../demoScreenset';
-import { UI_KIT_ELEMENTS_SCREEN_ID } from '../screens/screenIds';
+import { DEMO_SCREENSET_ID } from "../ids";
+import { UI_KIT_ELEMENTS_SCREEN_ID } from "../ids";
 
 /**
  * Layout Elements Component

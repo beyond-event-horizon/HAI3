@@ -3,7 +3,9 @@
  * Chat icon for the Chat Copy screenset
  */
 
-export const MESSAGE_SQUARE_COPY_ICON_ID = 'message-square-copy' as const;
+import { CHAT_COPY_SCREENSET_ID } from '../../ids';
+
+export const MESSAGE_SQUARE_COPY_ICON_ID = `${CHAT_COPY_SCREENSET_ID}:message-square` as const;
 
 export const MessageSquareIcon = ({ className }: { className?: string }) => {
   return (

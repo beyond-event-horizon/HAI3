@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch, fetchCurrentUser, useTranslation, TextLoader, useScreenTranslations, I18nRegistry, Language } from '@hai3/uicore';
 import { Button, Card, CardContent, CardFooter } from '@hai3/uikit';
-import { PROFILE_SCREEN_ID } from '../screenIds';
-import { DEMO_SCREENSET_ID } from '../../demoScreenset';
+import { PROFILE_SCREEN_ID } from "../../ids";
+import { DEMO_SCREENSET_ID } from "../../ids";
 
 /**
  * Profile screen translations (loaded lazily when screen mounts)

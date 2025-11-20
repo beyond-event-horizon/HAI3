@@ -171,4 +171,7 @@ export const {
   resetChat,
 } = chatSlice.actions;
 
-export default chatSlice.reducer;
+// Export reducer with proper name for validation
+const chatReducer = chatSlice.reducer;
+Object.defineProperty(chatReducer, 'name', { value: CHAT_SCREENSET_ID });
+export default chatReducer;

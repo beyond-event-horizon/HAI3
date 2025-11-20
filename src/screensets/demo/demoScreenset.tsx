@@ -1,5 +1,5 @@
 import { type ScreensetConfig, ScreensetCategory, uikitRegistry, I18nRegistry, Language, apiRegistry, ACCOUNTS_DOMAIN, screensetRegistry } from '@hai3/uicore';
-import { HELLO_WORLD_SCREEN_ID, CURRENT_THEME_SCREEN_ID, PROFILE_SCREEN_ID, UI_KIT_ELEMENTS_SCREEN_ID } from './screens/screenIds';
+import { DEMO_SCREENSET_ID, HELLO_WORLD_SCREEN_ID, CURRENT_THEME_SCREEN_ID, PROFILE_SCREEN_ID, UI_KIT_ELEMENTS_SCREEN_ID } from './ids';
 import { WorldIcon, WORLD_ICON_ID } from './uikit/icons/WorldIcon';
 import { PaletteIcon, PALETTE_ICON_ID } from './uikit/icons/PaletteIcon';
 import { UserIcon, USER_ICON_ID } from './uikit/icons/UserIcon';
@@ -8,12 +8,6 @@ import { ShadcnIcon, SHADCN_ICON_ID } from './uikit/icons/ShadcnIcon';
 // Import module augmentation and mocks for accounts service
 import './api/accounts/extra';
 import { accountsMockMap } from './api/accounts/mocks';
-
-/**
- * Demo Screenset ID
- * Well-known constant defined where it belongs
- */
-export const DEMO_SCREENSET_ID = 'demo';
 
 /**
  * Screenset-level translations
