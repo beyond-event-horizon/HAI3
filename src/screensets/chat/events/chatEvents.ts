@@ -7,55 +7,57 @@
 import '@hai3/uicore';
 import type { AttachedFile, Thread, Message, Context } from '../types';
 import type { EnhancedChatThread } from '../uikit/components/EnhancedThreadList';
+import { CHAT_SCREENSET_ID } from '../ids';
 
 /**
  * Chat event enum
- * All chat events use the 'chat/' prefix for namespace isolation
+ * All chat events use template literals with CHAT_SCREENSET_ID for namespace isolation
+ * When CHAT_SCREENSET_ID changes, all event names auto-update
  */
 export enum ChatEvents {
   // Thread events
-  ThreadSelected = 'chat/threadSelected',
-  DraftThreadCreated = 'chat/draftThreadCreated', // Local draft thread (not saved to backend)
-  ThreadCreated = 'chat/threadCreated',
-  ThreadDeleted = 'chat/threadDeleted',
-  ThreadTitleUpdated = 'chat/threadTitleUpdated',
-  ThreadsReordered = 'chat/threadsReordered',
-  ThreadTemporaryToggled = 'chat/threadTemporaryToggled',
+  ThreadSelected = `${CHAT_SCREENSET_ID}/threadSelected`,
+  DraftThreadCreated = `${CHAT_SCREENSET_ID}/draftThreadCreated`, // Local draft thread (not saved to backend)
+  ThreadCreated = `${CHAT_SCREENSET_ID}/threadCreated`,
+  ThreadDeleted = `${CHAT_SCREENSET_ID}/threadDeleted`,
+  ThreadTitleUpdated = `${CHAT_SCREENSET_ID}/threadTitleUpdated`,
+  ThreadsReordered = `${CHAT_SCREENSET_ID}/threadsReordered`,
+  ThreadTemporaryToggled = `${CHAT_SCREENSET_ID}/threadTemporaryToggled`,
 
   // Message events
-  MessageSent = 'chat/messageSent',
-  MessageCreated = 'chat/messageCreated',
-  MessageEditingStarted = 'chat/messageEditingStarted',
-  MessageEditedContentUpdated = 'chat/messageEditedContentUpdated',
-  MessageEditSaved = 'chat/messageEditSaved',
-  MessageEditCancelled = 'chat/messageEditCancelled',
-  MessageLiked = 'chat/messageLiked',
-  MessageDisliked = 'chat/messageDisliked',
-  MessageDeleted = 'chat/messageDeleted',
-  MessageViewModeToggled = 'chat/messageViewModeToggled',
-  MessageRegenerated = 'chat/messageRegenerated',
+  MessageSent = `${CHAT_SCREENSET_ID}/messageSent`,
+  MessageCreated = `${CHAT_SCREENSET_ID}/messageCreated`,
+  MessageEditingStarted = `${CHAT_SCREENSET_ID}/messageEditingStarted`,
+  MessageEditedContentUpdated = `${CHAT_SCREENSET_ID}/messageEditedContentUpdated`,
+  MessageEditSaved = `${CHAT_SCREENSET_ID}/messageEditSaved`,
+  MessageEditCancelled = `${CHAT_SCREENSET_ID}/messageEditCancelled`,
+  MessageLiked = `${CHAT_SCREENSET_ID}/messageLiked`,
+  MessageDisliked = `${CHAT_SCREENSET_ID}/messageDisliked`,
+  MessageDeleted = `${CHAT_SCREENSET_ID}/messageDeleted`,
+  MessageViewModeToggled = `${CHAT_SCREENSET_ID}/messageViewModeToggled`,
+  MessageRegenerated = `${CHAT_SCREENSET_ID}/messageRegenerated`,
 
   // Model and Context events
-  ModelChanged = 'chat/modelChanged',
-  ContextAdded = 'chat/contextAdded',
-  ContextRemoved = 'chat/contextRemoved',
+  ModelChanged = `${CHAT_SCREENSET_ID}/modelChanged`,
+  ContextAdded = `${CHAT_SCREENSET_ID}/contextAdded`,
+  ContextRemoved = `${CHAT_SCREENSET_ID}/contextRemoved`,
 
   // File events
-  FileAttached = 'chat/fileAttached',
-  FileRemoved = 'chat/fileRemoved',
+  FileAttached = `${CHAT_SCREENSET_ID}/fileAttached`,
+  FileRemoved = `${CHAT_SCREENSET_ID}/fileRemoved`,
 
   // Input events
-  InputValueChanged = 'chat/inputValueChanged',
+  InputValueChanged = `${CHAT_SCREENSET_ID}/inputValueChanged`,
 
   // Streaming
-  StreamingStarted = 'chat/streamingStarted',
-  StreamingContentUpdated = 'chat/streamingContentUpdated',
-  StreamingCompleted = 'chat/streamingCompleted',
+  StreamingStarted = `${CHAT_SCREENSET_ID}/streamingStarted`,
+  StreamingContentUpdated = `${CHAT_SCREENSET_ID}/streamingContentUpdated`,
+  StreamingCompleted = `${CHAT_SCREENSET_ID}/streamingCompleted`,
 
   // Data fetch events
-  DataFetchStarted = 'chat/dataFetchStarted',
-  DataFetchSucceeded = 'chat/dataFetchSucceeded',
-  DataFetchFailed = 'chat/dataFetchFailed',
+  DataFetchStarted = `${CHAT_SCREENSET_ID}/dataFetchStarted`,
+  DataFetchSucceeded = `${CHAT_SCREENSET_ID}/dataFetchSucceeded`,
+  DataFetchFailed = `${CHAT_SCREENSET_ID}/dataFetchFailed`,
 }
 
 /**
@@ -65,47 +67,47 @@ export enum ChatEvents {
 declare module '@hai3/uicore' {
   interface EventPayloadMap {
     // Thread events
-    'chat/threadSelected': { threadId: string };
-    'chat/draftThreadCreated': { threadId: string; title: string; isTemporary: boolean }; // Draft thread created locally
-    'chat/threadCreated': { thread: Thread };
-    'chat/threadDeleted': { threadId: string };
-    'chat/threadTitleUpdated': { threadId: string; newTitle: string };
-    'chat/threadsReordered': { threads: EnhancedChatThread[] };
-    'chat/threadTemporaryToggled': { threadId: string; isTemporary: boolean };
-    
+    [ChatEvents.ThreadSelected]: { threadId: string };
+    [ChatEvents.DraftThreadCreated]: { threadId: string; title: string; isTemporary: boolean }; // Draft thread created locally
+    [ChatEvents.ThreadCreated]: { thread: Thread };
+    [ChatEvents.ThreadDeleted]: { threadId: string };
+    [ChatEvents.ThreadTitleUpdated]: { threadId: string; newTitle: string };
+    [ChatEvents.ThreadsReordered]: { threads: EnhancedChatThread[] };
+    [ChatEvents.ThreadTemporaryToggled]: { threadId: string; isTemporary: boolean };
+
     // Message events
-    'chat/messageSent': { content: string };
-    'chat/messageCreated': { message: Message };
-    'chat/messageEditingStarted': { messageId: string; content: string };
-    'chat/messageEditedContentUpdated': { content: string };
-    'chat/messageEditSaved': { messageId: string; content: string };
-    'chat/messageEditCancelled': void;
-    'chat/messageLiked': { messageId: string };
-    'chat/messageDisliked': { messageId: string };
-    'chat/messageDeleted': { messageId: string };
-    'chat/messageViewModeToggled': { messageId: string };
-    'chat/messageRegenerated': { messageId: string };
-    
+    [ChatEvents.MessageSent]: { content: string };
+    [ChatEvents.MessageCreated]: { message: Message };
+    [ChatEvents.MessageEditingStarted]: { messageId: string; content: string };
+    [ChatEvents.MessageEditedContentUpdated]: { content: string };
+    [ChatEvents.MessageEditSaved]: { messageId: string; content: string };
+    [ChatEvents.MessageEditCancelled]: void;
+    [ChatEvents.MessageLiked]: { messageId: string };
+    [ChatEvents.MessageDisliked]: { messageId: string };
+    [ChatEvents.MessageDeleted]: { messageId: string };
+    [ChatEvents.MessageViewModeToggled]: { messageId: string };
+    [ChatEvents.MessageRegenerated]: { messageId: string };
+
     // Model and context events
-    'chat/modelChanged': { model: string };
-    'chat/contextAdded': { contextId: string };
-    'chat/contextRemoved': { contextId: string };
-    
+    [ChatEvents.ModelChanged]: { model: string };
+    [ChatEvents.ContextAdded]: { contextId: string };
+    [ChatEvents.ContextRemoved]: { contextId: string };
+
     // File events
-    'chat/fileAttached': { file: AttachedFile };
-    'chat/fileRemoved': { fileId: string };
-    
+    [ChatEvents.FileAttached]: { file: AttachedFile };
+    [ChatEvents.FileRemoved]: { fileId: string };
+
     // Input events
-    'chat/inputValueChanged': { value: string };
-    
+    [ChatEvents.InputValueChanged]: { value: string };
+
     // Streaming events
-    'chat/streamingStarted': { messageId: string };
-    'chat/streamingContentUpdated': { messageId: string; content: string };
-    'chat/streamingCompleted': { messageId: string };
+    [ChatEvents.StreamingStarted]: { messageId: string };
+    [ChatEvents.StreamingContentUpdated]: { messageId: string; content: string };
+    [ChatEvents.StreamingCompleted]: { messageId: string };
 
     // Data fetch events
-    'chat/dataFetchStarted': Record<string, never>;
-    'chat/dataFetchSucceeded': { threads: Thread[]; messages: Message[]; contexts: Context[] };
-    'chat/dataFetchFailed': { error: string };
+    [ChatEvents.DataFetchStarted]: Record<string, never>;
+    [ChatEvents.DataFetchSucceeded]: { threads: Thread[]; messages: Message[]; contexts: Context[] };
+    [ChatEvents.DataFetchFailed]: { error: string };
   }
 }

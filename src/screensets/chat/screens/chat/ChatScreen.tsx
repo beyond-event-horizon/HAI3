@@ -28,9 +28,8 @@ import { TextLoader, useAppSelector, useAppDispatch, useTranslation, useScreenTr
 import * as chatActions from '../../actions/chatActions';
 import { ChatRole } from '../../api/api';
 import type { AttachedFile } from '../../types';
-import '../../chatStore'; // Import for module augmentation side effect
-import { CHAT_SCREEN_ID } from '../screenIds';
-import { CHAT_SCREENSET_ID } from '../../chatScreenset';
+import { selectChatState } from '../../chatStore';
+import { CHAT_SCREENSET_ID, CHAT_SCREEN_ID } from '../../ids';
 import { ModelSelector } from '../../uikit/components/ModelSelector';
 import { TemporaryChatToggle } from '../../uikit/components/TemporaryChatToggle';
 import { ChatTitleEditor } from '../../uikit/components/ChatTitleEditor';
@@ -94,7 +93,7 @@ const ChatScreenInternal: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const { t, translationsReady } = useTranslation();
-  const tk = (key: string) => t(`screen.chat.chat:${key}`);
+  const tk = (key: string) => t(`screen.${CHAT_SCREENSET_ID}.${CHAT_SCREEN_ID}:${key}`);
 
   // Fetch chat data on mount
   useEffect(() => {
@@ -111,8 +110,8 @@ const ChatScreenInternal: React.FC = () => {
   const [editedTitle, setEditedTitle] = useState('');
 
   // Subscribe to Redux state from global uicore store
-  // Chat slice was dynamically registered and RootState augmented in types.ts
-  const chat = useAppSelector((state) => state.chat);
+  // Chat slice was dynamically registered and RootState augmented in chatStore.ts
+  const chat = useAppSelector(selectChatState);
   const {
     threads,
     messages,

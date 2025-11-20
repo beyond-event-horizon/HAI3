@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { useTranslation } from '@hai3/uicore';
 import { ThreadList, type ChatThread } from '../uikit/components/ThreadList';
 import { formatTimestamp } from '../utils/formatters';
-import { CHAT_SCREENSET_ID } from '../chatScreenset';
+import { CHAT_SCREENSET_ID } from '../ids';
 
 export interface ThreadListContainerProps {
   threads: ChatThread[];

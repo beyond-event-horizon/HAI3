@@ -38,14 +38,36 @@ const staticReducers = {
 // Dynamic reducers registered by screensets
 const dynamicReducers: Record<string, Reducer> = {};
 
-export const store = configureStore({
+// Base RootState interface - defined explicitly for module augmentation
+// Screensets can extend this via module augmentation to add their slices
+export interface RootState {
+  app: ReturnType<typeof appReducer>;
+  layout: ReturnType<typeof layoutReducer>;
+  header: ReturnType<typeof headerReducer>;
+  footer: ReturnType<typeof footerReducer>;
+  menu: ReturnType<typeof menuReducer>;
+  sidebar: ReturnType<typeof sidebarReducer>;
+  screen: ReturnType<typeof screenReducer>;
+  popup: ReturnType<typeof popupReducer>;
+  overlay: ReturnType<typeof overlayReducer>;
+}
+
+// Create store with static reducers
+const _internalStore = configureStore({
   reducer: staticReducers,
 });
+
+// Export store typed to return RootState (enables module augmentation to work everywhere)
+// We create a wrapper object that delegates to the internal store but types getState correctly
+export const store = {
+  ..._internalStore,
+  getState: (): RootState => _internalStore.getState() as RootState,
+};
 
 /**
  * Register a dynamic slice from a screenset
  * Allows screensets to add their state to the global store without modifying uicore
- * 
+ *
  * @param sliceName - Name of the slice (e.g., 'chat')
  * @param reducer - Reducer function for the slice
  * @param initEffects - Optional function to initialize effects with store.dispatch
@@ -85,10 +107,6 @@ initAppEffects(store);
 initLayoutEffects(store);
 initNavigationEffects(store);
 initMenuEffects(store);
-
-// Base RootState interface for augmentation by screensets
-// Screensets can extend this via module augmentation to add their slices
-export interface RootState extends ReturnType<typeof store.getState> {}
 
 export type AppDispatch = typeof store.dispatch;
 
