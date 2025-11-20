@@ -24,12 +24,14 @@ import type {
   UpdateThreadResponse,
   DeleteThreadResponse,
 } from './api';
+import { CHAT_SCREENSET_ID } from '../ids';
 
 /**
- * Chat domain identifier
- * Per GUIDELINES.md: Define constants where used, not in central file
+ * Chat API domain identifier
+ * Format: `${screensetId}:${serviceName}` for proper namespacing
+ * Allows multiple API services per screenset (e.g., chat:completion, chat:history)
  */
-export const CHAT_DOMAIN = 'chat' as const;
+export const CHAT_DOMAIN = `${CHAT_SCREENSET_ID}:chat` as const;
 
 /**
  * Chat API Service

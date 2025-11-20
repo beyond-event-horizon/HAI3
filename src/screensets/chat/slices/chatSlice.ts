@@ -7,6 +7,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Message, Thread, AttachedFile, Context } from '../types';
 import { DEFAULT_MODEL } from '../constants/modelConstants';
+import { CHAT_SCREENSET_ID } from '../ids';
 
 export interface ChatState {
   threads: Thread[];
@@ -38,7 +39,7 @@ const initialState: ChatState = {
 };
 
 export const chatSlice = createSlice({
-  name: 'chat',
+  name: CHAT_SCREENSET_ID,
   initialState,
   reducers: {
     // Thread management

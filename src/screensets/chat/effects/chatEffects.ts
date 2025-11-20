@@ -5,8 +5,9 @@
  * Effects NEVER call actions or emit events (would create circular flow)
  */
 
-import { eventBus, type AppDispatch, store, type RootState } from '@hai3/uicore';
+import { eventBus, type AppDispatch, store } from '@hai3/uicore';
 import { ChatEvents } from '../events/chatEvents';
+import { selectChatState } from '../chatStore';
 import {
   setCurrentThreadId,
   addThread,
@@ -63,8 +64,8 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
   eventBus.on(ChatEvents.ThreadCreated, ({ thread }) => {
     // Effect ONLY updates Redux - thread object comes from action/API
     // If this is replacing a draft thread, remove the draft first
-    const state = store.getState() as RootState;
-    const draftThread = state.chat.threads.find((t) => t.isDraft);
+    const chat = selectChatState(store.getState());
+    const draftThread = chat.threads.find((t) => t.isDraft);
     if (draftThread) {
       dispatch(removeThread({ threadId: draftThread.id }));
     }
@@ -106,8 +107,8 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
 
   eventBus.on(ChatEvents.MessageSent, ({ content }) => {
     // Handle UI updates after message is sent
-    const state = store.getState() as RootState;
-    const currentThreadId = state.chat.currentThreadId;
+    const chat = selectChatState(store.getState());
+    const currentThreadId = chat.currentThreadId;
 
     if (!currentThreadId || !content.trim()) {
       return;
@@ -210,8 +211,8 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
 
   eventBus.on(ChatEvents.StreamingContentUpdated, ({ messageId, content }) => {
     // Append new content to existing message
-    const state = store.getState() as RootState;
-    const message = state.chat.messages.find(m => m.id === messageId);
+    const chat = selectChatState(store.getState());
+    const message = chat.messages.find(m => m.id === messageId);
 
     if (message) {
       const newContent = message.content + content;
@@ -231,7 +232,7 @@ export const initializeChatEffects = (appDispatch: AppDispatch): void => {
     dispatch(setAvailableContexts(contexts));
 
     // Set current thread to the first one if available
-    if (threads.length > 0 && !(store.getState() as RootState).chat.currentThreadId) {
+    if (threads.length > 0 && !selectChatState(store.getState()).currentThreadId) {
       dispatch(setCurrentThreadId(threads[0].id));
     }
   });

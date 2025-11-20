@@ -4,7 +4,7 @@
  */
 
 import { type ScreensetConfig, ScreensetCategory, uikitRegistry, registerSlice, I18nRegistry, Language, apiRegistry } from '@hai3/uicore';
-import { CHAT_SCREEN_ID } from './screens/screenIds';
+import { CHAT_SCREENSET_ID, CHAT_SCREEN_ID } from './ids';
 import { MessageSquareIcon, MESSAGE_SQUARE_ICON_ID } from './uikit/icons/MessageSquareIcon';
 import { chatReducer, initializeChatEffects } from './chatStore';
 
@@ -12,12 +12,6 @@ import { chatReducer, initializeChatEffects } from './chatStore';
 import { CHAT_DOMAIN } from './api/ChatApiService';
 import './api/ChatApiService';
 import { chatMockMap } from './api/mocks';
-
-/**
- * Chat Screenset ID
- * Well-known constant defined where it belongs
- */
-export const CHAT_SCREENSET_ID = 'chat';
 
 // Register mock data for API service
 apiRegistry.registerMocks(CHAT_DOMAIN, chatMockMap);
@@ -78,7 +72,7 @@ uikitRegistry.registerIcons({
  * Register chat slice dynamically with uicore store
  * Screensets can add their state without modifying uicore package
  */
-registerSlice('chat', chatReducer, initializeChatEffects);
+registerSlice(CHAT_SCREENSET_ID, chatReducer, initializeChatEffects);
 
 /**
  * Chat Screenset Configuration
@@ -96,7 +90,7 @@ export const chatScreenset: ScreensetConfig = {
     {
       menuItem: {
         id: CHAT_SCREEN_ID,
-        label: `screenset.${CHAT_SCREENSET_ID}:screens.${CHAT_SCREEN_ID}.title`,
+        label: `screenset.${CHAT_SCREENSET_ID}:menu_items.chat.label`,
         icon: MESSAGE_SQUARE_ICON_ID,
       },
       screen: () => import('./screens/chat/ChatScreen'),

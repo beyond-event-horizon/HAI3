@@ -156,30 +156,45 @@ export const MESSAGE_SQUARE_ICON_ID = 'chat-copy:message-square'; // ✅ UNIQUE
 - ❌ **Auto-prefix in registry**: Magical behavior, hard to debug
 - ✅ **Explicit namespace in constant**: Clear and greppable
 
-### Decision 4: API Domain = Screenset ID
+### Decision 4: API Domain Namespacing
 
-**Rationale**: API services are screenset-owned. Domain should match screenset for discoverability.
+**Rationale**: Screensets may have multiple API services (e.g., completion, history, settings). Domain should namespace under screenset ID + service name, similar to icon IDs.
 
 **Implementation**:
 ```typescript
 // src/screensets/chat/api/ChatApiService.ts
-export const CHAT_DOMAIN = 'chat' as const;
-//                          ^^^^^^ MUST match CHAT_SCREENSET_ID
+import { CHAT_SCREENSET_ID } from '../chatScreensetId';
 
-// Runtime check (optional):
-if (CHAT_DOMAIN !== CHAT_SCREENSET_ID) {
-  console.warn(`API domain "${CHAT_DOMAIN}" should match screenset ID "${CHAT_SCREENSET_ID}"`);
-}
+export const CHAT_DOMAIN = `${CHAT_SCREENSET_ID}:chat` as const;
+// Result: 'chat:chat'
+
+// Multiple services in same screenset:
+export const CHAT_HISTORY_DOMAIN = `${CHAT_SCREENSET_ID}:history` as const;
+// Result: 'chat:history'
+
+export const CHAT_SETTINGS_DOMAIN = `${CHAT_SCREENSET_ID}:settings` as const;
+// Result: 'chat:settings'
 ```
+
+**After duplication** (changing `CHAT_SCREENSET_ID = 'chat-copy'`):
+```typescript
+// ALL domains auto-update:
+CHAT_DOMAIN = 'chat-copy:chat'
+CHAT_HISTORY_DOMAIN = 'chat-copy:history'
+CHAT_SETTINGS_DOMAIN = 'chat-copy:settings'
+```
+
+**Pattern**: `${screensetId}:${serviceName}` - matches icon ID pattern for consistency.
 
 **Edge Case**: Shared API services (e.g., `accounts` used by multiple screensets)
 - **Solution**: Framework services defined in `uicore`, mocks owned by screensets
 - **Pattern**: Service in `packages/uicore/src/api/services/`, mocks in `src/screensets/*/api/mocks.ts`
+- **Domain**: Framework services use simple names like `'accounts'`, not namespaced
 
 **Alternatives Considered**:
+- ❌ **Domain = Screenset ID only**: Doesn't support multiple services per screenset
 - ❌ **Allow arbitrary domains**: Loses discoverability
-- ❌ **Enforce domain = ID for all services**: Too rigid for shared services
-- ✅ **Convention for screenset-owned, flexibility for shared**: Pragmatic
+- ✅ **Namespace with colon separator**: Consistent with icon IDs, supports multiple services
 
 ### Decision 5: Translation Namespace (Already Implemented)
 

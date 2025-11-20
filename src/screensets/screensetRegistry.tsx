@@ -7,7 +7,7 @@ import { chatCopyScreenset } from './chat-copy/chatCopyScreenset';
  * Screenset Registry
  * Project-level registry that only knows about screensets, not individual screens
  * Each screenset is self-contained and manages its own screens internally
- *
+*
  * All IDs (screenset, screen, icon) are well-known constants defined where they belong:
  * - Screenset ID: in screenset file (e.g., DEMO_SCREENSET_ID in demoScreenset.ts)
  * - Screen IDs: in screen files (e.g., HELLO_WORLD_SCREEN_ID in HelloWorldScreen.tsx)
