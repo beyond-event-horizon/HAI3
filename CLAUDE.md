@@ -148,14 +148,26 @@ screensetRegistry.register(demoScreenset);
 **Redux Integration:**
 ```typescript
 // Domain-specific slice
+const SLICE_KEY = `${CHAT_SCREENSET_ID}/threads` as const;
+
+export const threadsSlice = createSlice({
+  name: SLICE_KEY,
+  initialState,
+  reducers: { /* ... */ }
+});
+
+// Export slice object (not just reducer)
+export default threadsSlice;
+
+// Module augmentation
 declare module '@hai3/uicore' {
   interface RootState {
-    [`${CHAT_SCREENSET_ID}/threads`]: ThreadsState;
+    [SLICE_KEY]: ThreadsState;
   }
 }
 
-// Register with effects
-registerSlice(`${CHAT_SCREENSET_ID}/threads`, threadsReducer, initializeThreadsEffects);
+// Register with effects - slice.name is used automatically
+registerSlice(threadsSlice, initializeThreadsEffects);
 ```
 
 **Event Bus Integration:**
