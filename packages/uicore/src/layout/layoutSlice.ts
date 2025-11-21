@@ -49,7 +49,5 @@ const layoutSlice = createSlice({
 });
 
 export const { setTheme, setCurrentScreenset, setSelectedScreen } = layoutSlice.actions;
-export default layoutSlice.reducer;
 
-// Ensure reducer name matches slice key (convention for self-containment)
-Object.defineProperty(layoutSlice.reducer, 'name', { value: SLICE_KEY });
+export default layoutSlice.reducer;

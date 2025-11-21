@@ -56,10 +56,9 @@ export const {
   removeContextFromList,
 } = settingsSlice.actions;
 
-// Export reducer with proper name for validation
-const settingsReducer = settingsSlice.reducer;
-Object.defineProperty(settingsReducer, 'name', { value: SLICE_KEY });
-export default settingsReducer;
+// Export the slice object (not just the reducer) for registerSlice()
+// The slice.name property is automatically set by createSlice() to SLICE_KEY
+export default settingsSlice;
 
 // Module augmentation - extends uicore RootState
 declare module '@hai3/uicore' {

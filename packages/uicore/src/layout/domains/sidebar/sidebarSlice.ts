@@ -68,7 +68,5 @@ export const {
   setSidebarVisible,
   setSidebarConfig,
 } = sidebarSlice.actions;
-export default sidebarSlice.reducer;
 
-// Ensure reducer name matches slice key (convention for self-containment)
-Object.defineProperty(sidebarSlice.reducer, 'name', { value: SLICE_KEY });
+export default sidebarSlice.reducer;

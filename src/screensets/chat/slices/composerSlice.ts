@@ -47,10 +47,9 @@ export const {
   removeFileFromList,
 } = composerSlice.actions;
 
-// Export reducer with proper name for validation
-const composerReducer = composerSlice.reducer;
-Object.defineProperty(composerReducer, 'name', { value: SLICE_KEY });
-export default composerReducer;
+// Export the slice object (not just the reducer) for registerSlice()
+// The slice.name property is automatically set by createSlice() to SLICE_KEY
+export default composerSlice;
 
 // Module augmentation - extends uicore RootState
 declare module '@hai3/uicore' {

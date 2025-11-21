@@ -71,6 +71,3 @@ const appSlice = createSlice({
 export const { setUser, setTenant, setLoading, setError, clearError, setUseMockApi, setLanguage, setTranslationsReady, incrementScreenTranslationsVersion } = appSlice.actions;
 
 export default appSlice.reducer;
-
-// Ensure reducer name matches slice key (convention for self-containment)
-Object.defineProperty(appSlice.reducer, 'name', { value: SLICE_KEY });

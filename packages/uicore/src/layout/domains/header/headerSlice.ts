@@ -21,7 +21,5 @@ const headerSlice = createSlice({
 });
 
 // No actions currently exported
-export default headerSlice.reducer;
 
-// Ensure reducer name matches slice key (convention for self-containment)
-Object.defineProperty(headerSlice.reducer, 'name', { value: SLICE_KEY });
+export default headerSlice.reducer;

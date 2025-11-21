@@ -34,7 +34,5 @@ const overlaySlice = createSlice({
 });
 
 export const { showOverlay, hideOverlay, setOverlayVisible } = overlaySlice.actions;
-export default overlaySlice.reducer;
 
-// Ensure reducer name matches slice key (convention for self-containment)
-Object.defineProperty(overlaySlice.reducer, 'name', { value: SLICE_KEY });
+export default overlaySlice.reducer;

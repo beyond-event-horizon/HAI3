@@ -55,7 +55,5 @@ const menuSlice = createSlice({
 });
 
 export const { toggleMenu, setMenuCollapsed, setMenuItems, setMenuVisible, setMenuConfig } = menuSlice.actions;
-export default menuSlice.reducer;
 
-// Ensure reducer name matches slice key (convention for self-containment)
-Object.defineProperty(menuSlice.reducer, 'name', { value: SLICE_KEY });
+export default menuSlice.reducer;
