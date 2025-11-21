@@ -140,39 +140,168 @@ A **screenset** is a self-contained domain with:
 - Translations (i18n)
 - Icons (optional)
 - Redux slices (optional)
+- Events (optional)
+- API services (optional)
 
 Screensets are stored in a flat structure:
 ```
 src/screensets/
 ├── demo/          # Demo screenset
+│   ├── ids.ts     # CRITICAL: All IDs centralized here
+│   ├── screens/   # Screen components
+│   ├── i18n/      # Translations
+│   ├── uikit/     # Icons
+│   └── demoScreenset.tsx
 ├── chat/          # Chat screenset
+│   ├── ids.ts
+│   ├── slices/    # Redux state
+│   ├── events/    # Event definitions
+│   ├── effects/   # Event listeners
+│   ├── actions/   # Action creators
+│   ├── api/       # API services
+│   └── chatScreenset.tsx
 └── another/       # Another screenset
 ```
 
 Category information (Drafts, Mockups, Production) is tracked via the `ScreensetCategory` enum in the screenset configuration, not in folder structure.
 
-**Screenset Registration Pattern:**
+**Screenset Self-Containment Pattern:**
 ```typescript
-// src/screensets/demo/demoScreenset.tsx
+// src/screensets/demo/ids.ts - CRITICAL: Single source of truth
 export const DEMO_SCREENSET_ID = 'demo';
+export const HELLO_WORLD_SCREEN_ID = 'helloworld';
+export const THEME_SCREEN_ID = 'theme';
+
+// src/screensets/demo/uikit/icons/WorldIcon.tsx - Template literals for namespacing
+import { DEMO_SCREENSET_ID } from '../../ids';
+export const WORLD_ICON_ID = `${DEMO_SCREENSET_ID}:world` as const;
+
+// src/screensets/demo/demoScreenset.tsx - Auto-discovered, auto-registers
+import { screensetRegistry, ScreensetCategory, type ScreensetConfig } from '@hai3/uicore';
+import { DEMO_SCREENSET_ID, HELLO_WORLD_SCREEN_ID } from './ids';
+import { WORLD_ICON_ID } from './uikit/icons/WorldIcon';
 
 export const demoScreenset: ScreensetConfig = {
   id: DEMO_SCREENSET_ID,
   name: 'Demo Screenset',
+  category: ScreensetCategory.Drafts,
   defaultScreen: HELLO_WORLD_SCREEN_ID,
-  getMenuItems: () => [ /* menu items */ ],
-  getScreens: () => ({ 'hello-world': HelloWorldScreen }),
+  menu: [
+    {
+      menuItem: {
+        id: HELLO_WORLD_SCREEN_ID,
+        label: `screen.${DEMO_SCREENSET_ID}.${HELLO_WORLD_SCREEN_ID}:title`,
+        icon: WORLD_ICON_ID, // Auto-namespaced via template literal
+      },
+      screen: () => import('./screens/helloworld/HelloWorldScreen'),
+    },
+  ],
 };
 
-// Self-registers at module import
+// Self-registers at module import (no manual import in registry needed)
 screensetRegistry.register(demoScreenset);
+```
+
+**Redux Integration Pattern (Domain-Based Slices):**
+
+Screensets should be split into logical domains, not one monolithic slice:
+
+```typescript
+// src/screensets/chat/slices/threadsSlice.ts - Domain-specific slice
+import { CHAT_SCREENSET_ID } from '../ids';
+
+declare module '@hai3/uicore' {
+  interface RootState {
+    [`${CHAT_SCREENSET_ID}/threads`]: ThreadsState;
+  }
+}
+
+export const selectThreadsState = (state: RootState): ThreadsState => {
+  return state[`${CHAT_SCREENSET_ID}/threads`];
+};
+```
+
+**Multiple domains per screenset:**
+- `chat/threads` - Thread list and selection
+- `chat/messages` - Messages in current thread
+- `chat/composer` - Input composition (text, files)
+- `chat/settings` - Model and context selection
+
+**Event Bus Integration Pattern (Domain-Based Events):**
+
+Events are split into domain-specific files for clear boundaries:
+
+```
+src/screensets/chat/events/
+├── threadsEvents.ts    # Thread domain events
+├── messagesEvents.ts   # Messages domain events
+├── composerEvents.ts   # Composer domain events
+├── settingsEvents.ts   # Settings domain events
+└── dataEvents.ts       # Data loading coordination
+```
+
+Each event file uses domain constant pattern:
+
+```typescript
+// src/screensets/chat/events/threadsEvents.ts
+import { CHAT_SCREENSET_ID } from '../ids';
+
+const DOMAIN_ID = 'threads'; // Local domain constant
+
+export enum ThreadsEvents {
+  Selected = `${CHAT_SCREENSET_ID}/${DOMAIN_ID}/selected`,
+  Created = `${CHAT_SCREENSET_ID}/${DOMAIN_ID}/created`,
+  Deleted = `${CHAT_SCREENSET_ID}/${DOMAIN_ID}/deleted`,
+}
+
+declare module '@hai3/uicore' {
+  interface EventPayloadMap {
+    'chat/threads/selected': { threadId: string };
+    'chat/threads/created': { thread: Thread };
+    'chat/threads/deleted': { threadId: string };
+  }
+}
+```
+
+**Effects are also domain-specific:**
+
+```
+src/screensets/chat/effects/
+├── threadsEffects.ts    # Listens to ThreadsEvents
+├── messagesEffects.ts   # Listens to MessagesEvents
+├── composerEffects.ts   # Listens to ComposerEvents
+└── settingsEffects.ts   # Listens to SettingsEvents
+```
+
+Each slice registers its own effects (no coordinator):
+
+```typescript
+// src/screensets/chat/chatScreenset.tsx
+import { initializeThreadsEffects } from './effects/threadsEffects';
+import { initializeMessagesEffects } from './effects/messagesEffects';
+
+registerSlice(`${CHAT_SCREENSET_ID}/threads`, threadsReducer, (dispatch) => {
+  initializeThreadsEffects(dispatch);
+});
+registerSlice(`${CHAT_SCREENSET_ID}/messages`, messagesReducer, (dispatch) => {
+  initializeMessagesEffects(dispatch);
+});
 ```
 
 **Key Conventions:**
 - Each screenset is completely independent (vertical slice)
-- Define IDs where they're used (no central constants file to prevent circular imports)
-- Screensets can extend Redux store dynamically via `registerSlice()`
-- Translation keys use format: `'screenset.demo:screens.hello.title'`
+- All IDs centralized in `ids.ts` at screenset root (single source of truth)
+- **Domain hierarchy:** `${SCREENSET_ID}/domain` for state slices, `${SCREENSET_ID}/${DOMAIN_ID}/event` for events
+- Screensets split into logical domains (threads, messages, composer, settings, etc.)
+- Multiple focused slices per screenset, not one monolithic slice
+- Events split into domain-specific files (threadsEvents.ts, messagesEvents.ts, etc.)
+- Each event file has local `DOMAIN_ID` constant for namespace consistency
+- Effects split into domain-specific files (threadsEffects.ts, messagesEffects.ts, etc.)
+- Each slice registers its own effects (no coordinator file)
+- NO barrel exports (index.ts) in events/ or effects/ folders
+- Screensets auto-discovered via Vite glob pattern in `screensetRegistry.tsx`
+- Screensets extend Redux store dynamically via `registerSlice()` for each domain
+- Translation keys use format: `'screenset.demo:key'` or `'screen.demo.hello:key'`
 
 ### Registry Pattern (Self-Registration)
 
@@ -578,15 +707,32 @@ const user = await accountsApi.getCurrentUser();
 
 **IMPORTANT:** All screens MUST be lazy-loaded using dynamic imports for optimal performance and code-splitting.
 
+### Screenset Naming Conventions
+
+All screenset identifiers MUST follow these conventions for self-containment:
+
+1. **Screenset ID**: camelCase, single word preferred (e.g., `'demo'`, `'chat'`, `'chatCopy'`)
+2. **Screen IDs**: camelCase (e.g., `'helloworld'`, `'theme'`, `'profile'`)
+3. **Redux State Keys**: Domain-based: `${SCREENSET_ID}/domain` format (e.g., `'chat/threads'`, `'chat/messages'`)
+4. **Event Names**: Domain hierarchy: `${SCREENSET_ID}/${DOMAIN_ID}/event` format (e.g., `'chat/threads/selected'`, `'chat/messages/sent'`)
+5. **Icon IDs**: `${SCREENSET_ID}:iconName` format (e.g., `'demo:world'`)
+6. **API Domains**: `${SCREENSET_ID}:serviceName` format (e.g., `'chat:api'`)
+7. **Translation Keys**: `screenset.${SCREENSET_ID}:path` or `screen.${SCREENSET_ID}.${SCREEN_ID}:path`
+
+**CRITICAL:** All IDs must be centralized in `ids.ts` and use template literals for auto-updating namespaces.
+
+### Steps to Create a Screenset
+
 1. **Create directory structure:**
    ```bash
    mkdir -p src/screensets/my-screenset/screens/home
    ```
 
-2. **Create screen IDs file:**
+2. **Create centralized IDs file:**
    ```typescript
-   // src/screensets/my-screenset/screens/screenIds.ts
-   export const HOME_SCREEN_ID = 'my-screenset-home';
+   // src/screensets/my-screenset/ids.ts
+   export const MY_SCREENSET_ID = 'myScreenset'; // camelCase, single word preferred
+   export const HOME_SCREEN_ID = 'home';
    ```
 
 3. **Create screenset-level translation files:**
@@ -599,12 +745,11 @@ const user = await accountsApi.getCurrentUser();
    ```typescript
    // src/screensets/my-screenset/screens/home/HomeScreen.tsx
    import React from 'react';
-   import { useScreenTranslations, useTranslation, createTranslationLoader, Language } from '@hai3/uicore';
-   import { HOME_SCREEN_ID } from '../screenIds';
-   import { MY_SCREENSET_ID } from '../../myScreenset';
+   import { useScreenTranslations, useTranslation, I18nRegistry, Language } from '@hai3/uicore';
+   import { MY_SCREENSET_ID, HOME_SCREEN_ID } from '../../ids';
 
    // Create screen-level translation files in ./i18n/en.json, ./i18n/es.json, etc.
-   const translations = createTranslationLoader({
+   const translations = I18nRegistry.createLoader({
      [Language.English]: () => import('./i18n/en.json'),
      [Language.Spanish]: () => import('./i18n/es.json'),
      // ... all 36 languages
@@ -632,13 +777,11 @@ const user = await accountsApi.getCurrentUser();
 5. **Create screenset config with localization:**
    ```typescript
    // src/screensets/my-screenset/myScreenset.tsx
-   import { screensetRegistry, ScreensetCategory, type ScreensetConfig, createTranslationLoader, Language } from '@hai3/uicore';
-   import { HOME_SCREEN_ID } from './screens/screenIds';
-
-   export const MY_SCREENSET_ID = 'my-screenset';
+   import { screensetRegistry, ScreensetCategory, type ScreensetConfig, I18nRegistry, Language } from '@hai3/uicore';
+   import { MY_SCREENSET_ID, HOME_SCREEN_ID } from './ids';
 
    // Screenset-level translations
-   const screensetTranslations = createTranslationLoader({
+   const screensetTranslations = I18nRegistry.createLoader({
      [Language.English]: () => import('./i18n/en.json'),
      [Language.Spanish]: () => import('./i18n/es.json'),
      // ... all 36 languages
@@ -649,13 +792,13 @@ const user = await accountsApi.getCurrentUser();
      name: 'My Screenset',
      category: ScreensetCategory.Drafts,
      defaultScreen: HOME_SCREEN_ID,
-     localization: screensetTranslations, // Screenset-level translations
+     localization: screensetTranslations,
      menu: [
        {
          menuItem: {
            id: HOME_SCREEN_ID,
-           label: `screen.${MY_SCREENSET_ID}.${HOME_SCREEN_ID}:title`, // Translation key
-           icon: 'home-icon-id', // Optional
+           label: `screen.${MY_SCREENSET_ID}.${HOME_SCREEN_ID}:title`,
+           icon: `${MY_SCREENSET_ID}:home`, // Template literal for namespacing
          },
          screen: () => import('./screens/home/HomeScreen'), // Lazy loader
        },
@@ -665,19 +808,17 @@ const user = await accountsApi.getCurrentUser();
    screensetRegistry.register(myScreenset);
    ```
 
-6. **Import in screenset registry:**
-   ```typescript
-   // src/screensets/screensetRegistry.tsx
-   import './my-screenset/myScreenset';
-   ```
+6. **Auto-discovery:** The screenset is automatically discovered via Vite glob imports in `screensetRegistry.tsx`. No manual import needed!
 
 7. **Run app and switch screenset via UI selector**
 
 **Key Points:**
-- Screen IDs are in separate `screenIds.ts` to prevent circular dependencies
-- Screen components must export a default export for lazy loading
-- Use dynamic imports `() => import('./path/to/Screen')` in screenset config
-- No top-level screen component imports in screenset files
+- All IDs centralized in `ids.ts` at screenset root
+- Use template literals for events, icons, API domains: `${SCREENSET_ID}/event`
+- Redux state keys use enum pattern for type-safe auto-updating
+- Screensets auto-discovered via glob pattern - no manual registration needed
+- Screen components must export default for lazy loading
+- ESLint enforces naming conventions automatically
 
 ## Initialization Sequence (Critical)
 
@@ -721,6 +862,65 @@ npm run dev
 # Exercise all changed flows, check console for errors
 ```
 
+## Automated Enforcement
+
+HAI3 uses automated tools to enforce architectural conventions and prevent common mistakes:
+
+### ESLint Rules for Screensets
+
+Custom ESLint rules automatically enforce screenset naming conventions:
+
+1. **Centralized IDs Rule**: Ensures all screenset/screen IDs are defined in `ids.ts`
+   - **Rule**: `@hai3/screenset-ids-location`
+   - **Error**: "Screenset/screen ID constants must be defined in ids.ts"
+   - **Why**: Prevents scattered IDs across files, ensures single source of truth
+
+2. **Template Literal Enforcement**: Ensures events, icons, and API domains use template literals
+   - **Rule**: `@hai3/screenset-template-literals`
+   - **Error**: "Event names must use template literals with screenset ID"
+   - **Why**: Ensures auto-updating namespaces when screenset ID changes
+
+3. **Enum Pattern for State Keys**: Ensures RootState augmentation uses enum pattern
+   - **Rule**: `@hai3/screenset-state-key-pattern`
+   - **Error**: "RootState augmentation must use enum pattern with template literal"
+   - **Why**: Ensures type-safe, auto-updating state keys
+
+### Dependency Cruiser Rules
+
+Dependency-cruiser enforces package isolation and prevents circular dependencies:
+
+1. **Package Isolation**: Prevents app code from importing package internals
+   - **Rule**: `no-internal-imports`
+   - **Example**: ❌ `import '@hai3/uikit/src/internal'`
+
+2. **Circular Dependency Detection**: Prevents circular imports
+   - **Rule**: `no-circular`
+   - **Command**: `npm run arch:deps`
+
+3. **Cross-Screenset Dependencies**: Prevents screensets from importing each other
+   - **Rule**: `no-cross-screenset-imports`
+   - **Why**: Maintains vertical slice independence
+
+### Runtime Validation
+
+Additional validations happen at runtime:
+
+1. **Slice Name Validation**: `registerSlice()` validates that reducer `.name` matches state key
+   - **Error**: "Screenset convention violation: Slice name 'X' must match state key 'Y'"
+   - **Fix**: Use `Object.defineProperty(reducer, 'name', { value: SCREENSET_ID })`
+
+2. **Auto-Discovery**: Screensets automatically discovered via Vite glob pattern
+   - **Pattern**: `import.meta.glob('./*/[a-z]*Screenset.tsx', { eager: true })`
+   - **Why**: Eliminates manual registration, prevents forgetting to import
+
+### Benefits
+
+- **96% Reduction in Duplication Effort**: From ~50 manual steps to 2 steps (copy + update ids.ts)
+- **Zero Manual Renaming**: Template literals auto-update all namespaced identifiers
+- **Type Safety**: Enum pattern ensures Redux state keys stay in sync
+- **Early Error Detection**: ESLint catches convention violations during development
+- **Consistent Architecture**: Automated enforcement prevents architectural drift
+
 ## AI Development Workflow
 
 When working with AI (Claude, GPT, etc.):
@@ -754,7 +954,33 @@ When working with AI (Claude, GPT, etc.):
 5. **Forgetting to register translations**
    - Each screenset should register its i18n namespace with `i18nRegistry.registerLoader()`
 
-6. **CRITICAL: Skipping Chrome DevTools MCP testing or killing MCP processes**
+6. **Violating screenset naming conventions**
+   - ❌ Hardcoded event names: `eventBus.emit('chat/messageReceived', ...)`
+   - ✅ Template literals: `eventBus.emit(ChatEvents.MessageReceived, ...)` where enum uses `${SCREENSET_ID}/messageReceived`
+   - ❌ Hardcoded icon IDs: `icon: 'chat-icon'`
+   - ✅ Template literals: `icon: MESSAGE_ICON_ID` where `const MESSAGE_ICON_ID = \`${SCREENSET_ID}:message\``
+   - ❌ IDs scattered across files
+   - ✅ All IDs in centralized `ids.ts`
+   - ❌ Slice name doesn't match state key: `name: 'reducer'` but registered as `'chat'`
+   - ✅ Use `Object.defineProperty(reducer, 'name', { value: SCREENSET_ID })` after slice creation
+
+7. **Hardcoding state keys instead of using screenset ID constant**
+   - ❌ Hardcoded state keys: `interface RootState { 'chat': ChatState }`
+   - ✅ Use screenset ID constant: `interface RootState { [SCREENSET_ID]: ChatState }`
+   - ✅ Use enums only for multiple keys: `enum Keys { Main = \`${SCREENSET_ID}\`, Cache = \`${SCREENSET_ID}_cache\` }`
+   - This ensures state keys auto-update when screenset ID changes
+
+8. **Using monolithic event/effects files instead of domain-specific**
+   - ❌ Single `chatEvents.ts` with all events
+   - ✅ Domain-specific files: `threadsEvents.ts`, `messagesEvents.ts`, `composerEvents.ts`, `settingsEvents.ts`
+   - ❌ Coordinator `chatEffects.ts` file initializing all domains
+   - ✅ Each slice registers its own effects: `registerSlice('chat/threads', threadsReducer, initializeThreadsEffects)`
+   - ❌ Barrel export `index.ts` in events/ or effects/ folders
+   - ✅ Direct imports from specific domain files
+   - ❌ Missing `DOMAIN_ID` constant in event files
+   - ✅ Each event file has local `const DOMAIN_ID = 'domain';` and uses it in template literals
+
+9. **CRITICAL: Skipping Chrome DevTools MCP testing or killing MCP processes**
    - ❌ Continuing development when MCP WebSocket is closed
    - ❌ `pkill -f chrome-devtools-mcp` (permanently breaks MCP tools for the session)
    - ❌ Making multiple code changes without testing each one
