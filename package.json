@@ -5,17 +5,18 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "eslint-plugin-local"
   ],
   "scripts": {
     "dev": "vite",
     "build": "npm run generate:colors && npm run build:packages && vite build",
     "build:packages": "npm run build --workspace=@hai3/uikit-contracts && npm run build --workspace=@hai3/uikit && npm run build --workspace=@hai3/uicore && npm run build --workspace=@hai3/devtools",
     "generate:colors": "npx tsx scripts/generate-colors.ts 2>&1 | grep -v 'warn -' | grep -v 'has been renamed' | grep -v 'Update your configuration' || true",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "npm run build --workspace=eslint-plugin-local && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
-    "clean:artifacts": "rm -rf packages/*/dist dist .nyc_output coverage .eslintcache",
+    "clean:artifacts": "rm -rf packages/*/dist eslint-plugin-local/dist dist .nyc_output coverage .eslintcache",
     "clean:modules": "rm -rf node_modules",
     "clean:deps": "npm run clean:modules && npm ci",
     "clean": "npm run clean:artifacts && npm run clean:modules",

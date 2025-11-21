@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   root: true,
   env: { browser: true, es2020: true, node: true },
@@ -11,17 +13,26 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
-  plugins: ['@typescript-eslint', 'react-hooks', 'unused-imports'],
+  plugins: ['@typescript-eslint', 'react-hooks', 'unused-imports', 'local'],
+  settings: {
+    // Resolve local plugin
+    'import/resolver': {
+      node: {
+        paths: [path.resolve(__dirname, 'eslint-plugin-local')]
+      }
+    }
+  },
   noInlineConfig: true, // Disallow ALL inline eslint-disable comments
   ignorePatterns: [
-    'dist', 
-    '.eslintrc.js', 
+    'dist',
+    '.eslintrc.js',
     'node_modules',
     'packages/*/dist/**',
     'scripts/**',
     'vite.config.ts',
     'tsup.config.*',
-    '*.config.*'
+    '*.config.*',
+    'eslint-plugin-local/**'
   ],
   rules: {
     // Unused detection with eslint-plugin-unused-imports
@@ -50,7 +61,13 @@ module.exports = {
     'no-console': 'off', // Allow console statements for development
     'no-var': 'error',
     'no-empty-pattern': 'error',
-    
+
+    // Screenset Architecture: Domain-based conventions (disabled globally, enabled for screensets only)
+    'local/no-barrel-exports-events-effects': 'off',
+    'local/no-coordinator-effects': 'off',
+    'local/no-missing-domain-id': 'off',
+    'local/domain-event-format': 'off',
+
     // Flux Architecture: No direct store.dispatch (use actions instead)
     'no-restricted-syntax': [
       'error',
@@ -82,6 +99,17 @@ module.exports = {
     ],
   },
   overrides: [
+    // Screensets: Domain-based architecture rules
+    {
+      files: ['src/screensets/**/*'],
+      rules: {
+        'local/no-barrel-exports-events-effects': 'error',
+        'local/no-coordinator-effects': 'error',
+        'local/no-missing-domain-id': 'error',
+        'local/domain-event-format': 'error',
+      },
+    },
+
     // Packages: Must use relative imports, no @/ aliases
     {
       files: ['packages/**/*'],
