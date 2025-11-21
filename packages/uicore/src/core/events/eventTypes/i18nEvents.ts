@@ -5,7 +5,7 @@
 import type { Language } from '../../../i18n/types';
 
 export enum I18nEvents {
-  LanguageChanged = 'i18n/languageChanged',
+  LanguageChanged = 'uicore/i18n/languageChanged',
 }
 
 export interface LanguageChangedPayload {
@@ -16,5 +16,5 @@ export interface LanguageChangedPayload {
  * Type map: ties each I18nEvent to its payload type
  */
 export interface I18nEventPayloadMap {
-  'i18n/languageChanged': LanguageChangedPayload;
+  'uicore/i18n/languageChanged': LanguageChangedPayload;
 }

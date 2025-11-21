@@ -11,7 +11,7 @@ import { ApiEvents } from '../events/eventTypes';
  * Emits ApiModeChanged event
  */
 export const setApiMode = (useMockApi: boolean): void => {
-  eventBus.emit(ApiEvents.ApiModeChanged, {
+  eventBus.emit(ApiEvents.ModeChanged, {
     useMockApi,
   });
 };

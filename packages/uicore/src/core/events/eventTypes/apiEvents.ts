@@ -4,7 +4,7 @@
  */
 
 export enum ApiEvents {
-  ApiModeChanged = 'api/apiModeChanged',
+  ModeChanged = 'uicore/api/modeChanged',
 }
 
 export interface ApiModeChangedPayload {
@@ -17,5 +17,5 @@ export interface ApiModeChangedPayload {
  * Ensures type safety when emitting/subscribing to events
  */
 export interface ApiEventPayloadMap {
-  'api/apiModeChanged': ApiModeChangedPayload;
+  'uicore/api/modeChanged': ApiModeChangedPayload;
 }

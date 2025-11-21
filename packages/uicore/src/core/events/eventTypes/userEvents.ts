@@ -6,9 +6,9 @@
 import type { ApiUser } from '../../../api/services/accounts/api';
 
 export enum UserEvents {
-  UserFetchStarted = 'user/userFetchStarted',
-  UserFetched = 'user/userFetched',
-  UserFetchFailed = 'user/userFetchFailed',
+  FetchStarted = 'uicore/user/fetchStarted',
+  Fetched = 'uicore/user/fetched',
+  FetchFailed = 'uicore/user/fetchFailed',
 }
 
 export interface UserFetchedPayload {
@@ -28,7 +28,7 @@ export interface UserFetchFailedPayload {
  * Ensures type safety when emitting/subscribing to events
  */
 export interface UserEventPayloadMap {
-  'user/userFetchStarted': void; // No payload needed
-  'user/userFetched': UserFetchedPayload;
-  'user/userFetchFailed': UserFetchFailedPayload;
+  'uicore/user/fetchStarted': void; // No payload needed
+  'uicore/user/fetched': UserFetchedPayload;
+  'uicore/user/fetchFailed': UserFetchFailedPayload;
 }

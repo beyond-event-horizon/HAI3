@@ -22,10 +22,10 @@ import { changeLanguage } from './i18nActions';
  */
 export const fetchCurrentUser = () => (_dispatch: AppDispatch): void => {
   // Emit start event - effect will set loading
-  eventBus.emit(UserEvents.UserFetchStarted);
-  
+  eventBus.emit(UserEvents.FetchStarted);
+
   const accountsService = apiRegistry.getService(ACCOUNTS_DOMAIN);
-  
+
   // Fire and forget - action returns void immediately
   // Results handled via events
   accountsService.getCurrentUser()
@@ -36,7 +36,7 @@ export const fetchCurrentUser = () => (_dispatch: AppDispatch): void => {
       }
 
       // Emit success event
-      eventBus.emit(UserEvents.UserFetched, {
+      eventBus.emit(UserEvents.Fetched, {
         user: response.user,
       });
 
@@ -51,7 +51,7 @@ export const fetchCurrentUser = () => (_dispatch: AppDispatch): void => {
     .catch(error => {
       // Emit failure event
       const apiError = error as ApiError;
-      eventBus.emit(UserEvents.UserFetchFailed, {
+      eventBus.emit(UserEvents.FetchFailed, {
         error: {
           code: apiError.code || 'UNKNOWN_ERROR',
           message: apiError.message || 'Failed to fetch user',
