@@ -17,13 +17,24 @@
 - Domains are vertical slices: each owns its slice, effects, and actions; cross-domain communication only through events.
 
 ## FILE LOCATION RULES
-- Domain slices and effects: packages/uicore/src/domains/<domain>/{slice.ts,effects.ts}.
-- Domain actions: packages/uicore/src/actions/<namespace>Actions.ts.
-- Domain events: packages/uicore/src/events/<namespace>Events.ts.
+- Domain slices and effects: packages/uicore/src/layout/domains/<domain>/{slice.ts,effects.ts}.
+- Domain actions: packages/uicore/src/core/actions/<namespace>Actions.ts.
+- Domain events: packages/uicore/src/core/events/eventTypes/<namespace>Events.ts.
+- Core constants: packages/uicore/src/core/constants.ts (UICORE_ID and shared identifiers).
 - Bootstrap and providers: packages/uicore/src/app/{HAI3Provider.tsx,store.ts,initEffects.ts}.
 - UI Kit registry accessors: packages/uicore/src/registry/uikitRegistry.ts.
 - Screenset-driven routing (no hardcoded routes): packages/uicore/src/routing/**.
 - I18n system: packages/uicore/src/i18n/{i18nRegistry.ts,types.ts,useTranslation.ts,useScreenTranslations.ts}.
+
+## NAMING CONVENTIONS (Matches screenset pattern)
+- REQUIRED: Use UICORE_ID constant ('uicore') from core/constants.ts.
+- REQUIRED: Each event file has local DOMAIN_ID constant (e.g., const DOMAIN_ID = 'api').
+- REQUIRED: Event names use pattern ${UICORE_ID}/${DOMAIN_ID}/eventName (e.g., 'uicore/api/modeChanged').
+- REQUIRED: Redux state keys use pattern ${UICORE_ID}/${DOMAIN_ID} (e.g., 'uicore/app', 'uicore/layout').
+- REQUIRED: Slice name must match state key via Object.defineProperty(reducer, 'name', { value: SLICE_KEY }).
+- REQUIRED: Access state via state.uicore.domainName (e.g., state.uicore.app, state.uicore.layout).
+- FORBIDDEN: Barrel export (index.ts) in eventTypes folder; use direct imports instead.
+- FORBIDDEN: Hardcoded event names or state keys; always use template literals with constants.
 
 ## STOP CONDITIONS
 - Importing from @hai3/uikit inside UI Core.
