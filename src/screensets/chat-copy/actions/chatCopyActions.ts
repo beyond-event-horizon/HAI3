@@ -5,7 +5,11 @@
  */
 
 import { eventBus, apiRegistry, type AppDispatch } from '@hai3/uicore';
-import { ChatCopyEvents } from '../events/chatCopyEvents';
+import { ThreadsEvents } from '../events/threadsEvents';
+import { MessagesEvents } from '../events/messagesEvents';
+import { SettingsEvents } from '../events/settingsEvents';
+import { ComposerEvents } from '../events/composerEvents';
+import { DataEvents } from '../events/dataEvents';
 import type { AttachedFile } from '../types';
 import type { EnhancedChatThread } from '../uikit/components/EnhancedThreadList';
 import { CHAT_DOMAIN } from '../api/ChatApiService';
@@ -15,7 +19,7 @@ import { ChatRole } from '../api/api';
  * Thread Actions
  */
 export const selectThread = (threadId: string): void => {
-  eventBus.emit(ChatCopyEvents.ThreadSelected, { threadId });
+  eventBus.emit(ThreadsEvents.Selected, { threadId });
 };
 
 export const createDraftThread = (title: string, isTemporary: boolean): void => {
@@ -23,7 +27,7 @@ export const createDraftThread = (title: string, isTemporary: boolean): void => 
   const draftId = `draft-${Date.now()}`;
 
   // Emit event to create local draft thread (not saved to backend)
-  eventBus.emit(ChatCopyEvents.DraftThreadCreated, { threadId: draftId, title, isTemporary });
+  eventBus.emit(ThreadsEvents.DraftCreated, { threadId: draftId, title, isTemporary });
 };
 
 export const createThread = (isTemporary: boolean, title: string) => {
@@ -37,7 +41,7 @@ export const createThread = (isTemporary: boolean, title: string) => {
     })
       .then((thread) => {
         // Emit event with full thread object
-        eventBus.emit(ChatCopyEvents.ThreadCreated, { thread });
+        eventBus.emit(ThreadsEvents.Created, { thread });
       })
       .catch((error) => {
         console.error('Failed to create thread:', error);
@@ -53,7 +57,7 @@ export const deleteThread = (threadId: string) => {
     chatApi.deleteThread(threadId)
       .then(() => {
         // Emit event after successful deletion
-        eventBus.emit(ChatCopyEvents.ThreadDeleted, { threadId });
+        eventBus.emit(ThreadsEvents.Deleted, { threadId });
       })
       .catch((error) => {
         console.error('Failed to delete thread:', error);
@@ -69,7 +73,7 @@ export const updateThreadTitle = (threadId: string, newTitle: string) => {
     chatApi.updateThread(threadId, { title: newTitle })
       .then(() => {
         // Emit event after successful update
-        eventBus.emit(ChatCopyEvents.ThreadTitleUpdated, { threadId, newTitle });
+        eventBus.emit(ThreadsEvents.TitleUpdated, { threadId, newTitle });
       })
       .catch((error) => {
         console.error('Failed to update thread title:', error);
@@ -78,11 +82,11 @@ export const updateThreadTitle = (threadId: string, newTitle: string) => {
 };
 
 export const reorderThreads = (threads: EnhancedChatThread[]): void => {
-  eventBus.emit(ChatCopyEvents.ThreadsReordered, { threads });
+  eventBus.emit(ThreadsEvents.Reordered, { threads });
 };
 
 export const toggleThreadTemporary = (threadId: string, isTemporary: boolean): void => {
-  eventBus.emit(ChatCopyEvents.ThreadTemporaryToggled, { threadId, isTemporary });
+  eventBus.emit(ThreadsEvents.TemporaryToggled, { threadId, isTemporary });
 };
 
 /**
@@ -111,7 +115,7 @@ export const sendMessage = (
       })
         .then((newThread) => {
           // Emit ThreadCreated with the new thread (has smart-generated title)
-          eventBus.emit(ChatCopyEvents.ThreadCreated, { thread: newThread });
+          eventBus.emit(ThreadsEvents.Created, { thread: newThread });
 
           // Now create the user message in the new thread
           return chatApi.createMessage({
@@ -122,10 +126,10 @@ export const sendMessage = (
         })
         .then((userMessage) => {
           // Emit MessageCreated event
-          eventBus.emit(ChatCopyEvents.MessageCreated, { message: userMessage });
+          eventBus.emit(MessagesEvents.Created, { message: userMessage });
 
           // Clear input
-          eventBus.emit(ChatCopyEvents.MessageSent, { content });
+          eventBus.emit(MessagesEvents.Sent, { content });
 
           // Create empty assistant message via API before streaming
           return chatApi.createMessage({
@@ -136,10 +140,10 @@ export const sendMessage = (
         })
         .then((assistantMessage) => {
           // Emit MessageCreated event with API-created message
-          eventBus.emit(ChatCopyEvents.MessageCreated, { message: assistantMessage });
+          eventBus.emit(MessagesEvents.Created, { message: assistantMessage });
 
           // Signal streaming started
-          eventBus.emit(ChatCopyEvents.StreamingStarted, { messageId: assistantMessage.id });
+          eventBus.emit(MessagesEvents.StreamingStarted, { messageId: assistantMessage.id });
 
           // Build messages array for completion
           const messages = [
@@ -159,18 +163,18 @@ export const sendMessage = (
             (chunk) => {
               const delta = chunk.choices?.[0]?.delta;
               if (delta?.content) {
-                eventBus.emit(ChatCopyEvents.StreamingContentUpdated, {
+                eventBus.emit(MessagesEvents.StreamingContentUpdated, {
                   messageId: assistantMessage.id,
                   content: delta.content,
                 });
               }
 
               if (chunk.choices?.[0]?.finish_reason === 'stop') {
-                eventBus.emit(ChatCopyEvents.StreamingCompleted, { messageId: assistantMessage.id });
+                eventBus.emit(MessagesEvents.StreamingCompleted, { messageId: assistantMessage.id });
               }
             },
             () => {
-              eventBus.emit(ChatCopyEvents.StreamingCompleted, { messageId: assistantMessage.id });
+              eventBus.emit(MessagesEvents.StreamingCompleted, { messageId: assistantMessage.id });
             }
           );
         })
@@ -185,8 +189,8 @@ export const sendMessage = (
         content: content.trim(),
       })
         .then((userMessage) => {
-          eventBus.emit(ChatCopyEvents.MessageCreated, { message: userMessage });
-          eventBus.emit(ChatCopyEvents.MessageSent, { content });
+          eventBus.emit(MessagesEvents.Created, { message: userMessage });
+          eventBus.emit(MessagesEvents.Sent, { content });
 
           // Create empty assistant message via API before streaming
           return chatApi.createMessage({
@@ -197,10 +201,10 @@ export const sendMessage = (
         })
         .then((assistantMessage) => {
           // Emit MessageCreated event with API-created message
-          eventBus.emit(ChatCopyEvents.MessageCreated, { message: assistantMessage });
+          eventBus.emit(MessagesEvents.Created, { message: assistantMessage });
 
           // Signal streaming started
-          eventBus.emit(ChatCopyEvents.StreamingStarted, { messageId: assistantMessage.id });
+          eventBus.emit(MessagesEvents.StreamingStarted, { messageId: assistantMessage.id });
 
           // Build messages array for completion (conversation history + new user message)
           const messages = [
@@ -220,18 +224,18 @@ export const sendMessage = (
             (chunk) => {
               const delta = chunk.choices?.[0]?.delta;
               if (delta?.content) {
-                eventBus.emit(ChatCopyEvents.StreamingContentUpdated, {
+                eventBus.emit(MessagesEvents.StreamingContentUpdated, {
                   messageId: assistantMessage.id,
                   content: delta.content,
                 });
               }
 
               if (chunk.choices?.[0]?.finish_reason === 'stop') {
-                eventBus.emit(ChatCopyEvents.StreamingCompleted, { messageId: assistantMessage.id });
+                eventBus.emit(MessagesEvents.StreamingCompleted, { messageId: assistantMessage.id });
               }
             },
             () => {
-              eventBus.emit(ChatCopyEvents.StreamingCompleted, { messageId: assistantMessage.id });
+              eventBus.emit(MessagesEvents.StreamingCompleted, { messageId: assistantMessage.id });
             }
           );
         })
@@ -243,35 +247,35 @@ export const sendMessage = (
 };
 
 export const startEditingMessage = (messageId: string, content: string): void => {
-  eventBus.emit(ChatCopyEvents.MessageEditingStarted, { messageId, content });
+  eventBus.emit(MessagesEvents.EditingStarted, { messageId, content });
 };
 
 export const updateEditedContent = (content: string): void => {
-  eventBus.emit(ChatCopyEvents.MessageEditedContentUpdated, { content });
+  eventBus.emit(MessagesEvents.EditedContentUpdated, { content });
 };
 
 export const saveEditedMessage = (messageId: string, content: string): void => {
-  eventBus.emit(ChatCopyEvents.MessageEditSaved, { messageId, content });
+  eventBus.emit(MessagesEvents.EditSaved, { messageId, content });
 };
 
 export const cancelEditingMessage = (): void => {
-  eventBus.emit(ChatCopyEvents.MessageEditCancelled);
+  eventBus.emit(MessagesEvents.EditCancelled);
 };
 
 export const likeMessage = (messageId: string): void => {
-  eventBus.emit(ChatCopyEvents.MessageLiked, { messageId });
+  eventBus.emit(MessagesEvents.Liked, { messageId });
 };
 
 export const dislikeMessage = (messageId: string): void => {
-  eventBus.emit(ChatCopyEvents.MessageDisliked, { messageId });
+  eventBus.emit(MessagesEvents.Disliked, { messageId });
 };
 
 export const deleteMessage = (messageId: string): void => {
-  eventBus.emit(ChatCopyEvents.MessageDeleted, { messageId });
+  eventBus.emit(MessagesEvents.Deleted, { messageId });
 };
 
 export const toggleMessageViewMode = (messageId: string): void => {
-  eventBus.emit(ChatCopyEvents.MessageViewModeToggled, { messageId });
+  eventBus.emit(MessagesEvents.ViewModeToggled, { messageId });
 };
 
 export const regenerateMessage = (
@@ -284,7 +288,7 @@ export const regenerateMessage = (
     const chatApi = apiRegistry.getService(CHAT_DOMAIN);
 
     // Remove the message being regenerated (and all after it)
-    eventBus.emit(ChatCopyEvents.MessageRegenerated, { messageId });
+    eventBus.emit(MessagesEvents.Regenerated, { messageId });
 
     // Create empty assistant message via API before streaming
     chatApi.createMessage({
@@ -294,10 +298,10 @@ export const regenerateMessage = (
     })
       .then((assistantMessage) => {
         // Emit MessageCreated event with API-created message
-        eventBus.emit(ChatCopyEvents.MessageCreated, { message: assistantMessage });
+        eventBus.emit(MessagesEvents.Created, { message: assistantMessage });
 
         // Signal streaming started
-        eventBus.emit(ChatCopyEvents.StreamingStarted, { messageId: assistantMessage.id });
+        eventBus.emit(MessagesEvents.StreamingStarted, { messageId: assistantMessage.id });
 
         // Call streaming API with conversation history (excluding regenerated message)
         chatApi.createCompletionStream(
@@ -309,18 +313,18 @@ export const regenerateMessage = (
           (chunk) => {
             const delta = chunk.choices?.[0]?.delta;
             if (delta?.content) {
-              eventBus.emit(ChatCopyEvents.StreamingContentUpdated, {
+              eventBus.emit(MessagesEvents.StreamingContentUpdated, {
                 messageId: assistantMessage.id,
                 content: delta.content,
               });
             }
 
             if (chunk.choices?.[0]?.finish_reason === 'stop') {
-              eventBus.emit(ChatCopyEvents.StreamingCompleted, { messageId: assistantMessage.id });
+              eventBus.emit(MessagesEvents.StreamingCompleted, { messageId: assistantMessage.id });
             }
           },
           () => {
-            eventBus.emit(ChatCopyEvents.StreamingCompleted, { messageId: assistantMessage.id });
+            eventBus.emit(MessagesEvents.StreamingCompleted, { messageId: assistantMessage.id });
           }
         );
       })
@@ -334,33 +338,33 @@ export const regenerateMessage = (
  * Model and Context Actions
  */
 export const changeModel = (model: string): void => {
-  eventBus.emit(ChatCopyEvents.ModelChanged, { model });
+  eventBus.emit(SettingsEvents.ModelChanged, { model });
 };
 
 export const addContext = (contextId: string): void => {
-  eventBus.emit(ChatCopyEvents.ContextAdded, { contextId });
+  eventBus.emit(SettingsEvents.ContextAdded, { contextId });
 };
 
 export const removeContext = (contextId: string): void => {
-  eventBus.emit(ChatCopyEvents.ContextRemoved, { contextId });
+  eventBus.emit(SettingsEvents.ContextRemoved, { contextId });
 };
 
 /**
  * File Actions
  */
 export const attachFile = (file: AttachedFile): void => {
-  eventBus.emit(ChatCopyEvents.FileAttached, { file });
+  eventBus.emit(ComposerEvents.FileAttached, { file });
 };
 
 export const removeFile = (fileId: string): void => {
-  eventBus.emit(ChatCopyEvents.FileRemoved, { fileId });
+  eventBus.emit(ComposerEvents.FileRemoved, { fileId });
 };
 
 /**
  * Input Actions
  */
 export const changeInputValue = (value: string): void => {
-  eventBus.emit(ChatCopyEvents.InputValueChanged, { value });
+  eventBus.emit(ComposerEvents.InputValueChanged, { value });
 };
 
 /**
@@ -371,7 +375,7 @@ export const fetchChatData = () => {
     const chatApi = apiRegistry.getService(CHAT_DOMAIN);
 
     // Emit fetch started event
-    eventBus.emit(ChatCopyEvents.DataFetchStarted, {});
+    eventBus.emit(DataEvents.FetchStarted, {});
 
     // Fetch all data in parallel
     Promise.all([
@@ -381,11 +385,11 @@ export const fetchChatData = () => {
     ])
       .then(([threads, messages, contexts]) => {
         // Emit success event with data
-        eventBus.emit(ChatCopyEvents.DataFetchSucceeded, { threads, messages, contexts });
+        eventBus.emit(DataEvents.FetchSucceeded, { threads, messages, contexts });
       })
       .catch((error) => {
         console.error('Failed to fetch chat data:', error);
-        eventBus.emit(ChatCopyEvents.DataFetchFailed, {
+        eventBus.emit(DataEvents.FetchFailed, {
           error: error instanceof Error ? error.message : 'Unknown error'
         });
       });
