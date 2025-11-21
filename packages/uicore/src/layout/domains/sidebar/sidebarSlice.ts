@@ -1,10 +1,14 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { ReactNode } from 'react';
-import { LayoutDomains } from '../../layoutSlice';
+import { UICORE_ID } from '../../../core/constants';
+import { LAYOUT_DOMAINS } from '../../layoutSlice';
 
 /**
  * Sidebar slice for managing sidebar state and configuration
  */
+
+const DOMAIN_ID = LAYOUT_DOMAINS.SIDEBAR;
+const SLICE_KEY = `${UICORE_ID}/${DOMAIN_ID}` as const;
 
 export enum SidebarPosition {
   Left = 'left',
@@ -28,7 +32,7 @@ const initialState: SidebarState = {
 };
 
 const sidebarSlice = createSlice({
-  name: LayoutDomains.Sidebar,
+  name: SLICE_KEY,
   initialState,
   reducers: {
     toggleSidebar: (state) => {
@@ -65,3 +69,6 @@ export const {
   setSidebarConfig,
 } = sidebarSlice.actions;
 export default sidebarSlice.reducer;
+
+// Ensure reducer name matches slice key (convention for self-containment)
+Object.defineProperty(sidebarSlice.reducer, 'name', { value: SLICE_KEY });

@@ -3,8 +3,12 @@
  * Events related to API configuration
  */
 
+import { UICORE_ID } from '../../constants';
+
+const DOMAIN_ID = 'api';
+
 export enum ApiEvents {
-  ModeChanged = 'uicore/api/modeChanged',
+  ModeChanged = `${UICORE_ID}/${DOMAIN_ID}/modeChanged`,
 }
 
 export interface ApiModeChangedPayload {

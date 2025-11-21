@@ -33,8 +33,8 @@ export interface ScreenProps {
 }
 
 export const Screen: React.FC<ScreenProps> = ({ children, className = '' }) => {
-  const currentScreensetValue = useAppSelector((state) => state.layout.currentScreenset);
-  const selectedScreen = useAppSelector((state) => state.layout.selectedScreen);
+  const currentScreensetValue = useAppSelector((state) => state.uicore.layout.currentScreenset);
+  const selectedScreen = useAppSelector((state) => state.uicore.layout.selectedScreen);
 
   const screenset = screensetRegistry.get(currentScreensetValue);
   const screenId = selectedScreen || screenset?.defaultScreen || '';

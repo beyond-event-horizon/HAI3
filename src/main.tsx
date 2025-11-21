@@ -13,7 +13,7 @@ import '@/themes/themeRegistry'; // Auto-registers themes
 import '@/screensets/screensetRegistry'; // Auto-registers screensets (includes API services + mocks + i18n loaders)
 
 // Initialize API services
-const initialUseMockApi = store.getState().app.useMockApi;
+const initialUseMockApi = store.getState().uicore.app.useMockApi;
 apiRegistry.initialize({
   useMockApi: initialUseMockApi,
   mockDelay: 500,

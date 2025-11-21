@@ -57,7 +57,7 @@ export const ProfileScreen: React.FC = () => {
   // Register translations for this screen
   useScreenTranslations(DEMO_SCREENSET_ID, PROFILE_SCREEN_ID, translations);
   const dispatch = useAppDispatch();
-  const { user, loading, error } = useAppSelector((state) => state.app);
+  const { user, loading, error } = useAppSelector((state) => state.uicore.app);
   const { t } = useTranslation();
 
   useEffect(() => {

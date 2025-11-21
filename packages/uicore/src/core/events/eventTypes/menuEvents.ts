@@ -3,9 +3,13 @@
  * Events related to menu state changes
  */
 
+import { UICORE_ID } from '../../constants';
+
+const DOMAIN_ID = 'menu';
+
 export enum MenuEvents {
-  ItemsChanged = 'uicore/menu/itemsChanged',
-  Toggled = 'uicore/menu/toggled',
+  ItemsChanged = `${UICORE_ID}/${DOMAIN_ID}/itemsChanged`,
+  Toggled = `${UICORE_ID}/${DOMAIN_ID}/toggled`,
 }
 
 export interface MenuItemsChangedPayload {

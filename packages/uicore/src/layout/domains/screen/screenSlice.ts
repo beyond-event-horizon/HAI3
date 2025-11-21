@@ -1,9 +1,13 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { LayoutDomains } from '../../layoutSlice';
+import { UICORE_ID } from '../../../core/constants';
+import { LAYOUT_DOMAINS } from '../../layoutSlice';
 
 /**
  * Screen slice for managing screen state
  */
+
+const DOMAIN_ID = LAYOUT_DOMAINS.SCREEN;
+const SLICE_KEY = `${UICORE_ID}/${DOMAIN_ID}` as const;
 
 export interface ScreenState {
   activeScreen: string | null;
@@ -16,7 +20,7 @@ const initialState: ScreenState = {
 };
 
 const screenSlice = createSlice({
-  name: LayoutDomains.Screen,
+  name: SLICE_KEY,
   initialState,
   reducers: {
     setActiveScreen: (state, action: PayloadAction<string>) => {
@@ -33,3 +37,6 @@ const screenSlice = createSlice({
 
 export const { setActiveScreen, setScreenLoading, clearActiveScreen } = screenSlice.actions;
 export default screenSlice.reducer;
+
+// Ensure reducer name matches slice key (convention for self-containment)
+Object.defineProperty(screenSlice.reducer, 'name', { value: SLICE_KEY });

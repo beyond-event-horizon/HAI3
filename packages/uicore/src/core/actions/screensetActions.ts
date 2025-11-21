@@ -6,11 +6,9 @@
 
 import type { AppDispatch } from '../../store';
 import { eventBus } from '../events/eventBus';
-import { 
-  ScreensetEvents,
-  MenuEvents,
-  NavigationEvents
-} from '../events/eventTypes';
+import { ScreensetEvents } from '../events/eventTypes/screensetEvents';
+import { MenuEvents } from '../events/eventTypes/menuEvents';
+import { NavigationEvents } from '../events/eventTypes/navigationEvents';
 import { screensetRegistry } from '../../screensets/screensetRegistry';
 
 /**

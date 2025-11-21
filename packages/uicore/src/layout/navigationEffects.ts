@@ -8,10 +8,8 @@
 
 import type { Store } from '@reduxjs/toolkit';
 import { eventBus } from '../core/events/eventBus';
-import { 
-  NavigationEvents,
-  ScreensetEvents
-} from '../core/events/eventTypes';
+import { NavigationEvents } from '../core/events/eventTypes/navigationEvents';
+import { ScreensetEvents } from '../core/events/eventTypes/screensetEvents';
 import { setSelectedScreen, setCurrentScreenset } from './layoutSlice';
 
 /**

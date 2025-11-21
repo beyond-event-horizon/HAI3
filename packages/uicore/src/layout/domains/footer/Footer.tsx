@@ -9,7 +9,7 @@ import { UiKitComponent, ButtonVariant } from '@hai3/uikit-contracts';
  */
 
 export const Footer: React.FC = () => {
-  const visible = useAppSelector((state) => state.footer.visible);
+  const visible = useAppSelector((state) => state.uicore.footer.visible);
 
   // Production footer content
   const copyright = '© 2025 HAI3 Framework';

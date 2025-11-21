@@ -8,7 +8,7 @@
 
 import type { Store } from '@reduxjs/toolkit';
 import { eventBus } from '../../../core/events/eventBus';
-import { MenuEvents } from '../../../core/events/eventTypes';
+import { MenuEvents } from '../../../core/events/eventTypes/menuEvents';
 import { setMenuItems, setMenuCollapsed } from './menuSlice';
 
 /**

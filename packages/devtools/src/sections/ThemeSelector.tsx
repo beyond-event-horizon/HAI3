@@ -25,7 +25,7 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   className = '',
 }) => {
   const dispatch = useAppDispatch();
-  const currentTheme = useAppSelector((state) => state.layout.theme);
+  const currentTheme = useAppSelector((state) => state.uicore.layout.theme);
   const { portalContainer } = useDevToolsContext();
   const { t } = useTranslation();
 

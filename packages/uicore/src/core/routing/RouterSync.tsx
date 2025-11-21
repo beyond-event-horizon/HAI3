@@ -19,8 +19,8 @@ import { routeRegistry } from './routeRegistry';
 export function RouterSync() {
   const navigate = useNavigate();
   const params = useParams<{ screenId: string }>();
-  
-  const selectedScreen = useAppSelector((state) => state.layout.selectedScreen);
+
+  const selectedScreen = useAppSelector((state) => state.uicore.layout.selectedScreen);
   
   // URL → Redux: When URL changes, dispatch navigation action
   useEffect(() => {

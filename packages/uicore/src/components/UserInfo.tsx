@@ -15,7 +15,7 @@ export interface UserInfoProps {
 
 export const UserInfo: React.FC<UserInfoProps> = () => {
   const dispatch = useAppDispatch();
-  const { user, loading } = useAppSelector((state) => state.app);
+  const { user, loading } = useAppSelector((state) => state.uicore.app);
 
   // Fetch user on mount if not already loaded
   useEffect(() => {

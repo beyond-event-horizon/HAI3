@@ -5,7 +5,7 @@
 
 import type { AppDispatch } from '../../store';
 import { eventBus } from '../events/eventBus';
-import { UserEvents } from '../events/eventTypes';
+import { UserEvents } from '../events/eventTypes/userEvents';
 import { apiRegistry } from '../../api/apiRegistry';
 import { ACCOUNTS_DOMAIN } from '../../api/services/accounts/AccountsApiService';
 import type { ApiError } from '../../api/services/accounts/api';

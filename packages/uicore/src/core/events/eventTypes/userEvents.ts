@@ -4,11 +4,14 @@
  */
 
 import type { ApiUser } from '../../../api/services/accounts/api';
+import { UICORE_ID } from '../../constants';
+
+const DOMAIN_ID = 'user';
 
 export enum UserEvents {
-  FetchStarted = 'uicore/user/fetchStarted',
-  Fetched = 'uicore/user/fetched',
-  FetchFailed = 'uicore/user/fetchFailed',
+  FetchStarted = `${UICORE_ID}/${DOMAIN_ID}/fetchStarted`,
+  Fetched = `${UICORE_ID}/${DOMAIN_ID}/fetched`,
+  FetchFailed = `${UICORE_ID}/${DOMAIN_ID}/fetchFailed`,
 }
 
 export interface UserFetchedPayload {

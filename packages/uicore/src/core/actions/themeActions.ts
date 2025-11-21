@@ -6,7 +6,7 @@
 
 import type { AppDispatch } from '../../store';
 import { eventBus } from '../events/eventBus';
-import { ThemeEvents } from '../events/eventTypes';
+import { ThemeEvents } from '../events/eventTypes/themeEvents';
 
 /**
  * Change current theme

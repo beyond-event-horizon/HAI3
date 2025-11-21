@@ -23,7 +23,7 @@ const buildScreensetOptions = (): ScreensetOption[] => {
 
 export const ControlPanel: React.FC = () => {
   const dispatch = useAppDispatch();
-  const currentScreenset = useAppSelector((state) => state.layout.currentScreenset);
+  const currentScreenset = useAppSelector((state) => state.uicore.layout.currentScreenset);
   const [screensetOptions, setScreensetOptions] = useState<ScreensetOption[]>([]);
   const { t } = useTranslation();
 
