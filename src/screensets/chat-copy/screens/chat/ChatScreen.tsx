@@ -28,7 +28,10 @@ import { TextLoader, useAppSelector, useAppDispatch, useTranslation, useScreenTr
 import * as chatCopyActions from '../../actions/chatCopyActions';
 import { ChatRole } from '../../api/api';
 import type { AttachedFile } from '../../types';
-import '../../chatCopyStore'; // Import for module augmentation side effect
+import { selectThreadsState } from '../../slices/threadsSlice';
+import { selectMessagesState } from '../../slices/messagesSlice';
+import { selectComposerState } from '../../slices/composerSlice';
+import { selectSettingsState } from '../../slices/settingsSlice';
 import { CHAT_COPY_SCREENSET_ID, CHAT_COPY_SCREEN_ID } from '../../ids';
 import { ModelSelector } from '../../uikit/components/ModelSelector';
 import { TemporaryChatToggle } from '../../uikit/components/TemporaryChatToggle';
@@ -110,20 +113,17 @@ const ChatScreenInternal: React.FC = () => {
   const [editedTitle, setEditedTitle] = useState('');
 
   // Subscribe to Redux state from global uicore store
-  // Chat slice was dynamically registered and RootState augmented in types.ts
-  const chat = useAppSelector((state) => state.chatCopy);
-  const {
-    threads,
-    messages,
-    currentThreadId,
-    currentModel,
-    currentContext,
-    inputValue,
-    isStreaming,
-    attachedFiles,
-    editingMessageId,
-    editedContent,
-  } = chat;
+  // Domain slices were dynamically registered and RootState augmented in each slice
+  const threadsState = useAppSelector(selectThreadsState);
+  const messagesState = useAppSelector(selectMessagesState);
+  const composerState = useAppSelector(selectComposerState);
+  const settingsState = useAppSelector(selectSettingsState);
+
+  // Destructure state from domain slices
+  const { threads, currentThreadId } = threadsState;
+  const { messages, isStreaming, editingMessageId, editedContent } = messagesState;
+  const { inputValue, attachedFiles } = composerState;
+  const { currentModel, currentContext, availableContexts } = settingsState;
 
   // Get messages for current thread
   const currentMessages = messages.filter((m) => m.threadId === currentThreadId);
@@ -601,7 +601,7 @@ const ChatScreenInternal: React.FC = () => {
             {/* Selected contexts display */}
             {currentContext.length > 0 && (
               <SelectedContextsDisplay
-                availableContexts={chat.availableContexts}
+                availableContexts={availableContexts}
                 selectedContexts={currentContext}
                 onRemove={handleRemoveContext}
                 removeAriaLabelFormatter={(name) => `Remove ${name}`}
@@ -635,7 +635,7 @@ const ChatScreenInternal: React.FC = () => {
                 />
                 <div className="absolute end-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
                   <ContextSelector
-                    availableContexts={chat.availableContexts}
+                    availableContexts={availableContexts}
                     selectedContexts={currentContext}
                     isOpen={isContextSelectorOpen}
                     onToggleOpen={() => setIsContextSelectorOpen(!isContextSelectorOpen)}

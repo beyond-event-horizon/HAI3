@@ -4,9 +4,19 @@
  */
 
 import { type ScreensetConfig, ScreensetCategory, uikitRegistry, registerSlice, I18nRegistry, Language, apiRegistry, screensetRegistry } from '@hai3/uicore';
-import { CHAT_SCREENSET_ID, CHAT_SCREEN_ID } from './ids';
+import {
+  CHAT_SCREENSET_ID,
+  CHAT_SCREEN_ID,
+} from './ids';
 import { MessageSquareIcon, MESSAGE_SQUARE_ICON_ID } from './uikit/icons/MessageSquareIcon';
-import chatReducer, { initializeChatEffects } from './slices/chatSlice';
+import threadsReducer from './slices/threadsSlice';
+import messagesReducer from './slices/messagesSlice';
+import composerReducer from './slices/composerSlice';
+import settingsReducer from './slices/settingsSlice';
+import { initializeThreadsEffects } from './effects/threadsEffects';
+import { initializeMessagesEffects } from './effects/messagesEffects';
+import { initializeComposerEffects } from './effects/composerEffects';
+import { initializeSettingsEffects } from './effects/settingsEffects';
 
 // Import for side effect - register API service
 import { CHAT_DOMAIN } from './api/ChatApiService';
@@ -69,10 +79,22 @@ uikitRegistry.registerIcons({
 });
 
 /**
- * Register chat slice dynamically with uicore store
+ * Register chat domain slices dynamically with uicore store
  * Screensets can add their state without modifying uicore package
+ * Each domain (threads, messages, composer, settings) has its own slice
  */
-registerSlice(CHAT_SCREENSET_ID, chatReducer, initializeChatEffects);
+registerSlice(`${CHAT_SCREENSET_ID}/threads`, threadsReducer, (dispatch) => {
+  initializeThreadsEffects(dispatch);
+});
+registerSlice(`${CHAT_SCREENSET_ID}/messages`, messagesReducer, (dispatch) => {
+  initializeMessagesEffects(dispatch);
+});
+registerSlice(`${CHAT_SCREENSET_ID}/composer`, composerReducer, (dispatch) => {
+  initializeComposerEffects(dispatch);
+});
+registerSlice(`${CHAT_SCREENSET_ID}/settings`, settingsReducer, (dispatch) => {
+  initializeSettingsEffects(dispatch);
+});
 
 /**
  * Chat Screenset Configuration
