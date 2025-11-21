@@ -4,7 +4,7 @@
  */
 
 export enum ScreensetEvents {
-  Changed = 'screenset/changed',
+  Changed = 'uicore/screenset/changed',
 }
 
 export interface ScreensetChangedPayload {
@@ -16,5 +16,5 @@ export interface ScreensetChangedPayload {
  * Uses string literal types as keys (event string values)
  */
 export interface ScreensetEventPayloadMap {
-  'screenset/changed': ScreensetChangedPayload;
+  'uicore/screenset/changed': ScreensetChangedPayload;
 }

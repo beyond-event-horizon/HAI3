@@ -4,7 +4,7 @@
  */
 
 export enum ThemeEvents {
-  Changed = 'theme/changed',
+  Changed = 'uicore/theme/changed',
 }
 
 export interface ThemeChangedPayload {
@@ -16,5 +16,5 @@ export interface ThemeChangedPayload {
  * Uses string literal types as keys (event string values)
  */
 export interface ThemeEventPayloadMap {
-  'theme/changed': ThemeChangedPayload;
+  'uicore/theme/changed': ThemeChangedPayload;
 }

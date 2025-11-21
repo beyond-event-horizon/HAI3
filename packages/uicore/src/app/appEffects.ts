@@ -27,25 +27,25 @@ export function initAppEffects(store: Store): void {
   // This ensures services are instantiated before plugins are registered
 
   // User fetch started - set loading state
-  eventBus.on(UserEvents.UserFetchStarted, () => {
+  eventBus.on(UserEvents.FetchStarted, () => {
     store.dispatch(setLoading(true));
   });
-  
+
   // User fetch succeeded - update user and clear loading/error
-  eventBus.on(UserEvents.UserFetched, ({ user }) => {
+  eventBus.on(UserEvents.Fetched, ({ user }) => {
     store.dispatch(setUser(user));
     store.dispatch(setError(null));
     store.dispatch(setLoading(false));
   });
 
   // User fetch failed - set error and clear loading
-  eventBus.on(UserEvents.UserFetchFailed, ({ error }) => {
+  eventBus.on(UserEvents.FetchFailed, ({ error }) => {
     store.dispatch(setError(error.message));
     store.dispatch(setLoading(false));
   });
 
   // API configuration events
-  eventBus.on(ApiEvents.ApiModeChanged, ({ useMockApi }) => {
+  eventBus.on(ApiEvents.ModeChanged, ({ useMockApi }) => {
     store.dispatch(setUseMockApi(useMockApi));
     // Reinitialize all API services with new mock mode
     apiRegistry.setMockMode(useMockApi);

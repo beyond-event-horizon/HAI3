@@ -4,7 +4,7 @@
  */
 
 export enum NavigationEvents {
-  ScreenNavigated = 'navigation/screenNavigated',
+  ScreenNavigated = 'uicore/navigation/screenNavigated',
 }
 
 export interface NavigateToScreenPayload {
@@ -16,5 +16,5 @@ export interface NavigateToScreenPayload {
  * Uses string literal types as keys (event string values)
  */
 export interface NavigationEventPayloadMap {
-  'navigation/screenNavigated': NavigateToScreenPayload;
+  'uicore/navigation/screenNavigated': NavigateToScreenPayload;
 }

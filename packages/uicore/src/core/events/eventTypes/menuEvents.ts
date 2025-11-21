@@ -4,8 +4,8 @@
  */
 
 export enum MenuEvents {
-  ItemsChanged = 'menu/itemsChanged',
-  Toggled = 'menu/toggled',
+  ItemsChanged = 'uicore/menu/itemsChanged',
+  Toggled = 'uicore/menu/toggled',
 }
 
 export interface MenuItemsChangedPayload {
@@ -24,6 +24,6 @@ export interface MenuItemsChangedPayload {
  * Toggled has no payload (void)
  */
 export interface MenuEventPayloadMap {
-  'menu/itemsChanged': MenuItemsChangedPayload;
-  'menu/toggled': void;
+  'uicore/menu/itemsChanged': MenuItemsChangedPayload;
+  'uicore/menu/toggled': void;
 }
