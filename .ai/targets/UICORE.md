@@ -31,7 +31,9 @@
 - REQUIRED: Each event file has local DOMAIN_ID constant (e.g., const DOMAIN_ID = 'api').
 - REQUIRED: Event names use pattern ${UICORE_ID}/${DOMAIN_ID}/eventName (e.g., 'uicore/api/modeChanged').
 - REQUIRED: Redux state keys use pattern ${UICORE_ID}/${DOMAIN_ID} (e.g., 'uicore/app', 'uicore/layout').
-- REQUIRED: Slice name must match state key via Object.defineProperty(reducer, 'name', { value: SLICE_KEY }).
+- REQUIRED: Define SLICE_KEY constant and use in createSlice({ name: SLICE_KEY }).
+- REQUIRED: Export the slice object (not just the reducer) as default export for registerSlice().
+- FORBIDDEN: Object.defineProperty on reducers (slice.name is used automatically).
 - REQUIRED: Access state via state.uicore.domainName (e.g., state.uicore.app, state.uicore.layout).
 - FORBIDDEN: Barrel export (index.ts) in eventTypes folder; use direct imports instead.
 - FORBIDDEN: Hardcoded event names or state keys; always use template literals with constants.
@@ -49,9 +51,8 @@
 - REQUIRED: Use useTranslation() hook to consume translations (t, language, direction).
 - REQUIRED: Use useScreenTranslations(screensetId, screenId, loader) in screen components for lazy-loaded translations.
 - REQUIRED: Use <TextLoader> component to wrap translated text for loading states during lazy translation loading.
-- REQUIRED: Translation namespaces:
-  - Screenset: "screenset.<id>:key".
-  - Screen: "screen.<screenset>.<screen>:key".
+- REQUIRED: Screenset namespace format: "screenset.<id>:key".
+- REQUIRED: Screen namespace format: "screen.<screenset>.<screen>:key".
 - REQUIRED: Screenset-level translations auto-load on language change via i18nRegistry.loadLanguage().
 - REQUIRED: Screen-level translations lazy-load only when screen is active (via useScreenTranslations).
 - FORBIDDEN: Creating standalone i18n utility files; consolidate into I18nRegistry class methods.
@@ -65,3 +66,4 @@
 - [ ] Routing is generated from screenset registry, not hardcoded.
 - [ ] No imports from screenset-private modules.
 - [ ] I18n uses I18nRegistry class methods (no standalone utilities).
+- [ ] Slice objects exported as default (not just reducers).

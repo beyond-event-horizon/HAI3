@@ -17,11 +17,14 @@
 - No direct slice imports; use @hai3/uicore or local actions.
 
 ## STATE MANAGEMENT RULES
-- REQUIRED: registerSlice() from @hai3/uicore for each domain slice.
+- REQUIRED: Export slice object (not just reducer) as default from slice files.
+- REQUIRED: registerSlice(sliceObject, initEffects) passes slice object directly.
 - REQUIRED: Split screenset into domains (threads, messages, settings, etc).
 - REQUIRED: Domain-specific folders: slices/, actions/, events/, effects/.
 - REQUIRED: Events split into domain files with local DOMAIN_ID.
 - REQUIRED: Effects split into domain files; each slice registers its own effects.
+- FORBIDDEN: Object.defineProperty on reducers.
+- FORBIDDEN: Exporting only reducer from slice files.
 - FORBIDDEN: Coordinator effects files.
 - FORBIDDEN: Monolithic slice/events/effects files.
 - FORBIDDEN: Barrel exports in events/ or effects/.
@@ -30,6 +33,7 @@
 - DETECT: grep -rn "class.*Store\\|subscribe.*listener" src/screensets/*/
 - DETECT: grep -rn "events/index\\|effects/index" src/screensets
 - DETECT: grep -rn "chatEffects\\|demoEffects" src/screensets
+- DETECT: grep -rn "Object\\.defineProperty.*reducer" src/screensets
 
 ## DRAFT ENTITY PATTERN
 - REQUIRED: Create draft entities locally before backend save.
