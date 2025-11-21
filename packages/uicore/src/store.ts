@@ -72,11 +72,12 @@ export const store = {
  * This ensures screenset self-containment - when you duplicate a screenset and change
  * the screenset ID constant, everything auto-updates via template literals.
  *
- * @param sliceName - Name of the slice AND state key (e.g., 'chat')
+ * @param sliceName - Name of the slice AND state key (e.g., 'chat' or 'chat/threads')
  * @param reducer - Reducer function for the slice (slice.name must match sliceName)
  * @param initEffects - Optional function to initialize effects with store.dispatch
  *
  * @throws Error if slice name doesn't match state key (convention violation)
+ * @throws Error if domain-based slice has invalid format
  */
 export function registerSlice(
   sliceName: string,
@@ -89,6 +90,27 @@ export function registerSlice(
     return;
   }
 
+  // VALIDATE DOMAIN-BASED SLICE FORMAT
+  // Domain-based slices must follow 'screensetId/domain' format (exactly 2 parts)
+  if (sliceName.includes('/')) {
+    const parts = sliceName.split('/');
+    if (parts.length !== 2) {
+      throw new Error(
+        `Invalid domain slice key: "${sliceName}".\n` +
+        `Domain-based slices must use "screensetId/domain" format (exactly 2 parts).\n` +
+        `Examples: "chat/threads", "chat/messages", "dashboard/widgets"\n` +
+        `Invalid: "chat/messages/extra" (too many parts)`
+      );
+    }
+    if (parts[0] === '' || parts[1] === '') {
+      throw new Error(
+        `Invalid domain slice key: "${sliceName}".\n` +
+        `Both screensetId and domain must be non-empty.\n` +
+        `Fix: Use format "screensetId/domain" (e.g., "chat/threads")`
+      );
+    }
+  }
+
   // ENFORCE CONVENTION: Slice name must equal state key
   // Extract the actual slice name from the reducer (set in createSlice({ name: ... }))
   // Redux Toolkit reducers have a 'name' property from the slice configuration
@@ -96,10 +118,21 @@ export function registerSlice(
   const actualSliceName = reducerWithName.name;
 
   if (actualSliceName && actualSliceName !== sliceName) {
+    const isDomainBased = sliceName.includes('/');
+    const fixSuggestion = isDomainBased
+      ? `For domain-based slices:\n` +
+        `  1. Define: const SLICE_KEY = \`\${SCREENSET_ID}/domain\` as const;\n` +
+        `  2. Use in: createSlice({ name: SLICE_KEY, ... })\n` +
+        `  3. Register: registerSlice(SLICE_KEY, reducer, effects)`
+      : `For flat slices:\n` +
+        `  1. Define: const SLICE_KEY = SCREENSET_ID;\n` +
+        `  2. Use in: createSlice({ name: SLICE_KEY, ... })\n` +
+        `  3. Register: registerSlice(SLICE_KEY, reducer, effects)`;
+
     throw new Error(
       `Screenset convention violation: Slice name "${actualSliceName}" must match state key "${sliceName}".\n` +
-      `This is required for screenset self-containment.\n` +
-      `Fix: Update createSlice({ name: ${actualSliceName} }) to use your SCREENSET_ID constant instead of a hardcoded string.`
+      `This is required for screenset self-containment.\n\n` +
+      fixSuggestion
     );
   }
 
