@@ -2,103 +2,71 @@
 
 ## WORKFLOW: Duplicate Screenset
 
-REQUIRED: Copy entire screenset directory including api/
-REQUIRED: Update all IDs (screenset, screen, icon, slice, events, API domain)
-REQUIRED: Update Redux slice name and module augmentation
-REQUIRED: Update API domain constant to be unique
-REQUIRED: Update all event names with new namespace prefix
-REQUIRED: Update all translation keys in all 36 language files
-REQUIRED: Register in screensetRegistry.tsx
-REQUIRED: Pass arch:check with zero errors
-REQUIRED: Test via Chrome DevTools MCP (never skip)
+REQUIRED: Copy folder and update ids.ts only (2 steps, 96% reduction from ~50 steps).
+REQUIRED: Pass arch:check with zero errors.
+REQUIRED: Test via Chrome DevTools MCP (never skip).
 
 ## STEP 0: Gather Requirements
 
-Ask the user for:
-1. **SOURCE screenset name** (existing screenset to copy)
-2. **TARGET screenset name** (new screenset name)
-3. **TARGET category**: drafts | mockups | production
+Ask user for:
+- SOURCE screenset name (existing screenset to copy).
+- TARGET screenset name (camelCase, single word preferred).
+- TARGET category: Drafts, Mockups, or Production.
 
-## STEP 1: Copy
+## STEP 1: Copy Folder
 
 REQUIRED: cp -r src/screensets/SOURCE src/screensets/TARGET
-REQUIRED: Verify api/ directory copied (if exists)
+
+What gets copied:
+- All screens, components, UI elements.
+- Redux slices/, actions/, events/, effects/ with domain-specific files (if present).
+- API services and mocks (if present).
+- Icons (if present).
+- Translation files (all 36 languages).
+- ids.ts (will be updated in Step 2).
 
 ## STEP 2: Update IDs
 
-REQUIRED: Update screenIds.ts - rename all SCREEN_ID constants
-REQUIRED: Update main screenset file - rename SCREENSET_ID
-REQUIRED: Update icon IDs - append suffix to avoid conflicts
-REQUIRED: Update API domain constant (e.g., 'chat' to 'chat-copy')
-REQUIRED: Set category to correct ScreensetCategory value
+REQUIRED: Update ids.ts with TARGET_SCREENSET_ID and all SCREEN_IDs (camelCase).
+REQUIRED: Everything else auto-updates via template literals.
+- Event enums: ${TARGET_SCREENSET_ID}/${DOMAIN_ID}/eventName (domain files have local DOMAIN_ID constant).
+- Icon IDs: ${TARGET_SCREENSET_ID}:iconName.
+- API domain: ${TARGET_SCREENSET_ID}:serviceName.
+- Redux state key: State = \`${TARGET_SCREENSET_ID}\`.
+- Screenset auto-discovered (no manual registration).
 
-## STEP 3: Redux State
+Optional: Update category in screenset config if needed.
 
-REQUIRED: Rename store file (SOURCEStore.ts to TARGETStore.ts)
-REQUIRED: Update createSlice name field
-REQUIRED: Rename State interface
-REQUIRED: Update module augmentation - new state key in RootState
-FORBIDDEN: Duplicate state keys
+## STEP 3: Validate
 
-## STEP 4: Events & API
+REQUIRED: npm run type-check (MUST pass with zero errors).
+REQUIRED: npm run arch:check (MUST pass all checks).
+REQUIRED: npm run lint (MUST pass with zero errors).
+DETECT: grep -rn "OLD_SCREENSET_ID" src/screensets/TARGET/ (MUST be 0 matches).
 
-REQUIRED: Rename events file
-REQUIRED: Update enum name
-REQUIRED: Replace all event string prefixes (source/ to target/)
-REQUIRED: Update EventPayloadMap with new event names
-REQUIRED: Rename effects file and update listeners
-REQUIRED: Rename actions file and update emits
-REQUIRED: Update api/ChatApiService.ts domain constant
-REQUIRED: Update ApiServicesMap module augmentation
-FORBIDDEN: Any references to old event names or old domain constants
+## STEP 4: Test via Chrome DevTools MCP
 
-## STEP 5: Components
-
-REQUIRED: Update screen component imports
-REQUIRED: Change state.source to state.target in selectors
-REQUIRED: Update all action imports and calls
-REQUIRED: Update translation keys in tk function
-REQUIRED: Update useScreenTranslations IDs
-FORBIDDEN: Old screenset or screen IDs
-
-## STEP 6: Translations
-
-REQUIRED: Update i18n/en.json title and screen keys
-REQUIRED: sed update all other language files
-DETECT: grep -rn "screenset\\.SOURCE:" TARGET (MUST be 0)
-
-## STEP 7: Register
-
-REQUIRED: Import new screenset in screensetRegistry.tsx
-REQUIRED: Call register with new config
-
-## STEP 8: Validate
-
-REQUIRED: npm run type-check (MUST pass)
-REQUIRED: npm run arch:check (MUST pass)
-DETECT: grep -rn "OLD_SCREENSET_ID" TARGET (MUST be 0)
-
-## STEP 9: Test MCP
-
-STOP: If MCP broken, fix first
-REQUIRED: Navigate via DevTools selector
-REQUIRED: Verify URL change
-REQUIRED: Test all primary screenset features
-REQUIRED: Test all interactive components and state changes
-REQUIRED: Verify no console errors
-FORBIDDEN: Skip MCP testing
-
-## PATTERNS
-
-BAD: Import SOURCE names | GOOD: Update to TARGET names
-BAD: state.source in TARGET | GOOD: state.target in TARGET
-BAD: source/ events | GOOD: target/ events
-BAD: Skip testing | GOOD: Always test MCP
+STOP: If MCP connection is broken, fix it first. NEVER skip testing.
+REQUIRED: npm run dev.
+REQUIRED: mcp__chrome-devtools__list_pages to check open pages.
+REQUIRED: mcp__chrome-devtools__navigate_page to load app.
+REQUIRED: mcp__chrome-devtools__take_snapshot to verify screenset appears in selector.
+REQUIRED: Click screenset in dev panel to switch to new screenset.
+REQUIRED: Verify URL changes to target screenset.
+REQUIRED: mcp__chrome-devtools__list_console_messages to check for errors.
+REQUIRED: Test all primary screenset features.
+REQUIRED: Verify no console errors in browser.
 
 ## CHECKLIST
 
-- [ ] Gather requirements (source, target name, category)
-- [ ] Copy, IDs, icon, category
-- [ ] Store, slice, events, effects, actions
-- [ ] Components, translations, register
-- [ ] Type-check, arch:check, MCP test, no errors
+- [ ] Gather requirements (source, target name, category).
+- [ ] Copy folder: cp -r src/screensets/SOURCE src/screensets/TARGET.
+- [ ] Update ids.ts with new screenset ID and all screen IDs.
+- [ ] (Optional) Update category in screenset config.
+- [ ] Run type-check (MUST pass).
+- [ ] Run arch:check (MUST pass).
+- [ ] Run lint (MUST pass).
+- [ ] Verify zero occurrences of old screenset ID.
+- [ ] Test via Chrome DevTools MCP (NEVER skip).
+- [ ] Verify screenset auto-discovered in dev panel.
+- [ ] Test all features and verify no console errors.
