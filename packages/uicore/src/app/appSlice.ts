@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { ApiUser } from '../api/services/accounts/api';
 import { Language } from '../i18n/types';
+import { UICORE_ID } from '../core/constants';
 
 /**
  * App Slice - Application-level state
@@ -8,7 +9,8 @@ import { Language } from '../i18n/types';
  * Updated by appEffects based on events
  */
 
-const APP_SLICE_NAME = 'app';
+const DOMAIN_ID = 'app';
+const SLICE_KEY = `${UICORE_ID}/${DOMAIN_ID}` as const;
 
 export interface AppState {
   user: ApiUser | null;
@@ -33,7 +35,7 @@ const initialState: AppState = {
 };
 
 const appSlice = createSlice({
-  name: APP_SLICE_NAME,
+  name: SLICE_KEY,
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<ApiUser | null>) => {
@@ -69,3 +71,6 @@ const appSlice = createSlice({
 export const { setUser, setTenant, setLoading, setError, clearError, setUseMockApi, setLanguage, setTranslationsReady, incrementScreenTranslationsVersion } = appSlice.actions;
 
 export default appSlice.reducer;
+
+// Ensure reducer name matches slice key (convention for self-containment)
+Object.defineProperty(appSlice.reducer, 'name', { value: SLICE_KEY });

@@ -3,9 +3,12 @@
  */
 
 import type { Language } from '../../../i18n/types';
+import { UICORE_ID } from '../../constants';
+
+const DOMAIN_ID = 'i18n';
 
 export enum I18nEvents {
-  LanguageChanged = 'uicore/i18n/languageChanged',
+  LanguageChanged = `${UICORE_ID}/${DOMAIN_ID}/languageChanged`,
 }
 
 export interface LanguageChangedPayload {

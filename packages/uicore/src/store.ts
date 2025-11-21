@@ -12,6 +12,7 @@ import { initAppEffects } from './app/appEffects';
 import { initLayoutEffects } from './layout/layoutEffects';
 import { initNavigationEffects } from './layout/navigationEffects';
 import { initMenuEffects } from './layout/domains/menu/menuEffects';
+import { UICORE_ID } from './core/constants';
 
 /**
  * HAI3 Redux store configuration
@@ -22,8 +23,8 @@ import { initMenuEffects } from './layout/domains/menu/menuEffects';
  * - Screensets can register slices dynamically via registerSlice()
  */
 
-// Core reducers that are always present
-const staticReducers = {
+// Core uicore reducers nested under 'uicore' key
+const uicoreReducers = combineReducers({
   app: appReducer,
   layout: layoutReducer,
   header: headerReducer,
@@ -33,6 +34,11 @@ const staticReducers = {
   screen: screenReducer,
   popup: popupReducer,
   overlay: overlayReducer,
+});
+
+// Static reducers that are always present
+const staticReducers = {
+  [UICORE_ID]: uicoreReducers,
 };
 
 // Dynamic reducers registered by screensets
@@ -41,15 +47,17 @@ const dynamicReducers: Record<string, Reducer> = {};
 // Base RootState interface - defined explicitly for module augmentation
 // Screensets can extend this via module augmentation to add their slices
 export interface RootState {
-  app: ReturnType<typeof appReducer>;
-  layout: ReturnType<typeof layoutReducer>;
-  header: ReturnType<typeof headerReducer>;
-  footer: ReturnType<typeof footerReducer>;
-  menu: ReturnType<typeof menuReducer>;
-  sidebar: ReturnType<typeof sidebarReducer>;
-  screen: ReturnType<typeof screenReducer>;
-  popup: ReturnType<typeof popupReducer>;
-  overlay: ReturnType<typeof overlayReducer>;
+  uicore: {
+    app: ReturnType<typeof appReducer>;
+    layout: ReturnType<typeof layoutReducer>;
+    header: ReturnType<typeof headerReducer>;
+    footer: ReturnType<typeof footerReducer>;
+    menu: ReturnType<typeof menuReducer>;
+    sidebar: ReturnType<typeof sidebarReducer>;
+    screen: ReturnType<typeof screenReducer>;
+    popup: ReturnType<typeof popupReducer>;
+    overlay: ReturnType<typeof overlayReducer>;
+  };
 }
 
 // Create store with static reducers

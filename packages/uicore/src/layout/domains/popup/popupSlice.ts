@@ -1,9 +1,13 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { LayoutDomains } from '../../layoutSlice';
+import { UICORE_ID } from '../../../core/constants';
+import { LAYOUT_DOMAINS } from '../../layoutSlice';
 
 /**
  * Popup slice for managing popup state
  */
+
+const DOMAIN_ID = LAYOUT_DOMAINS.POPUP;
+const SLICE_KEY = `${UICORE_ID}/${DOMAIN_ID}` as const;
 
 export interface PopupState {
   id: string;
@@ -22,7 +26,7 @@ const initialState: PopupSliceState = {
 };
 
 const popupSlice = createSlice({
-  name: LayoutDomains.Popup,
+  name: SLICE_KEY,
   initialState,
   reducers: {
     openPopup: (state, action: PayloadAction<Omit<PopupState, 'zIndex'>>) => {
@@ -45,3 +49,6 @@ const popupSlice = createSlice({
 
 export const { openPopup, closePopup, closeTopPopup, closeAllPopups } = popupSlice.actions;
 export default popupSlice.reducer;
+
+// Ensure reducer name matches slice key (convention for self-containment)
+Object.defineProperty(popupSlice.reducer, 'name', { value: SLICE_KEY });

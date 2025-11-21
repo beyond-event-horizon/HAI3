@@ -37,8 +37,8 @@ export function useScreenTranslations(
   const registered = useRef(false);
   const loadedLanguage = useRef<Language | null>(null);
   const [, setLoaded] = useState(0);
-  const language = useSelector((state: RootState) => state.app.language);
-  const selectedScreen = useSelector((state: RootState) => state.layout.selectedScreen);
+  const language = useSelector((state: RootState) => state.uicore.app.language);
+  const selectedScreen = useSelector((state: RootState) => state.uicore.layout.selectedScreen);
   const dispatch = useDispatch();
 
   // Register loader once

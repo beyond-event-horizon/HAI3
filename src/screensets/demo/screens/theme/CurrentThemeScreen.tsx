@@ -52,7 +52,7 @@ const translations = I18nRegistry.createLoader({
 export const CurrentThemeScreen: React.FC = () => {
   // Register translations for this screen
   useScreenTranslations(DEMO_SCREENSET_ID, CURRENT_THEME_SCREEN_ID, translations);
-  const theme = useAppSelector((state) => state.layout.theme);
+  const theme = useAppSelector((state) => state.uicore.layout.theme);
   const { t } = useTranslation();
 
   return (

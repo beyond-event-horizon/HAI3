@@ -39,10 +39,10 @@ import { TextDirection, type Language, type LanguageMetadata } from './types';
  */
 export function useTranslation() {
   // Read language and translations ready state from Redux store (Flux pattern: Store → Component)
-  const language = useSelector((state: RootState) => state.app.language);
-  const translationsReady = useSelector((state: RootState) => state.app.translationsReady);
+  const language = useSelector((state: RootState) => state.uicore.app.language);
+  const translationsReady = useSelector((state: RootState) => state.uicore.app.translationsReady);
   // Subscribe to screen translations version to re-render when screen translations load
-  useSelector((state: RootState) => state.app.screenTranslationsVersion);
+  useSelector((state: RootState) => state.uicore.app.screenTranslationsVersion);
 
   // Compute direction from language metadata (convert null to undefined for isRTL)
   const direction = i18nRegistry.isRTL(language ?? undefined)

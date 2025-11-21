@@ -13,7 +13,7 @@ export interface ApiModeToggleProps {
 }
 
 export const ApiModeToggle: React.FC<ApiModeToggleProps> = ({ className }) => {
-  const useMockApi = useAppSelector((state) => state.app.useMockApi);
+  const useMockApi = useAppSelector((state) => state.uicore.app.useMockApi);
   const { t } = useTranslation();
 
   return (

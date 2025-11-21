@@ -1,9 +1,13 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { LayoutDomains } from '../../layoutSlice';
+import { UICORE_ID } from '../../../core/constants';
+import { LAYOUT_DOMAINS } from '../../layoutSlice';
 
 /**
  * Footer slice for managing footer configuration
  */
+
+const DOMAIN_ID = LAYOUT_DOMAINS.FOOTER;
+const SLICE_KEY = `${UICORE_ID}/${DOMAIN_ID}` as const;
 
 export interface ScreensetOption {
   category: string;
@@ -21,7 +25,7 @@ const initialState: FooterState = {
 };
 
 const footerSlice = createSlice({
-  name: LayoutDomains.Footer,
+  name: SLICE_KEY,
   initialState,
   reducers: {
     setFooterVisible: (state, action: PayloadAction<boolean>) => {
@@ -35,3 +39,6 @@ const footerSlice = createSlice({
 
 export const { setFooterVisible, setFooterConfig } = footerSlice.actions;
 export default footerSlice.reducer;
+
+// Ensure reducer name matches slice key (convention for self-containment)
+Object.defineProperty(footerSlice.reducer, 'name', { value: SLICE_KEY });

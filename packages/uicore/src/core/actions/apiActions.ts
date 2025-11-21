@@ -4,7 +4,7 @@
  */
 
 import { eventBus } from '../events/eventBus';
-import { ApiEvents } from '../events/eventTypes';
+import { ApiEvents } from '../events/eventTypes/apiEvents';
 
 /**
  * Set API mode (mock vs real)

@@ -8,7 +8,7 @@
 
 import type { Store } from '@reduxjs/toolkit';
 import { eventBus } from '../core/events/eventBus';
-import { ThemeEvents } from '../core/events/eventTypes';
+import { ThemeEvents } from '../core/events/eventTypes/themeEvents';
 import { themeRegistry } from '../theme/themeRegistry';
 import { setTheme } from './layoutSlice';
 

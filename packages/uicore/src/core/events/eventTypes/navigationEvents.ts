@@ -3,8 +3,12 @@
  * Events related to screen navigation
  */
 
+import { UICORE_ID } from '../../constants';
+
+const DOMAIN_ID = 'navigation';
+
 export enum NavigationEvents {
-  ScreenNavigated = 'uicore/navigation/screenNavigated',
+  ScreenNavigated = `${UICORE_ID}/${DOMAIN_ID}/screenNavigated`,
 }
 
 export interface NavigateToScreenPayload {

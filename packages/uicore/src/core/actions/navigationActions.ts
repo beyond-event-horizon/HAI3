@@ -5,7 +5,9 @@
  */
 
 import { eventBus } from '../events/eventBus';
-import { NavigationEvents, ScreensetEvents, MenuEvents } from '../events/eventTypes';
+import { NavigationEvents } from '../events/eventTypes/navigationEvents';
+import { ScreensetEvents } from '../events/eventTypes/screensetEvents';
+import { MenuEvents } from '../events/eventTypes/menuEvents';
 import { routeRegistry } from '../routing/routeRegistry';
 import { screensetRegistry } from '../../screensets/screensetRegistry';
 

@@ -1,10 +1,14 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { LayoutDomains } from '../../layoutSlice';
+import { UICORE_ID } from '../../../core/constants';
+import { LAYOUT_DOMAINS } from '../../layoutSlice';
 
 /**
  * Menu slice for managing menu state and configuration
  * MenuItem type is defined here (vertical slice approach)
  */
+
+const DOMAIN_ID = LAYOUT_DOMAINS.MENU;
+const SLICE_KEY = `${UICORE_ID}/${DOMAIN_ID}` as const;
 
 export interface MenuItem {
   id: string;
@@ -29,7 +33,7 @@ const initialState: MenuState = {
 };
 
 const menuSlice = createSlice({
-  name: LayoutDomains.Menu,
+  name: SLICE_KEY,
   initialState,
   reducers: {
     toggleMenu: (state) => {
@@ -52,3 +56,6 @@ const menuSlice = createSlice({
 
 export const { toggleMenu, setMenuCollapsed, setMenuItems, setMenuVisible, setMenuConfig } = menuSlice.actions;
 export default menuSlice.reducer;
+
+// Ensure reducer name matches slice key (convention for self-containment)
+Object.defineProperty(menuSlice.reducer, 'name', { value: SLICE_KEY });

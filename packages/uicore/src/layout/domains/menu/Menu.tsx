@@ -14,8 +14,8 @@ import { TextLoader } from '../../../i18n/TextLoader';
  * Initial navigation handled by AppRouter (default route)
  */
 export const Menu: React.FC = () => {
-  const { items, collapsed, visible } = useAppSelector((state) => state.menu);
-  const selectedScreen = useAppSelector((state) => state.layout.selectedScreen);
+  const { items, collapsed, visible } = useAppSelector((state) => state.uicore.menu);
+  const selectedScreen = useAppSelector((state) => state.uicore.layout.selectedScreen);
   const { t } = useTranslation();
 
   if (!visible) return null;

@@ -2,7 +2,7 @@ import React from 'react';
 import { useAppSelector } from '../../../hooks/useRedux';
 
 export const Sidebar: React.FC = () => {
-  const { content, position, collapsed, visible } = useAppSelector((state) => state.sidebar);
+  const { content, position, collapsed, visible } = useAppSelector((state) => state.uicore.sidebar);
 
   if (!visible) return null;
 

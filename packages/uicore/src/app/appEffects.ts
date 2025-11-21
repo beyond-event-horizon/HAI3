@@ -9,11 +9,9 @@
 
 import type { Store } from '@reduxjs/toolkit';
 import { eventBus } from '../core/events/eventBus';
-import {
-  UserEvents,
-  ApiEvents,
-  I18nEvents,
-} from '../core/events/eventTypes';
+import { UserEvents } from '../core/events/eventTypes/userEvents';
+import { ApiEvents } from '../core/events/eventTypes/apiEvents';
+import { I18nEvents } from '../core/events/eventTypes/i18nEvents';
 import { setUser, setError, setLoading, setUseMockApi, setLanguage, setTranslationsReady } from './appSlice';
 import { i18nRegistry } from '../i18n/i18nRegistry';
 import { apiRegistry } from '../api/apiRegistry';

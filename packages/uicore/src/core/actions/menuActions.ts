@@ -5,7 +5,7 @@
  */
 
 import { eventBus } from '../events/eventBus';
-import { MenuEvents } from '../events/eventTypes';
+import { MenuEvents } from '../events/eventTypes/menuEvents';
 
 /**
  * Toggle menu collapsed state
