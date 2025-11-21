@@ -38,7 +38,5 @@ const footerSlice = createSlice({
 });
 
 export const { setFooterVisible, setFooterConfig } = footerSlice.actions;
-export default footerSlice.reducer;
 
-// Ensure reducer name matches slice key (convention for self-containment)
-Object.defineProperty(footerSlice.reducer, 'name', { value: SLICE_KEY });
+export default footerSlice.reducer;

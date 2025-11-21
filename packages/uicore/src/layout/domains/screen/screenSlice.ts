@@ -36,7 +36,5 @@ const screenSlice = createSlice({
 });
 
 export const { setActiveScreen, setScreenLoading, clearActiveScreen } = screenSlice.actions;
-export default screenSlice.reducer;
 
-// Ensure reducer name matches slice key (convention for self-containment)
-Object.defineProperty(screenSlice.reducer, 'name', { value: SLICE_KEY });
+export default screenSlice.reducer;

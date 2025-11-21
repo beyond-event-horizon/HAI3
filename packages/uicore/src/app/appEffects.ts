@@ -51,7 +51,7 @@ export function initAppEffects(store: Store): void {
 
   // i18n events
   eventBus.on(I18nEvents.LanguageChanged, async ({ language }) => {
-    const state = store.getState().app;
+    const state = store.getState().uicore.app;
     const currentLanguage = state.language;
     const translationsReady = state.translationsReady;
     

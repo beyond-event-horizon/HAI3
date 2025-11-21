@@ -80,10 +80,9 @@ export const {
   setIsStreaming,
 } = messagesSlice.actions;
 
-// Export reducer with proper name for validation
-const messagesReducer = messagesSlice.reducer;
-Object.defineProperty(messagesReducer, 'name', { value: SLICE_KEY });
-export default messagesReducer;
+// Export the slice object (not just the reducer) for registerSlice()
+// The slice.name property is automatically set by createSlice() to SLICE_KEY
+export default messagesSlice;
 
 // Module augmentation - extends uicore RootState
 declare module '@hai3/uicore' {

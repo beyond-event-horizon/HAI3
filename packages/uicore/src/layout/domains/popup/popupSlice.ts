@@ -48,7 +48,5 @@ const popupSlice = createSlice({
 });
 
 export const { openPopup, closePopup, closeTopPopup, closeAllPopups } = popupSlice.actions;
-export default popupSlice.reducer;
 
-// Ensure reducer name matches slice key (convention for self-containment)
-Object.defineProperty(popupSlice.reducer, 'name', { value: SLICE_KEY });
+export default popupSlice.reducer;
