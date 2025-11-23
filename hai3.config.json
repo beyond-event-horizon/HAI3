@@ -1,0 +1,7 @@
+{
+  "$schema": "https://hai3.dev/schemas/config.json",
+  "version": "1.0.0",
+  "uikit": "hai3",
+  "devtools": true,
+  "cliVersion": "0.1.0"
+}

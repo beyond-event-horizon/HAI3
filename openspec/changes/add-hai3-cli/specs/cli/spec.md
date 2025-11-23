@@ -11,14 +11,20 @@ The CLI SHALL be implemented as a workspace package `@hai3/cli` with a globally 
 **Then** the system SHALL:
 - Install the `@hai3/cli` package
 - Make `hai3` command available in PATH
-- Support both ESM and CommonJS environments
+- Support CommonJS environments (Node.js)
 
 #### Scenario: Package structure
 
 ```
 packages/cli/
-├── package.json          # name: @hai3/cli, bin: { hai3: ./dist/index.js }
-├── tsup.config.ts        # Bundle config
+├── package.json          # name: @hai3/cli, bin: { hai3: ./dist/index.cjs }
+├── tsup.config.ts        # Bundle config (CJS output)
+├── scripts/
+│   └── copy-templates.ts # Build-time template copying
+├── templates/            # Gitignored - generated at build
+│   ├── manifest.json
+│   ├── screenset-template/
+│   └── ...
 ├── src/
 │   ├── index.ts          # CLI entry point (Commander setup)
 │   ├── api.ts            # Programmatic API exports
@@ -27,30 +33,116 @@ packages/cli/
 │   │   ├── command.ts    # CommandDefinition interface
 │   │   ├── registry.ts   # CommandRegistry class
 │   │   ├── executor.ts   # executeCommand() function
-│   │   ├── context.ts    # CommandContext builder
-│   │   └── logger.ts     # Colored output (silenceable)
+│   │   ├── types.ts      # Shared types
+│   │   ├── logger.ts     # Colored output (silenceable)
+│   │   └── prompt.ts     # Prompt abstraction
 │   │
 │   ├── commands/
 │   │   ├── create/       # Project creation command
 │   │   ├── update/       # Update command
 │   │   └── screenset/    # Screenset subcommands
 │   │
-│   ├── generators/       # TypeScript code generators
-│   │   ├── project.ts
-│   │   ├── screenset.ts
-│   │   ├── screen.ts
-│   │   ├── i18n.ts
-│   │   └── utils.ts
+│   ├── generators/
+│   │   ├── project.ts          # Template-based project generation
+│   │   ├── screensetFromTemplate.ts  # Template-based screenset generation
+│   │   ├── screenset.ts        # Legacy programmatic (reference)
+│   │   ├── i18n.ts             # Translation utilities
+│   │   ├── transform.ts        # ID transformation for copy
+│   │   └── utils.ts            # toPascalCase, toScreamingSnake, etc.
 │   │
 │   └── utils/
 │       ├── project.ts    # findProjectRoot(), loadConfig()
 │       ├── fs.ts         # writeGeneratedFiles()
-│       └── transform.ts  # ID transformation for copy
+│       └── validation.ts # Name validation utilities
 ```
 
 **Given** the package structure above
 **When** tsup builds the package
 **Then** the output SHALL include both CLI binary and library exports
+
+### Requirement: Template-Based Code Generation
+
+The CLI SHALL use a template-based approach where real project files are copied at build time and transformed at runtime, ensuring templates never drift from framework patterns.
+
+#### Scenario: Build-time template copying
+
+**Given** the `packages/cli/scripts/copy-templates.ts` script
+**When** `npm run build` is executed in packages/cli
+**Then** the system SHALL:
+- Copy root config files (index.html, tsconfig.json, vite.config.ts, etc.)
+- Copy AI guideline folders (.ai, .cursor, .windsurf)
+- Copy source directories (themes, uikit, icons)
+- Copy demo screenset for project creation
+- Copy _blank screenset as screenset-template for screenset creation
+- Generate manifest.json with build metadata
+
+#### Scenario: Template sources configuration
+
+```typescript
+const config = {
+  rootFiles: [
+    'index.html',
+    'postcss.config.ts',
+    'tailwind.config.ts',
+    'tsconfig.json',
+    'tsconfig.node.json',
+    'vite.config.ts',
+    '.gitignore',
+  ],
+  directories: [
+    '.ai',
+    '.cursor',
+    '.windsurf',
+    'src/themes',
+    'src/uikit',
+    'src/icons',
+  ],
+  screensets: ['demo'],
+  screensetTemplate: '_blank',
+};
+```
+
+**Given** the template configuration above
+**When** copy-templates.ts runs
+**Then** all specified files SHALL be copied to packages/cli/templates/
+
+### Requirement: Blank Screenset Template
+
+The CLI SHALL include a minimal `_blank` screenset template with correct structure but no business logic.
+
+#### Scenario: Template structure
+
+```
+src/screensets/_blank/
+├── ids.ts                    # Centralized IDs
+├── types/index.ts            # Type definitions (empty)
+├── events/_blankEvents.ts    # Events enum (empty, with examples)
+├── slices/_blankSlice.ts     # Redux slice (empty state)
+├── effects/_blankEffects.ts  # Effect listeners (empty)
+├── actions/_blankActions.ts  # Action creators (empty)
+├── api/
+│   ├── _blankApiService.ts   # API service class (base only)
+│   └── mocks.ts              # Mock map (empty)
+├── uikit/icons/HomeIcon.tsx  # Custom icon
+├── i18n/                     # 36 language files
+├── screens/home/
+│   ├── HomeScreen.tsx        # Simple screen (title + description)
+│   └── i18n/                 # 36 language files
+└── _blankScreenset.tsx       # Screenset config with self-registration
+```
+
+**Given** the _blank screenset template
+**When** developers review the structure
+**Then** they SHALL find:
+- Empty placeholder files with commented examples
+- No business logic to remove
+- Correct HAI3 architectural patterns
+
+#### Scenario: Template validation
+
+**Given** the _blank screenset in src/screensets/_blank/
+**When** running validation commands
+**Then** `npm run type-check` and `npm run arch:check` SHALL pass
 
 ### Requirement: Scalable Command Architecture
 
@@ -125,142 +217,41 @@ if (result.success) {
 - Use provided arguments directly
 - Return typed `CommandResult<T>` with success/failure and data
 
-#### Scenario: Pre-filled answers for prompts
-
-```typescript
-const result = await executeCommand(
-  commands.create,
-  { projectName: 'my-app' },
-  {
-    interactive: false,
-    answers: {
-      uikit: 'hai3',
-      devtools: true,
-      initGit: false,
-    },
-  }
-);
-```
-
-**Given** a command with interactive prompts
-**When** executed with `answers` object
-**Then** the system SHALL use provided answers instead of prompting
-
-#### Scenario: Structured error responses
-
-```typescript
-const result = await executeCommand(
-  commands.screensetCreate,
-  { name: 'Invalid-Name' },
-  { interactive: false }
-);
-
-// result = {
-//   success: false,
-//   errors: [
-//     { code: 'INVALID_NAME', message: 'Screenset name must be camelCase' }
-//   ]
-// }
-```
-
-**Given** invalid arguments
-**When** validation fails
-**Then** the system SHALL return structured errors with code and message
-
-### Requirement: TypeScript-Based Code Generation
-
-The CLI SHALL use TypeScript generator functions (NOT template engines like EJS) to produce type-safe, refactorable code.
-
-#### Scenario: Generator function pattern
-
-```typescript
-interface ScreensetGeneratorInput {
-  screensetId: string;
-  screensetName: string;
-  initialScreenId: string;
-  category: ScreensetCategory;
-}
-
-interface GeneratedFile {
-  path: string;
-  content: string;
-}
-
-function generateScreenset(input: ScreensetGeneratorInput): GeneratedFile[] {
-  return [
-    generateIdsFile(input),
-    generateScreensetConfig(input),
-    generateInitialScreen(input),
-    ...generateI18nFiles(input),
-  ];
-}
-```
-
-**Given** typed generator input
-**When** generating code
-**Then** the system SHALL:
-- Use TypeScript functions to build file contents
-- Return array of `{ path, content }` objects
-- Enable IDE autocomplete and refactoring support
-
-#### Scenario: Generated ids.ts file
-
-```typescript
-function generateIdsFile(input: ScreensetGeneratorInput): GeneratedFile {
-  const { screensetId, screensetName, initialScreenId } = input;
-  return {
-    path: `src/screensets/${screensetId}/ids.ts`,
-    content: `/**
- * ${screensetName} Screenset IDs
- */
-export const ${toScreamingSnake(screensetName)}_SCREENSET_ID = '${screensetId}';
-export const ${toScreamingSnake(initialScreenId)}_SCREEN_ID = '${initialScreenId}';
-`,
-  };
-}
-```
-
-**Given** screenset input with `screensetId: 'billing'`, `screensetName: 'Billing'`
-**When** `generateIdsFile()` is called
-**Then** the output SHALL contain:
-- Export for `BILLING_SCREENSET_ID = 'billing'`
-- Export for initial screen ID
-
 ### Requirement: Project Creation Command
 
-The CLI SHALL provide a `hai3 create <project-name>` command that scaffolds a new HAI3 project with interactive configuration.
+The CLI SHALL provide a `hai3 create <project-name>` command that scaffolds a new HAI3 project using template-based generation.
 
-#### Scenario: Interactive project creation
+#### Scenario: Project creation
 
 **Given** a developer running `hai3 create my-app`
-**When** the command executes interactively
-**Then** the system SHALL:
-- Prompt: "Which UIKit would you like to use?" (HAI3 UIKit / Custom UIKit)
-- Prompt: "Include DevTools?" (Yes / No)
-- Create directory `my-app/`
-- Generate `package.json` with selected dependencies
-- Generate `hai3.config.json` with configuration
-- Generate `.ai/` documents matching configuration
-- Generate boilerplate files (App.tsx, main.tsx, vite.config.ts)
-- Run `npm install` with progress indicator
-
-#### Scenario: Non-interactive project creation
-
-**Given** a developer running `hai3 create my-app --uikit=hai3 --devtools --no-git`
 **When** the command executes
-**Then** the system SHALL skip prompts and use flag values
+**Then** the system SHALL create:
+- Directory `my-app/`
+- All root config files from templates
+- `hai3.config.json` with project configuration
+- `package.json` with HAI3 dependencies
+- `.ai/`, `.cursor/`, `.windsurf/` folders from templates
+- `src/themes/`, `src/uikit/`, `src/icons/` from templates
+- `src/screensets/demo/` screenset from templates
+- Generated files: App.tsx, main.tsx, screensetRegistry.tsx
+
+#### Scenario: Project creation flags
+
+**Given** running `hai3 create my-app --uikit=custom --devtools`
+**When** the command executes with flags
+**Then** the system SHALL use flag values without prompting
+
+#### Scenario: Generated project file count
+
+**Given** a successful project creation
+**When** counting generated files
+**Then** approximately 261+ files SHALL be created
 
 #### Scenario: Project name validation
 
 **Given** invalid project name `123-invalid`
 **When** validation runs
 **Then** the system SHALL display error and exit with code 1
-
-#### Scenario: Directory conflict handling
-
-**Given** existing directory `my-app/`
-**When** running `hai3 create my-app`
-**Then** the system SHALL prompt for overwrite confirmation
 
 ### Requirement: Update Command
 
@@ -281,15 +272,9 @@ The CLI SHALL provide a `hai3 update` command that updates the CLI globally, and
 - Update all `@hai3/*` packages in project
 - Return summary of updated packages
 
-#### Scenario: Project detection traverses parents
-
-**Given** running from `my-app/src/components/`
-**When** `hai3.config.json` exists in `my-app/`
-**Then** the system SHALL detect project root correctly
-
 ### Requirement: Screenset Create Command
 
-The CLI SHALL provide a `hai3 screenset create <name>` command that scaffolds a new screenset with one initial screen.
+The CLI SHALL provide a `hai3 screenset create <name>` command that scaffolds a new screenset using template-based generation from the _blank template.
 
 #### Scenario: Create screenset
 
@@ -299,15 +284,45 @@ The CLI SHALL provide a `hai3 screenset create <name>` command that scaffolds a 
 ```
 src/screensets/billing/
 ├── ids.ts
+├── types/index.ts
+├── events/billingEvents.ts
+├── slices/billingSlice.ts
+├── effects/billingEffects.ts
+├── actions/billingActions.ts
+├── api/
+│   ├── billingApiService.ts
+│   └── mocks.ts
+├── uikit/icons/HomeIcon.tsx
 ├── billingScreenset.tsx
-├── i18n/
-│   └── ... (36 language files)
-└── screens/
-    └── home/
-        ├── HomeScreen.tsx
-        └── i18n/
-            └── ... (36 language files)
+├── i18n/                 # 36 language files
+└── screens/home/
+    ├── HomeScreen.tsx
+    └── i18n/             # 36 language files
 ```
+
+#### Scenario: ID transformation patterns
+
+**Given** the _blank template with identifiers like `_BLANK_SCREENSET_ID`, `_blankSlice`, `_BlankState`
+**When** creating screenset named `billing`
+**Then** the system SHALL transform:
+- `_BLANK_SCREENSET_ID` → `BILLING_SCREENSET_ID`
+- `_BLANK_DOMAIN` → `BILLING_DOMAIN`
+- `'_blank'` → `'billing'`
+- `_blankSlice` → `billingSlice`
+- `_blankEffects` → `billingEffects`
+- `_blankEvents` → `billingEvents`
+- `_BlankEvents` → `BillingEvents`
+- `_BlankState` → `BillingState`
+- `initialize_BlankEffects` → `initializeBillingEffects`
+- `select_BlankState` → `selectBillingState`
+- `_blank` → `billing`
+- `_Blank` → `Billing`
+
+#### Scenario: Generated screenset file count
+
+**Given** a successful screenset creation
+**When** counting generated files
+**Then** 84 files SHALL be created
 
 #### Scenario: Name validation
 
@@ -315,23 +330,17 @@ src/screensets/billing/
 **When** validation runs
 **Then** the system SHALL display: "Screenset name must be camelCase"
 
-#### Scenario: Existing screenset
+#### Scenario: Reserved name validation
 
-**Given** `src/screensets/demo/` exists
-**When** running `hai3 screenset create demo`
-**Then** the system SHALL display error and exit with code 1
+**Given** reserved name `_blank`
+**When** validation runs
+**Then** the system SHALL display error about reserved name
 
 #### Scenario: Category flag
 
 **Given** running `hai3 screenset create billing --category=production`
 **When** generating screenset config
 **Then** the config SHALL have `category: ScreensetCategory.Production`
-
-#### Scenario: Outside project error
-
-**Given** running outside HAI3 project
-**When** no `hai3.config.json` found
-**Then** the system SHALL display: "Not inside a HAI3 project"
 
 ### Requirement: Screenset Copy Command
 
@@ -343,10 +352,14 @@ The CLI SHALL provide a `hai3 screenset copy <source> <target>` command that dup
 **When** `src/screensets/chat/` exists
 **Then** the system SHALL:
 - Copy to `src/screensets/chatCopy/`
-- Parse `chat/ids.ts` using TypeScript compiler API
-- Transform constant names: `CHAT_SCREENSET_ID` -> `CHAT_COPY_SCREENSET_ID`
-- Transform string values: `'chat'` -> `'chatCopy'`
-- Rename files: `chatScreenset.tsx` -> `chatCopyScreenset.tsx`
+- Parse `chat/ids.ts` to find all ID constants
+- Transform constant names: `CHAT_SCREENSET_ID` → `CHAT_COPY_SCREENSET_ID`
+- Transform screenset ID values: `'chat'` → `'chatCopy'`
+- Transform screen ID values using suffix: `'helloworld'` → `'helloworldCopy'`
+- Transform translation key paths: `.chat.` → `.chatCopy.` in template literals
+- Update screenset display name: `name: 'Chat'` → `name: 'ChatCopy'`
+- Rename files: `chatScreenset.tsx` → `chatCopyScreenset.tsx`
+- Default category to `ScreensetCategory.Drafts` unless `--category` specified
 
 #### Scenario: Source not found
 
@@ -359,12 +372,6 @@ The CLI SHALL provide a `hai3 screenset copy <source> <target>` command that dup
 **Given** running `hai3 screenset copy chat demo`
 **When** `src/screensets/demo/` exists
 **Then** the system SHALL display error and exit with code 1
-
-#### Scenario: Category override
-
-**Given** running `hai3 screenset copy chat chatProd --category=production`
-**When** original has `category: ScreensetCategory.Drafts`
-**Then** copied screenset SHALL have `category: ScreensetCategory.Production`
 
 #### Scenario: Template literal preservation
 
@@ -382,31 +389,47 @@ export enum ChatCopyEvents {
 }
 ```
 
-#### Scenario: Redux slice transformation
+#### Scenario: Screen ID suffix transformation
 
-**Given** source screenset with Redux slices
-**When** copying
-**Then** the system SHALL transform:
-- Slice file names
-- Slice names in `createSlice()`
-- State keys in RootState augmentation
-- Selector names and references
+**Given** source screen IDs that don't contain the screenset ID:
+```typescript
+export const HELLO_WORLD_SCREEN_ID = 'helloworld';
+export const PROFILE_SCREEN_ID = 'profile';
+```
+**When** copying from `demo` to `demoCopy`
+**Then** the system SHALL derive suffix `'Copy'` and transform:
+```typescript
+export const HELLO_WORLD_SCREEN_ID = 'helloworldCopy';
+export const PROFILE_SCREEN_ID = 'profileCopy';
+```
+
+#### Scenario: Translation key path transformation
+
+**Given** source menu item label:
+```typescript
+label: `screenset.${CHAT_SCREENSET_ID}:menu_items.chat.label`
+```
+**When** copying to `chatCopy`
+**Then** the result SHALL be:
+```typescript
+label: `screenset.${CHAT_COPY_SCREENSET_ID}:menu_items.chatCopy.label`
+```
+
+#### Scenario: Default category to drafts
+
+**Given** running `hai3 screenset copy chat chatCopy` without `--category` flag
+**When** the source screenset has `category: ScreensetCategory.Mockups`
+**Then** the copied screenset SHALL have `category: ScreensetCategory.Drafts`
+
+#### Scenario: Screenset display name transformation
+
+**Given** source screenset with `name: 'Chat'`
+**When** copying to `chatCopy`
+**Then** the result SHALL have `name: 'ChatCopy'`
 
 ### Requirement: Generated Code Quality
 
 All code generated by CLI commands SHALL pass HAI3 architectural validation without modification.
-
-#### Scenario: Created project passes validation
-
-**Given** running `hai3 create my-app`
-**When** project is created
-**Then** the following SHALL succeed in `my-app/`:
-```bash
-npm run type-check
-npm run lint
-npm run arch:check
-npm run build
-```
 
 #### Scenario: Created screenset passes validation
 

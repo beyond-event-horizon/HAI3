@@ -176,6 +176,17 @@ module.exports = {
       from: { path: '^packages/.*/dist' },
       to: { path: '^node_modules' },
       comment: 'Built packages can import from node_modules (normal dependency resolution)'
+    },
+    // CLI package rules - CLI is a standalone Node.js tool with different dependencies
+    {
+      from: { path: '^packages/cli' },
+      to: { path: '^(path|fs|child_process|events|process)$' },
+      comment: 'CLI can use Node.js built-in modules'
+    },
+    {
+      from: { path: '^packages/cli' },
+      to: { path: '^packages/cli/node_modules' },
+      comment: 'CLI can import from its own node_modules (commander, fs-extra, chalk)'
     }
   ]
 };
