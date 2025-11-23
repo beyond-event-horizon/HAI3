@@ -43,7 +43,7 @@ npm run clean:deps        # Remove node_modules + reinstall
 npm run clean:build       # Clean + build from scratch
 ```
 
-**Build Order:** uikit-contracts → uikit → uicore → app (`npm run build:packages` handles this)
+**Build Order:** uikit-contracts → uikit → uicore → devtools → cli → app (`npm run build:packages` handles this)
 
 ## Architecture Overview
 
@@ -302,8 +302,55 @@ apiRegistry.registerMocks(ACCOUNTS_DOMAIN, accountsMockMap);
 
 **Key Principles:** Framework services in uicore, mocks in screensets, intentional duplication for independence.
 
+## HAI3 CLI
+
+The CLI provides project scaffolding and screenset management tools.
+
+### Installation
+```bash
+npm install -g @hai3/cli  # Global installation
+```
+
+### Commands
+```bash
+# Create new project
+hai3 create <project-name>              # Interactive project creation
+hai3 create my-app --uikit=hai3 --devtools  # Non-interactive
+
+# Update CLI and packages
+hai3 update                             # Inside project: updates CLI + packages
+                                        # Outside: updates CLI only
+
+# Screenset management
+hai3 screenset create <name>            # Create new screenset
+hai3 screenset create billing --category=production
+hai3 screenset copy <source> <target>   # Copy with ID transformation
+hai3 screenset copy chat chatCopy --category=mockups
+```
+
+### Programmatic API (for AI agents)
+```typescript
+import { executeCommand, commands } from '@hai3/cli';
+
+const result = await executeCommand(
+  commands.screensetCreate,
+  { name: 'billing', category: 'drafts' },
+  { interactive: false }
+);
+
+if (result.success) {
+  console.log('Created:', result.data.files);
+}
+```
+
 ## Creating a New Screenset
 
+### Option 1: Using CLI (Recommended)
+```bash
+hai3 screenset create myScreenset
+```
+
+### Option 2: Manual Creation
 1. Create directory: `mkdir -p src/screensets/my-screenset/screens/home`
 2. Create `ids.ts`: `export const MY_SCREENSET_ID = 'myScreenset';`
 3. Create screenset-level i18n files: `src/screensets/my-screenset/i18n/en.json`, etc.
@@ -407,7 +454,7 @@ React 18, TypeScript 5, Vite 6, Redux Toolkit, Lodash, Tailwind CSS 3, shadcn/ui
 
 ```
 HAI3/
-├── packages/          # uikit-contracts, uikit, uicore, devtools
+├── packages/          # uikit-contracts, uikit, uicore, devtools, cli
 ├── src/               # App code
 │   ├── screensets/    # Vertical slices
 │   ├── themes/        # Theme registry

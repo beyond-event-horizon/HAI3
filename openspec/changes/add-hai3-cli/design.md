@@ -17,7 +17,7 @@ HAI3 is a monorepo with workspace packages. The CLI needs to:
 - Support all 36 languages in generated i18n stubs
 - **Scalable architecture** for future command additions
 - **Programmatic API** for AI agent integration
-- **Type-safe code generation** using TypeScript (no template strings)
+- **Template-based generation** - copy real project files, not programmatic strings
 
 **Non-Goals:**
 - GUI or web-based project wizard
@@ -32,11 +32,11 @@ HAI3 is a monorepo with workspace packages. The CLI needs to:
 **Rationale:** Consistent with existing monorepo structure; tsup already used for other packages
 
 ### CLI Framework
-**Decision:** Commander.js for CLI parsing, Inquirer.js for prompts
+**Decision:** Commander.js for CLI parsing, chalk for colored output
 **Alternatives:**
 - yargs: More verbose API, less intuitive for subcommands
 - oclif: Overkill for 4 commands, heavy framework
-- Prompts.js: Less popular than Inquirer, fewer features
+- Inquirer.js: Dropped in favor of simpler approach with flags
 
 ### Command Structure
 **Decision:** `hai3 <verb>` for top-level, `hai3 screenset <verb>` for screenset operations
@@ -52,51 +52,158 @@ HAI3 is a monorepo with workspace packages. The CLI needs to:
 - Can store project-specific CLI configuration in future
 - Falls back to checking `package.json` for `@hai3/*` dependencies
 
-### Code Generation (TypeScript-based, NOT EJS)
-**Decision:** Use TypeScript generator functions that return typed AST or string builders
+### Template-Based Code Generation (IMPLEMENTED)
+
+**Decision:** Copy real project files at build time, transform IDs at runtime
 **Rationale:**
-- **Type safety**: Templates are TypeScript code, IDE autocomplete works
-- **Refactoring**: Renaming types/interfaces propagates to generators
-- **Testing**: Generator functions are unit-testable
-- **No runtime parsing**: Faster than template engines
-- **AI-friendly**: Generators can be called programmatically with typed inputs
+- **Single source of truth**: Templates are real, working code from the main project
+- **No drift**: When framework patterns change, templates auto-update on next CLI build
+- **Accurate**: No manual string interpolation that could introduce bugs
+- **Maintainable**: Edit real files, not template strings
 
-**Implementation Pattern:**
+**Implementation:**
+```
+packages/cli/
+├── scripts/
+│   └── copy-templates.ts     # Build script: copies from main project
+├── templates/                 # Generated at build time (gitignored)
+│   ├── .ai/                   # AI guidelines
+│   ├── .cursor/               # Cursor rules
+│   ├── .windsurf/             # Windsurf rules
+│   ├── src/themes/            # Theme files
+│   ├── src/uikit/             # UIKit registry
+│   ├── src/icons/             # Icon utilities
+│   ├── src/screensets/demo/   # Demo screenset (for projects)
+│   ├── screenset-template/    # _blank screenset (for screenset create)
+│   └── manifest.json          # Build metadata
+```
+
+**Build Process:**
+```bash
+npm run build  # in packages/cli
+# 1. Runs copy-templates.ts - copies from main project
+# 2. Runs tsup - bundles CLI code
+# 3. Templates are included in dist
+```
+
+### Blank Screenset Template
+
+**Decision:** Minimal `_blank` screenset with structure only, no business logic
+**Rationale:**
+- Provides correct file structure and patterns
+- No confusing example code to delete
+- Clear placeholder comments showing where to add logic
+
+**Template Structure:**
+```
+src/screensets/_blank/
+├── ids.ts                    # Centralized IDs
+├── types/index.ts            # Type definitions (empty)
+├── events/_blankEvents.ts    # Events enum (empty, with examples)
+├── slices/_blankSlice.ts     # Redux slice (empty state)
+├── effects/_blankEffects.ts  # Effect listeners (empty)
+├── actions/_blankActions.ts  # Action creators (empty)
+├── api/
+│   ├── _blankApiService.ts   # API service class (base only)
+│   └── mocks.ts              # Mock map (empty)
+├── uikit/icons/HomeIcon.tsx  # Custom icon
+├── i18n/                     # 36 language files
+├── screens/home/
+│   ├── HomeScreen.tsx        # Simple screen with title/description
+│   └── i18n/                 # 36 language files
+└── _blankScreenset.tsx       # Screenset config with self-registration
+```
+
+### ID Transformation for Screenset Create
+
+**Decision:** String replacement with ordered patterns
+**Rationale:**
+- Simple and predictable
+- Handles all naming conventions (camelCase, PascalCase, SCREAMING_SNAKE)
+- Order matters: more specific patterns before generic `_blank`
+
+**Transform Patterns (in order):**
 ```typescript
-// packages/cli/src/generators/screenset.ts
-interface ScreensetGeneratorInput {
-  screensetId: string;
-  screensetName: string;  // PascalCase
-  initialScreenId: string;
-  category: ScreensetCategory;
-}
+// SCREAMING_SNAKE constants
+_BLANK_SCREENSET_ID → BILLING_SCREENSET_ID
+_BLANK_DOMAIN → BILLING_DOMAIN
 
-interface GeneratedFile {
-  path: string;
-  content: string;
-}
+// String values
+'_blank' → 'billing'
+"_blank" → "billing"
 
-export function generateScreenset(input: ScreensetGeneratorInput): GeneratedFile[] {
-  return [
-    generateIdsFile(input),
-    generateScreensetConfig(input),
-    generateInitialScreen(input),
-    ...generateI18nFiles(input),
-  ];
-}
+// Specific patterns (before generic _blank)
+_blankScreenset → billingScreenset
+_blankApiService → billingApiService
+_blankSlice → billingSlice
+_blankEffects → billingEffects
+_blankEvents → billingEvents
+_BlankEvents → BillingEvents
+_BlankState → BillingState
+initialize_BlankEffects → initializeBillingEffects
+select_BlankState → selectBillingState
 
-function generateIdsFile(input: ScreensetGeneratorInput): GeneratedFile {
-  const { screensetId, screensetName, initialScreenId } = input;
-  return {
-    path: `src/screensets/${screensetId}/ids.ts`,
-    content: `/**
- * ${screensetName} Screenset IDs
- */
-export const ${toScreamingSnake(screensetName)}_SCREENSET_ID = '${screensetId}';
-export const ${toScreamingSnake(initialScreenId)}_SCREEN_ID = '${initialScreenId}';
-`,
-  };
+// Generic patterns (last)
+_blank → billing
+_Blank → Billing
+```
+
+### ID Transformation for Copy
+
+**Decision:** Parse `ids.ts` using regex, generate transformation map with suffix-based screen ID transformation
+**Rationale:**
+- Follows existing convention that ALL IDs are in `ids.ts`
+- Regex parsing sufficient for controlled format
+- Safer than string-based find-replace
+- Screen IDs use suffix to avoid screenset ID in routes
+
+**Suffix Derivation:**
+```typescript
+// If target starts with source, suffix is the remainder
+// 'chat' -> 'chatCopy' gives suffix 'Copy'
+// 'demo' -> 'demoV2' gives suffix 'V2'
+function deriveCopySuffix(source: string, target: string): string {
+  if (target.startsWith(source)) {
+    return target.slice(source.length);
+  }
+  return toPascalCase(target); // fallback
 }
+```
+
+**Screen ID Transformation:**
+```typescript
+// Screen IDs that don't contain screenset ID get suffix appended
+// 'helloworld' -> 'helloworldCopy' (not 'demoCopyHelloworld')
+// 'profile' -> 'profileCopy'
+if (constName.endsWith('_SCREEN_ID') && !value.startsWith(sourceScreensetId)) {
+  newValue = `${value}${suffix}`;
+}
+```
+
+**Translation Key Path Transformation:**
+```typescript
+// Transform .originalValue. patterns in template literals
+// 'menu_items.chat.label' -> 'menu_items.chatCopy.label'
+result = result.replace(
+  /\.${escapeRegExp(originalValue)}([.}\`:]|$)/g,
+  `.${newValue}$1`
+);
+```
+
+**Category Default:**
+```typescript
+// Default to 'drafts' for copies (copies are work-in-progress)
+const category: ScreensetCategory = args.category ?? 'drafts';
+```
+
+**Display Name Transformation:**
+```typescript
+// Update name property for screenset selector display
+// name: 'Chat' -> name: 'ChatCopy'
+result = result.replace(
+  /^(\s*name:\s*)['"]([^'"]+)['"]/m,
+  `$1'${toPascalCase(target)}'`
+);
 ```
 
 ### Scalable Command Architecture
@@ -181,61 +288,62 @@ const result = await executeCommand(
 );
 ```
 
-### ID Transformation for Copy
-**Decision:** Parse `ids.ts` using TypeScript compiler API, generate transformation map
-**Rationale:**
-- Follows existing convention that ALL IDs are in `ids.ts`
-- TypeScript AST parsing is accurate (vs regex)
-- Can validate that all IDs follow naming conventions
-- Safer than string-based find-replace
-
 ## Architecture Diagram
 
 ```
 @hai3/cli
+├── scripts/
+│   └── copy-templates.ts       # Build-time template copying
+│
+├── templates/                   # Gitignored - generated at build
+│   ├── manifest.json            # Build metadata
+│   ├── screenset-template/      # _blank screenset for create
+│   └── ...                      # Project files for create
+│
 ├── src/
-│   ├── index.ts              # CLI entry (Commander setup)
-│   ├── api.ts                # Programmatic API exports (for AI agents)
+│   ├── index.ts                 # CLI entry (Commander setup)
+│   ├── api.ts                   # Programmatic API exports (for AI agents)
 │   │
 │   ├── core/
-│   │   ├── command.ts        # CommandDefinition interface
-│   │   ├── registry.ts       # CommandRegistry
-│   │   ├── executor.ts       # executeCommand()
-│   │   ├── context.ts        # CommandContext builder
-│   │   └── logger.ts         # Colored output (silenceable)
+│   │   ├── command.ts           # CommandDefinition interface
+│   │   ├── registry.ts          # CommandRegistry
+│   │   ├── executor.ts          # executeCommand()
+│   │   ├── types.ts             # Shared types
+│   │   ├── logger.ts            # Colored output (silenceable)
+│   │   └── prompt.ts            # Prompt abstraction
 │   │
 │   ├── commands/
 │   │   ├── create/
-│   │   │   ├── index.ts      # CommandDefinition
-│   │   │   └── prompts.ts    # Interactive questions
+│   │   │   └── index.ts         # CommandDefinition
 │   │   ├── update/
 │   │   │   └── index.ts
 │   │   └── screenset/
 │   │       ├── create.ts
 │   │       └── copy.ts
 │   │
-│   ├── generators/           # TypeScript code generators
-│   │   ├── project.ts        # Full project scaffolding
-│   │   ├── screenset.ts      # Screenset scaffolding
-│   │   ├── screen.ts         # Individual screen
-│   │   ├── i18n.ts           # Translation file stubs
-│   │   └── utils.ts          # toScreamingSnake, toPascalCase, etc.
+│   ├── generators/
+│   │   ├── project.ts           # Reads from templates/
+│   │   ├── screensetFromTemplate.ts  # Transform _blank template
+│   │   ├── screenset.ts         # Legacy programmatic (kept for reference)
+│   │   ├── i18n.ts              # Translation file utilities
+│   │   ├── transform.ts         # ID transformation for copy
+│   │   └── utils.ts             # toPascalCase, toScreamingSnake, etc.
 │   │
 │   └── utils/
-│       ├── project.ts        # findProjectRoot(), loadConfig()
-│       ├── fs.ts             # writeGeneratedFiles()
-│       └── transform.ts      # ID transformation for copy
+│       ├── project.ts           # findProjectRoot(), loadConfig()
+│       ├── fs.ts                # writeGeneratedFiles()
+│       └── validation.ts        # Name validation utilities
 │
-└── package.json              # bin: { hai3: ./dist/index.js }
+└── package.json                 # bin: { hai3: ./dist/index.cjs }
 ```
 
 ## Risks / Trade-offs
 
 | Risk | Mitigation |
 |------|------------|
-| Generated code drifts from framework patterns | Include generated files in arch:check CI |
+| Generated code drifts from framework patterns | Templates are real code from main project |
 | Version incompatibility between CLI and project | Store compatible version range in hai3.config.json |
-| TypeScript generators harder to visualize than templates | Each generator is small, focused, well-documented |
+| Template copy adds build time | Only ~300 files, takes <1s |
 | AI agent API surface area grows unpredictably | Define stable public API, version it |
 
 ## Migration Plan
@@ -271,4 +379,7 @@ export default {
    - **Yes** - With ID transformation in slice names and state keys.
 
 4. ~~EJS vs TypeScript for templates?~~
-   - **TypeScript generators** - Type safety, testability, AI-friendliness.
+   - **Neither** - Template-based approach using real project files.
+
+5. ~~Should screenset create use programmatic generation or templates?~~
+   - **Templates** - Copy from `_blank` screenset with ID transformation.

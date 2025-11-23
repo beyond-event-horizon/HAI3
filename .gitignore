@@ -31,6 +31,7 @@ dist-ssr
 
 # Generated files
 packages/uikit/src/styles/tailwindColors.ts
+packages/cli/templates
 
 # Claude Code local settings
 .claude/settings.local.json

@@ -99,6 +99,25 @@ module.exports = {
     ],
   },
   overrides: [
+    // CLI Package: Exempt from app-level rules (standalone CLI tool)
+    {
+      files: ['packages/cli/**/*'],
+      rules: {
+        // CLI has its own string utilities that don't need lodash
+        'no-restricted-syntax': 'off',
+      },
+    },
+
+    // CLI Templates: Copied from main project, but stored in CLI package during build
+    // These inherit from their source files' rules, not CLI rules
+    {
+      files: ['packages/cli/templates/**/*'],
+      rules: {
+        // Templates are copies of main project files - ignore during CLI lint
+        'no-restricted-syntax': 'off',
+      },
+    },
+
     // Screensets: Domain-based architecture rules
     {
       files: ['src/screensets/**/*'],
