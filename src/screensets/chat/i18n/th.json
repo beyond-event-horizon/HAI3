@@ -2,9 +2,9 @@
   "title": "แชท",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "แชทใหม่",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "แชท"
+      "label": "แชท"
     }
   },
   "models": {

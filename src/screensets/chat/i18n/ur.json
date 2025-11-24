@@ -2,9 +2,9 @@
   "title": "چیٹ",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "نیا چیٹ",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "چیٹ"
+      "label": "چیٹ"
     }
   },
   "models": {

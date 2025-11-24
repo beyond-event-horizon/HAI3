@@ -2,9 +2,9 @@
   "title": "聊天",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "新对话",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "聊天"
+      "label": "聊天"
     }
   },
   "models": {

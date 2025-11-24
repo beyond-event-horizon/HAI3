@@ -2,9 +2,9 @@
   "title": "Mazungumzo",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "Mazungumzo mapya",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "Mazungumzo"
+      "label": "Mazungumzo"
     }
   },
   "models": {

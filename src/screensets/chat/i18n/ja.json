@@ -2,9 +2,9 @@
   "title": "チャット",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "新しいチャット",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "チャット"
+      "label": "チャット"
     }
   },
   "models": {

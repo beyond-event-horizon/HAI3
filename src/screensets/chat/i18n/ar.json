@@ -2,9 +2,9 @@
   "title": "دردشة",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "محادثة جديدة",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "دردشة"
+      "label": "دردشة"
     }
   },
   "models": {

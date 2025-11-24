@@ -2,9 +2,9 @@
   "title": "அரட்டை",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "புதிய அரட்டை",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "அரட்டை"
+      "label": "அரட்டை"
     }
   },
   "models": {

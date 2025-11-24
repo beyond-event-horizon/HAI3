@@ -2,9 +2,9 @@
   "title": "צ'אט",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "שיחה חדשה",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "צ'אט"
+      "label": "צ'אט"
     }
   },
   "models": {

@@ -2,9 +2,9 @@
   "title": "Sembang",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "Sembang baharu",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "Sembang"
+      "label": "Sembang"
     }
   },
   "models": {
