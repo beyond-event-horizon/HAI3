@@ -2,9 +2,9 @@
   "title": "Csevegés",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "Új chat",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "Csevegés"
+      "label": "Csevegés"
     }
   },
   "models": {

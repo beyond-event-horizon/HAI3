@@ -2,9 +2,9 @@
   "title": "Usapan",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "Bagong chat",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "Usapan"
+      "label": "Usapan"
     }
   },
   "models": {

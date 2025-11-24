@@ -2,9 +2,9 @@
   "title": "Obrolan",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "Obrolan baru",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "Obrolan"
+      "label": "Obrolan"
     }
   },
   "models": {

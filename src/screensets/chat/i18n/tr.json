@@ -2,9 +2,9 @@
   "title": "Sohbet",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "Yeni sohbet",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "Sohbet"
+      "label": "Sohbet"
     }
   },
   "models": {

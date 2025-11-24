@@ -2,9 +2,9 @@
   "title": "Keskustelu",
   "description": "Full-featured chat interface with threads and messages",
   "new_chat": "Uusi keskustelu",
-  "screens": {
+  "menu_items": {
     "chat": {
-      "title": "Keskustelu"
+      "label": "Keskustelu"
     }
   },
   "models": {
