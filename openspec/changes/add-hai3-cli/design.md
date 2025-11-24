@@ -122,13 +122,16 @@ src/screensets/_blank/
 - Handles all naming conventions (camelCase, PascalCase, SCREAMING_SNAKE)
 - Order matters: more specific patterns before generic `_blank`
 
+**Home Screen ID Pattern:**
+The `_blank` template uses `HOME_SCREEN_ID = '_blank'` (same value as screenset ID) to ensure each created screenset has a unique route. When transformed, `'_blank'` becomes `'billing'`, giving each screenset a unique home screen route.
+
 **Transform Patterns (in order):**
 ```typescript
 // SCREAMING_SNAKE constants
 _BLANK_SCREENSET_ID → BILLING_SCREENSET_ID
 _BLANK_DOMAIN → BILLING_DOMAIN
 
-// String values
+// String values (includes HOME_SCREEN_ID value)
 '_blank' → 'billing'
 "_blank" → "billing"
 

@@ -342,6 +342,16 @@ src/screensets/billing/
 **When** generating screenset config
 **Then** the config SHALL have `category: ScreensetCategory.Production`
 
+#### Scenario: Home screen ID uses screenset name
+
+**Given** the _blank template with `HOME_SCREEN_ID = '_blank'`
+**When** creating screenset named `billing`
+**Then** the system SHALL transform:
+- `HOME_SCREEN_ID = '_blank'` → `HOME_SCREEN_ID = 'billing'`
+- Translation key `menu_items._blank.label` → `menu_items.billing.label`
+
+This ensures unique routes when multiple screensets are created.
+
 ### Requirement: Screenset Copy Command
 
 The CLI SHALL provide a `hai3 screenset copy <source> <target>` command that duplicates an existing screenset with transformed IDs.
