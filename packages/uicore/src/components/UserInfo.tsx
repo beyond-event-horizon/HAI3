@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { trim } from 'lodash';
 import { useAppSelector, useAppDispatch } from '../hooks/useRedux';
 import { fetchCurrentUser } from '../core/actions';
 import { uikitRegistry } from '../uikit/uikitRegistry';
@@ -36,7 +37,7 @@ export const UserInfo: React.FC<UserInfoProps> = () => {
     return null;
   }
 
-  const displayName = `${user.firstName || ''} ${user.lastName || ''}`.trim();
+  const displayName = trim(`${user.firstName || ''} ${user.lastName || ''}`);
 
   return (
     <UserInfoUI

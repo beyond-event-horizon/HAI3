@@ -7,7 +7,7 @@ import type { AppDispatch } from '../../store';
 import { eventBus } from '../events/eventBus';
 import { UserEvents } from '../events/eventTypes/userEvents';
 import { apiRegistry } from '../../api/apiRegistry';
-import { ACCOUNTS_DOMAIN } from '../../api/services/accounts/AccountsApiService';
+import { ACCOUNTS_DOMAIN, AccountsApiService } from '../../api/services/accounts/AccountsApiService';
 import type { ApiError } from '../../api/services/accounts/api';
 import { changeLanguage } from './i18nActions';
 
@@ -24,12 +24,12 @@ export const fetchCurrentUser = () => (_dispatch: AppDispatch): void => {
   // Emit start event - effect will set loading
   eventBus.emit(UserEvents.FetchStarted);
 
-  const accountsService = apiRegistry.getService(ACCOUNTS_DOMAIN);
+  const accountsService = apiRegistry.getService(ACCOUNTS_DOMAIN) as AccountsApiService;
 
   // Fire and forget - action returns void immediately
   // Results handled via events
   accountsService.getCurrentUser()
-    .then(response => {
+    .then((response) => {
       // Validate response structure
       if (!response || !response.user) {
         throw new Error('Invalid response: user data missing');
@@ -48,7 +48,7 @@ export const fetchCurrentUser = () => (_dispatch: AppDispatch): void => {
         changeLanguage(response.user.language);
       }
     })
-    .catch(error => {
+    .catch((error: unknown) => {
       // Emit failure event
       const apiError = error as ApiError;
       eventBus.emit(UserEvents.FetchFailed, {

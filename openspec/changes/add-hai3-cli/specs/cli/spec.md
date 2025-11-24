@@ -84,7 +84,6 @@ const config = {
     'index.html',
     'postcss.config.ts',
     'tailwind.config.ts',
-    'tsconfig.json',
     'tsconfig.node.json',
     'vite.config.ts',
     '.gitignore',
@@ -96,6 +95,14 @@ const config = {
     'src/themes',
     'src/uikit',
     'src/icons',
+    'eslint-plugin-local',
+  ],
+  // Standalone presets copied from presets/standalone/
+  standalonePresets: [
+    { src: 'configs/.eslintrc.cjs', dest: '.eslintrc.cjs' },
+    { src: 'configs/.dependency-cruiser.cjs', dest: '.dependency-cruiser.cjs' },
+    { src: 'configs/tsconfig.json', dest: 'tsconfig.json' },
+    { src: 'scripts/test-architecture.ts', dest: 'scripts/test-architecture.ts' },
   ],
   screensets: ['demo'],
   screensetTemplate: '_blank',
