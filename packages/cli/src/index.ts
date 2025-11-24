@@ -43,8 +43,8 @@ program
   .command('create <project-name>')
   .description('Create a new HAI3 project')
   .option('--uikit <type>', 'UIKit to use (hai3 or custom)', undefined)
-  .option('--devtools', 'Include DevTools package')
-  .option('--no-devtools', 'Exclude DevTools package')
+  .option('--studio', 'Include Studio package')
+  .option('--no-studio', 'Exclude Studio package')
   .option('--no-git', 'Skip git initialization')
   .option('--no-install', 'Skip npm install')
   .action(async (projectName: string, options: Record<string, unknown>) => {
@@ -53,7 +53,7 @@ program
       {
         projectName,
         uikit: options.uikit as 'hai3' | 'custom' | undefined,
-        devtools: options.devtools as boolean | undefined,
+        studio: options.studio as boolean | undefined,
         git: options.git as boolean,
         install: options.install as boolean,
       },

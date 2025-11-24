@@ -48,10 +48,10 @@ npm run type-check
 npm run arch:check
 ```
 
-## STEP 5: Test via Chrome DevTools MCP
+## STEP 5: Test via Chrome Studio MCP
 STOP if MCP WebSocket is closed.
 1. npm run dev
-2. mcp__chrome-devtools__list_console_messages
+2. mcp__chrome-studio__list_console_messages
 3. Test API calls
 4. Verify mocks return expected data
-5. Toggle API mode in DevTools and verify both modes work
+5. Toggle API mode in Studio and verify both modes work

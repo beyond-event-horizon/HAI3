@@ -43,7 +43,7 @@ npm run clean:deps        # Remove node_modules + reinstall
 npm run clean:build       # Clean + build from scratch
 ```
 
-**Build Order:** uikit-contracts → uikit → uicore → devtools → cli → app (`npm run build:packages` handles this)
+**Build Order:** uikit-contracts → uikit → uicore → studio → cli → app (`npm run build:packages` handles this)
 
 ## Architecture Overview
 
@@ -52,7 +52,7 @@ npm run clean:build       # Clean + build from scratch
 ```
 App (src/) → screensets, themes, icons
     ↓
-uicore (layout, Redux, events) + uikit (React components) + devtools (dev only)
+uicore (layout, Redux, events) + uikit (React components) + studio (dev only)
     ↓
 uikit-contracts (interfaces only)
 ```
@@ -61,7 +61,7 @@ uikit-contracts (interfaces only)
 - **uikit-contracts**: Pure TypeScript interfaces - no implementation
 - **uikit**: React components - NO dependency on uicore
 - **uicore**: Layout, Redux store, event bus, registries - depends ONLY on contracts
-- **devtools**: Dev panel (auto-loaded in dev, tree-shaken in prod)
+- **studio**: Dev panel (auto-loaded in dev, tree-shaken in prod)
 - **App**: Registers uikit implementations with uicore at runtime
 
 ### Event-Driven Flux Pattern
@@ -256,7 +256,7 @@ declare module '@hai3/uicore' {
 
 1. **CRITICAL: Read `.ai/GUIDELINES.md` FIRST** - Route to correct target file before ANY modification. For `.ai/` files, MUST read `.ai/targets/AI.md` first.
 2. **CRITICAL: Verify MCP connection** - If WebSocket breaks, STOP and fix it first (see `.ai/MCP_TROUBLESHOOTING.md`)
-3. **CRITICAL: Use Chrome DevTools MCP native tools** - ALWAYS use appropriate tool:
+3. **CRITICAL: Use Chrome Studio MCP native tools** - ALWAYS use appropriate tool:
    - Navigation: `navigate_page`, `wait_for`
    - Page info: `take_snapshot`, `take_screenshot`, `list_console_messages`, `list_network_requests`
    - Interaction: `click`, `fill`, `fill_form`, `hover`, `press_key`
@@ -315,7 +315,7 @@ npm install -g @hai3/cli  # Global installation
 ```bash
 # Create new project
 hai3 create <project-name>              # Interactive project creation
-hai3 create my-app --uikit=hai3 --devtools  # Non-interactive
+hai3 create my-app --uikit=hai3 --studio  # Non-interactive
 
 # Update CLI and packages
 hai3 update                             # Inside project: updates CLI + packages
@@ -423,7 +423,7 @@ npm run dev           # 5. Test in browser + console
 6. **Naming violations**: Follow template literal pattern for events/icons/IDs
 7. **Hardcoded state keys**: Use screenset ID constant
 8. **Monolithic events/effects**: Split into domain-specific files with `DOMAIN_ID` constant
-9. **MCP testing**: NEVER skip Chrome DevTools MCP testing, STOP if WebSocket closes
+9. **MCP testing**: NEVER skip Chrome Studio MCP testing, STOP if WebSocket closes
 
 ## AI Development Workflow
 
@@ -432,7 +432,7 @@ npm run dev           # 5. Test in browser + console
 3. Follow event-driven patterns
 4. Use registries for extensibility
 5. Validate with `npm run arch:check`
-6. **CRITICAL: Test via Chrome DevTools MCP immediately** (see `.ai/MCP_TROUBLESHOOTING.md`)
+6. **CRITICAL: Test via Chrome Studio MCP immediately** (see `.ai/MCP_TROUBLESHOOTING.md`)
 7. Keep screensets as vertical slices
 
 ## Documentation
@@ -454,7 +454,7 @@ React 18, TypeScript 5, Vite 6, Redux Toolkit, Lodash, Tailwind CSS 3, shadcn/ui
 
 ```
 HAI3/
-├── packages/          # uikit-contracts, uikit, uicore, devtools, cli
+├── packages/          # uikit-contracts, uikit, uicore, studio, cli
 ├── src/               # App code
 │   ├── screensets/    # Vertical slices
 │   ├── themes/        # Theme registry

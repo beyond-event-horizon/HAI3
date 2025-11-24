@@ -453,7 +453,7 @@ export const CHAT_COPY_SCREEN_ID = 'chat-copy';     // Changed from 'chat'
 # After 2-step duplication process
 npm run type-check  # TypeScript validates all type constraints
 npm run arch:check  # Architecture rules validate dependencies
-npm run dev         # Test via Chrome DevTools MCP
+npm run dev         # Test via Chrome Studio MCP
 ```
 
 **Given** a screenset duplicated using the 2-step process

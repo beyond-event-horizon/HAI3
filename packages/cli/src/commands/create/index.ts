@@ -12,7 +12,7 @@ import { isValidPackageName } from '../../utils/validation.js';
 export interface CreateCommandArgs {
   projectName: string;
   uikit?: 'hai3' | 'custom';
-  devtools?: boolean;
+  studio?: boolean;
 }
 
 /**
@@ -47,8 +47,8 @@ export const createCommand: CommandDefinition<
       choices: ['hai3', 'custom'],
     },
     {
-      name: 'devtools',
-      description: 'Include DevTools package',
+      name: 'studio',
+      description: 'Include Studio package',
       type: 'boolean',
     },
   ],
@@ -99,12 +99,12 @@ export const createCommand: CommandDefinition<
 
     // Get configuration via prompts if not provided
     let uikit = args.uikit;
-    let devtools = args.devtools;
+    let studio = args.studio;
 
-    if (uikit === undefined || devtools === undefined) {
+    if (uikit === undefined || studio === undefined) {
       const answers = await prompt<{
         uikit: 'hai3' | 'custom';
-        devtools: boolean;
+        studio: boolean;
       }>([
         {
           name: 'uikit',
@@ -117,15 +117,15 @@ export const createCommand: CommandDefinition<
           default: 'hai3',
         },
         {
-          name: 'devtools',
+          name: 'studio',
           type: 'confirm',
-          message: 'Include DevTools?',
+          message: 'Include Studio?',
           default: true,
         },
       ]);
 
       uikit = uikit ?? answers.uikit;
-      devtools = devtools ?? answers.devtools;
+      studio = studio ?? answers.studio;
     }
 
     logger.newline();
@@ -136,7 +136,7 @@ export const createCommand: CommandDefinition<
     const files = await generateProject({
       projectName: args.projectName,
       uikit: uikit!,
-      devtools: devtools!,
+      studio: studio!,
     });
 
     // Write files

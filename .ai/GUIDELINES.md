@@ -18,7 +18,7 @@
 - packages/uicore -> .ai/targets/UICORE.md
 - packages/uikit -> .ai/targets/UIKIT.md
 - packages/uikit-contracts -> .ai/targets/UIKIT_CONTRACTS.md
-- packages/devtools -> .ai/targets/DEVTOOLS.md
+- packages/studio -> .ai/targets/STUDIO.md
 - packages/cli -> .ai/targets/CLI.md
 - presets/standalone, presets/monorepo -> .ai/targets/CLI.md
 - src/screensets -> .ai/targets/SCREENSETS.md

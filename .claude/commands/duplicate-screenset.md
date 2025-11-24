@@ -25,13 +25,13 @@ npm run lint
 grep -rn "OLD_SCREENSET_ID" src/screensets/TARGET/  # Must return 0 matches
 ```
 
-## STEP 5: Test via Chrome DevTools MCP
+## STEP 5: Test via Chrome Studio MCP
 STOP if MCP WebSocket is closed. Fix connection first.
 1. npm run dev
-2. mcp__chrome-devtools__list_pages
-3. mcp__chrome-devtools__navigate_page to http://localhost:5173
-4. mcp__chrome-devtools__take_snapshot - verify TARGET in screenset selector
+2. mcp__chrome-studio__list_pages
+3. mcp__chrome-studio__navigate_page to http://localhost:5173
+4. mcp__chrome-studio__take_snapshot - verify TARGET in screenset selector
 5. Click TARGET screenset in dev panel
-6. mcp__chrome-devtools__list_console_messages - verify 0 errors
+6. mcp__chrome-studio__list_console_messages - verify 0 errors
 7. Test primary features
 8. Verify auto-discovery worked (screenset appears without manual registration)

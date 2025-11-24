@@ -28,7 +28,7 @@ apiRegistry.initialize({
  * 2. Components show skeleton loaders (translationsReady = false)
  * 3. User fetched → language set → translations loaded
  * 4. Components re-render with actual text (translationsReady = true)
- * 5. In DEV mode: HAI3Provider auto-loads DevToolsOverlay if @hai3/devtools is installed
+ * 5. In DEV mode: HAI3Provider auto-loads StudioOverlay if @hai3/studio is installed
  */
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

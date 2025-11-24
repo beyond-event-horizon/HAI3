@@ -6,7 +6,7 @@
  */
 
 /**
- * @hai3/devtools - Optional development tools package
+ * @hai3/studio - Optional development tools package
  *
  * This package is an optional peer dependency that provides a floating development panel
  * with theme/screenset/language selectors and API mode toggle.
@@ -14,30 +14,30 @@
  * It's automatically loaded by HAI3Provider in development mode via dynamic import
  * with error handling, ensuring graceful degradation if not installed.
  */
-declare module '@hai3/devtools' {
+declare module '@hai3/studio' {
   import type { FC } from 'react';
 
   /**
-   * DevTools overlay component - floating development panel
+   * Studio overlay component - floating development panel
    * Provides theme, screenset, language, and API mode controls
    */
-  export const DevToolsOverlay: FC;
+  export const StudioOverlay: FC;
 
   /**
-   * DevTools provider context
+   * Studio provider context
    */
-  export const DevToolsProvider: FC<{ children?: React.ReactNode }>;
+  export const StudioProvider: FC<{ children?: React.ReactNode }>;
 
   /**
-   * Hook to access DevTools context
+   * Hook to access Studio context
    */
-  export function useDevToolsContext(): {
+  export function useStudioContext(): {
     toggleCollapsed: () => void;
     setPortalContainer: (container: HTMLElement | null) => void;
   };
 
   /**
-   * Position type for DevTools panel
+   * Position type for Studio panel
    */
   export interface Position {
     x: number;
@@ -45,7 +45,7 @@ declare module '@hai3/devtools' {
   }
 
   /**
-   * Size type for DevTools panel
+   * Size type for Studio panel
    */
   export interface Size {
     width: number;
@@ -53,9 +53,9 @@ declare module '@hai3/devtools' {
   }
 
   /**
-   * DevTools state interface
+   * Studio state interface
    */
-  export interface DevToolsState {
+  export interface StudioState {
     position: Position;
     size: Size;
     collapsed: boolean;

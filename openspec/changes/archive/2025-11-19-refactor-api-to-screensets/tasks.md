@@ -56,7 +56,7 @@
 
 ## 7.5. MCP Testing - Mock API Mode
 - [x] 7.5.1 Use MCP tools to navigate to chat screenset
-- [x] 7.5.2 Enable mock API mode via DevTools toggle
+- [x] 7.5.2 Enable mock API mode via Studio toggle
 - [x] 7.5.3 Create a new thread and verify mock data returns
 - [x] 7.5.4 Send a message and verify mock streaming response
 - [x] 7.5.5 Check console for API service registration logs

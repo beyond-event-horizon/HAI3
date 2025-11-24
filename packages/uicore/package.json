@@ -49,12 +49,12 @@
     "react-router-dom": "^6.28.0"
   },
   "peerDependencies": {
-    "@hai3/devtools": "^0.1.0",
+    "@hai3/studio": "^0.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
   "peerDependenciesMeta": {
-    "@hai3/devtools": {
+    "@hai3/studio": {
       "optional": true
     }
   },

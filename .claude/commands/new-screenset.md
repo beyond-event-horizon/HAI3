@@ -57,10 +57,10 @@ npm run lint
 npm run dev
 ```
 
-## STEP 9: Test via Chrome DevTools MCP
+## STEP 9: Test via Chrome Studio MCP
 STOP if MCP WebSocket is closed.
-1. mcp__chrome-devtools__list_pages
-2. mcp__chrome-devtools__take_snapshot - verify screenset in selector
+1. mcp__chrome-studio__list_pages
+2. mcp__chrome-studio__take_snapshot - verify screenset in selector
 3. Switch to new screenset via dev panel
-4. mcp__chrome-devtools__list_console_messages - verify 0 errors
+4. mcp__chrome-studio__list_console_messages - verify 0 errors
 5. Test all screens and features

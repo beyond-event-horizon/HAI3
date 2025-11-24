@@ -12,8 +12,8 @@
       "@hai3/uikit/*": ["./packages/uikit/src/*"],
       "@hai3/uikit-contracts": ["./packages/uikit-contracts/src/index.ts"],
       "@hai3/uikit-contracts/*": ["./packages/uikit-contracts/src/*"],
-      "@hai3/devtools": ["./packages/devtools/src/index.ts"],
-      "@hai3/devtools/*": ["./packages/devtools/src/*"],
+      "@hai3/studio": ["./packages/studio/src/index.ts"],
+      "@hai3/studio/*": ["./packages/studio/src/*"],
       "@hai3/cli": ["./packages/cli/src/index.ts"],
       "@hai3/cli/*": ["./packages/cli/src/*"]
     }

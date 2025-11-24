@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run generate:colors && npm run build:packages && vite build",
-    "build:packages": "npm run build --workspace=@hai3/uikit-contracts && npm run build --workspace=@hai3/uikit && npm run build --workspace=@hai3/uicore && npm run build --workspace=@hai3/devtools && npm run build --workspace=@hai3/cli",
+    "build:packages": "npm run build --workspace=@hai3/uikit-contracts && npm run build --workspace=@hai3/uikit && npm run build --workspace=@hai3/uicore && npm run build --workspace=@hai3/studio && npm run build --workspace=@hai3/cli",
     "generate:colors": "npx tsx presets/monorepo/scripts/generate-colors.ts 2>&1 | grep -v 'warn -' | grep -v 'has been renamed' | grep -v 'Update your configuration' || true",
     "lint": "npm run build --workspace=eslint-plugin-local && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
@@ -43,7 +43,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@hai3/devtools": "^0.1.0",
+    "@hai3/studio": "^0.1.0",
     "@types/lodash": "^4.17.20",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
