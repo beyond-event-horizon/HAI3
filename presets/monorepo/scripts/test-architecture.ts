@@ -16,7 +16,17 @@ import {
 import type { ArchCheck, ValidationResult } from '../../standalone/scripts/test-architecture';
 
 /**
- * Monorepo-specific architecture checks
+ * Monorepo prerequisite checks (run before standalone checks)
+ */
+function getMonorepoPrerequisites(): ArchCheck[] {
+  return [
+    // Generate tailwindColors.ts (gitignored, must exist for type-check)
+    { command: 'npm run generate:colors', description: 'Generate Tailwind colors' },
+  ];
+}
+
+/**
+ * Monorepo-specific architecture checks (run after standalone checks)
  */
 function getMonorepoChecks(): ArchCheck[] {
   return [
@@ -28,7 +38,8 @@ function getMonorepoChecks(): ArchCheck[] {
  * Run monorepo architecture validation
  */
 function validateMonorepoArchitecture(): ValidationResult {
-  const allChecks = [...getStandaloneChecks(), ...getMonorepoChecks()];
+  // Order: prerequisites -> standalone checks -> monorepo checks
+  const allChecks = [...getMonorepoPrerequisites(), ...getStandaloneChecks(), ...getMonorepoChecks()];
   return runValidation(allChecks, 'HAI3 Monorepo Architecture Validation');
 }
 
