@@ -1,6 +1,6 @@
 {
   "menu_items": {
-    "home": {
+    "_blank": {
       "label": "Home"
     }
   }

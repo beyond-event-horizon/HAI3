@@ -96,7 +96,7 @@ export const _blankScreenset: ScreensetConfig = {
     {
       menuItem: {
         id: HOME_SCREEN_ID,
-        label: `screenset.${_BLANK_SCREENSET_ID}:menu_items.home.label`,
+        label: `screenset.${_BLANK_SCREENSET_ID}:menu_items._blank.label`,
         icon: HOME_ICON_ID,
       },
       screen: () => import('./screens/home/HomeScreen'),

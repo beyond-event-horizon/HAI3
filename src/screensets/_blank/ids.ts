@@ -16,4 +16,4 @@ export const _BLANK_SCREENSET_ID = '_blank';
  * Screen IDs
  * Used for: Screen routing, screen-level translations
  */
-export const HOME_SCREEN_ID = 'home';
+export const HOME_SCREEN_ID = '_blank';
