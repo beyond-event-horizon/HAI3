@@ -274,13 +274,15 @@ export class I18nRegistry {
 
   /**
    * Load translations for a specific language
-   * Calls all registered loaders and registers their translations
+   * Calls registered loaders and registers their translations
    *
    * Note: Usually called automatically by setLanguage()
    * Only call directly for preloading languages before they're selected
    *
-   * IMPORTANT: Only loads screenset-level translations (screenset.*), NOT screen-level (screen.*)
-   * Screen-level translations are loaded lazily by useScreenTranslations hook when screen is active
+   * IMPORTANT:
+   * - Screen-level translations (screen.*) are loaded lazily by useScreenTranslations hook
+   * - Screenset-level translations (screenset.*) are loaded lazily when screenset is selected
+   * - Only core translations (uikit, app, etc.) are loaded during language change
    *
    * @param language - Language to load
    */
@@ -289,8 +291,13 @@ export class I18nRegistry {
 
     for (const [namespace, loader] of this.loaders) {
       // Skip screen-level loaders - they're loaded by useScreenTranslations hook
-      // Only load screenset-level, uikit, app, and other non-screen loaders
       if (namespace.startsWith('screen.')) {
+        continue;
+      }
+
+      // Skip screenset-level loaders - they're loaded when screenset is selected
+      // This enables lazy loading: only active screenset translations are loaded
+      if (namespace.startsWith('screenset.')) {
         continue;
       }
 
@@ -307,6 +314,42 @@ export class I18nRegistry {
     }
 
     await Promise.all(loadPromises);
+  }
+
+  /**
+   * Load translations for a specific screenset
+   * Called when navigating to a screenset or when language changes while a screenset is active
+   *
+   * @param screensetId - The screenset ID (e.g., 'demo', 'chat')
+   * @param language - Language to load (defaults to current language)
+   */
+  async loadScreensetTranslations(screensetId: string, language?: Language): Promise<void> {
+    const lang = language ?? this.currentLanguage;
+    if (!lang) {
+      console.warn('[i18n] Cannot load screenset translations: no language set');
+      return;
+    }
+
+    const namespace = `screenset.${screensetId}`;
+    const loader = this.loaders.get(namespace);
+
+    if (!loader) {
+      console.warn(`[i18n] No loader registered for namespace '${namespace}'`);
+      return;
+    }
+
+    // Skip if already loaded for this language
+    const existingDict = this.dictionaries.get(namespace)?.get(lang);
+    if (existingDict) {
+      return;
+    }
+
+    try {
+      const translations = await loader(lang);
+      this.register(namespace, lang, translations);
+    } catch (error) {
+      console.error(`[i18n] Failed to load translations for namespace '${namespace}', language '${lang}':`, error);
+    }
   }
 
   /**

@@ -12,6 +12,7 @@ import { eventBus } from '../core/events/eventBus';
 import { UserEvents } from '../core/events/eventTypes/userEvents';
 import { ApiEvents } from '../core/events/eventTypes/apiEvents';
 import { I18nEvents } from '../core/events/eventTypes/i18nEvents';
+import { ScreensetEvents } from '../core/events/eventTypes/screensetEvents';
 import { setUser, setError, setLoading, setUseMockApi, setLanguage, setTranslationsReady } from './appSlice';
 import { i18nRegistry } from '../i18n/i18nRegistry';
 import { apiRegistry } from '../api/apiRegistry';
@@ -54,24 +55,48 @@ export function initAppEffects(store: Store): void {
     const state = store.getState().uicore.app;
     const currentLanguage = state.language;
     const translationsReady = state.translationsReady;
-    
+
     // Skip reload only if language hasn't changed AND translations are already ready
     // This allows initial load even when language is the same (e.g., both English)
     // Prevents unnecessary reloads when navigating to profile screen after initial load
     if (currentLanguage === language && translationsReady) {
       return;
     }
-    
+
     // Mark translations as not ready while loading
     store.dispatch(setTranslationsReady(false));
-    
+
     // Update Redux store
     store.dispatch(setLanguage(language));
-    
-    // Update i18nRegistry (sets HTML attributes, loads translations)
+
+    // Update i18nRegistry (sets HTML attributes, loads core translations)
     await i18nRegistry.setLanguage(language);
-    
+
+    // Load translations for the currently active screenset (lazy loading)
+    const currentScreenset = store.getState().uicore.layout.currentScreenset;
+    if (currentScreenset) {
+      // Extract screenset ID from format "category:screensetId"
+      const screensetId = currentScreenset.includes(':')
+        ? currentScreenset.split(':')[1]
+        : currentScreenset;
+      await i18nRegistry.loadScreensetTranslations(screensetId, language);
+    }
+
     // Mark translations as ready after loading
     store.dispatch(setTranslationsReady(true));
+  });
+
+  // Screenset change events - load translations for newly selected screenset
+  eventBus.on(ScreensetEvents.Changed, async ({ screensetId }) => {
+    const currentScreenset = store.getState().uicore.layout.currentScreenset;
+
+    // Only load if screenset actually changed
+    if (currentScreenset !== screensetId) {
+      // Extract screenset ID from format "category:screensetId"
+      const id = screensetId.includes(':')
+        ? screensetId.split(':')[1]
+        : screensetId;
+      await i18nRegistry.loadScreensetTranslations(id);
+    }
   });
 }
