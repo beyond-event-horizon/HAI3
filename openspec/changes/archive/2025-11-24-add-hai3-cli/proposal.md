@@ -2,11 +2,11 @@
 
 ## Status
 
-**IMPLEMENTED** - Core functionality complete (99% tasks done, 7 documentation tasks pending)
+**IMPLEMENTED** - All tasks complete (100%)
 
 ### Recent Updates (2024-11-24)
 - **DevTools → Studio Rename**: Completed full rename across codebase (packages/devtools → packages/studio, @hai3/devtools → @hai3/studio, all imports, docs, CLI flags)
-- **NPM Publishing Preparation**: Pending approval (see Section 22 in tasks.md)
+- **NPM Publishing**: Moved to separate proposal `add-npm-publishing`
 
 ## Why
 
@@ -90,93 +90,3 @@ This ensures consistency between monorepo and standalone projects.
 |---------|-------|----------|
 | `hai3 create` | 261+ | Demo screenset, themes, uikit, icons, AI docs, configs |
 | `hai3 screenset create` | 84 | All screenset files + 72 i18n files (36 screenset + 36 screen) |
-
----
-
-## Proposed: NPM Publishing Preparation (Section 22)
-
-**Status:** PENDING APPROVAL
-
-### Why
-
-The HAI3 packages need to be published to NPM so that:
-1. External developers can use `npm install -g @hai3/cli` to install the CLI
-2. Generated projects can depend on `@hai3/uikit`, `@hai3/uicore`, etc. from NPM
-3. Early testers can try the framework before stable release
-
-### Versioning Strategy
-
-Use **semver prerelease versions** for early testing:
-- Version format: `0.1.0-alpha.0`, `0.1.0-alpha.1`, etc.
-- Publish with `--tag alpha` to avoid polluting `latest` tag
-- Users install with: `npm install @hai3/cli@alpha`
-
-### Package.json Fields Required
-
-Each package needs these fields for NPM publishing:
-
-```json
-{
-  "name": "@hai3/packagename",
-  "version": "0.1.0-alpha.0",
-  "description": "Package description",
-  "author": "HAI3 <team@hai3.dev>",
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/anthropics/hai3.git",
-    "directory": "packages/packagename"
-  },
-  "bugs": {
-    "url": "https://github.com/anthropics/hai3/issues"
-  },
-  "homepage": "https://hai3.dev",
-  "keywords": ["hai3", "ui", "react", "saas"],
-  "publishConfig": {
-    "access": "public"
-  },
-  "files": ["dist", "README.md"],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
-    }
-  }
-}
-```
-
-### Packages to Publish
-
-| Package | Priority | Notes |
-|---------|----------|-------|
-| `@hai3/cli` | P0 | CLI tool, main entry point for users |
-| `@hai3/uikit-contracts` | P0 | Interface definitions, dependency of uikit |
-| `@hai3/uikit` | P0 | React components |
-| `@hai3/uicore` | P0 | Core framework (layout, Redux, events) |
-| `@hai3/studio` | P1 | Dev overlay, optional for production |
-
-### Tasks (Proposed Section 22)
-
-- [ ] 22.1 Add publishing metadata to `packages/uikit-contracts/package.json`
-- [ ] 22.2 Add publishing metadata to `packages/uikit/package.json`
-- [ ] 22.3 Add publishing metadata to `packages/uicore/package.json`
-- [ ] 22.4 Add publishing metadata to `packages/studio/package.json`
-- [ ] 22.5 Add publishing metadata to `packages/cli/package.json`
-- [ ] 22.6 Create README.md for each package with basic docs
-- [ ] 22.7 Add `.npmignore` or verify `files` field excludes dev artifacts
-- [ ] 22.8 Verify build output structure matches exports
-- [ ] 22.9 Test local `npm pack` for each package
-- [ ] 22.10 Document publishing workflow in CLAUDE.md or README
-
-### Out of Scope (This Proposal)
-
-- Actual publishing to NPM (requires NPM tokens, CI setup)
-- Automated release workflow (GitHub Actions)
-- Changelog generation
-- Version synchronization tooling
-
-These items should be separate proposals after basic publishing preparation is approved.

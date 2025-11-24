@@ -159,13 +159,20 @@ Review and update documentation in .ai, .claude, .cursor, .windsurf folders to r
 - Use keywords: MUST, REQUIRED, FORBIDDEN, STOP, DETECT, BAD, GOOD
 - No code blocks, no multi-line examples
 
-- [ ] 15.1 Review `.ai/GUIDELINES.md` - update routing if needed
-- [ ] 15.2 Review `.ai/targets/CLI.md` - already updated, verify compliance
-- [ ] 15.3 Review other `.ai/targets/*.md` files for preset references
-- [ ] 15.4 Review `.claude/` folder for outdated references
-- [ ] 15.5 Review `.cursor/` folder for outdated references
-- [ ] 15.6 Review `.windsurf/` folder for outdated references
-- [ ] 15.7 Update `CLAUDE.md` if preset hierarchy is mentioned
+- [x] 15.1 Review `.ai/GUIDELINES.md` - update routing if needed
+  - Verified: already has proper routing for presets (line 23)
+- [x] 15.2 Review `.ai/targets/CLI.md` - already updated, verify compliance
+  - Fixed: Updated line 31 to reflect that root scripts/ was deleted
+- [x] 15.3 Review other `.ai/targets/*.md` files for preset references
+  - Verified: No outdated references found
+- [x] 15.4 Review `.claude/` folder for outdated references
+  - Verified: No outdated references found
+- [x] 15.5 Review `.cursor/` folder for outdated references
+  - Verified: No outdated references found
+- [x] 15.6 Review `.windsurf/` folder for outdated references
+  - Verified: No outdated references found
+- [x] 15.7 Update `CLAUDE.md` if preset hierarchy is mentioned
+  - Verified: No preset references in CLAUDE.md (uses npm commands only)
 
 ## 16. Technical Debt
 
@@ -260,27 +267,11 @@ Community decision to rename "devtools" to "studio" across the entire codebase.
 - [x] 21.12 Verify no remaining "devtools" references in codebase
 - [x] 21.13 Run arch:check to verify all changes pass
 
-## 22. NPM Publishing Preparation (PENDING APPROVAL)
-
-Prepare packages for publishing to NPM registry with prerelease versions.
-
-**Status:** Proposal added to proposal.md - awaiting user approval before implementation.
-
-- [ ] 22.1 Add publishing metadata to `packages/uikit-contracts/package.json`
-- [ ] 22.2 Add publishing metadata to `packages/uikit/package.json`
-- [ ] 22.3 Add publishing metadata to `packages/uicore/package.json`
-- [ ] 22.4 Add publishing metadata to `packages/studio/package.json`
-- [ ] 22.5 Add publishing metadata to `packages/cli/package.json`
-- [ ] 22.6 Create README.md for each package with basic docs
-- [ ] 22.7 Add `.npmignore` or verify `files` field excludes dev artifacts
-- [ ] 22.8 Verify build output structure matches exports
-- [ ] 22.9 Test local `npm pack` for each package
-- [ ] 22.10 Document publishing workflow in CLAUDE.md or README
-
 ## Summary
 
-**Completed:** 106/123 tasks (86%)
-**Pending:** 17 tasks (Section 15 - 7 documentation tasks, Section 22 - 10 NPM publishing tasks pending approval)
+**Completed:** 113/113 tasks (100%)
+
+**Note:** NPM Publishing tasks moved to separate proposal `add-npm-publishing`.
 
 ### Files Modified (Session 2024-11-24 - Studio Rename)
 
