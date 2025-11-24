@@ -61,22 +61,22 @@ interface ValidationResult {
 function validateArchitecture(): ValidationResult {
   log('\ud83c\udfd7\ufe0f HAI3 Architecture Validation', 'blue');
   log('================================', 'blue');
-  
+
   const results: boolean[] = [];
-  
+
   // Run architecture checks
   results.push(runCommand('npm run lint -- --max-warnings 0', 'ESLint rules'));
-  
+
   // Clean artifacts before type-check to ensure fresh validation
   results.push(runCommand('npm run clean:build:packages', 'Clean artifacts build'));
   results.push(runCommand('npm run type-check', 'TypeScript type check'));
   results.push(runCommand('npm run arch:deps', 'Dependency rules'));
-  
+
   // Calculate results
   const passed = results.filter(result => result === true).length;
   const total = results.length;
   const success = passed === total;
-  
+
   return { passed, total, success };
 }
 

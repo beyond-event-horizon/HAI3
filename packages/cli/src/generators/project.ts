@@ -12,8 +12,6 @@ export interface ProjectGeneratorInput {
   uikit: 'hai3' | 'custom';
   /** Include devtools */
   devtools: boolean;
-  /** CLI version that created this project */
-  cliVersion: string;
 }
 
 /**
@@ -63,7 +61,7 @@ async function readDirRecursive(
 export async function generateProject(
   input: ProjectGeneratorInput
 ): Promise<GeneratedFile[]> {
-  const { projectName, uikit, devtools, cliVersion } = input;
+  const { projectName, uikit, devtools } = input;
   const templatesDir = getTemplatesDir();
   const files: GeneratedFile[] = [];
 
@@ -105,13 +103,9 @@ export async function generateProject(
 
   // 5. Generate dynamic files (need project-specific values)
 
-  // 5.1 hai3.config.json
+  // 5.1 hai3.config.json (marker file for project detection)
   const config: Hai3Config = {
-    $schema: 'https://hai3.dev/schemas/config.json',
-    version: '1.0.0',
-    uikit,
-    devtools,
-    cliVersion,
+    hai3: true,
   };
   files.push({
     path: 'hai3.config.json',
@@ -142,10 +136,12 @@ export async function generateProject(
     '@typescript-eslint/parser': '^7.0.0',
     '@vitejs/plugin-react': '^4.3.4',
     autoprefixer: '^10.4.18',
+    'dependency-cruiser': '^16.4.0',
     eslint: '^8.57.0',
     'eslint-plugin-react-hooks': '^4.6.0',
     postcss: '^8.4.35',
     tailwindcss: '^3.4.1',
+    tsx: '^4.19.0',
     typescript: '^5.4.2',
     vite: '^6.4.1',
   };
@@ -159,12 +155,16 @@ export async function generateProject(
     version: '0.1.0',
     private: true,
     type: 'module',
+    workspaces: ['eslint-plugin-local'],
     scripts: {
       dev: 'vite',
       build: 'vite build',
       preview: 'vite preview',
-      lint: 'eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0',
+      lint: 'npm run build --workspace=eslint-plugin-local && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0',
       'type-check': 'tsc --noEmit',
+      'arch:check': 'npx tsx scripts/test-architecture.ts',
+      'arch:deps':
+        'npx dependency-cruiser src/ --config .dependency-cruiser.cjs --output-type err-long',
     },
     dependencies,
     devDependencies,

@@ -4,13 +4,11 @@
 
 /**
  * HAI3 project configuration stored in hai3.config.json
+ * This file serves as a project marker for CLI detection.
  */
 export interface Hai3Config {
-  $schema?: string;
-  version: string;
-  uikit: 'hai3' | 'custom';
-  devtools: boolean;
-  cliVersion: string;
+  /** Marker to identify HAI3 projects */
+  hai3: true;
 }
 
 /**

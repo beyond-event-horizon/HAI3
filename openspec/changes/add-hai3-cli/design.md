@@ -46,11 +46,11 @@ HAI3 is a monorepo with workspace packages. The CLI needs to:
 - Follows established patterns (npm, git, docker)
 
 ### Project Detection
-**Decision:** Check for `hai3.config.json` in project root
+**Decision:** Check for `hai3.config.json` marker file in project root
 **Rationale:**
-- Explicit marker file (like `tsconfig.json` for TypeScript projects)
-- Can store project-specific CLI configuration in future
-- Falls back to checking `package.json` for `@hai3/*` dependencies
+- Simple marker file with `{ "hai3": true }` content
+- Explicit project identifier (like `tsconfig.json` for TypeScript projects)
+- No configuration values - purely for project detection
 
 ### Template-Based Code Generation (IMPLEMENTED)
 
@@ -345,7 +345,6 @@ const result = await executeCommand(
 | Risk | Mitigation |
 |------|------------|
 | Generated code drifts from framework patterns | Templates are real code from main project |
-| Version incompatibility between CLI and project | Store compatible version range in hai3.config.json |
 | Template copy adds build time | Only ~300 files, takes <1s |
 | AI agent API surface area grows unpredictably | Define stable public API, version it |
 
