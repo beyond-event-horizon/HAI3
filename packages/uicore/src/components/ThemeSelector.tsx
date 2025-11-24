@@ -1,4 +1,5 @@
 import React from 'react';
+import { upperFirst } from 'lodash';
 import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
 import { useTranslation } from '../i18n/useTranslation';
 import { uikitRegistry } from '../uikit/uikitRegistry';
@@ -32,7 +33,7 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   const formatThemeName = (themeName: string): string => {
     return themeName
       .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map(word => upperFirst(word))
       .join(' ');
   };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { upperFirst } from 'lodash';
 import { uikitRegistry } from '../uikit/uikitRegistry';
 import { UiKitComponent, ButtonVariant } from '@hai3/uikit-contracts';
 import { useTranslation } from '../i18n/useTranslation';
@@ -42,7 +43,7 @@ export const ScreensetSelector: React.FC<ScreensetSelectorProps> = ({
   const formatName = (name: string): string => {
     return name
       .split(/[-_]/)
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => upperFirst(word))
       .join(' ');
   };
 

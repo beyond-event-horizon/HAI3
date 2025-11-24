@@ -1,42 +1,21 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "_comment": [
+    "HAI3 TypeScript Configuration (Root)",
+    "",
+    "This file extends the monorepo preset which extends standalone.",
+    "Architecture: presets/standalone/configs/tsconfig.json -> presets/monorepo/configs/tsconfig.json -> tsconfig.json (this file)",
+    "",
+    "NOTE: Unlike JS configs, tsconfig paths are relative to file location.",
+    "So 'include' and 'references' must be duplicated at each level.",
+    "",
+    "DO NOT add compilerOptions here - add them to:",
+    "- presets/standalone/configs/tsconfig.json for options that apply to standalone HAI3 projects",
+    "- presets/monorepo/configs/tsconfig.json for monorepo-specific options"
+  ],
+  "extends": "./presets/monorepo/configs/tsconfig.json",
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "stripInternal": true,
-    "jsx": "react-jsx",
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "alwaysStrict": true,
-    "noImplicitThis": true,
-
-    /* Path aliases */
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/screensets/*": ["./src/screensets/*"],
-      "@/themes/*": ["./src/themes/*"],
-      "@/components/*": ["./src/components/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["src", "packages/uikit/src/styles/tailwindColors.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]

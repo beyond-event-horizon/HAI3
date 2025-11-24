@@ -1,4 +1,5 @@
 import React, { Suspense, useMemo } from 'react';
+import { trim } from 'lodash';
 import { useAppSelector } from '../../../hooks/useRedux';
 import { screensetRegistry } from '../../../screensets/screensetRegistry';
 import { uikitRegistry } from '../../../uikit/uikitRegistry';
@@ -49,14 +50,14 @@ export const Screen: React.FC<ScreenProps> = ({ children, className = '' }) => {
   // If children provided, use them (legacy/non-screenset apps)
   if (children) {
     return (
-      <main className={`flex-1 overflow-auto bg-muted/30 ${className}`.trim()}>
+      <main className={trim(`flex-1 overflow-auto bg-muted/30 ${className}`)}>
         {children}
       </main>
     );
   }
 
   return (
-    <main className={`flex-1 overflow-auto bg-muted/30 ${className}`.trim()}>
+    <main className={trim(`flex-1 overflow-auto bg-muted/30 ${className}`)}>
       {LazyScreenComponent ? (
         <Suspense fallback={<ScreenLoadingFallback />}>
           <LazyScreenComponent />

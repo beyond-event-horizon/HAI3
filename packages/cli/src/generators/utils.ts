@@ -2,6 +2,8 @@
  * String transformation utilities for code generation
  */
 
+import { upperFirst, lowerFirst, toUpper, toLower } from 'lodash';
+
 /**
  * Escape special regex characters in a string
  * @example escapeRegExp('hello.world') // 'hello\\.world'
@@ -16,9 +18,8 @@ export function escapeRegExp(str: string): string {
  * @example toPascalCase('helloWorld') // 'HelloWorld'
  */
 export function toPascalCase(str: string): string {
-  return str
-    .replace(/[-_](.)/g, (_, char) => char.toUpperCase())
-    .replace(/^(.)/, (_, char) => char.toUpperCase());
+  const withoutSeparators = str.replace(/[-_](.)/g, (_, char) => toUpper(char));
+  return upperFirst(withoutSeparators);
 }
 
 /**
@@ -27,9 +28,8 @@ export function toPascalCase(str: string): string {
  * @example toCamelCase('HelloWorld') // 'helloWorld'
  */
 export function toCamelCase(str: string): string {
-  return str
-    .replace(/[-_](.)/g, (_, char) => char.toUpperCase())
-    .replace(/^(.)/, (_, char) => char.toLowerCase());
+  const withoutSeparators = str.replace(/[-_](.)/g, (_, char) => toUpper(char));
+  return lowerFirst(withoutSeparators);
 }
 
 /**
@@ -38,10 +38,10 @@ export function toCamelCase(str: string): string {
  * @example toScreamingSnake('HelloWorld') // 'HELLO_WORLD'
  */
 export function toScreamingSnake(str: string): string {
-  return str
+  const withUnderscores = str
     .replace(/([a-z])([A-Z])/g, '$1_$2')
-    .replace(/[-\s]/g, '_')
-    .toUpperCase();
+    .replace(/[-\s]/g, '_');
+  return toUpper(withUnderscores);
 }
 
 /**
@@ -50,10 +50,10 @@ export function toScreamingSnake(str: string): string {
  * @example toKebabCase('HelloWorld') // 'hello-world'
  */
 export function toKebabCase(str: string): string {
-  return str
+  const withDashes = str
     .replace(/([a-z])([A-Z])/g, '$1-$2')
-    .replace(/[_\s]/g, '-')
-    .toLowerCase();
+    .replace(/[_\s]/g, '-');
+  return toLower(withDashes);
 }
 
 /**

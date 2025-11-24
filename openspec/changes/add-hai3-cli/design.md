@@ -63,9 +63,21 @@ HAI3 is a monorepo with workspace packages. The CLI needs to:
 
 **Implementation:**
 ```
+presets/
+├── standalone/
+│   ├── configs/                  # Source of truth for standalone project configs
+│   │   ├── .eslintrc.cjs
+│   │   ├── .dependency-cruiser.cjs
+│   │   └── tsconfig.json
+│   └── scripts/
+│       └── test-architecture.ts  # Source of truth for standalone scripts
+├── monorepo/
+│   ├── configs/                  # Extends standalone/configs/
+│   └── scripts/                  # Extends standalone/scripts/
+
 packages/cli/
 ├── scripts/
-│   └── copy-templates.ts     # Build script: copies from main project
+│   └── copy-templates.ts     # Build script: copies from presets/standalone/
 ├── templates/                 # Generated at build time (gitignored)
 │   ├── .ai/                   # AI guidelines
 │   ├── .cursor/               # Cursor rules

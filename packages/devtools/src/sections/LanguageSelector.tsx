@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation, LanguageDisplayMode, TextDirection } from '@hai3/uicore';
 import { ButtonVariant } from '@hai3/uikit-contracts';
 import {

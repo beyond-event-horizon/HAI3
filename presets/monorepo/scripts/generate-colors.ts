@@ -173,7 +173,7 @@ export default colors;
 // Write to packages/uikit/src/styles/tailwindColors.ts
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const outputPath = path.join(__dirname, '../packages/uikit/src/styles/tailwindColors.ts');
+const outputPath = path.join(__dirname, '../../../packages/uikit/src/styles/tailwindColors.ts');
 fs.writeFileSync(outputPath, output, 'utf8');
 
 console.log('✓ Generated packages/uikit/src/styles/tailwindColors.ts');

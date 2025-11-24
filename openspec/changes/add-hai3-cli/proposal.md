@@ -2,7 +2,7 @@
 
 ## Status
 
-**IMPLEMENTED** - All core functionality complete (97% tasks done, 2 documentation tasks deferred)
+**IMPLEMENTED** - Core functionality complete (93% tasks done, 7 documentation tasks pending)
 
 ## Why
 
@@ -71,6 +71,14 @@ The `_blank` screenset provides:
 ### CJS Output
 CLI uses CommonJS output with chalk v4 for Node.js compatibility.
 ESM was causing issues with fs-extra and chalk v5.
+
+### Preset Hierarchy in Generated Projects
+Generated projects follow the same preset hierarchy as the monorepo:
+- `presets/standalone/configs/` - Source of truth for configs (.eslintrc.cjs, tsconfig.json, etc.)
+- `presets/standalone/scripts/` - Source of truth for scripts (test-architecture.ts)
+- Root files re-export from presets (e.g., `.eslintrc.cjs` requires `./presets/standalone/configs/.eslintrc.cjs`)
+
+This ensures consistency between monorepo and standalone projects.
 
 ## Files Generated
 

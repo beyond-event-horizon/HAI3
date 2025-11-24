@@ -139,6 +139,7 @@ export async function generateProject(
     'dependency-cruiser': '^16.4.0',
     eslint: '^8.57.0',
     'eslint-plugin-react-hooks': '^4.6.0',
+    'eslint-plugin-unused-imports': '^3.2.0',
     postcss: '^8.4.35',
     tailwindcss: '^3.4.1',
     tsx: '^4.19.0',
@@ -162,7 +163,7 @@ export async function generateProject(
       preview: 'vite preview',
       lint: 'npm run build --workspace=eslint-plugin-local && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0',
       'type-check': 'tsc --noEmit',
-      'arch:check': 'npx tsx scripts/test-architecture.ts',
+      'arch:check': 'npx tsx presets/standalone/scripts/test-architecture.ts',
       'arch:deps':
         'npx dependency-cruiser src/ --config .dependency-cruiser.cjs --output-type err-long',
     },
@@ -182,7 +183,7 @@ export async function generateProject(
     "import { HAI3Provider } from '@hai3/uicore';",
   ];
   if (uikit === 'hai3') {
-    mainImports.push("import '@hai3/uikit/styles.css';");
+    mainImports.push("import '@hai3/uikit/styles';");
   }
   mainImports.push(
     "import '@/uikit/uikitRegistry';",
@@ -231,20 +232,73 @@ export default App;
   // 5.6 src/screensets/screensetRegistry.tsx
   files.push({
     path: 'src/screensets/screensetRegistry.tsx',
-    content: `/**
- * Auto-discover and import all screensets
- * Pattern: ./*/*[Ss]creenset.tsx matches files like:
- * - ./demo/demoScreenset.tsx
- * - ./billing/billingScreenset.tsx
- *
- * Eager loading ensures side effects (screensetRegistry.register() calls)
- * execute before app renders
- */
+    content: `// Auto-discover and import all screensets
+// Glob pattern matches files like:
+//   demo/demoScreenset.tsx
+//   billing/billingScreenset.tsx
+//
+// Eager loading ensures side effects (screensetRegistry.register() calls)
+// execute before app renders
 const screensetModules = import.meta.glob('./*/*[Ss]creenset.tsx', { eager: true });
 
 // Export for debugging
 export { screensetModules };
 `,
+  });
+
+  // 5.7 Root wrapper files that re-export from presets/standalone/
+  // These follow the same pattern as the monorepo but point to standalone presets
+
+  // .eslintrc.cjs - re-exports standalone ESLint config
+  files.push({
+    path: '.eslintrc.cjs',
+    content: `/**
+ * HAI3 ESLint Configuration (Root)
+ *
+ * This file re-exports the standalone preset.
+ * DO NOT add rules here - add them to presets/standalone/configs/.eslintrc.cjs
+ */
+
+module.exports = require('./presets/standalone/configs/.eslintrc.cjs');
+`,
+  });
+
+  // .dependency-cruiser.cjs - re-exports standalone dependency cruiser config
+  files.push({
+    path: '.dependency-cruiser.cjs',
+    content: `/**
+ * HAI3 Dependency Cruiser Configuration (Root)
+ *
+ * This file re-exports the standalone preset.
+ * DO NOT add rules here - add them to presets/standalone/configs/.dependency-cruiser.cjs
+ */
+
+module.exports = require('./presets/standalone/configs/.dependency-cruiser.cjs');
+`,
+  });
+
+  // tsconfig.json - extends standalone TypeScript config
+  files.push({
+    path: 'tsconfig.json',
+    content: JSON.stringify(
+      {
+        $schema: 'https://json.schemastore.org/tsconfig',
+        _comment: [
+          'HAI3 TypeScript Configuration (Root)',
+          '',
+          'This file extends the standalone preset.',
+          'DO NOT add compilerOptions here - add them to presets/standalone/configs/tsconfig.json',
+        ],
+        extends: './presets/standalone/configs/tsconfig.json',
+        compilerOptions: {
+          baseUrl: '.',
+        },
+        include: ['src'],
+        references: [{ path: './tsconfig.node.json' }],
+      },
+      null,
+      2
+    ) + '\n',
   });
 
   return files;

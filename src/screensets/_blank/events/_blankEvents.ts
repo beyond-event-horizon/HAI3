@@ -4,9 +4,9 @@
  */
 
 import '@hai3/uicore';
-// import { _BLANK_SCREENSET_ID } from '../ids';
+import { _BLANK_SCREENSET_ID } from '../ids';
 
-// const DOMAIN_ID = '_blank';
+const DOMAIN_ID = '_blank';
 
 /**
  * Events enum
@@ -16,6 +16,10 @@ import '@hai3/uicore';
 export enum _BlankEvents {
   // Example: Selected = `${_BLANK_SCREENSET_ID}/${DOMAIN_ID}/selected`,
 }
+
+// These are used in the event enum pattern above
+void _BLANK_SCREENSET_ID;
+void DOMAIN_ID;
 
 /**
  * Module augmentation for type-safe event payloads

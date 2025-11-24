@@ -2,6 +2,8 @@
  * Validation utilities for CLI commands
  */
 
+import { toLower } from 'lodash';
+
 /**
  * Validate npm package name
  * Based on npm package name rules
@@ -10,7 +12,7 @@ export function isValidPackageName(name: string): boolean {
   if (!name || name.length === 0) return false;
   if (name.length > 214) return false;
   if (name.startsWith('.') || name.startsWith('_')) return false;
-  if (name !== name.toLowerCase()) return false;
+  if (name !== toLower(name)) return false;
   if (/[~'!()*]/.test(name)) return false;
   if (encodeURIComponent(name) !== name) {
     // Check for scoped packages
@@ -59,5 +61,5 @@ const RESERVED_SCREENSET_NAMES = ['screenset', 'screen', 'index', 'api', 'core']
  * Check if screenset name is reserved
  */
 export function isReservedScreensetName(name: string): boolean {
-  return RESERVED_SCREENSET_NAMES.includes(name.toLowerCase());
+  return RESERVED_SCREENSET_NAMES.includes(toLower(name));
 }

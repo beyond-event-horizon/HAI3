@@ -7,6 +7,7 @@
 
 import path from 'path';
 import fs from 'fs-extra';
+import { upperFirst } from 'lodash';
 import type { GeneratedFile, ScreensetCategory } from '../core/types.js';
 import { toPascalCase, toScreamingSnake } from './utils.js';
 
@@ -160,7 +161,7 @@ export async function generateScreensetFromTemplate(
     if (file.path.includes('Screenset.tsx')) {
       transformedContent = transformedContent.replace(
         /ScreensetCategory\.Drafts/g,
-        `ScreensetCategory.${category.charAt(0).toUpperCase() + category.slice(1)}`
+        `ScreensetCategory.${upperFirst(category)}`
       );
     }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAppDispatch, useAppSelector, screensetRegistry, selectScreenset, useTranslation } from '@hai3/uicore';
+import { useAppDispatch, useAppSelector, screensetRegistry, selectScreenset, useTranslation, ScreensetCategory } from '@hai3/uicore';
 import { ThemeSelector } from './ThemeSelector';
 import { ScreensetSelector, type ScreensetOption } from './ScreensetSelector';
 import { LanguageSelector } from './LanguageSelector';
@@ -8,7 +8,7 @@ import { ApiModeToggle } from './ApiModeToggle';
 /**
  * All possible screenset categories
  */
-const ALL_CATEGORIES = ['drafts', 'mockups', 'production'];
+const ALL_CATEGORIES: ScreensetCategory[] = [ScreensetCategory.Drafts, ScreensetCategory.Mockups, ScreensetCategory.Production];
 
 /**
  * Build screenset options for selector
