@@ -254,14 +254,14 @@ declare module '@hai3/uicore' {
 
 ### Before Making Changes
 
-1. **CRITICAL: Verify MCP connection** - If WebSocket breaks, STOP and fix it first (see `.ai/MCP_TROUBLESHOOTING.md`)
-2. **CRITICAL: Use Chrome DevTools MCP native tools** - ALWAYS use appropriate tool:
+1. **CRITICAL: Read `.ai/GUIDELINES.md` FIRST** - Route to correct target file before ANY modification. For `.ai/` files, MUST read `.ai/targets/AI.md` first.
+2. **CRITICAL: Verify MCP connection** - If WebSocket breaks, STOP and fix it first (see `.ai/MCP_TROUBLESHOOTING.md`)
+3. **CRITICAL: Use Chrome DevTools MCP native tools** - ALWAYS use appropriate tool:
    - Navigation: `navigate_page`, `wait_for`
    - Page info: `take_snapshot`, `take_screenshot`, `list_console_messages`, `list_network_requests`
    - Interaction: `click`, `fill`, `fill_form`, `hover`, `press_key`
    - Tabs: `list_pages`, `select_page`, `new_page`, `close_page`
    - **ONLY use `evaluate_script` as last resort when NO native tool works**
-3. Read `.ai/GUIDELINES.md` for routing table
 4. Run `npm run arch:check` (MUST pass before commits)
 5. Follow event-driven flow (no direct dispatch)
 

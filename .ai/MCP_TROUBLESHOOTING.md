@@ -67,6 +67,19 @@
 - MCP tools cannot reload mid-session
 - Killing processes removes tools from session permanently
 
+## Screenshot Safety
+
+### Rules
+- REQUIRED: Use take_snapshot for page inspection (text-based, always safe)
+- REQUIRED: Use take_screenshot with filePath parameter to save to disk
+- REQUIRED: Use Read tool to view saved screenshot files
+- FORBIDDEN: Inline take_screenshot without filePath (causes 400 MIME error)
+
+### Error Recovery
+- DETECT: 400 error after take_screenshot (MIME type mismatch)
+- STOP: Session corrupted beyond recovery
+- REQUIRED: Start new conversation immediately
+
 ## STOP CONDITIONS
 Stop and ask user before:
 - Attempting to restart MCP processes manually
