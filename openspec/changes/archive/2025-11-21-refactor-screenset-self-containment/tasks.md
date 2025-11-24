@@ -110,7 +110,7 @@ This implementation used a **phased approach** to minimize risk:
 - [x] 1.9.4 Start dev server: `npm run dev` (RUNNING)
 
 ### 1.10 Test chat screenset via MCP
-- [x] 1.10.1 Navigate to chat screenset via Chrome DevTools MCP
+- [x] 1.10.1 Navigate to chat screenset via Chrome Studio MCP
 - [x] 1.10.2 Test thread creation, selection, deletion
 - [x] 1.10.3 Test message sending and streaming
 - [x] 1.10.4 Test model and context selection
@@ -243,7 +243,7 @@ This implementation used a **phased approach** to minimize risk:
 - [x] 3.4.2 Update ALL IDs in `src/screensets/demo-test/ids.ts` file only
 - [x] 3.4.3 Verify auto-discovery picks up new screenset (showed 4 screensets - SUCCESS!)
 - [x] 3.4.4 Run `npm run type-check` (PASSED after fixing import paths)
-- [x] 3.4.5 Test demo-test screenset via MCP (appeared in DevTools selector)
+- [x] 3.4.5 Test demo-test screenset via MCP (appeared in Studio selector)
 - [x] 3.4.6 Delete test screenset (cleaned up successfully)
 - [x] 3.4.7 Confirm 2-step duplication works! (96% reduction from ~50 steps - PROVEN!)
 
@@ -289,7 +289,7 @@ This implementation used a **phased approach** to minimize risk:
 - [x] 4.6.1 Run `npm run type-check` (PASSED)
 - [x] 4.6.2 Run `npm run arch:check` (PASSED)
 - [x] 4.6.3 Run `npm run lint` (PASSED)
-- [x] 4.6.4 Test via Chrome DevTools MCP (PASSED)
+- [x] 4.6.4 Test via Chrome Studio MCP (PASSED)
 
 **Notes**:
 - Chat screenset successfully split into 4 domain slices (threads, messages, composer, settings)
@@ -365,7 +365,7 @@ This implementation used a **phased approach** to minimize risk:
 - [x] 5.1.6 Verify dependency-cruiser rules work as expected - VERIFIED ✅
 
 ### 5.2 Comprehensive MCP testing
-- [x] 5.2.1 Test all screensets via Chrome DevTools MCP - PASSED ✅
+- [x] 5.2.1 Test all screensets via Chrome Studio MCP - PASSED ✅
 - [x] 5.2.2 Test navigation between screensets - Auto-discovery working ✅
 - [x] 5.2.3 Test Redux state isolation (no cross-contamination) - Verified via enum pattern ✅
 - [x] 5.2.4 Test event bus isolation (events namespaced correctly) - Template literals working ✅
@@ -414,14 +414,14 @@ This implementation used a **phased approach** to minimize risk:
 
 **Notes**:
 - Production build completed successfully with zero errors
-- All packages built: uikit-contracts, uikit, uicore, devtools
+- All packages built: uikit-contracts, uikit, uicore, studio
 - Bundle sizes reasonable:
   - Main app: 258.10 kB (87.35 kB gzipped)
   - React vendor: 433.39 kB (136.58 kB gzipped)
   - Translation files properly chunked by language (lazy loading working)
 - Production bundle tested on localhost:5175 - works perfectly
 - Auto-discovery working in production (screensets loaded correctly)
-- DevTools panel correctly tree-shaken in production (not visible)
+- Studio panel correctly tree-shaken in production (not visible)
 
 ### 5.6 Documentation final review
 - [x] 5.6.1 Review all updated documentation for accuracy - VERIFIED ✅

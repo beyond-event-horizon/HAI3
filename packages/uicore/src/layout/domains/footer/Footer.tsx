@@ -5,7 +5,7 @@ import { UiKitComponent, ButtonVariant } from '@hai3/uikit-contracts';
 
 /**
  * Core Footer component (production-ready)
- * All dev tools moved to @hai3/devtools package
+ * All dev tools moved to @hai3/studio package
  */
 
 export const Footer: React.FC = () => {

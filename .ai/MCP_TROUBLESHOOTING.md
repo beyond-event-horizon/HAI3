@@ -3,7 +3,7 @@
 ## CRITICAL RULES
 
 ### Connection Management
-- FORBIDDEN: pkill -f chrome-devtools-mcp during active session
+- FORBIDDEN: pkill -f chrome-studio-mcp during active session
 - FORBIDDEN: pkill -f chrome-mcp during active session
 - FORBIDDEN: Restarting MCP processes manually
 - REQUIRED: Ask user to restart MCP via Claude Code interface
@@ -39,8 +39,8 @@
 - REQUIRED: Ask user: continue without testing or start new session
 
 ### Active MCP Server
-- Server name: chrome-devtools-mcp
-- DETECT: ps aux | grep chrome-devtools-mcp | grep -v grep
+- Server name: chrome-studio-mcp
+- DETECT: ps aux | grep chrome-studio-mcp | grep -v grep
 
 ### Error States
 - "WebSocket is not open: readyState 3 (CLOSED)" -> Connection dropped
@@ -56,7 +56,7 @@
 - REQUIRED: Only then make next change
 
 ### When Connection Lost
-- BAD: pkill -f chrome-devtools-mcp -> breaks permanently
+- BAD: pkill -f chrome-studio-mcp -> breaks permanently
 - GOOD: Ask user to restart MCP or start new conversation
 - BAD: Continue without testing
 - GOOD: Document completion status and ask user preference

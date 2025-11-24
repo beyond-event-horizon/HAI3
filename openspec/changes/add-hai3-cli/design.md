@@ -384,7 +384,7 @@ export default {
 ## Open Questions (Resolved)
 
 1. ~~Should `hai3 create` support non-interactive mode via flags for CI/automation?~~
-   - **Yes** - Essential for AI agents. Use `--uikit=hai3|custom` and `--devtools` flags.
+   - **Yes** - Essential for AI agents. Use `--uikit=hai3|custom` and `--studio` flags.
 
 2. ~~Should CLI be published to npm public registry or private?~~
    - **Public** - Following framework's open-source nature.

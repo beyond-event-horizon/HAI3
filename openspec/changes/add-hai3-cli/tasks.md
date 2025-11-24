@@ -74,7 +74,7 @@
 - [x] 7.1 Create `CreateCommandArgs` and `CreateCommandResult` types
 - [x] 7.2 Implement `createCommand` satisfying `CommandDefinition`
 - [x] 7.3 Add validation: npm package name rules, directory conflict check
-- [x] 7.4 Support flags: `--uikit`, `--devtools`, `--no-install`
+- [x] 7.4 Support flags: `--uikit`, `--studio`, `--no-install`
 - [x] 7.5 Wire template-based generator to produce all project files
 - [x] 7.6 Return structured result with created files list
 
@@ -193,11 +193,11 @@ These bugs were discovered and fixed during testing session:
   - `packages/uicore/src/components/UserInfo.tsx` - use lodash trim
   - `packages/uicore/src/layout/domains/screen/Screen.tsx` - use lodash trim
 
-- [x] 17.3 Fix TypeScript errors in devtools package
+- [x] 17.3 Fix TypeScript errors in studio package
   - `packages/uikit/src/base/dropdown-menu.tsx` - add container prop to DropdownMenuContent
   - `packages/uikit/src/base/dropdown-menu.tsx` - add container prop to DropdownMenuSubContent
-  - `packages/devtools/src/sections/ControlPanel.tsx` - use ScreensetCategory enum
-  - `packages/devtools/src/sections/LanguageSelector.tsx` - remove unused React import
+  - `packages/studio/src/sections/ControlPanel.tsx` - use ScreensetCategory enum
+  - `packages/studio/src/sections/LanguageSelector.tsx` - remove unused React import
 
 - [x] 17.4 Fix TypeScript errors in uicore userActions
   - `packages/uicore/src/core/actions/userActions.ts` - cast to AccountsApiService, type error param
@@ -242,12 +242,73 @@ Fixed knip configuration hints from arch:check output.
 - [x] 20.4 Remove redundant entry patterns (let knip auto-detect)
 - [x] 20.5 Verify no configuration hints remain
 
+## 21. Rename DevTools to Studio (2024-11-24)
+
+Community decision to rename "devtools" to "studio" across the entire codebase.
+
+- [x] 21.1 Rename `packages/devtools/` directory to `packages/studio/`
+- [x] 21.2 Update package name from `@hai3/devtools` to `@hai3/studio` in all package.json files
+- [x] 21.3 Rename component files (DevToolsPanel.tsx → StudioPanel.tsx, etc.)
+- [x] 21.4 Rename event files (devtoolsEvents.ts → studioEvents.ts)
+- [x] 21.5 Rename icon files (DevToolsIcon.tsx → StudioIcon.tsx)
+- [x] 21.6 Update all TypeScript imports and references
+- [x] 21.7 Update all documentation (.ai/, .claude/, CLAUDE.md, README files)
+- [x] 21.8 Rename `.ai/targets/DEVTOOLS.md` to `.ai/targets/STUDIO.md`
+- [x] 21.9 Rename `openspec/specs/devtools/` to `openspec/specs/studio/`
+- [x] 21.10 Update i18n translation strings (HAI3 DevTools → HAI3 Studio)
+- [x] 21.11 Update CLI create command flag (--devtools → --studio)
+- [x] 21.12 Verify no remaining "devtools" references in codebase
+- [x] 21.13 Run arch:check to verify all changes pass
+
+## 22. NPM Publishing Preparation (PENDING APPROVAL)
+
+Prepare packages for publishing to NPM registry with prerelease versions.
+
+**Status:** Proposal added to proposal.md - awaiting user approval before implementation.
+
+- [ ] 22.1 Add publishing metadata to `packages/uikit-contracts/package.json`
+- [ ] 22.2 Add publishing metadata to `packages/uikit/package.json`
+- [ ] 22.3 Add publishing metadata to `packages/uicore/package.json`
+- [ ] 22.4 Add publishing metadata to `packages/studio/package.json`
+- [ ] 22.5 Add publishing metadata to `packages/cli/package.json`
+- [ ] 22.6 Create README.md for each package with basic docs
+- [ ] 22.7 Add `.npmignore` or verify `files` field excludes dev artifacts
+- [ ] 22.8 Verify build output structure matches exports
+- [ ] 22.9 Test local `npm pack` for each package
+- [ ] 22.10 Document publishing workflow in CLAUDE.md or README
+
 ## Summary
 
-**Completed:** 93/100 tasks (93%)
-**Pending:** 7 tasks (Section 15 - Documentation updates)
+**Completed:** 106/123 tasks (86%)
+**Pending:** 17 tasks (Section 15 - 7 documentation tasks, Section 22 - 10 NPM publishing tasks pending approval)
 
-### Files Modified (Session 2024-11-24 - Latest)
+### Files Modified (Session 2024-11-24 - Studio Rename)
+
+**Studio Package (renamed from devtools):**
+- Renamed `packages/devtools/` → `packages/studio/`
+- Renamed `DevToolsPanel.tsx` → `StudioPanel.tsx`
+- Renamed `DevToolsProvider.tsx` → `StudioProvider.tsx`
+- Renamed `DevToolsOverlay.tsx` → `StudioOverlay.tsx`
+- Renamed `devtoolsEvents.ts` → `studioEvents.ts`
+- Renamed `DevToolsIcon.tsx` → `StudioIcon.tsx`
+- Updated all internal references and exports
+
+**Package.json files:**
+- `packages/studio/package.json` - Changed name to `@hai3/studio`
+- `packages/uicore/package.json` - Updated peerDependency to `@hai3/studio`
+- `package.json` (root) - Updated devDependency and build scripts
+
+**Documentation:**
+- Renamed `.ai/targets/DEVTOOLS.md` → `.ai/targets/STUDIO.md`
+- Updated CLAUDE.md with studio references
+- Updated all .claude/commands/*.md files
+- Updated all openspec files
+
+**CLI Package:**
+- `packages/cli/src/generators/project.ts` - Changed --devtools to --studio flag
+- `packages/cli/src/commands/create/index.ts` - Updated flag handling
+
+### Files Modified (Session 2024-11-24 - Earlier)
 
 **CLI Package:**
 - `packages/cli/scripts/copy-templates.ts` - Copy presets/standalone folder instead of flattening
@@ -280,9 +341,9 @@ Fixed knip configuration hints from arch:check output.
 - `packages/uicore/src/layout/domains/screen/Screen.tsx`
 - `packages/uicore/src/core/actions/userActions.ts`
 
-**DevTools Package:**
-- `packages/devtools/src/sections/ControlPanel.tsx`
-- `packages/devtools/src/sections/LanguageSelector.tsx`
+**Studio Package:**
+- `packages/studio/src/sections/ControlPanel.tsx`
+- `packages/studio/src/sections/LanguageSelector.tsx`
 
 **App Source:**
 - `src/screensets/_blank/events/_blankEvents.ts`

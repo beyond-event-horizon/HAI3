@@ -642,7 +642,7 @@ module.exports = {
 2. Update event namespace in events enum
 3. Update icon IDs with namespace prefix
 4. Verify `registerSlice()` call
-5. Test via Chrome DevTools MCP
+5. Test via Chrome Studio MCP
 
 **Validation**: Architecture checks, MCP testing
 

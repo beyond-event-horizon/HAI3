@@ -10,11 +10,11 @@ The current development tooling (theme selector, screenset selector, language se
 4. **Poor UX** - Tools are always visible and consume vertical space, even when not needed
 5. **Not Extensible** - Hard to add advanced dev features (state inspector, console, performance monitoring)
 
-This change creates a dedicated `@hai3/devtools` package with a modern floating overlay panel that can be completely excluded from production builds.
+This change creates a dedicated `@hai3/studio` package with a modern floating overlay panel that can be completely excluded from production builds.
 
 ## What Changes
 
-- **New Package**: `@hai3/devtools` - Standalone developer tools package
+- **New Package**: `@hai3/studio` - Standalone developer tools package
 - **Floating Panel UI**: Glassmorphic draggable/resizable overlay with collapsible state
 - **Migrated Tools**: Theme, screenset, language selectors and API mode toggle move from Footer
 - **Footer Cleanup**: Remove dev tools from Footer, make Footer production-ready
@@ -25,34 +25,34 @@ This change creates a dedicated `@hai3/devtools` package with a modern floating 
 ## Impact
 
 ### Affected Specs
-- **ADDED**: New `devtools` capability (floating panel, controls, state persistence)
+- **ADDED**: New `studio` capability (floating panel, controls, state persistence)
 
 ### Affected Code
-- **New Package**: `packages/devtools/` (complete new workspace package)
-  - DevToolsPanel component (main floating overlay)
-  - DevToolsProvider context and hooks
+- **New Package**: `packages/studio/` (complete new workspace package)
+  - StudioPanel component (main floating overlay)
+  - StudioProvider context and hooks
   - Control sections (theme, screenset, language, API mode)
   - Drag/resize/collapse logic
   - State persistence utilities
 - **Modified Files**:
   - `packages/uicore/src/layout/domains/footer/Footer.tsx` - Remove dev tools, keep only production footer
   - `packages/uicore/src/layout/domains/footer/footerSlice.ts` - Remove dev tool state if needed
-  - `package.json` - Add new workspace `@hai3/devtools`
-  - `src/main.tsx` - Conditionally import and render DevToolsOverlay
+  - `package.json` - Add new workspace `@hai3/studio`
+  - `src/main.tsx` - Conditionally import and render StudioOverlay
   - `vite.config.ts` - Ensure tree-shaking for conditional imports
-- **Moved Components** (from uicore to devtools):
+- **Moved Components** (from uicore to studio):
   - `ThemeSelector.tsx`
   - `ScreensetSelector.tsx`
   - `LanguageSelector.tsx`
   - `ApiModeToggle.tsx`
 
 ### Migration Path
-1. Create new `@hai3/devtools` package
+1. Create new `@hai3/studio` package
 2. Implement floating panel with all features
-3. Move selector components from uicore to devtools
+3. Move selector components from uicore to studio
 4. Update Footer to remove dev tools
 5. Add conditional import in main.tsx
-6. Verify tree-shaking excludes devtools from production build
+6. Verify tree-shaking excludes studio from production build
 
 ### Breaking Changes
 None - This is purely additive. Footer continues to work, dev tools move to new location in dev mode only.

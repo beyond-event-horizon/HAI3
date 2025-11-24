@@ -244,7 +244,7 @@ The CLI SHALL provide a `hai3 create <project-name>` command that scaffolds a ne
 
 #### Scenario: Project creation flags
 
-**Given** running `hai3 create my-app --uikit=custom --devtools`
+**Given** running `hai3 create my-app --uikit=custom --studio`
 **When** the command executes with flags
 **Then** the system SHALL use flag values without prompting
 

@@ -40,11 +40,11 @@ npm run type-check
 npm run lint
 ```
 
-## STEP 7: Test via Chrome DevTools MCP
+## STEP 7: Test via Chrome Studio MCP
 STOP if MCP WebSocket is closed.
 1. npm run dev
-2. mcp__chrome-devtools__navigate_page to screenset
-3. mcp__chrome-devtools__take_snapshot
+2. mcp__chrome-studio__navigate_page to screenset
+3. mcp__chrome-studio__take_snapshot
 4. Navigate to new screen
-5. mcp__chrome-devtools__list_console_messages - verify 0 errors
+5. mcp__chrome-studio__list_console_messages - verify 0 errors
 6. Verify translations load correctly

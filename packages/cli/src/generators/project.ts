@@ -10,8 +10,8 @@ export interface ProjectGeneratorInput {
   projectName: string;
   /** Use HAI3 UIKit or custom */
   uikit: 'hai3' | 'custom';
-  /** Include devtools */
-  devtools: boolean;
+  /** Include studio */
+  studio: boolean;
 }
 
 /**
@@ -61,7 +61,7 @@ async function readDirRecursive(
 export async function generateProject(
   input: ProjectGeneratorInput
 ): Promise<GeneratedFile[]> {
-  const { projectName, uikit, devtools } = input;
+  const { projectName, uikit, studio } = input;
   const templatesDir = getTemplatesDir();
   const files: GeneratedFile[] = [];
 
@@ -147,8 +147,8 @@ export async function generateProject(
     vite: '^6.4.1',
   };
 
-  if (devtools) {
-    devDependencies['@hai3/devtools'] = '^0.1.0';
+  if (studio) {
+    devDependencies['@hai3/studio'] = '^0.1.0';
   }
 
   const packageJson = {

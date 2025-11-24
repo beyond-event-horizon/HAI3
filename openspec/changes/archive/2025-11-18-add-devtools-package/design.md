@@ -1,4 +1,4 @@
-# DevTools Package Design Document
+# Studio Package Design Document
 
 ## Context
 
@@ -24,7 +24,7 @@ HAI3 needs a modern, extensible developer tooling solution that:
 ## Goals / Non-Goals
 
 ### Goals
-✅ Create standalone `@hai3/devtools` package
+✅ Create standalone `@hai3/studio` package
 ✅ Implement floating, draggable, resizable panel with glassmorphic design
 ✅ Migrate existing dev tools (theme, screenset, language, API mode) from Footer
 ✅ Zero production bundle impact via conditional imports
@@ -35,7 +35,7 @@ HAI3 needs a modern, extensible developer tooling solution that:
 ### Non-Goals
 ❌ Browser extension (future consideration if deep debugging needed)
 ❌ Redux time-travel or state tree inspection (future feature)
-❌ Built-in console or network panel (use browser DevTools for now)
+❌ Built-in console or network panel (use browser Studio for now)
 ❌ Multi-language translation for dev tools UI (English only)
 ❌ Mobile/responsive support (dev tools for desktop development only)
 
@@ -43,60 +43,60 @@ HAI3 needs a modern, extensible developer tooling solution that:
 
 ### 0. UIKit Contracts: Keep Unified for Now, Split If Needed Later
 
-**Decision**: Keep `@hai3/uikit-contracts` as a single package for now. If devtools requires contracts not used by uicore, consider splitting in the future.
+**Decision**: Keep `@hai3/uikit-contracts` as a single package for now. If studio requires contracts not used by uicore, consider splitting in the future.
 
 **Rationale**:
 - **Contracts are types only**: No runtime code, minimal bundle impact (few KB)
 - **YAGNI principle**: Don't split until we have concrete need
 - **Simpler architecture**: Fewer packages to manage
-- **Easy to split later**: If devtools needs 50+ devtools-only type definitions, we can create `@hai3/uikit-contracts-devtools` or use subpath exports
+- **Easy to split later**: If studio needs 50+ studio-only type definitions, we can create `@hai3/uikit-contracts-studio` or use subpath exports
 
 **Future Split Strategy** (if needed):
 ```
 Option 1: Separate package
   @hai3/uikit-contracts (core types)
-  @hai3/uikit-contracts-devtools (devtools-only types)
+  @hai3/uikit-contracts-studio (studio-only types)
 
 Option 2: Subpath exports
   @hai3/uikit-contracts/core
-  @hai3/uikit-contracts/devtools
+  @hai3/uikit-contracts/studio
 ```
 
-**For now**: All contracts in `@hai3/uikit-contracts`, both uicore and devtools import from it.
+**For now**: All contracts in `@hai3/uikit-contracts`, both uicore and studio import from it.
 
 ### 1. Package Architecture: Standalone Workspace Package
 
-**Decision**: Create `@hai3/devtools` as a new workspace package with direct dependency on `@hai3/uikit`.
+**Decision**: Create `@hai3/studio` as a new workspace package with direct dependency on `@hai3/uikit`.
 
 **Rationale**:
 - **Clean separation**: Dev tools are conceptually separate from production layout code
-- **No production bloat**: DevTools can import directly from `@hai3/uikit` without platforms needing to register devtools-specific components
+- **No production bloat**: Studio can import directly from `@hai3/uikit` without platforms needing to register studio-specific components
 - **Tree-shaking**: Entire package (including its uikit dependencies) eliminated when conditionally imported
-- **Simplified platform code**: Platforms don't register components only used by devtools
+- **Simplified platform code**: Platforms don't register components only used by studio
 - **Independent versioning**: Can evolve dev tools separately from core packages
 
 **Alternatives Considered**:
 - **Alt 1: Keep in `uicore`** - Rejected because it mixes dev and production concerns
-- **Alt 2: Use `uikitRegistry` for all components** - Rejected because platforms would need to register devtools-specific components, bloating production bundles
+- **Alt 2: Use `uikitRegistry` for all components** - Rejected because platforms would need to register studio-specific components, bloating production bundles
 - **Alt 3: Separate npm package** - Overkill for monorepo; adds publishing overhead
 - **Alt 4: Browser extension** - Rejected for v1 due to installation friction and cross-browser complexity
 
 **Why Direct `@hai3/uikit` Dependency Is Safe**:
-- DevTools is conditionally imported with `if (import.meta.env.DEV)`
+- Studio is conditionally imported with `if (import.meta.env.DEV)`
 - Vite/Rollup tree-shakes the entire branch in production builds
-- Both `@hai3/devtools` AND its dependency `@hai3/uikit` components are eliminated
+- Both `@hai3/studio` AND its dependency `@hai3/uikit` components are eliminated
 - Zero production bundle impact
 
 **Implementation**:
 ```
-packages/devtools/
+packages/studio/
 ├── package.json          # Workspace package config
 ├── tsconfig.json         # Extends root tsconfig
 ├── tsup.config.ts        # ESM build with sideEffects: false
 └── src/
-    ├── DevToolsOverlay.tsx      # Top-level component
-    ├── DevToolsPanel.tsx        # Main panel UI
-    ├── DevToolsProvider.tsx     # Context for state
+    ├── StudioOverlay.tsx      # Top-level component
+    ├── StudioPanel.tsx        # Main panel UI
+    ├── StudioProvider.tsx     # Context for state
     ├── hooks/
     │   ├── useDraggable.ts
     │   ├── useResizable.ts
@@ -151,7 +151,7 @@ packages/devtools/
 
 **Implementation**:
 ```typescript
-// packages/devtools/src/hooks/useDraggable.ts
+// packages/studio/src/hooks/useDraggable.ts
 export const useDraggable = (initialPosition: Position) => {
   const [position, setPosition] = useState(initialPosition);
   const [isDragging, setIsDragging] = useState(false);
@@ -169,7 +169,7 @@ export const useDraggable = (initialPosition: Position) => {
       const newX = clamp(e.clientX - dragStartPos.current.x, 0, window.innerWidth - panelWidth);
       const newY = clamp(e.clientY - dragStartPos.current.y, 0, window.innerHeight - panelHeight);
       setPosition({ x: newX, y: newY });
-      saveToLocalStorage('hai3:devtools:position', { x: newX, y: newY });
+      saveToLocalStorage('hai3:studio:position', { x: newX, y: newY });
     };
 
     const handleMouseUp = () => setIsDragging(false);
@@ -201,7 +201,7 @@ export const useDraggable = (initialPosition: Position) => {
 
 **Implementation**:
 ```typescript
-// packages/devtools/src/hooks/useResizable.ts
+// packages/studio/src/hooks/useResizable.ts
 export const useResizable = (initialSize: Size) => {
   const [size, setSize] = useState(initialSize);
   const [isResizing, setIsResizing] = useState(false);
@@ -218,7 +218,7 @@ export const useResizable = (initialSize: Size) => {
       const newWidth = clamp(e.clientX - panelX, MIN_WIDTH, MAX_WIDTH);
       const newHeight = clamp(e.clientY - panelY, MIN_HEIGHT, MAX_HEIGHT);
       setSize({ width: newWidth, height: newHeight });
-      saveToLocalStorage('hai3:devtools:size', { width: newWidth, height: newHeight });
+      saveToLocalStorage('hai3:studio:size', { width: newWidth, height: newHeight });
     };
 
     const handleMouseUp = () => setIsResizing(false);
@@ -250,27 +250,27 @@ export const useResizable = (initialSize: Size) => {
 - **Resilience**: Defensive coding handles localStorage errors (quota exceeded, disabled, etc.)
 
 **Keys**:
-- `hai3:devtools:position` - `{ x: number, y: number }`
-- `hai3:devtools:size` - `{ width: number, height: number }`
-- `hai3:devtools:collapsed` - `boolean`
+- `hai3:studio:position` - `{ x: number, y: number }`
+- `hai3:studio:size` - `{ width: number, height: number }`
+- `hai3:studio:collapsed` - `boolean`
 
 **Implementation**:
 ```typescript
-// packages/devtools/src/utils/persistence.ts
-export const saveDevToolsState = <T>(key: string, value: T): void => {
+// packages/studio/src/utils/persistence.ts
+export const saveStudioState = <T>(key: string, value: T): void => {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (e) {
-    console.warn(`[DevTools] Failed to save state for ${key}:`, e);
+    console.warn(`[Studio] Failed to save state for ${key}:`, e);
   }
 };
 
-export const loadDevToolsState = <T>(key: string, defaultValue: T): T => {
+export const loadStudioState = <T>(key: string, defaultValue: T): T => {
   try {
     const item = localStorage.getItem(key);
     return item ? JSON.parse(item) : defaultValue;
   } catch (e) {
-    console.warn(`[DevTools] Failed to load state for ${key}:`, e);
+    console.warn(`[Studio] Failed to load state for ${key}:`, e);
     return defaultValue;
   }
 };
@@ -283,7 +283,7 @@ export const loadDevToolsState = <T>(key: string, defaultValue: T): T => {
 
 ### 6. Conditional Import: Dynamic import() with import.meta.env.DEV
 
-**Decision**: Use dynamic `import()` wrapped in `if (import.meta.env.DEV)` to conditionally load devtools.
+**Decision**: Use dynamic `import()` wrapped in `if (import.meta.env.DEV)` to conditionally load studio.
 
 **Rationale**:
 - **Tree-shaking**: Vite's Rollup will eliminate the entire branch in production builds
@@ -306,13 +306,13 @@ import './index.css';
 const rootElement = document.getElementById('root')!;
 const root = createRoot(rootElement);
 
-// Conditionally load and render DevTools in development
+// Conditionally load and render Studio in development
 (async () => {
-  let DevToolsOverlay: React.ComponentType | null = null;
+  let StudioOverlay: React.ComponentType | null = null;
 
   if (import.meta.env.DEV) {
-    const devtools = await import('@hai3/devtools');
-    DevToolsOverlay = devtools.DevToolsOverlay;
+    const studio = await import('@hai3/studio');
+    StudioOverlay = studio.StudioOverlay;
   }
 
   root.render(
@@ -320,15 +320,15 @@ const root = createRoot(rootElement);
       <HAI3Provider>
         <App />
       </HAI3Provider>
-      {DevToolsOverlay && <DevToolsOverlay />}
+      {StudioOverlay && <StudioOverlay />}
     </StrictMode>
   );
 })();
 ```
 
 **Build Verification**: Run `npm run build` and inspect `dist/` bundle to confirm:
-1. No `@hai3/devtools` imports in production JS
-2. No devtools-related strings in bundle
+1. No `@hai3/studio` imports in production JS
+2. No studio-related strings in bundle
 3. Bundle size doesn't increase
 
 **Alternatives Considered**:
@@ -337,7 +337,7 @@ const root = createRoot(rootElement);
 
 ### 7. Component Hierarchy: Context Provider Pattern
 
-**Decision**: Use React Context API via `DevToolsProvider` to share state across panel components.
+**Decision**: Use React Context API via `StudioProvider` to share state across panel components.
 
 **Rationale**:
 - **Clean prop-drilling avoidance**: Position, size, collapsed state accessible anywhere
@@ -347,12 +347,12 @@ const root = createRoot(rootElement);
 
 **Component Tree**:
 ```
-<DevToolsOverlay>                      # Top-level, handles keyboard shortcuts
-  <DevToolsProvider>                   # Context provider for state
+<StudioOverlay>                      # Top-level, handles keyboard shortcuts
+  <StudioProvider>                   # Context provider for state
     {collapsed ? (
       <FloatingButton />               # 40px button (uses UIKit Button)
     ) : (
-      <DevToolsPanel>                  # Main panel (uses UIKit Card)
+      <StudioPanel>                  # Main panel (uses UIKit Card)
         <PanelHeader />                # Title, collapse button (UIKit Button), drag handle
         <ControlPanel>                 # Scrollable content (UIKit ScrollArea)
           <ThemeSelector />            # Uses UIKit DropdownMenu
@@ -361,15 +361,15 @@ const root = createRoot(rootElement);
           <ApiModeToggle />            # Uses UIKit Switch/Toggle
         </ControlPanel>
         <ResizeHandle />               # Bottom-right corner grip (custom div)
-      </DevToolsPanel>
+      </StudioPanel>
     )}
-  </DevToolsProvider>
-</DevToolsOverlay>
+  </StudioProvider>
+</StudioOverlay>
 ```
 
 **UIKit Component Usage** (direct imports):
 ```typescript
-// In DevToolsPanel.tsx - Direct imports from @hai3/uikit
+// In StudioPanel.tsx - Direct imports from @hai3/uikit
 import { Card } from '@hai3/uikit';
 import { Button } from '@hai3/uikit';
 import { ScrollArea } from '@hai3/uikit';
@@ -380,13 +380,13 @@ import { DropdownMenu, DropdownButton, DropdownMenuItem } from '@hai3/uikit';
 
 **Why not `uikitRegistry`?**
 - Registry pattern is for runtime swappability (platforms customizing components)
-- DevTools components are internal implementation details, not meant to be customized
+- Studio components are internal implementation details, not meant to be customized
 - Direct imports simpler and tree-shake better
-- Platforms don't waste bundle space on devtools-only components
+- Platforms don't waste bundle space on studio-only components
 
 **Context Shape**:
 ```typescript
-interface DevToolsContextValue {
+interface StudioContextValue {
   position: Position;
   size: Size;
   collapsed: boolean;
@@ -408,7 +408,7 @@ interface DevToolsContextValue {
 
 **Implementation**:
 ```typescript
-// packages/devtools/src/hooks/useKeyboardShortcut.ts
+// packages/studio/src/hooks/useKeyboardShortcut.ts
 export const useKeyboardShortcut = (handler: () => void) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -451,9 +451,9 @@ export const useKeyboardShortcut = (handler: () => void) => {
 **Risk**: Conditional import might not be eliminated in production if build config is incorrect.
 
 **Mitigation**:
-- **Test in CI**: Add build step that inspects bundle for devtools strings
+- **Test in CI**: Add build step that inspects bundle for studio strings
 - **Documentation**: Clear instructions in README about verifying tree-shaking
-- **Package config**: Set `"sideEffects": false` in `@hai3/devtools/package.json`
+- **Package config**: Set `"sideEffects": false` in `@hai3/studio/package.json`
 
 **Trade-off**: Accepted. If tree-shaking fails, production bundle includes ~50KB of dev tools code (minor). CI tests will catch this.
 
@@ -482,19 +482,19 @@ export const useKeyboardShortcut = (handler: () => void) => {
 ## Migration Plan
 
 ### Step 1: Create Package (Day 1)
-1. Scaffold `packages/devtools` directory
+1. Scaffold `packages/studio` directory
 2. Create package.json, tsconfig, tsup config
 3. Add to root workspace
 4. Verify builds successfully
 
 ### Step 2: Implement Core Components (Day 2)
-1. Build DevToolsPanel, DevToolsProvider, DevToolsOverlay
+1. Build StudioPanel, StudioProvider, StudioOverlay
 2. Implement drag/resize hooks
 3. Add keyboard shortcuts
 4. Add state persistence
 
 ### Step 3: Migrate Controls (Day 2-3)
-1. Copy ThemeSelector, ScreensetSelector, LanguageSelector, ApiModeToggle from uicore to devtools
+1. Copy ThemeSelector, ScreensetSelector, LanguageSelector, ApiModeToggle from uicore to studio
 2. Update imports to use `@hai3/uicore` for hooks/actions
 3. Create ControlPanel container
 4. Test all controls work correctly
@@ -502,8 +502,8 @@ export const useKeyboardShortcut = (handler: () => void) => {
 ### Step 4: Integrate and Clean Up (Day 3)
 1. Add conditional import to `src/main.tsx`
 2. Remove dev tools from Footer in uicore
-3. Test dev mode: devtools loads and works
-4. Test production build: devtools excluded
+3. Test dev mode: studio loads and works
+4. Test production build: studio excluded
 
 ### Step 5: Validation (Day 4)
 1. Run architecture checks (`npm run arch:check`, `npm run arch:deps`)
@@ -514,8 +514,8 @@ export const useKeyboardShortcut = (handler: () => void) => {
 ### Rollback Plan
 If critical issues arise:
 1. Keep Footer with dev tools as fallback (behind feature flag)
-2. Disable devtools conditional import in main.tsx
-3. Fix issues in devtools package
+2. Disable studio conditional import in main.tsx
+3. Fix issues in studio package
 4. Re-enable when stable
 
 No user-facing breaking changes - rollback is seamless.
@@ -528,8 +528,8 @@ No user-facing breaking changes - rollback is seamless.
 2. **Multi-Panel Support**: Should panel support tabs for future sections (Console, Network, etc.)?
    - **Answer**: Yes, add tab structure to ControlPanel now (even if only 1 tab initially). Makes future expansion easier.
 
-3. **Themes**: Should devtools respect app theme or have independent theme?
+3. **Themes**: Should studio respect app theme or have independent theme?
    - **Answer**: Respect app theme. Glassmorphism adapts to light/dark automatically.
 
 4. **Mobile**: Should we support mobile responsive layout?
-   - **Answer**: No. DevTools are for desktop development only. Saves complexity.
+   - **Answer**: No. Studio are for desktop development only. Saves complexity.

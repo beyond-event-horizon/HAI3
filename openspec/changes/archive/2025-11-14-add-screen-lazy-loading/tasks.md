@@ -38,7 +38,7 @@
 - [ ] 6.4 Test chat screenset in browser - verify screen loads
 - [ ] 6.5 Verify bundle splitting in build output (`npm run build`)
 - [ ] 6.6 Test navigation between screens (should be smooth)
-- [ ] 6.7 Check browser DevTools Network tab - verify chunks load on-demand
+- [ ] 6.7 Check browser Studio Network tab - verify chunks load on-demand
 - [ ] 6.8 Test error handling (modify import path to trigger error)
 
 ## 7. Documentation

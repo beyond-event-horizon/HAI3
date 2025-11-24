@@ -2,54 +2,54 @@
 
 ## 1. Package Setup
 
-- [x] 1.1 Create `packages/devtools` directory structure
-- [x] 1.2 Create `packages/devtools/package.json` with workspace configuration
-  - Name: `@hai3/devtools`
+- [x] 1.1 Create `packages/studio` directory structure
+- [x] 1.2 Create `packages/studio/package.json` with workspace configuration
+  - Name: `@hai3/studio`
   - Type: `module`
   - SideEffects: `false`
   - Dependencies: `@hai3/uikit-contracts`, `@hai3/uicore`, `@hai3/uikit`, `lodash`
   - PeerDependencies: `react`, `react-dom`
-- [x] 1.3 Create `packages/devtools/tsconfig.json` extending root tsconfig
-- [x] 1.4 Create `packages/devtools/tsup.config.ts` for ESM build with tree-shaking
-- [x] 1.5 Add `packages/devtools` to root `package.json` workspaces array
-- [x] 1.6 Update root `package.json` build:packages script to include devtools build
+- [x] 1.3 Create `packages/studio/tsconfig.json` extending root tsconfig
+- [x] 1.4 Create `packages/studio/tsup.config.ts` for ESM build with tree-shaking
+- [x] 1.5 Add `packages/studio` to root `package.json` workspaces array
+- [x] 1.6 Update root `package.json` build:packages script to include studio build
 
 ## 2. Core Components
 
-- [x] 2.1 Create `packages/devtools/src/DevToolsPanel.tsx` - Main floating panel component
+- [x] 2.1 Create `packages/studio/src/StudioPanel.tsx` - Main floating panel component
   - Import `Card` directly from `@hai3/uikit` for panel container
   - Floating div with fixed positioning
   - Glassmorphic styling (backdrop-blur, semi-transparent background)
   - z-index > 1000 for overlay effect
-- [x] 2.2 Create `packages/devtools/src/DevToolsProvider.tsx` - Context provider for panel state
+- [x] 2.2 Create `packages/studio/src/StudioProvider.tsx` - Context provider for panel state
   - Manage visibility, position, size, collapsed state
   - Provide actions to toggle, move, resize, collapse
-- [x] 2.3 Create `packages/devtools/src/DevToolsOverlay.tsx` - Top-level component for app integration
-  - Wraps DevToolsProvider + DevToolsPanel
+- [x] 2.3 Create `packages/studio/src/StudioOverlay.tsx` - Top-level component for app integration
+  - Wraps StudioProvider + StudioPanel
   - Handles keyboard shortcuts
   - Import `Button` directly from `@hai3/uikit` for collapsed floating button
   - Renders collapsed button when minimized
 
 ## 3. Drag and Drop
 
-- [x] 3.1 Create `packages/devtools/src/hooks/useDraggable.ts` - Drag logic hook
+- [x] 3.1 Create `packages/studio/src/hooks/useDraggable.ts` - Drag logic hook
   - Track mouse down/move/up events on panel header
   - Calculate new position based on cursor movement
   - Enforce viewport boundaries (no off-screen positioning)
-- [x] 3.2 Implement drag handle in DevToolsPanel header
+- [x] 3.2 Implement drag handle in StudioPanel header
   - Visual indicator (cursor: move)
   - Attach useDraggable hook to header element
-- [x] 3.3 Add position persistence to localStorage (`hai3:devtools:position`)
+- [x] 3.3 Add position persistence to localStorage (`hai3:studio:position`)
 
 ## 4. Resize Logic
 
-- [x] 4.1 Create `packages/devtools/src/hooks/useResizable.ts` - Resize logic hook
+- [x] 4.1 Create `packages/studio/src/hooks/useResizable.ts` - Resize logic hook
   - Track mouse events on resize handle (bottom-right corner)
   - Calculate new width/height based on cursor movement
   - Enforce min dimensions (320px x 400px)
   - Enforce max dimensions (600px x 800px)
 - [x] 4.2 Add resize handle UI element (corner grip icon)
-- [x] 4.3 Add size persistence to localStorage (`hai3:devtools:size`)
+- [x] 4.3 Add size persistence to localStorage (`hai3:studio:size`)
 
 ## 5. Collapse/Expand
 
@@ -59,34 +59,34 @@
   - Wrench or dev tools icon from lucide-react
   - Positioned at bottom-right: 24px from edges
   - Click handler to expand panel
-- [x] 5.3 Implement toggle logic in DevToolsProvider
-- [x] 5.4 Add collapsed state persistence to localStorage (`hai3:devtools:collapsed`)
+- [x] 5.3 Implement toggle logic in StudioProvider
+- [x] 5.4 Add collapsed state persistence to localStorage (`hai3:studio:collapsed`)
 
 ## 6. Keyboard Shortcuts
 
-- [x] 6.1 Create `packages/devtools/src/hooks/useKeyboardShortcut.ts` - Keyboard event hook
+- [x] 6.1 Create `packages/studio/src/hooks/useKeyboardShortcut.ts` - Keyboard event hook
   - Listen for `Shift+`` ` ``** (tilde key, all platforms)
   - Toggle panel visibility
   - Prevent default browser behavior
-- [x] 6.2 Integrate keyboard shortcut hook in DevToolsOverlay
+- [x] 6.2 Integrate keyboard shortcut hook in StudioOverlay
 - [x] 6.3 Restore focus to previously focused element after toggle
 
 ## 7. Control Sections
 
-- [x] 7.1 Move `ThemeSelector.tsx` from `packages/uicore/src/components/` to `packages/devtools/src/sections/`
+- [x] 7.1 Move `ThemeSelector.tsx` from `packages/uicore/src/components/` to `packages/studio/src/sections/`
   - Update imports: `@hai3/uicore` for hooks/actions, `@hai3/uikit` for components
   - Change from `uikitRegistry.getComponent()` to direct imports
   - Keep Redux integration (useAppSelector, useAppDispatch, changeTheme)
-- [x] 7.2 Move `ScreensetSelector.tsx` from `packages/uicore/src/components/` to `packages/devtools/src/sections/`
+- [x] 7.2 Move `ScreensetSelector.tsx` from `packages/uicore/src/components/` to `packages/studio/src/sections/`
   - Update imports: direct `@hai3/uikit` imports instead of registry
   - Keep selectScreenset action integration
-- [x] 7.3 Move `LanguageSelector.tsx` from `packages/uicore/src/components/` to `packages/devtools/src/sections/`
+- [x] 7.3 Move `LanguageSelector.tsx` from `packages/uicore/src/components/` to `packages/studio/src/sections/`
   - Update imports: direct `@hai3/uikit` imports instead of registry
   - Keep changeLanguage action integration
-- [x] 7.4 Move `ApiModeToggle.tsx` from `packages/uicore/src/components/` to `packages/devtools/src/sections/`
+- [x] 7.4 Move `ApiModeToggle.tsx` from `packages/uicore/src/components/` to `packages/studio/src/sections/`
   - Update imports: direct `@hai3/uikit` imports instead of registry
   - Keep ApiEvents.ModeChanged integration
-- [x] 7.5 Create `packages/devtools/src/sections/ControlPanel.tsx` - Container for all sections
+- [x] 7.5 Create `packages/studio/src/sections/ControlPanel.tsx` - Container for all sections
   - Import `ScrollArea` directly from `@hai3/uikit` for scrollable content
   - Render ThemeSelector, ScreensetSelector, LanguageSelector, ApiModeToggle
   - Use Accordion from `@hai3/uikit` for collapsible sections if available
@@ -94,14 +94,14 @@
 
 ## 8. State Persistence
 
-- [x] 8.1 Create `packages/devtools/src/utils/persistence.ts` - localStorage utilities
-  - `saveDevToolsState(key: string, value: any): void`
-  - `loadDevToolsState<T>(key: string, defaultValue: T): T`
+- [x] 8.1 Create `packages/studio/src/utils/persistence.ts` - localStorage utilities
+  - `saveStudioState(key: string, value: any): void`
+  - `loadStudioState<T>(key: string, defaultValue: T): T`
   - Handle JSON serialization/deserialization
   - Handle localStorage errors gracefully
 - [x] 8.2 Implement position persistence in useDraggable
 - [x] 8.3 Implement size persistence in useResizable
-- [x] 8.4 Implement collapsed state persistence in DevToolsProvider
+- [x] 8.4 Implement collapsed state persistence in StudioProvider
 - [x] 8.5 Restore all persisted state on panel mount
 
 ## 9. Footer Cleanup
@@ -122,27 +122,27 @@
 - [x] 10.1 Add conditional dynamic import in `src/main.tsx`
   ```typescript
   if (import.meta.env.DEV) {
-    const { DevToolsOverlay } = await import('@hai3/devtools');
-    // Render DevToolsOverlay
+    const { StudioOverlay } = await import('@hai3/studio');
+    // Render StudioOverlay
   }
   ```
-- [x] 10.2 Ensure DevToolsOverlay is rendered inside HAI3Provider (fixed from initial outside placement)
-- [x] 10.3 Test that devtools loads correctly in development mode
+- [x] 10.2 Ensure StudioOverlay is rendered inside HAI3Provider (fixed from initial outside placement)
+- [x] 10.3 Test that studio loads correctly in development mode
 
 ## 11. Build Configuration
 
 - [x] 11.1 Verify `vite.config.ts` supports tree-shaking for conditional imports
 - [x] 11.2 Run production build: `npm run build`
-- [x] 11.3 Inspect production bundle to confirm `@hai3/devtools` is excluded
+- [x] 11.3 Inspect production bundle to confirm `@hai3/studio` is excluded
   - Check bundle size (should not increase)
-  - Search bundle for devtools-related strings (should not exist)
-  - **Result**: 0 DevTools component references found, only 2 coincidental matches in minified variable names
-- [x] 11.4 Test production build in browser to confirm no devtools code executes
-  - DevTools code successfully tree-shaken from production bundle
+  - Search bundle for studio-related strings (should not exist)
+  - **Result**: 0 Studio component references found, only 2 coincidental matches in minified variable names
+- [x] 11.4 Test production build in browser to confirm no studio code executes
+  - Studio code successfully tree-shaken from production bundle
 
 ## 12. Styling
 
-- [x] 12.1 Implement glassmorphic styles in DevToolsPanel
+- [x] 12.1 Implement glassmorphic styles in StudioPanel
   - Background: `rgba(255, 255, 255, 0.1)` for light themes, `rgba(0, 0, 0, 0.4)` for dark themes
   - Backdrop-filter: `blur(16px) saturate(180%)`
   - Border: `1px solid rgba(255, 255, 255, 0.18)` or theme-appropriate
@@ -161,9 +161,9 @@
 - [x] 13.5 Manual testing: Change theme, screenset, language, API mode
 - [x] 13.6 Manual testing: Reload page and verify state persistence
 - [x] 13.7 Manual testing: Clear localStorage and verify defaults
-- [x] 13.8 Test production build has no devtools code
-  - Verified: 0 DevTools references in production bundle
-- [x] 13.9 Test dev mode loads devtools correctly
+- [x] 13.8 Test production build has no studio code
+  - Verified: 0 Studio references in production bundle
+- [x] 13.9 Test dev mode loads studio correctly
 - [x] 13.10 Run architecture checks: `npm run arch:check`
 - [x] 13.11 Run dependency validation: `npm run arch:deps`
 - [x] 13.12 Run type-check: `npm run type-check`
@@ -172,10 +172,10 @@
 ## 14. Documentation
 
 - [x] 14.1 Add JSDoc comments to all public APIs
-- [x] 14.2 Update CLAUDE.md to mention devtools package
+- [x] 14.2 Update CLAUDE.md to mention studio package
   - Added to three-layer architecture diagram
   - Added explanation of auto-detection and tree-shaking
-- [x] 14.3 Add README.md to `packages/devtools/` explaining usage
+- [x] 14.3 Add README.md to `packages/studio/` explaining usage
   - Comprehensive documentation with usage examples
   - Architecture explanations
   - Keyboard shortcuts reference
@@ -192,30 +192,30 @@
 
 ## 16. Event-Driven Persistence Refactoring
 
-- [x] 16.1 Create `packages/devtools/src/events/devtoolsEvents.ts` - Event definitions
+- [x] 16.1 Create `packages/studio/src/events/studioEvents.ts` - Event definitions
   - Define PositionChangedPayload, SizeChangedPayload event payloads
-  - Export DevToolsEvents namespace with event names
+  - Export StudioEvents namespace with event names
   - Module augmentation to extend EventPayloadMap for type safety
-- [x] 16.2 Create `packages/devtools/src/effects/persistenceEffects.ts` - Persistence effects
-  - Subscribe to DevToolsEvents (PositionChanged, SizeChanged)
+- [x] 16.2 Create `packages/studio/src/effects/persistenceEffects.ts` - Persistence effects
+  - Subscribe to StudioEvents (PositionChanged, SizeChanged)
   - Update localStorage when events are emitted
   - Return cleanup function with proper unsubscribe pattern
 - [x] 16.3 Refactor `useDraggable` hook to emit events instead of direct localStorage writes
 - [x] 16.4 Refactor `useResizable` hook to emit events instead of direct localStorage writes
-- [x] 16.5 Initialize persistence effects in DevToolsProvider
+- [x] 16.5 Initialize persistence effects in StudioProvider
 - [x] 16.6 Fix subscription cleanup (use `.unsubscribe()` method pattern)
 
 ## 17. Localization Implementation
 
-- [x] 17.1 Create `packages/devtools/src/i18n/en.json` - English translations source file
+- [x] 17.1 Create `packages/studio/src/i18n/en.json` - English translations source file
 - [x] 17.2 Create translation generator script `generate-translations.cjs`
 - [x] 17.3 Generate translation files for all 36 supported languages
-- [x] 17.4 Create `packages/devtools/src/i18n/translationLoader.ts` using I18nRegistry.createLoader()
-- [x] 17.5 Create `packages/devtools/src/i18n/index.ts` - Register translations on module import
-- [x] 17.6 Add i18n import to `packages/devtools/src/index.ts` entry point
+- [x] 17.4 Create `packages/studio/src/i18n/translationLoader.ts` using I18nRegistry.createLoader()
+- [x] 17.5 Create `packages/studio/src/i18n/index.ts` - Register translations on module import
+- [x] 17.6 Add i18n import to `packages/studio/src/index.ts` entry point
 - [x] 17.7 Update package.json sideEffects to include i18n files
 - [x] 17.8 Add tsup onSuccess hook to copy i18n files to dist
-- [x] 17.9 Refactor DevToolsPanel to use useTranslation() hook
+- [x] 17.9 Refactor StudioPanel to use useTranslation() hook
 - [x] 17.10 Refactor ControlPanel to use translations
 - [x] 17.11 Refactor ThemeSelector to use translations
 - [x] 17.12 Refactor ScreensetSelector to use translations
@@ -242,7 +242,7 @@
 
 ## 20. Styling Cleanup
 
-- [x] 20.1 Remove redundant inline styles from DevToolsPanel
+- [x] 20.1 Remove redundant inline styles from StudioPanel
 - [x] 20.2 Convert `pointerEvents: 'none'` to Tailwind class
 - [x] 20.3 Remove duplicate cursor styles
 - [x] 20.4 Verify rem-based units throughout
@@ -251,29 +251,29 @@
 
 ## 21. UIKit Component Structure
 
-- [x] 21.1 Create `packages/devtools/src/uikit/icons/DevToolsIcon.tsx` - Settings/sliders icon component
-  - Export DEVTOOLS_ICON_ID constant
+- [x] 21.1 Create `packages/studio/src/uikit/icons/StudioIcon.tsx` - Settings/sliders icon component
+  - Export STUDIO_ICON_ID constant
   - SVG icon with configurable className prop
   - Follow screenset icon pattern
-- [x] 21.2 Create `packages/devtools/src/uikit/composite/GlassmorphicButton.tsx` - Reusable glassmorphic button
+- [x] 21.2 Create `packages/studio/src/uikit/composite/GlassmorphicButton.tsx` - Reusable glassmorphic button
   - Accept icon as React.ReactNode prop
   - Circular button with glassmorphic styling (Tailwind only)
   - Support dragging cursor states (grab/grabbing)
   - Use ButtonVariant.Ghost to prevent default button background
 - [x] 21.3 Update CollapsedButton to use GlassmorphicButton
-  - Pass DevToolsIcon as icon prop
+  - Pass StudioIcon as icon prop
   - Keep drag and click handling logic
 
 ## 22. Independent Button Positioning
 
 - [x] 22.1 Add BUTTON_SIZE constant to types.ts (48x48)
 - [x] 22.2 Add BUTTON_POSITION storage key to STORAGE_KEYS
-- [x] 22.3 Add ButtonPositionChangedPayload to devtoolsEvents.ts
-- [x] 22.4 Add ButtonPositionChanged event to DevToolsEvents
+- [x] 22.3 Add ButtonPositionChangedPayload to studioEvents.ts
+- [x] 22.4 Add ButtonPositionChanged event to StudioEvents
 - [x] 22.5 Update useDraggable hook to accept optional storageKey parameter
   - Emit appropriate event based on storage key
   - Support both panel and button positioning
-- [x] 22.6 Create CollapsedButton component separate from DevToolsOverlay
+- [x] 22.6 Create CollapsedButton component separate from StudioOverlay
   - Use useDraggable with BUTTON_POSITION storage key
   - Implement click vs drag distinction (5px threshold)
   - Independent positioning from panel
@@ -296,10 +296,10 @@
 
 ## 24. Dropdown Portal and Z-Index Management
 
-- [x] 24.1 Add portal container div to DevToolsPanel
+- [x] 24.1 Add portal container div to StudioPanel
   - Fixed positioning with z-[99999]
   - pointer-events-none to allow click-through
-  - Register with DevToolsContext via setPortalContainer
+  - Register with StudioContext via setPortalContainer
 - [x] 24.2 Pass portalContainer to all dropdown components
   - ThemeSelector: container={portalContainer}
   - LanguageSelector: container={portalContainer}

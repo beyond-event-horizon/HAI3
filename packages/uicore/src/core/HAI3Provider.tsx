@@ -18,20 +18,20 @@ const isDevelopment =
   (typeof import.meta !== 'undefined' && (import.meta as { env?: { DEV?: boolean } }).env?.DEV);
 
 /**
- * Lazy load DevTools only in development mode and only if installed
- * Falls back to null component if @hai3/devtools is not available
+ * Lazy load Studio only in development mode and only if installed
+ * Falls back to null component if @hai3/studio is not available
  *
- * Note: DevTools is an optional peer dependency loaded via dynamic import
+ * Note: Studio is an optional peer dependency loaded via dynamic import
  * The .catch() ensures graceful degradation if the package is not installed
  * Type declaration in types/optionalModules.d.ts allows TypeScript to recognize the module
  */
-const DevToolsOverlay = isDevelopment
+const StudioOverlay = isDevelopment
   ? lazy(() =>
-      import('@hai3/devtools')
-        .then(module => ({ default: module.DevToolsOverlay }))
+      import('@hai3/studio')
+        .then(module => ({ default: module.StudioOverlay }))
         .catch(() => {
-          // DevTools not installed - gracefully degrade
-          console.debug('[HAI3] DevTools package not found. Install @hai3/devtools for development tools.');
+          // Studio not installed - gracefully degrade
+          console.debug('[HAI3] Studio package not found. Install @hai3/studio for development tools.');
           return { default: () => null };
         })
     )
@@ -79,10 +79,10 @@ export const HAI3Provider: React.FC<HAI3ProviderProps> = ({ children }) => {
       {children}
       <AppRouter />
 
-      {/* Auto-inject DevTools in development mode if package is installed */}
-      {DevToolsOverlay && (
+      {/* Auto-inject Studio in development mode if package is installed */}
+      {StudioOverlay && (
         <Suspense fallback={null}>
-          <DevToolsOverlay />
+          <StudioOverlay />
         </Suspense>
       )}
     </Provider>

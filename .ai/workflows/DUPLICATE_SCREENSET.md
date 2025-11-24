@@ -4,7 +4,7 @@
 
 REQUIRED: Copy folder and update ids.ts only (2 steps, 96% reduction from ~50 steps).
 REQUIRED: Pass arch:check with zero errors.
-REQUIRED: Test via Chrome DevTools MCP (never skip).
+REQUIRED: Test via Chrome Studio MCP (never skip).
 
 ## STEP 0: Gather Requirements
 
@@ -44,16 +44,16 @@ REQUIRED: npm run arch:check (MUST pass all checks).
 REQUIRED: npm run lint (MUST pass with zero errors).
 DETECT: grep -rn "OLD_SCREENSET_ID" src/screensets/TARGET/ (MUST be 0 matches).
 
-## STEP 4: Test via Chrome DevTools MCP
+## STEP 4: Test via Chrome Studio MCP
 
 STOP: If MCP connection is broken, fix it first. NEVER skip testing.
 REQUIRED: npm run dev.
-REQUIRED: mcp__chrome-devtools__list_pages to check open pages.
-REQUIRED: mcp__chrome-devtools__navigate_page to load app.
-REQUIRED: mcp__chrome-devtools__take_snapshot to verify screenset appears in selector.
+REQUIRED: mcp__chrome-studio__list_pages to check open pages.
+REQUIRED: mcp__chrome-studio__navigate_page to load app.
+REQUIRED: mcp__chrome-studio__take_snapshot to verify screenset appears in selector.
 REQUIRED: Click screenset in dev panel to switch to new screenset.
 REQUIRED: Verify URL changes to target screenset.
-REQUIRED: mcp__chrome-devtools__list_console_messages to check for errors.
+REQUIRED: mcp__chrome-studio__list_console_messages to check for errors.
 REQUIRED: Test all primary screenset features.
 REQUIRED: Verify no console errors in browser.
 
@@ -67,6 +67,6 @@ REQUIRED: Verify no console errors in browser.
 - [ ] Run arch:check (MUST pass).
 - [ ] Run lint (MUST pass).
 - [ ] Verify zero occurrences of old screenset ID.
-- [ ] Test via Chrome DevTools MCP (NEVER skip).
+- [ ] Test via Chrome Studio MCP (NEVER skip).
 - [ ] Verify screenset auto-discovered in dev panel.
 - [ ] Test all features and verify no console errors.

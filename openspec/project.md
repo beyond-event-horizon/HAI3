@@ -16,7 +16,7 @@ The framework is built on clean architecture principles with dependency inversio
 - **React 18** - UI framework
 - **TypeScript 5** - Type safety with strict mode enabled
 - **Vite 6** - Build tool and dev server
-- **Redux Toolkit** - State management with Redux DevTools
+- **Redux Toolkit** - State management with Redux Studio
 - **Tailwind CSS 3** - Utility-first styling with custom theme tokens
 - **axios** - HTTP client for REST protocol
 - **EventSource API** - Native browser SSE support for streaming protocol
@@ -250,7 +250,7 @@ declare module '@hai3/uicore' {
 ### Chrome MCP Constraint (CRITICAL)
 
 **NEVER kill MCP processes during development:**
-- ❌ `pkill -f chrome-devtools-mcp` permanently breaks MCP tools
+- ❌ `pkill -f chrome-studio-mcp` permanently breaks MCP tools
 - ✅ Ask user to restart MCP through Claude Code, or start new conversation
 - See `.ai/MCP_TROUBLESHOOTING.md` for recovery procedures
 
