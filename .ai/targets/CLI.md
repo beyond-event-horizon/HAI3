@@ -28,7 +28,7 @@
 - REQUIRED: Root .eslintrc.cjs re-exports presets/monorepo/configs/.eslintrc.cjs.
 - REQUIRED: Root .dependency-cruiser.cjs re-exports presets/monorepo/configs/.dependency-cruiser.cjs.
 - REQUIRED: Root tsconfig.json extends presets/monorepo/configs/tsconfig.json.
-- REQUIRED: Root scripts/test-architecture.ts imports presets/monorepo/scripts/test-architecture.ts.
+- REQUIRED: npm run arch:check runs presets/monorepo/scripts/test-architecture.ts directly.
 - REQUIRED: tsconfig paths are relative to file location; include/references must be duplicated.
 - FORBIDDEN: Standalone presets importing monorepo presets.
 - FORBIDDEN: Direct modifications to templates/ directory.
