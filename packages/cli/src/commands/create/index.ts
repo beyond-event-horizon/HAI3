@@ -24,11 +24,6 @@ export interface CreateCommandResult {
 }
 
 /**
- * CLI version for config
- */
-const CLI_VERSION = '0.1.0';
-
-/**
  * Create command implementation
  */
 export const createCommand: CommandDefinition<
@@ -142,7 +137,6 @@ export const createCommand: CommandDefinition<
       projectName: args.projectName,
       uikit: uikit!,
       devtools: devtools!,
-      cliVersion: CLI_VERSION,
     });
 
     // Write files

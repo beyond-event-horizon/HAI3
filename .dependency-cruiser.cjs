@@ -1,11 +1,16 @@
 /**
- * Dependency Cruiser Configuration
- * JavaScript configuration for dependency analysis
+ * HAI3 Dependency Cruiser Configuration (Monorepo)
+ * Extends standalone base with monorepo-specific package isolation rules
  */
+
+const standaloneConfig = require('./packages/cli/templates/standalone/.dependency-cruiser.cjs');
 
 module.exports = {
   forbidden: [
-    // ============ PACKAGE ISOLATION RULES ============
+    // Include all standalone rules (screenset isolation, flux architecture, general)
+    ...standaloneConfig.forbidden,
+
+    // ============ MONOREPO: PACKAGE ISOLATION RULES ============
     {
       name: 'no-uikit-in-uicore',
       severity: 'error',
@@ -14,7 +19,7 @@ module.exports = {
       comment: 'UI Core must not import UI Kit directly. Use uikitRegistry.'
     },
     {
-      name: 'no-uicore-in-uikit', 
+      name: 'no-uicore-in-uikit',
       severity: 'error',
       from: { path: '^packages/uikit' },
       to: { path: '^packages/uicore' },
@@ -29,7 +34,7 @@ module.exports = {
     },
     {
       name: 'no-uikit-in-contracts',
-      severity: 'error', 
+      severity: 'error',
       from: { path: '^packages/uikit-contracts' },
       to: { path: '^packages/uikit[^-]' },
       comment: 'Contracts must remain pure types only.'
@@ -83,80 +88,19 @@ module.exports = {
       to: { path: '^packages/devtools' },
       comment: 'UI Kit cannot depend on DevTools. UI Kit must remain pure.'
     },
-    
-    // ============ SCREENSET ISOLATION RULES ============
-    {
-      name: 'no-cross-screenset-imports',
-      severity: 'error',
-      from: { path: '^src/screensets/([^/]+)/' },
-      to: {
-        path: '^src/screensets/(?!\\1/)[^/]+/',
-        pathNot: '^src/screensets/screensetRegistry\\.tsx$'
-      },
-      comment: 'Screensets must not import from other screensets (vertical slice isolation). Each screenset is self-contained.'
-    },
+
+    // ============ MONOREPO: SCREENSET → PACKAGE RULES ============
     {
       name: 'screensets-use-workspace-packages',
       severity: 'error',
       from: { path: '^src/screensets/' },
-      to: {
-        path: '^packages/.*/src/',
-      },
+      to: { path: '^packages/.*/src/' },
       comment: 'Screensets must import via @hai3/* workspace names, not direct package paths.'
     },
-    {
-      name: 'no-circular-screenset-deps',
-      severity: 'warn',
-      from: { path: '^src/screensets/([^/]+)/' },
-      to: {
-        path: '^src/screensets/\\1/',
-        circular: true
-      },
-      comment: 'Avoid circular dependencies within screenset modules. May indicate tight coupling.'
-    },
-
-    // ============ FLUX ARCHITECTURE RULES ============
-    // Note: ESLint handles precise Flux violations (actions/components importing slices).
-    // Dependency-cruiser focuses on architectural boundaries (folders, circular deps).
-    {
-      name: 'flux-no-actions-in-effects-folder',
-      severity: 'error',
-      from: { path: '/effects/' },
-      to: { path: '/actions/' },
-      comment: 'FLUX VIOLATION: Effects folder cannot import from actions folder (circular flow risk). See EVENTS.md.'
-    },
-    {
-      name: 'flux-no-effects-in-actions-folder',
-      severity: 'error',
-      from: { path: '/actions/' },
-      to: { path: '/effects/' },
-      comment: 'FLUX VIOLATION: Actions folder cannot import from effects folder. Use event bus. See EVENTS.md.'
-    },
-    
-    // ============ GENERAL RULES ============
-    {
-      name: 'no-circular',
-      severity: 'error',
-      from: { path: '^(?!.*node_modules)' },
-      to: { circular: true },
-      comment: 'Circular dependencies create tight coupling and make code harder to reason about.'
-    }
   ],
-  options: {
-    /**
-     * Exclude node_modules from analysis (industry standard - only validate project code)
-     * Using regex pattern to explicitly exclude node_modules directory
-     *
-     * Allow specific circular dependencies that are safe:
-     * devtools ↔ uicore: DevTools is an optional peer dependency loaded via dynamic import with .catch()
-     * This breaks the compile-time cycle and ensures graceful degradation if not installed
-     */
-    doNotFollow: '^node_modules',
-    exclude: {
-      dynamic: true  // Exclude dynamic imports from circular dependency checks
-    }
-  },
+  options: standaloneConfig.options,
   allowed: [
+    // ============ MONOREPO: PACKAGE ALLOWANCES ============
     {
       from: { path: '^packages/uicore/dist' },
       to: { path: '^packages/devtools/dist' },
@@ -177,7 +121,6 @@ module.exports = {
       to: { path: '^node_modules' },
       comment: 'Built packages can import from node_modules (normal dependency resolution)'
     },
-    // CLI package rules - CLI is a standalone Node.js tool with different dependencies
     {
       from: { path: '^packages/cli' },
       to: { path: '^(path|fs|child_process|events|process)$' },
