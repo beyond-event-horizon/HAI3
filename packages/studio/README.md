@@ -1,18 +1,88 @@
 # @hai3/studio
 
-Development tools overlay for HAI3 applications - provides runtime controls for theme switching, screenset selection, language changes, and API mode toggling.
+Development tools overlay for HAI3 applications providing runtime controls and debugging capabilities.
 
-## Features
+## Overview
 
-- **Theme Selector**: Switch between registered themes in real-time
-- **Screenset Selector**: Navigate between different screensets (Drafts, Mockups, Production)
-- **Language Selector**: Test internationalization with 36 supported languages
-- **API Mode Toggle**: Switch between mock and real API implementations
-- **Draggable & Resizable**: Position the panel anywhere on screen
-- **Keyboard Shortcut**: Toggle with `Shift+`` ` ``** (tilde key, works on all platforms)
-- **State Persistence**: Panel position, size, and collapsed state saved to localStorage
-- **Fully Localized**: All labels and controls available in 36 languages
-- **Glassmorphic Design**: Modern, semi-transparent overlay with backdrop blur
+`@hai3/studio` delivers a comprehensive development environment overlay that enables real-time application control without code changes. The package provides visual controls for theme switching, screen navigation, language testing, and API mode toggling, all accessible through a draggable, resizable panel that automatically tree-shakes out of production builds.
+
+## Purpose
+
+This package accelerates development and QA workflows by providing instant access to application configuration without stopping the dev server or editing code. Studio enables rapid theme iteration, internationalization testing across 36 languages, screen navigation for UI review, and seamless switching between mock and real API implementations.
+
+## Key Capabilities
+
+### Runtime Configuration
+
+Modify application state through an intuitive visual interface. Changes take effect immediately without page reloads, enabling fast iteration cycles. All configuration state persists across browser sessions through localStorage.
+
+### Theme Development
+
+Preview all registered themes instantly with a dedicated theme selector. Current theme highlights automatically, and theme changes propagate through the entire application via the framework's theme system.
+
+### Navigation Control
+
+Browse all available screens organized by screenset category (Drafts, Mockups, Production). Click any screen to navigate immediately, making it easy to review UI implementations across the entire application.
+
+### Internationalization Testing
+
+Validate translations across 36 supported languages without modifying code. The language selector shows all available languages with native names, and changes apply immediately to all localized content.
+
+### API Mode Switching
+
+Toggle between mock and real API implementations at runtime. This enables frontend development without backend dependencies and facilitates comprehensive testing scenarios without modifying service code.
+
+## Interface Features
+
+### Draggable Panel
+
+Position the studio panel anywhere on screen through drag-and-drop. Click and hold the header to drag. Position state saves automatically to localStorage and restores on page reload.
+
+### Resizable Interface
+
+Adjust panel dimensions by dragging the bottom-right corner. Minimum size: 320×400px. Maximum size: 600×800px. Size preferences persist across sessions.
+
+### Collapsible Design
+
+Minimize the panel to a circular button in the bottom-right corner when screen space is limited. Click to expand back to full panel. Collapsed state persists across page reloads.
+
+### Keyboard Shortcuts
+
+- **Shift + `** (tilde) - Toggle studio panel visibility on all platforms
+
+## Integration
+
+### Automatic Loading (Recommended)
+
+HAI3Provider automatically detects studio package installation and loads it in development mode only. No explicit imports or configuration required - install the package and it activates automatically in development.
+
+### Manual Integration (Advanced)
+
+For custom loading scenarios, import the StudioOverlay component directly and conditionally render based on environment. Useful when implementing custom development mode detection or build-time environment variables.
+
+## Production Safety
+
+### Tree-Shaking
+
+Studio code automatically eliminates from production bundles through conditional imports. HAI3Provider uses lazy loading with environment checks to ensure zero studio code reaches production.
+
+### Bundle Verification
+
+After production builds, studio adds 0 bytes to bundle size. No studio code appears in the dist/assets directory. The framework's conditional import pattern guarantees complete code elimination.
+
+## Technical Architecture
+
+### Event-Driven State
+
+Studio integrates with HAI3's event bus for all state changes. Position, size, and configuration updates emit events that persistence effects subscribe to. This maintains loose coupling with the framework core.
+
+### Localization System
+
+Studio translations register automatically at module import time. All 36 language files lazy-load on demand - only the current language downloads. Translation keys use the standard framework namespacing pattern.
+
+### Self-Contained Implementation
+
+The package imports UI components directly from UI Kit rather than using the component registry. This ensures studio functions independently and doesn't interfere with application component registrations.
 
 ## Installation
 
@@ -20,178 +90,44 @@ Development tools overlay for HAI3 applications - provides runtime controls for 
 npm install --save-dev @hai3/studio
 ```
 
-> **Note**: This is a development-only package. Install as a `devDependency`, not a regular dependency.
+Install as a devDependency rather than a regular dependency to reinforce its development-only nature.
 
-## Usage
+## Supported Languages
 
-### Automatic Integration (Recommended)
+Studio provides full localization for 36 languages including English, Spanish, French, German, Italian, Portuguese, Russian, Chinese (Simplified & Traditional), Japanese, Korean, Arabic, Hindi, Bengali, Turkish, Vietnamese, Thai, and 20 additional languages.
 
-HAI3Provider automatically detects and loads Studio in development mode if the package is installed:
+## Peer Dependencies
 
-```tsx
-// main.tsx
-import ReactDOM from 'react-dom/client';
-import { HAI3Provider } from '@hai3/uicore';
-import { App } from './App';
+Requires the following packages:
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <HAI3Provider>
-    <App />
-  </HAI3Provider>
-);
-```
+- `@hai3/uicore` - Core framework for state management and events
+- `react` ^18.0.0 - React library
+- `react-dom` ^18.0.0 - React DOM renderer
 
-That's it! Studio will automatically appear in development mode.
-
-### Manual Integration (Advanced)
-
-If you need custom control over Studio loading:
-
-```tsx
-import { StudioOverlay } from '@hai3/studio';
-
-export const App = () => {
-  return (
-    <div>
-      {/* Your app content */}
-      {import.meta.env.DEV && <StudioOverlay />}
-    </div>
-  );
-};
-```
-
-## Keyboard Shortcuts
-
-| Shortcut | Action |
-|----------|--------|
-| `Shift+`` ` ``** (All platforms) | Toggle Studio panel |
-
-## Panel Controls
-
-### Dragging
-- Click and hold the panel header to drag it anywhere on screen
-- Position persists across page reloads via localStorage
-
-### Resizing
-- Drag the bottom-right corner to resize the panel
-- Min size: 320px × 400px
-- Max size: 600px × 800px
-- Size persists across page reloads
-
-### Collapsing
-- Click the collapse button in the panel header to minimize
-- When collapsed, a circular button appears in the bottom-right corner
-- Click the button to expand the panel again
-
-## Development Controls
-
-### Theme Selector
-Switch between all registered themes in real-time. The current theme is highlighted.
-
-### Screenset Selector
-Navigate between screensets organized by category:
-- **Drafts**: AI-generated screens for rapid prototyping
-- **Mockups**: Human-refined screens for review
-- **Production**: Polished, production-ready screens
-
-### Language Selector
-Test your app's internationalization with 36 supported languages:
-- English, Spanish, French, German, Italian, Portuguese
-- Russian, Chinese (Simplified & Traditional), Japanese, Korean
-- Arabic, Hindi, Bengali, Turkish, Vietnamese, Thai
-- And 20 more languages
-
-### API Mode Toggle
-Switch between mock and real API implementations:
-- **Mock API**: Uses local mock data for development/testing
-- **Real API**: Connects to actual backend services
-
-## Tree-Shaking
-
-Studio is automatically excluded from production builds through Vite's tree-shaking:
-
-```typescript
-// This code in HAI3Provider only loads in development
-const StudioOverlay = isDevelopment
-  ? lazy(() => import('@hai3/studio'))
-  : null;
-```
-
-**Production bundle verification**:
-- Studio adds **0 bytes** to production bundle
-- No Studio code present in `dist/assets/` after `npm run build`
-- Conditional import ensures complete code elimination
-
-## Architecture
-
-### Event-Driven Persistence
-Studio uses HAI3's event bus for state persistence:
-
-```typescript
-// Position/size changes emit events
-eventBus.emit(StudioEvents.PositionChanged, { position });
-
-// Persistence effects subscribe to events
-eventBus.on(StudioEvents.PositionChanged, ({ position }) => {
-  localStorage.setItem('hai3:studio:position', JSON.stringify(position));
-});
-```
-
-### Localization
-Studio translations are registered at module import time:
-
-```typescript
-// Auto-registered when package loads
-i18nRegistry.registerLoader('studio', studioTranslations);
-```
-
-All 36 language files are lazy-loaded - only the current language downloads.
-
-### Self-Contained Design
-Studio imports components directly from `@hai3/uikit`:
-
-```typescript
-import { Button, Card, Select } from '@hai3/uikit';
-```
-
-This ensures Studio works independently without registry coupling.
-
-## Package Dependencies
-
-### Peer Dependencies (Required)
-- `@hai3/uicore` - Core layout and state management
-- `@hai3/uikit` - UI component library
-- `@hai3/uikit-contracts` - Type definitions
-- `react` ^18.0.0
-- `react-dom` ^18.0.0
-
-### Direct Dependencies
-- `lodash` - Utility functions
-
-## TypeScript Support
-
-Full TypeScript support with exported types:
-
-```typescript
-import type { Position, Size, StudioState } from '@hai3/studio';
-```
-
-## Browser Support
+## Browser Compatibility
 
 - Chrome/Edge (latest 2 versions)
 - Firefox (latest 2 versions)
 - Safari (latest 2 versions)
 
+## TypeScript Support
+
+Fully typed with exported type definitions for Position, Size, and StudioState. Includes module augmentation for integrating with the framework's type system.
+
+## Version
+
+**Alpha Release** (`0.1.0-alpha.0`) - APIs may change before stable release.
+
 ## License
 
-MIT
-
-## Contributing
-
-Studio is part of the HAI3 monorepo. See the main repository for contribution guidelines.
+Apache-2.0
 
 ## Related Packages
 
 - [`@hai3/uicore`](../uicore) - Core layout and state management
 - [`@hai3/uikit`](../uikit) - UI component library
 - [`@hai3/uikit-contracts`](../uikit-contracts) - Type definitions
+
+## Contributing
+
+Studio is part of the HAI3 monorepo. See the main repository for contribution guidelines and development setup instructions.

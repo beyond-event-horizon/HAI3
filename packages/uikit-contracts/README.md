@@ -1,76 +1,78 @@
 # @hai3/uikit-contracts
 
-UI Kit contract definitions for the HAI3 framework.
+Type-safe contract definitions for the HAI3 UI framework.
+
+## Overview
+
+`@hai3/uikit-contracts` provides TypeScript interfaces and type definitions that establish a contract layer between UI Core and UI Kit packages. This separation prevents circular dependencies while maintaining strict type safety across the framework.
 
 ## Purpose
 
-This package provides TypeScript interfaces and type definitions that serve as a contract layer between `@hai3/uicore` and `@hai3/uikit`, preventing circular dependencies while ensuring type safety.
+This package serves as a shared type system that enables loose coupling between framework layers. By defining interfaces separately from implementations, it allows UI Core to specify requirements without depending on concrete UI Kit implementations, and enables UI Kit to satisfy those requirements without depending on UI Core internals.
 
-## Architecture
+## Architecture Role
 
-```
-@hai3/uikit-contracts (no runtime deps)
-        ↑           ↑
-        |           |
-    uicore       uikit
-```
+The contracts package sits at the foundation of the dependency hierarchy with zero runtime dependencies. Both UI Core and UI Kit depend on contracts, but not on each other. Application code typically consumes these types indirectly through re-exports from UI Core.
 
-- **UI Core** imports contracts to define what it expects from UI implementations
-- **UI Kit** imports contracts to implement the required interfaces
-- **Apps** consume contracts through `@hai3/uicore` (re-exported)
+**Dependency Flow:**
+- UI Core imports contracts to define component expectations
+- UI Kit imports contracts to implement component interfaces
+- Applications import through UI Core's public API
 
-## Contents
+## Package Contents
 
 ### Component Contracts
 
-- `UiKitComponent` - Enum of framework component names (single source of truth)
-- `UiKitComponentMap` - Maps enum values to component types
-- Component prop interfaces (ButtonProps, SwitchProps, etc.)
-- Component type definitions (ButtonComponent, SwitchComponent, etc.)
-- Uses enum values as computed property names to eliminate duplication
+Defines the complete set of framework UI components through enums and mapped types. Includes prop interfaces and component type definitions for buttons, switches, inputs, and layout elements. The enum-based approach eliminates duplication and ensures consistent naming across the framework.
 
 ### Icon Contracts
 
-- `UiKitIcon` - Enum of core framework icon IDs
-- Icon registration types
+Provides type definitions for core framework icons and icon registration mechanisms. Establishes the contract for icon providers to implement and frameworks to consume.
 
 ### Theme Contracts
 
-- `Theme` - Structure that all themes must implement
-- Theme token types
+Specifies the structure that all theme implementations must follow. Defines token types for colors, typography, spacing, and other design system primitives.
 
-## Dependencies
+## Usage Patterns
 
-- **Zero runtime dependencies** - Types only
-- `react` - Peer dependency (types only)
+### Indirect Consumption (Recommended)
 
-## Usage
+Most applications consume contracts indirectly through the UI Core package, which re-exports necessary types. This approach maintains proper abstraction boundaries and reduces direct dependencies.
 
-This package is typically consumed indirectly through `@hai3/uicore`:
+### Direct Import (Framework Extensions)
 
-```typescript
-import { UiKitComponent, UiKitIcon } from '@hai3/uicore';
+When building custom UI Kit implementations or framework extensions, import directly from this package to access base interfaces and contracts.
+
+## Installation
+
+```bash
+npm install @hai3/uikit-contracts
 ```
 
-Direct import (for UI Kit implementations):
+This package has zero runtime dependencies and serves purely as a type definition layer.
 
-```typescript
-import type { ButtonProps, ButtonComponent } from '@hai3/uikit-contracts';
-```
+## Versioning Policy
 
-## Versioning
-
-Breaking changes include:
-- Adding required props to existing interfaces
-- Removing props from interfaces  
-- Changing Theme structure
+### Breaking Changes
+- Adding required properties to existing interfaces
+- Removing properties from interfaces
+- Modifying theme structure
 - Removing enum values
 
-Non-breaking changes:
-- Adding optional props
-- Adding new component contracts
+### Non-Breaking Changes
+- Adding optional properties
+- Introducing new component contracts
 - Adding new enum values
+
+## Version
+
+**Alpha Release** (`0.1.0-alpha.0`) - APIs may change before stable release.
 
 ## License
 
-ISC
+Apache-2.0
+
+## Related Packages
+
+- [`@hai3/uicore`](../uicore) - Core framework implementation
+- [`@hai3/uikit`](../uikit) - Reference UI component library

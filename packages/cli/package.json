@@ -1,6 +1,6 @@
 {
   "name": "@hai3/cli",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.0",
   "description": "HAI3 CLI - Project scaffolding and screenset management tools",
   "bin": {
     "hai3": "./dist/index.cjs"
@@ -30,12 +30,19 @@
     "screenset",
     "saas"
   ],
-  "author": "HAI3 Team",
-  "license": "MIT",
+  "author": "HAI3org",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/beyond-event-horizon/HAI3.git",
+    "url": "https://github.com/HAI3org/HAI3.git",
     "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/HAI3org/HAI3/issues"
+  },
+  "homepage": "https://github.com/HAI3org/HAI3#readme",
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "chalk": "^4.1.2",

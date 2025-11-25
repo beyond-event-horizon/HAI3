@@ -1,6 +1,6 @@
 {
   "name": "@hai3/uikit",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.0",
   "description": "HAI3 UI Kit - Reusable React components built on shadcn/ui",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -33,15 +33,25 @@
     "shadcn",
     "tailwind"
   ],
-  "author": "HAI3 Team",
-  "license": "MIT",
+  "author": "HAI3org",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/beyond-event-horizon/HAI3.git",
+    "url": "https://github.com/HAI3org/HAI3.git",
     "directory": "packages/uikit"
   },
+  "bugs": {
+    "url": "https://github.com/HAI3org/HAI3/issues"
+  },
+  "homepage": "https://github.com/HAI3org/HAI3#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@hai3/uikit-contracts": "^0.1.0",
+    "@hai3/uikit-contracts": "*",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
@@ -59,6 +69,7 @@
     "tailwind-merge": "^2.6.0"
   },
   "peerDependencies": {
+    "@hai3/uikit-contracts": "*",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },

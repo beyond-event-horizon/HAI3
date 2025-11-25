@@ -1,6 +1,6 @@
 {
   "name": "@hai3/studio",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.0",
   "description": "HAI3 Studio - Development studio overlay for HAI3 applications",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -31,20 +31,28 @@
     "development",
     "react"
   ],
-  "author": "HAI3 Team",
-  "license": "MIT",
+  "author": "HAI3org",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/beyond-event-horizon/HAI3.git",
+    "url": "https://github.com/HAI3org/HAI3.git",
     "directory": "packages/studio"
+  },
+  "bugs": {
+    "url": "https://github.com/HAI3org/HAI3/issues"
+  },
+  "homepage": "https://github.com/HAI3org/HAI3#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@hai3/uikit": "^0.1.0",
-    "@hai3/uikit-contracts": "^0.1.0",
-    "@hai3/uicore": "^0.1.0",
+    "@hai3/uicore": "*",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },

@@ -463,6 +463,69 @@ HAI3/
 └── docs/              # Documentation
 ```
 
+## Package Publishing
+
+HAI3 packages are published to NPM under the `@hai3` scope. All packages are currently in **alpha** (`0.1.0-alpha.0`).
+
+### Published Packages
+
+| Package | Version | Description |
+|---------|---------|-------------|
+| `@hai3/cli` | 0.1.0-alpha.0 | CLI tool for project scaffolding |
+| `@hai3/uikit-contracts` | 0.1.0-alpha.0 | TypeScript interface definitions |
+| `@hai3/uikit` | 0.1.0-alpha.0 | React component library |
+| `@hai3/uicore` | 0.1.0-alpha.0 | Core framework (layout, Redux, events) |
+| `@hai3/studio` | 0.1.0-alpha.0 | Development overlay (optional) |
+
+### Alpha Publishing Workflow
+
+**Prerequisites:**
+- NPM account with access to `@hai3` organization
+- Logged in via `npm login`
+
+**Steps:**
+
+1. **Build all packages:**
+   ```bash
+   npm run build:packages
+   ```
+
+2. **Run validation:**
+   ```bash
+   npm run type-check
+   npm run lint
+   npm run arch:check  # MUST pass
+   ```
+
+3. **Bump versions** (edit package.json or use npm version):
+   ```bash
+   # Example: Update all packages to 0.1.0-alpha.1
+   npm version prerelease --preid=alpha --workspaces
+   ```
+
+4. **Publish each package with alpha tag:**
+   ```bash
+   # Publish order matters (dependencies first)
+   cd packages/uikit-contracts && npm publish --tag alpha
+   cd ../uikit && npm publish --tag alpha
+   cd ../uicore && npm publish --tag alpha
+   cd ../studio && npm publish --tag alpha
+   cd ../cli && npm publish --tag alpha
+   ```
+
+**Important:**
+- Use `--tag alpha` to prevent tagging as `latest`
+- Users install alpha with: `npm install @hai3/uikit@alpha`
+- Version all packages together for consistency
+
+### Future Publishing (Post-Alpha)
+
+After 1.0.0 release, automated workflow with Changesets or Lerna:
+1. Developer creates PR with changeset file
+2. CI creates Release PR with version bumps + changelog
+3. Maintainer merges Release PR
+4. CI publishes to NPM automatically
+
 ## File Naming
 
 - Components: PascalCase (`HelloWorldScreen.tsx`)
