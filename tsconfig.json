@@ -17,6 +17,6 @@
   "compilerOptions": {
     "baseUrl": "."
   },
-  "include": ["src", "packages/uikit/src/styles/tailwindColors.ts"],
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

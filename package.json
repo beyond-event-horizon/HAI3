@@ -9,10 +9,9 @@
     "eslint-plugin-local"
   ],
   "scripts": {
-    "dev": "vite",
-    "build": "npm run generate:colors && npm run build:packages && vite build",
+    "dev": "npm run generate:colors && vite",
+    "build": "npm run build:packages && npm run generate:colors && vite build",
     "build:packages": "npm run build --workspace=@hai3/uikit-contracts && npm run build --workspace=@hai3/uikit && npm run build --workspace=@hai3/uicore && npm run build --workspace=@hai3/studio && npm run build --workspace=@hai3/cli",
-    "generate:colors": "npx tsx presets/monorepo/scripts/generate-colors.ts 2>&1 | grep -v 'warn -' | grep -v 'has been renamed' | grep -v 'Update your configuration' || true",
     "lint": "npm run build --workspace=eslint-plugin-local && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
@@ -21,7 +20,8 @@
     "clean:deps": "npm run clean:modules && npm ci",
     "clean": "npm run clean:artifacts && npm run clean:modules",
     "clean:build": "npm run clean:artifacts && npm run build",
-    "clean:build:packages": "npm run clean:artifacts && npm run generate:colors && npm run build:packages",
+    "clean:build:packages": "npm run clean:artifacts && npm run build:packages",
+    "generate:colors": "npx tsx presets/standalone/scripts/generate-colors.ts",
     "arch:check": "npx tsx presets/monorepo/scripts/test-architecture.ts",
     "arch:deps": "npx dependency-cruiser src/ packages/ --config .dependency-cruiser.cjs --output-type err-long",
     "arch:unused": "knip --no-exit-code",

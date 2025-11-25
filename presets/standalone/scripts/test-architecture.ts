@@ -74,6 +74,7 @@ interface ArchCheck {
  */
 function getStandaloneChecks(): ArchCheck[] {
   return [
+    { command: 'npm run generate:colors', description: 'Generate theme colors' },
     { command: 'npm run lint -- --max-warnings 0', description: 'ESLint rules' },
     { command: 'npm run type-check', description: 'TypeScript type check' },
     { command: 'npm run arch:deps', description: 'Dependency rules' },

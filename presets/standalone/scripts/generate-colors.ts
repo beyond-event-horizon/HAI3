@@ -170,11 +170,13 @@ const colors: TailwindColors = ${JSON.stringify(colors, null, 2)};
 export default colors;
 `;
 
-// Write to packages/uikit/src/styles/tailwindColors.ts
+// Write to src/themes/tailwindColors.ts (relative to project root)
+// In monorepo: presets/standalone/scripts -> ../../../src/themes
+// In standalone: scripts -> ../src/themes (handled by copy-templates)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const outputPath = path.join(__dirname, '../../../packages/uikit/src/styles/tailwindColors.ts');
+const outputPath = path.join(__dirname, '../../../src/themes/tailwindColors.ts');
 fs.writeFileSync(outputPath, output, 'utf8');
 
-console.log('✓ Generated packages/uikit/src/styles/tailwindColors.ts');
+console.log('✓ Generated src/themes/tailwindColors.ts');
 console.log(`  ${Object.keys(colors).length} color families converted to HSL`);

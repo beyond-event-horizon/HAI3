@@ -30,7 +30,7 @@ dist-ssr
 .env.*.local
 
 # Generated files
-packages/uikit/src/styles/tailwindColors.ts
+src/themes/tailwindColors.ts
 packages/cli/templates
 
 # Claude Code local settings

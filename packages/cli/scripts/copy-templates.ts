@@ -95,7 +95,16 @@ async function copyTemplates() {
     const dest = path.join(TEMPLATES_DIR, dir);
 
     if (await fs.pathExists(src)) {
-      await fs.copy(src, dest);
+      // Copy with filter to exclude generated files
+      await fs.copy(src, dest, {
+        filter: (srcPath: string) => {
+          // Exclude tailwindColors.ts (generated file)
+          if (srcPath.endsWith('tailwindColors.ts')) {
+            return false;
+          }
+          return true;
+        },
+      });
       const fileCount = await countFiles(dest);
       console.log(`  ✓ ${dir}/ (${fileCount} files)`);
     } else {
