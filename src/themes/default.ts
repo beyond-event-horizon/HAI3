@@ -4,7 +4,7 @@
  */
 
 import type { Theme } from '@hai3/uikit-contracts';
-import { tailwindColors as colors } from '@hai3/uikit';
+import colors from './tailwindColors';
 
 /**
  * Default theme ID

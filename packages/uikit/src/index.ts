@@ -126,5 +126,3 @@ export { CloseIcon, CLOSE_ICON_ID } from './icons/CloseIcon';
 // Theme system (utilities only - theme definitions in app)
 export { applyTheme } from './styles/applyTheme';
 export type { Theme } from './styles/themeTypes';
-export { default as tailwindColors } from './styles/tailwindColors';
-export type { TailwindColors, ColorScale } from './styles/tailwindColors';

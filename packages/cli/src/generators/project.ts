@@ -158,11 +158,12 @@ export async function generateProject(
     type: 'module',
     workspaces: ['eslint-plugin-local'],
     scripts: {
-      dev: 'vite',
-      build: 'vite build',
+      dev: 'npm run generate:colors && vite',
+      build: 'npm run generate:colors && vite build',
       preview: 'vite preview',
       lint: 'npm run build --workspace=eslint-plugin-local && eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0',
       'type-check': 'tsc --noEmit',
+      'generate:colors': 'npx tsx presets/standalone/scripts/generate-colors.ts',
       'arch:check': 'npx tsx presets/standalone/scripts/test-architecture.ts',
       'arch:deps':
         'npx dependency-cruiser src/ --config .dependency-cruiser.cjs --output-type err-long',

@@ -36,6 +36,7 @@ module.exports = {
     '.eslintrc.js',
     'node_modules',
     'scripts/**',
+    'presets/**/scripts',
     'vite.config.ts',
     '*.config.*',
     'eslint-plugin-local/**'

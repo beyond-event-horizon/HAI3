@@ -16,19 +16,19 @@ import {
 import type { ArchCheck, ValidationResult } from '../../standalone/scripts/test-architecture';
 
 /**
- * Monorepo prerequisite checks (run before standalone checks)
+ * Monorepo-specific architecture checks
+ * Order: clean build -> standalone checks -> unused exports
  */
-function getMonorepoPrerequisites(): ArchCheck[] {
+function getMonorepoChecks(): ArchCheck[] {
   return [
-    // Generate tailwindColors.ts (gitignored, must exist for type-check)
-    { command: 'npm run generate:colors', description: 'Generate Tailwind colors' },
+    { command: 'npm run clean:build', description: 'Clean build (packages + app)' },
   ];
 }
 
 /**
- * Monorepo-specific architecture checks (run after standalone checks)
+ * Monorepo-specific post checks (run after standalone)
  */
-function getMonorepoChecks(): ArchCheck[] {
+function getMonorepoPostChecks(): ArchCheck[] {
   return [
     { command: 'npm run arch:unused', description: 'Unused exports check' },
   ];
@@ -38,8 +38,8 @@ function getMonorepoChecks(): ArchCheck[] {
  * Run monorepo architecture validation
  */
 function validateMonorepoArchitecture(): ValidationResult {
-  // Order: prerequisites -> standalone checks -> monorepo checks
-  const allChecks = [...getMonorepoPrerequisites(), ...getStandaloneChecks(), ...getMonorepoChecks()];
+  // Order: monorepo (clean build) -> standalone -> monorepo post (unused)
+  const allChecks = [...getMonorepoChecks(), ...getStandaloneChecks(), ...getMonorepoPostChecks()];
   return runValidation(allChecks, 'HAI3 Monorepo Architecture Validation');
 }
 
