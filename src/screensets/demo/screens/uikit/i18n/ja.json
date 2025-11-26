@@ -246,5 +246,15 @@
   "popover_bottom": "下",
   "popover_bottom_content": "下部のポップオーバー",
   "popover_left": "左",
-  "popover_left_content": "左側のポップオーバー"
+  "popover_left_content": "左側のポップオーバー",
+  "hovercard_heading": "ホバーカード",
+  "hovercard_basic_label": "基本的なホバーカード",
+  "hovercard_username": "@nextjs",
+  "hovercard_name": "Next.js",
+  "hovercard_description": "Web用のReactフレームワーク - 世界最大級の企業の一部で使用されています。",
+  "hovercard_joined": "2021年12月に参加",
+  "hovercard_custom_label": "カスタムコンテンツホバーカード",
+  "hovercard_hover_trigger": "私の上にホバーしてください",
+  "hovercard_custom_title": "クイック情報",
+  "hovercard_custom_content": "これは、トリガー要素の上にホバーすると表示される追加情報です。"
 }

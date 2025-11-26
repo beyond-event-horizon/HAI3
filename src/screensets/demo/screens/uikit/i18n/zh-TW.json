@@ -246,5 +246,15 @@
   "popover_bottom": "底部",
   "popover_bottom_content": "底部彈出框",
   "popover_left": "左側",
-  "popover_left_content": "左側彈出框"
+  "popover_left_content": "左側彈出框",
+  "hovercard_heading": "懸停卡片",
+  "hovercard_basic_label": "基本懸停卡片",
+  "hovercard_username": "@nextjs",
+  "hovercard_name": "Next.js",
+  "hovercard_description": "Web的React框架 - 被世界上一些最大的公司使用。",
+  "hovercard_joined": "2021年12月加入",
+  "hovercard_custom_label": "自訂內容懸停卡片",
+  "hovercard_hover_trigger": "懸停在我上面",
+  "hovercard_custom_title": "快速資訊",
+  "hovercard_custom_content": "這是當您將滑鼠懸停在觸發元素上時顯示的附加資訊。"
 }

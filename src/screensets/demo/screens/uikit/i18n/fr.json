@@ -246,5 +246,15 @@
   "popover_bottom": "Bas",
   "popover_bottom_content": "Popover en bas",
   "popover_left": "Gauche",
-  "popover_left_content": "Popover à gauche"
+  "popover_left_content": "Popover à gauche",
+  "hovercard_heading": "Carte au survol",
+  "hovercard_basic_label": "Carte au survol de base",
+  "hovercard_username": "@nextjs",
+  "hovercard_name": "Next.js",
+  "hovercard_description": "Le framework React pour le Web - utilisé par certaines des plus grandes entreprises du monde.",
+  "hovercard_joined": "Rejoint en décembre 2021",
+  "hovercard_custom_label": "Carte au survol avec contenu personnalisé",
+  "hovercard_hover_trigger": "Survolez-moi",
+  "hovercard_custom_title": "Infos rapides",
+  "hovercard_custom_content": "Voici des informations supplémentaires qui apparaissent lorsque vous survolez l'élément déclencheur."
 }

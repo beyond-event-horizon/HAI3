@@ -246,5 +246,15 @@
   "popover_bottom": "नीचे",
   "popover_bottom_content": "नीचे पॉपओवर",
   "popover_left": "बाएं",
-  "popover_left_content": "बाईं ओर पॉपओवर"
+  "popover_left_content": "बाईं ओर पॉपओवर",
+  "hovercard_heading": "होवर कार्ड",
+  "hovercard_basic_label": "बुनियादी होवर कार्ड",
+  "hovercard_username": "@nextjs",
+  "hovercard_name": "Next.js",
+  "hovercard_description": "वेब के लिए React फ्रेमवर्क - दुनिया की कुछ सबसे बड़ी कंपनियों द्वारा उपयोग किया जाता है।",
+  "hovercard_joined": "दिसंबर 2021 में शामिल हुए",
+  "hovercard_custom_label": "कस्टम सामग्री होवर कार्ड",
+  "hovercard_hover_trigger": "मुझ पर होवर करें",
+  "hovercard_custom_title": "त्वरित जानकारी",
+  "hovercard_custom_content": "यह अतिरिक्त जानकारी है जो ट्रिगर तत्व पर होवर करने पर दिखाई देती है।"
 }

@@ -10,9 +10,16 @@ import {
   TooltipContent,
   Popover,
   PopoverTrigger,
-  PopoverContent
+  PopoverContent,
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent,
+  Avatar,
+  AvatarImage,
+  AvatarFallback
 } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
+import { CalendarDays } from 'lucide-react';
 import { StarIcon } from '../uikit/icons/StarIcon';
 import { FormInput } from '../uikit/icons/FormInput';
 import { DEMO_SCREENSET_ID } from "../ids";
@@ -20,7 +27,7 @@ import { UI_KIT_ELEMENTS_SCREEN_ID } from "../ids";
 
 /**
  * Overlay Elements Component
- * Contains Popover and Tooltip demonstrations
+ * Contains Popover, HoverCard, and Tooltip demonstrations
  * Uses parent screen (UIKitElementsScreen) translations
  */
 export const OverlayElements: React.FC = () => {
@@ -213,6 +220,100 @@ export const OverlayElements: React.FC = () => {
                   </TextLoader>
                 </PopoverContent>
               </Popover>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Hover Card Element Block */}
+      <div data-element-id="element-hover-card" className="flex flex-col gap-4">
+        <TextLoader skeletonClassName="h-8 w-32">
+          <h2 className="text-2xl font-semibold">
+            {tk('hovercard_heading')}
+          </h2>
+        </TextLoader>
+        <div className="flex flex-col gap-6 p-6 border border-border rounded-lg bg-background overflow-hidden">
+          
+          {/* Basic Hover Card */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-32" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('hovercard_basic_label')}
+              </label>
+            </TextLoader>
+            <div className="flex justify-center">
+              <HoverCard>
+                <HoverCardTrigger asChild>
+                  <span className="text-sm text-primary underline cursor-pointer">
+                    <TextLoader skeletonClassName="h-4 w-32" inheritColor>
+                      {tk('hovercard_hover_trigger')}
+                    </TextLoader>
+                  </span>
+                </HoverCardTrigger>
+                <HoverCardContent>
+                  <div className="space-y-2">
+                    <TextLoader skeletonClassName="h-5 w-32" inheritColor>
+                      <h4 className="text-sm font-semibold">
+                        {tk('hovercard_custom_title')}
+                      </h4>
+                    </TextLoader>
+                    <TextLoader skeletonClassName="h-4 w-full" inheritColor>
+                      <p className="text-sm text-muted-foreground">
+                        {tk('hovercard_custom_content')}
+                      </p>
+                    </TextLoader>
+                  </div>
+                </HoverCardContent>
+              </HoverCard>
+            </div>
+          </div>
+
+          {/* Hover Card with Custom Content */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-40" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('hovercard_custom_label')}
+              </label>
+            </TextLoader>
+            <div className="flex justify-center">
+              <HoverCard>
+                <HoverCardTrigger asChild>
+                  <Button variant={ButtonVariant.Link}>
+                    <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+                      {tk('hovercard_username')}
+                    </TextLoader>
+                  </Button>
+                </HoverCardTrigger>
+                <HoverCardContent className="w-80">
+                  <div className="flex justify-between space-x-4">
+                    <Avatar>
+                      <AvatarImage src="https://github.com/vercel.png" />
+                      <AvatarFallback>VC</AvatarFallback>
+                    </Avatar>
+                    <div className="space-y-1">
+                      <TextLoader skeletonClassName="h-5 w-24" inheritColor>
+                        <h4 className="text-sm font-semibold">
+                          {tk('hovercard_name')}
+                        </h4>
+                      </TextLoader>
+                      <TextLoader skeletonClassName="h-4 w-full" inheritColor>
+                        <p className="text-sm text-muted-foreground">
+                          {tk('hovercard_description')}
+                        </p>
+                      </TextLoader>
+                      <div className="flex items-center pt-2">
+                        <CalendarDays className="mr-2 h-4 w-4 opacity-70" />
+                        <TextLoader skeletonClassName="h-3.5 w-32" inheritColor>
+                          <span className="text-xs text-muted-foreground">
+                            {tk('hovercard_joined')}
+                          </span>
+                        </TextLoader>
+                      </div>
+                    </div>
+                  </div>
+                </HoverCardContent>
+              </HoverCard>
             </div>
           </div>
 

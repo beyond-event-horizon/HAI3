@@ -246,5 +246,15 @@
   "popover_bottom": "Unten",
   "popover_bottom_content": "Popover unten",
   "popover_left": "Links",
-  "popover_left_content": "Popover links"
+  "popover_left_content": "Popover links",
+  "hovercard_heading": "Schwebekarte",
+  "hovercard_basic_label": "Grundlegende Schwebekarte",
+  "hovercard_username": "@nextjs",
+  "hovercard_name": "Next.js",
+  "hovercard_description": "Das React-Framework für das Web - verwendet von einigen der größten Unternehmen der Welt.",
+  "hovercard_joined": "Beigetreten im Dezember 2021",
+  "hovercard_custom_label": "Schwebekarte mit benutzerdefiniertem Inhalt",
+  "hovercard_hover_trigger": "Schweben Sie über mich",
+  "hovercard_custom_title": "Schnellinfo",
+  "hovercard_custom_content": "Dies sind zusätzliche Informationen, die angezeigt werden, wenn Sie über das Auslöseelement schweben."
 }

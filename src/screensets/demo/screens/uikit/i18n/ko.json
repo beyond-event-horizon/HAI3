@@ -246,5 +246,15 @@
   "popover_bottom": "아래",
   "popover_bottom_content": "아래쪽 팝오버",
   "popover_left": "왼쪽",
-  "popover_left_content": "왼쪽 팝오버"
+  "popover_left_content": "왼쪽 팝오버",
+  "hovercard_heading": "호버 카드",
+  "hovercard_basic_label": "기본 호버 카드",
+  "hovercard_username": "@nextjs",
+  "hovercard_name": "Next.js",
+  "hovercard_description": "웹을 위한 React 프레임워크 - 세계에서 가장 큰 회사들이 사용합니다.",
+  "hovercard_joined": "2021년 12월에 가입",
+  "hovercard_custom_label": "사용자 지정 콘텐츠 호버 카드",
+  "hovercard_hover_trigger": "마우스를 올려보세요",
+  "hovercard_custom_title": "빠른 정보",
+  "hovercard_custom_content": "트리거 요소 위에 마우스를 올리면 표시되는 추가 정보입니다."
 }

@@ -242,5 +242,15 @@
   "popover_bottom": "أسفل",
   "popover_bottom_content": "نافذة منبثقة في الأسفل",
   "popover_left": "يسار",
-  "popover_left_content": "نافذة منبثقة على اليسار"
+  "popover_left_content": "نافذة منبثقة على اليسار",
+  "hovercard_heading": "بطاقة التمرير",
+  "hovercard_basic_label": "بطاقة تمرير أساسية",
+  "hovercard_username": "@nextjs",
+  "hovercard_name": "Next.js",
+  "hovercard_description": "إطار React للويب - يستخدمه بعض أكبر الشركات في العالم.",
+  "hovercard_joined": "انضم في ديسمبر 2021",
+  "hovercard_custom_label": "بطاقة تمرير محتوى مخصص",
+  "hovercard_hover_trigger": "مرر فوقي",
+  "hovercard_custom_title": "معلومات سريعة",
+  "hovercard_custom_content": "هذه معلومات إضافية تظهر عند تمرير الماوس فوق عنصر التشغيل."
 }

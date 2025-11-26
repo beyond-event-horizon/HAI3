@@ -246,5 +246,15 @@
   "popover_bottom": "Снизу",
   "popover_bottom_content": "Всплывающее окно снизу",
   "popover_left": "Слева",
-  "popover_left_content": "Всплывающее окно слева"
+  "popover_left_content": "Всплывающее окно слева",
+  "hovercard_heading": "Карточка при наведении",
+  "hovercard_basic_label": "Базовая карточка при наведении",
+  "hovercard_username": "@nextjs",
+  "hovercard_name": "Next.js",
+  "hovercard_description": "React-фреймворк для веба - используется некоторыми из крупнейших компаний мира.",
+  "hovercard_joined": "Присоединился в декабре 2021",
+  "hovercard_custom_label": "Карточка при наведении с пользовательским содержимым",
+  "hovercard_hover_trigger": "Наведите на меня",
+  "hovercard_custom_title": "Быстрая информация",
+  "hovercard_custom_content": "Это дополнительная информация, которая появляется при наведении на элемент триггера."
 }

@@ -246,5 +246,15 @@
   "popover_bottom": "Bottom",
   "popover_bottom_content": "Popover on bottom side",
   "popover_left": "Left",
-  "popover_left_content": "Popover on left"
+  "popover_left_content": "Popover on left",
+  "hovercard_heading": "Hover Card",
+  "hovercard_basic_label": "Basic Hover Card",
+  "hovercard_username": "@nextjs",
+  "hovercard_name": "Next.js",
+  "hovercard_description": "The React Framework for the Web – used by some of the world's largest companies.",
+  "hovercard_joined": "Joined December 2021",
+  "hovercard_custom_label": "Custom Content Hover Card",
+  "hovercard_hover_trigger": "Hover over me",
+  "hovercard_custom_title": "Quick Info",
+  "hovercard_custom_content": "This is additional information that appears when you hover over the trigger element."
 }

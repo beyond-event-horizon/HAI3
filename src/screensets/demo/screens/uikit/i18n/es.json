@@ -242,5 +242,15 @@
   "popover_bottom": "Abajo",
   "popover_bottom_content": "Popover en la parte inferior",
   "popover_left": "Izquierda",
-  "popover_left_content": "Popover a la izquierda"
+  "popover_left_content": "Popover a la izquierda",
+  "hovercard_heading": "Tarjeta flotante",
+  "hovercard_basic_label": "Tarjeta flotante básica",
+  "hovercard_username": "@nextjs",
+  "hovercard_name": "Next.js",
+  "hovercard_description": "El framework React para la Web - utilizado por algunas de las empresas más grandes del mundo.",
+  "hovercard_joined": "Se unió en diciembre de 2021",
+  "hovercard_custom_label": "Tarjeta flotante con contenido personalizado",
+  "hovercard_hover_trigger": "Pasa el mouse sobre mí",
+  "hovercard_custom_title": "Información rápida",
+  "hovercard_custom_content": "Esta es información adicional que aparece cuando pasas el mouse sobre el elemento desencadenante."
 }

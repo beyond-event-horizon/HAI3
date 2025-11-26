@@ -246,5 +246,15 @@
   "popover_bottom": "Inferior",
   "popover_bottom_content": "Popover na parte inferior",
   "popover_left": "Esquerda",
-  "popover_left_content": "Popover à esquerda"
+  "popover_left_content": "Popover à esquerda",
+  "hovercard_heading": "Cartão ao passar o mouse",
+  "hovercard_basic_label": "Cartão ao passar o mouse básico",
+  "hovercard_username": "@nextjs",
+  "hovercard_name": "Next.js",
+  "hovercard_description": "O framework React para a Web - usado por algumas das maiores empresas do mundo.",
+  "hovercard_joined": "Entrou em dezembro de 2021",
+  "hovercard_custom_label": "Cartão ao passar o mouse com conteúdo personalizado",
+  "hovercard_hover_trigger": "Passe o mouse sobre mim",
+  "hovercard_custom_title": "Informação rápida",
+  "hovercard_custom_content": "Esta é uma informação adicional que aparece quando você passa o mouse sobre o elemento de gatilho."
 }

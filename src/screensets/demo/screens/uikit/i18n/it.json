@@ -246,5 +246,15 @@
   "popover_bottom": "Sotto",
   "popover_bottom_content": "Popover in basso",
   "popover_left": "Sinistra",
-  "popover_left_content": "Popover a sinistra"
+  "popover_left_content": "Popover a sinistra",
+  "hovercard_heading": "Carta al passaggio del mouse",
+  "hovercard_basic_label": "Carta al passaggio del mouse di base",
+  "hovercard_username": "@nextjs",
+  "hovercard_name": "Next.js",
+  "hovercard_description": "Il framework React per il Web - utilizzato da alcune delle più grandi aziende del mondo.",
+  "hovercard_joined": "Iscritto a dicembre 2021",
+  "hovercard_custom_label": "Carta al passaggio del mouse con contenuto personalizzato",
+  "hovercard_hover_trigger": "Passa sopra di me",
+  "hovercard_custom_title": "Informazioni rapide",
+  "hovercard_custom_content": "Queste sono informazioni aggiuntive che appaiono quando passi sopra l'elemento trigger."
 }
