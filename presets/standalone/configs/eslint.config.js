@@ -28,6 +28,8 @@ export default [
       'presets/standalone/scripts/**',
       'vite.config.ts',
       '*.config.*',
+      // CommonJS config files (dependency-cruiser uses CommonJS)
+      '**/*.cjs',
       'eslint-plugin-local/**',
     ],
   },
