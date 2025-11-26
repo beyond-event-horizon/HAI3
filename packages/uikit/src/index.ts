@@ -60,6 +60,13 @@ export {
   DialogDescription,
 } from './base/dialog';
 
+// shadcn collapsible
+export {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from './base/collapsible';
+
 // shadcn select (native-style)
 export {
   Select,

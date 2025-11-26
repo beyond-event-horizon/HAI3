@@ -194,5 +194,17 @@
   "element_collapsible": "Сворачиваемый",
   "categories_heading": "Категории",
   "elements_implemented": "элементов реализовано",
-  "of": "из"
+  "of": "из",
+  "collapsible_heading": "Сворачиваемый",
+  "collapsible_basic_label": "Базовый сворачиваемый",
+  "collapsible_basic_trigger": "Переключить содержимое",
+  "collapsible_basic_content": "Это сворачиваемая область содержимого. Нажмите на триггер выше, чтобы скрыть или показать это содержимое.",
+  "collapsible_sections_label": "Несколько разделов",
+  "collapsible_section1_trigger": "Раздел 1",
+  "collapsible_section1_content": "Содержимое первого сворачиваемого раздела.",
+  "collapsible_section2_trigger": "Раздел 2",
+  "collapsible_section2_content": "Содержимое второго сворачиваемого раздела.",
+  "collapsible_styled_label": "Стилизованный сворачиваемый",
+  "collapsible_styled_trigger": "Пользовательский стилизованный раздел",
+  "collapsible_styled_content": "Этот сворачиваемый элемент имеет пользовательский стиль с акцентным фоном и плавными переходами."
 }

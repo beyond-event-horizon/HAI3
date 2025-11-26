@@ -194,5 +194,17 @@
   "element_collapsible": "Einklappbar",
   "categories_heading": "Kategorien",
   "elements_implemented": "Elemente implementiert",
-  "of": "von"
+  "of": "von",
+  "collapsible_heading": "Zusammenklappbar",
+  "collapsible_basic_label": "Einfach zusammenklappbar",
+  "collapsible_basic_trigger": "Inhalt umschalten",
+  "collapsible_basic_content": "Dies ist ein zusammenklappbarer Inhaltsbereich. Klicken Sie auf den Trigger oben, um diesen Inhalt auszublenden oder anzuzeigen.",
+  "collapsible_sections_label": "Mehrere Abschnitte",
+  "collapsible_section1_trigger": "Abschnitt 1",
+  "collapsible_section1_content": "Inhalt des ersten zusammenklappbaren Abschnitts.",
+  "collapsible_section2_trigger": "Abschnitt 2",
+  "collapsible_section2_content": "Inhalt des zweiten zusammenklappbaren Abschnitts.",
+  "collapsible_styled_label": "Gestylter zusammenklappbar",
+  "collapsible_styled_trigger": "Benutzerdefinierter Abschnitt",
+  "collapsible_styled_content": "Dieser zusammenklappbare Bereich hat benutzerdefiniertes Styling mit Akzenthintergrund und sanften Übergängen."
 }

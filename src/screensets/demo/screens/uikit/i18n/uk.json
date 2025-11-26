@@ -194,5 +194,17 @@
   "element_collapsible": "Згортаємий",
   "categories_heading": "Категорії",
   "elements_implemented": "елементів реалізовано",
-  "of": "з"
+  "of": "з",
+  "collapsible_heading": "Collapsible",
+  "collapsible_basic_label": "Basic Collapsible",
+  "collapsible_basic_trigger": "Toggle Content",
+  "collapsible_basic_content": "This is a collapsible content area. Click the trigger above to hide or show this content.",
+  "collapsible_sections_label": "Multiple Sections",
+  "collapsible_section1_trigger": "Section 1",
+  "collapsible_section1_content": "Content for the first collapsible section.",
+  "collapsible_section2_trigger": "Section 2",
+  "collapsible_section2_content": "Content for the second collapsible section.",
+  "collapsible_styled_label": "Styled Collapsible",
+  "collapsible_styled_trigger": "Custom Styled Section",
+  "collapsible_styled_content": "This collapsible has custom styling with accent background and smooth transitions."
 }

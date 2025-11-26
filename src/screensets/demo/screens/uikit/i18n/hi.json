@@ -194,5 +194,17 @@
   "element_collapsible": "संक्षिप्त करने योग्य",
   "categories_heading": "श्रेणियाँ",
   "elements_implemented": "तत्व लागू किए गए",
-  "of": "में से"
+  "of": "में से",
+  "collapsible_heading": "संक्षिप्त करने योग्य",
+  "collapsible_basic_label": "बुनियादी संक्षिप्त करने योग्य",
+  "collapsible_basic_trigger": "सामग्री टॉगल करें",
+  "collapsible_basic_content": "यह एक संक्षिप्त करने योग्य सामग्री क्षेत्र है। इस सामग्री को छिपाने या दिखाने के लिए ऊपर ट्रिगर पर क्लिक करें।",
+  "collapsible_sections_label": "कई अनुभाग",
+  "collapsible_section1_trigger": "अनुभाग 1",
+  "collapsible_section1_content": "पहले संक्षिप्त करने योग्य अनुभाग की सामग्री।",
+  "collapsible_section2_trigger": "अनुभाग 2",
+  "collapsible_section2_content": "दूसरे संक्षिप्त करने योग्य अनुभाग की सामग्री।",
+  "collapsible_styled_label": "स्टाइल किया गया संक्षिप्त करने योग्य",
+  "collapsible_styled_trigger": "कस्टम स्टाइल अनुभाग",
+  "collapsible_styled_content": "इस संक्षिप्त करने योग्य में उच्चारण पृष्ठभूमि और सुचारू संक्रमण के साथ कस्टम स्टाइलिंग है।"
 }

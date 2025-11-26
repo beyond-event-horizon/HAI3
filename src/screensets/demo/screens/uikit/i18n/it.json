@@ -194,5 +194,17 @@
   "element_collapsible": "Comprimibile",
   "categories_heading": "Categorie",
   "elements_implemented": "elementi implementati",
-  "of": "di"
+  "of": "di",
+  "collapsible_heading": "Comprimibile",
+  "collapsible_basic_label": "Comprimibile di base",
+  "collapsible_basic_trigger": "Attiva/disattiva contenuto",
+  "collapsible_basic_content": "Questa è un'area di contenuto comprimibile. Fare clic sul trigger sopra per nascondere o mostrare questo contenuto.",
+  "collapsible_sections_label": "Sezioni multiple",
+  "collapsible_section1_trigger": "Sezione 1",
+  "collapsible_section1_content": "Contenuto della prima sezione comprimibile.",
+  "collapsible_section2_trigger": "Sezione 2",
+  "collapsible_section2_content": "Contenuto della seconda sezione comprimibile.",
+  "collapsible_styled_label": "Comprimibile stilizzato",
+  "collapsible_styled_trigger": "Sezione con stile personalizzato",
+  "collapsible_styled_content": "Questo comprimibile ha uno stile personalizzato con sfondo in evidenza e transizioni fluide."
 }

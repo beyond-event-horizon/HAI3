@@ -194,5 +194,17 @@
   "element_collapsible": "Réductible",
   "categories_heading": "Catégories",
   "elements_implemented": "éléments implémentés",
-  "of": "sur"
+  "of": "sur",
+  "collapsible_heading": "Pliable",
+  "collapsible_basic_label": "Pliable de base",
+  "collapsible_basic_trigger": "Basculer le contenu",
+  "collapsible_basic_content": "Ceci est une zone de contenu pliable. Cliquez sur le déclencheur ci-dessus pour masquer ou afficher ce contenu.",
+  "collapsible_sections_label": "Plusieurs sections",
+  "collapsible_section1_trigger": "Section 1",
+  "collapsible_section1_content": "Contenu de la première section pliable.",
+  "collapsible_section2_trigger": "Section 2",
+  "collapsible_section2_content": "Contenu de la deuxième section pliable.",
+  "collapsible_styled_label": "Pliable stylisé",
+  "collapsible_styled_trigger": "Section personnalisée",
+  "collapsible_styled_content": "Ce pliable a un style personnalisé avec un arrière-plan accentué et des transitions fluides."
 }

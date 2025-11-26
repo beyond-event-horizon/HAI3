@@ -194,5 +194,17 @@
   "element_collapsible": "ভাঁজযোগ্য",
   "categories_heading": "বিভাগ",
   "elements_implemented": "উপাদান প্রয়োগ করা হয়েছে",
-  "of": "এর"
+  "of": "এর",
+  "collapsible_heading": "ভাঁজযোগ্য",
+  "collapsible_basic_label": "মৌলিক ভাঁজযোগ্য",
+  "collapsible_basic_trigger": "বিষয়বস্তু টগল করুন",
+  "collapsible_basic_content": "এটি একটি ভাঁজযোগ্য বিষয়বস্তু এলাকা। এই বিষয়বস্তু লুকাতে বা দেখাতে উপরের ট্রিগারে ক্লিক করুন।",
+  "collapsible_sections_label": "একাধিক বিভাগ",
+  "collapsible_section1_trigger": "বিভাগ 1",
+  "collapsible_section1_content": "প্রথম ভাঁজযোগ্য বিভাগের বিষয়বস্তু।",
+  "collapsible_section2_trigger": "বিভাগ 2",
+  "collapsible_section2_content": "দ্বিতীয় ভাঁজযোগ্য বিভাগের বিষয়বস্তু।",
+  "collapsible_styled_label": "স্টাইলযুক্ত ভাঁজযোগ্য",
+  "collapsible_styled_trigger": "কাস্টম স্টাইল বিভাগ",
+  "collapsible_styled_content": "এই ভাঁজযোগ্যটিতে অ্যাকসেন্ট ব্যাকগ্রাউন্ড এবং মসৃণ ট্রানজিশন সহ কাস্টম স্টাইলিং রয়েছে।"
 }

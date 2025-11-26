@@ -194,5 +194,17 @@
   "element_collapsible": "접을 수 있는",
   "categories_heading": "카테고리",
   "elements_implemented": "요소가 구현됨",
-  "of": "/"
+  "of": "/",
+  "collapsible_heading": "접을 수 있는",
+  "collapsible_basic_label": "기본 접을 수 있는",
+  "collapsible_basic_trigger": "콘텐츠 전환",
+  "collapsible_basic_content": "이것은 접을 수 있는 콘텐츠 영역입니다. 이 콘텐츠를 숨기거나 표시하려면 위의 트리거를 클릭하세요.",
+  "collapsible_sections_label": "여러 섹션",
+  "collapsible_section1_trigger": "섹션 1",
+  "collapsible_section1_content": "첫 번째 접을 수 있는 섹션의 콘텐츠입니다.",
+  "collapsible_section2_trigger": "섹션 2",
+  "collapsible_section2_content": "두 번째 접을 수 있는 섹션의 콘텐츠입니다.",
+  "collapsible_styled_label": "스타일이 지정된 접을 수 있는",
+  "collapsible_styled_trigger": "사용자 지정 스타일 섹션",
+  "collapsible_styled_content": "이 접을 수 있는 항목에는 강조 배경과 부드러운 전환이 있는 사용자 지정 스타일링이 있습니다."
 }

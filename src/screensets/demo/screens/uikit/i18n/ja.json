@@ -194,5 +194,17 @@
   "element_collapsible": "折りたたみ可能",
   "categories_heading": "カテゴリ",
   "elements_implemented": "要素が実装されました",
-  "of": "/"
+  "of": "/",
+  "collapsible_heading": "折りたたみ可能",
+  "collapsible_basic_label": "基本的な折りたたみ可能",
+  "collapsible_basic_trigger": "コンテンツを切り替え",
+  "collapsible_basic_content": "これは折りたたみ可能なコンテンツエリアです。上記のトリガーをクリックして、このコンテンツを非表示または表示します。",
+  "collapsible_sections_label": "複数のセクション",
+  "collapsible_section1_trigger": "セクション1",
+  "collapsible_section1_content": "最初の折りたたみ可能なセクションのコンテンツ。",
+  "collapsible_section2_trigger": "セクション2",
+  "collapsible_section2_content": "2番目の折りたたみ可能なセクションのコンテンツ。",
+  "collapsible_styled_label": "スタイル付き折りたたみ可能",
+  "collapsible_styled_trigger": "カスタムスタイルセクション",
+  "collapsible_styled_content": "この折りたたみ可能には、アクセント背景とスムーズなトランジションを備えたカスタムスタイリングがあります。"
 }

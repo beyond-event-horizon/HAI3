@@ -194,5 +194,17 @@
   "element_collapsible": "Recolhível",
   "categories_heading": "Categorias",
   "elements_implemented": "elementos implementados",
-  "of": "de"
+  "of": "de",
+  "collapsible_heading": "Recolhível",
+  "collapsible_basic_label": "Recolhível básico",
+  "collapsible_basic_trigger": "Alternar conteúdo",
+  "collapsible_basic_content": "Esta é uma área de conteúdo recolhível. Clique no gatilho acima para ocultar ou mostrar este conteúdo.",
+  "collapsible_sections_label": "Várias seções",
+  "collapsible_section1_trigger": "Seção 1",
+  "collapsible_section1_content": "Conteúdo da primeira seção recolhível.",
+  "collapsible_section2_trigger": "Seção 2",
+  "collapsible_section2_content": "Conteúdo da segunda seção recolhível.",
+  "collapsible_styled_label": "Recolhível estilizado",
+  "collapsible_styled_trigger": "Seção de estilo personalizado",
+  "collapsible_styled_content": "Este recolhível tem um estilo personalizado com fundo de destaque e transições suaves."
 }

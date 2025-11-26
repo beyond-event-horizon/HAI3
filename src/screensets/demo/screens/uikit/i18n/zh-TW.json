@@ -194,5 +194,17 @@
   "element_collapsible": "可摺疊",
   "categories_heading": "類別",
   "elements_implemented": "個元素已實現",
-  "of": "/"
+  "of": "/",
+  "collapsible_heading": "可摺疊",
+  "collapsible_basic_label": "基本可摺疊",
+  "collapsible_basic_trigger": "切換內容",
+  "collapsible_basic_content": "這是一個可摺疊的內容區域。點擊上方的觸發器以隱藏或顯示此內容。",
+  "collapsible_sections_label": "多個部分",
+  "collapsible_section1_trigger": "第1部分",
+  "collapsible_section1_content": "第一個可摺疊部分的內容。",
+  "collapsible_section2_trigger": "第2部分",
+  "collapsible_section2_content": "第二個可摺疊部分的內容。",
+  "collapsible_styled_label": "樣式化可摺疊",
+  "collapsible_styled_trigger": "自訂樣式部分",
+  "collapsible_styled_content": "此可摺疊項具有帶強調背景和平滑過渡的自訂樣式。"
 }

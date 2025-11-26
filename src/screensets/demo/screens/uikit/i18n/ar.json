@@ -190,5 +190,17 @@
   "element_collapsible": "قابل للطي",
   "categories_heading": "الفئات",
   "elements_implemented": "العناصر المنفذة",
-  "of": "من"
+  "of": "من",
+  "collapsible_heading": "قابل للطي",
+  "collapsible_basic_label": "قابل للطي أساسي",
+  "collapsible_basic_trigger": "تبديل المحتوى",
+  "collapsible_basic_content": "هذه منطقة محتوى قابلة للطي. انقر على الزر أعلاه لإخفاء أو إظهار هذا المحتوى.",
+  "collapsible_sections_label": "أقسام متعددة",
+  "collapsible_section1_trigger": "القسم 1",
+  "collapsible_section1_content": "محتوى القسم القابل للطي الأول.",
+  "collapsible_section2_trigger": "القسم 2",
+  "collapsible_section2_content": "محتوى القسم القابل للطي الثاني.",
+  "collapsible_styled_label": "قابل للطي منسق",
+  "collapsible_styled_trigger": "قسم منسق مخصص",
+  "collapsible_styled_content": "هذا القسم القابل للطي له تنسيق مخصص مع خلفية مميزة وانتقالات سلسة."
 }
