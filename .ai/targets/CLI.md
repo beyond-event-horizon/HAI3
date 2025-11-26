@@ -18,14 +18,14 @@
 - templates/ is a BUILD ARTIFACT (gitignored); NEVER commit or reference as source.
 
 ## PRESET STRUCTURE
-- presets/standalone/configs/: .eslintrc.cjs, .dependency-cruiser.cjs, tsconfig.json
+- presets/standalone/configs/: eslint.config.js, .dependency-cruiser.cjs, tsconfig.json
 - presets/standalone/scripts/: test-architecture.ts
 - presets/monorepo/configs/: extends standalone/configs/ with package rules
 - presets/monorepo/scripts/: imports standalone/scripts/ and adds monorepo checks
 
 ## CRITICAL RULES
 - REQUIRED: presets/monorepo/ extends presets/standalone/ (not reverse).
-- REQUIRED: Root .eslintrc.cjs re-exports presets/monorepo/configs/.eslintrc.cjs.
+- REQUIRED: Root eslint.config.js re-exports presets/monorepo/configs/eslint.config.js.
 - REQUIRED: Root .dependency-cruiser.cjs re-exports presets/monorepo/configs/.dependency-cruiser.cjs.
 - REQUIRED: Root tsconfig.json extends presets/monorepo/configs/tsconfig.json.
 - REQUIRED: npm run arch:check runs presets/monorepo/scripts/test-architecture.ts directly.
