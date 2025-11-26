@@ -28,11 +28,25 @@ module.exports = {
       comment: 'PACKAGE VIOLATION: uikit cannot depend on uicore. Use uikit-contracts for shared types.'
     },
     {
+      name: 'uicore-no-uikit-import',
+      severity: 'error',
+      from: { path: '^packages/uicore/' },
+      to: { path: '^packages/uikit/' },
+      comment: 'PACKAGE VIOLATION: uicore cannot depend on uikit. Use uikit-contracts for shared types.'
+    },
+    {
       name: 'contracts-no-implementation',
       severity: 'error',
       from: { path: '^packages/uikit-contracts/' },
       to: { path: '^packages/(uikit|uicore)/' },
       comment: 'PACKAGE VIOLATION: uikit-contracts is pure interfaces, cannot import implementations.'
+    },
+    {
+      name: 'packages-no-src-import',
+      severity: 'error',
+      from: { path: '^packages/' },
+      to: { path: '^src/' },
+      comment: 'PACKAGE VIOLATION: Packages cannot import from app src/. Packages must be self-contained.'
     },
   ],
   options: {
