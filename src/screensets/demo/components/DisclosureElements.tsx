@@ -6,12 +6,11 @@ import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
-  AccordionContent,
-  Button, 
-  ButtonVariant 
+  AccordionContent
 } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { ChevronDown } from 'lucide-react';
+import { ExpandableButton } from '../uikit/icons/ExpandableButton';
 import { DEMO_SCREENSET_ID } from "../ids";
 import { UI_KIT_ELEMENTS_SCREEN_ID } from "../ids";
 
@@ -178,17 +177,9 @@ export const DisclosureElements: React.FC = () => {
             </TextLoader>
             <Collapsible open={isOpen1} onOpenChange={setIsOpen1} className="w-full max-w-sm">
               <CollapsibleTrigger asChild>
-                <Button 
-                  variant={ButtonVariant.Outline}
-                  className="w-full flex items-center justify-between"
-                >
-                  <TextLoader skeletonClassName="h-4 w-32" inheritColor>
-                    {tk('collapsible_basic_trigger')}
-                  </TextLoader>
-                  <ChevronDown 
-                    className={`h-4 w-4 transition-transform ${isOpen1 ? 'rotate-180' : ''}`} 
-                  />
-                </Button>
+                <ExpandableButton isExpanded={isOpen1}>
+                  {tk('collapsible_basic_trigger')}
+                </ExpandableButton>
               </CollapsibleTrigger>
               <CollapsibleContent className="mt-2 p-4 border border-border rounded-lg bg-muted/50">
                 <TextLoader skeletonClassName="h-4 w-full" inheritColor>
@@ -211,17 +202,9 @@ export const DisclosureElements: React.FC = () => {
               {/* Section 1 */}
               <Collapsible open={isOpen2} onOpenChange={setIsOpen2}>
                 <CollapsibleTrigger asChild>
-                  <Button 
-                    variant={ButtonVariant.Ghost}
-                    className="w-full flex items-center justify-between"
-                  >
-                    <TextLoader skeletonClassName="h-4 w-24" inheritColor>
-                      {tk('collapsible_section1_trigger')}
-                    </TextLoader>
-                    <ChevronDown 
-                      className={`h-4 w-4 transition-transform ${isOpen2 ? 'rotate-180' : ''}`} 
-                    />
-                  </Button>
+                  <ExpandableButton isExpanded={isOpen2}>
+                    {tk('collapsible_section1_trigger')}
+                  </ExpandableButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="px-4 py-2">
                   <TextLoader skeletonClassName="h-4 w-full" inheritColor>
@@ -235,17 +218,9 @@ export const DisclosureElements: React.FC = () => {
               {/* Section 2 */}
               <Collapsible open={isOpen3} onOpenChange={setIsOpen3}>
                 <CollapsibleTrigger asChild>
-                  <Button 
-                    variant={ButtonVariant.Ghost}
-                    className="w-full flex items-center justify-between"
-                  >
-                    <TextLoader skeletonClassName="h-4 w-24" inheritColor>
-                      {tk('collapsible_section2_trigger')}
-                    </TextLoader>
-                    <ChevronDown 
-                      className={`h-4 w-4 transition-transform ${isOpen3 ? 'rotate-180' : ''}`} 
-                    />
-                  </Button>
+                  <ExpandableButton isExpanded={isOpen3}>
+                    {tk('collapsible_section2_trigger')}
+                  </ExpandableButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="px-4 py-2">
                   <TextLoader skeletonClassName="h-4 w-full" inheritColor>
