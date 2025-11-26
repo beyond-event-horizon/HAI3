@@ -206,5 +206,21 @@
   "collapsible_section2_content": "Inhalt des zweiten zusammenklappbaren Abschnitts.",
   "collapsible_styled_label": "Gestylter zusammenklappbar",
   "collapsible_styled_trigger": "Benutzerdefinierter Abschnitt",
-  "collapsible_styled_content": "Dieser zusammenklappbare Bereich hat benutzerdefiniertes Styling mit Akzenthintergrund und sanften Übergängen."
+  "collapsible_styled_content": "Dieser zusammenklappbare Bereich hat benutzerdefiniertes Styling mit Akzenthintergrund und sanften Übergängen.",
+  "accordion_heading": "Akkordeon",
+  "accordion_single_label": "Einzelnes Element",
+  "accordion_single_item1_trigger": "Ist es zugänglich?",
+  "accordion_single_item1_content": "Ja. Es entspricht dem WAI-ARIA-Designmuster.",
+  "accordion_multiple_label": "Mehrere Elemente",
+  "accordion_multiple_item1_trigger": "Was ist ein Akkordeon?",
+  "accordion_multiple_item1_content": "Ein Akkordeon ist ein vertikal gestapelter Satz interaktiver Überschriften, die jeweils einen Inhaltsabschnitt offenbaren.",
+  "accordion_multiple_item2_trigger": "Wann verwenden?",
+  "accordion_multiple_item2_content": "Verwenden Sie Akkordeons, um verwandte Informationen zu organisieren und den vertikalen Platz auf der Seite zu reduzieren.",
+  "accordion_multiple_item3_trigger": "Wie anpassen?",
+  "accordion_multiple_item3_content": "Sie können den Stil, die Animation und das Verhalten mit Props und CSS-Klassen anpassen.",
+  "accordion_faq_label": "FAQ-Stil",
+  "accordion_faq_item1_trigger": "Wie fange ich an?",
+  "accordion_faq_item1_content": "Importieren Sie einfach die Akkordeon-Komponenten und beginnen Sie mit dem Aufbau Ihrer Oberfläche.",
+  "accordion_faq_item2_trigger": "Ist es kostenlos zu verwenden?",
+  "accordion_faq_item2_content": "Ja, alle Komponenten sind Open Source und kostenlos in Ihren Projekten zu verwenden."
 }

@@ -206,5 +206,21 @@
   "collapsible_section2_content": "Content for the second collapsible section.",
   "collapsible_styled_label": "Styled Collapsible",
   "collapsible_styled_trigger": "Custom Styled Section",
-  "collapsible_styled_content": "This collapsible has custom styling with accent background and smooth transitions."
+  "collapsible_styled_content": "This collapsible has custom styling with accent background and smooth transitions.",
+  "accordion_heading": "Accordion",
+  "accordion_single_label": "Single Item",
+  "accordion_single_item1_trigger": "Is it accessible?",
+  "accordion_single_item1_content": "Yes. It adheres to the WAI-ARIA design pattern.",
+  "accordion_multiple_label": "Multiple Items",
+  "accordion_multiple_item1_trigger": "What is an accordion?",
+  "accordion_multiple_item1_content": "An accordion is a vertically stacked set of interactive headings that each reveal a section of content.",
+  "accordion_multiple_item2_trigger": "When to use it?",
+  "accordion_multiple_item2_content": "Use accordions to organize related information and reduce the amount of vertical space on the page.",
+  "accordion_multiple_item3_trigger": "How to customize?",
+  "accordion_multiple_item3_content": "You can customize the styling, animation, and behavior using props and CSS classes.",
+  "accordion_faq_label": "FAQ Style",
+  "accordion_faq_item1_trigger": "How do I get started?",
+  "accordion_faq_item1_content": "Simply import the Accordion components and start building your interface.",
+  "accordion_faq_item2_trigger": "Is it free to use?",
+  "accordion_faq_item2_content": "Yes, all components are open source and free to use in your projects."
 }

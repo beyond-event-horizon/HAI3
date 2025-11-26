@@ -206,5 +206,21 @@
   "collapsible_section2_content": "두 번째 접을 수 있는 섹션의 콘텐츠입니다.",
   "collapsible_styled_label": "스타일이 지정된 접을 수 있는",
   "collapsible_styled_trigger": "사용자 지정 스타일 섹션",
-  "collapsible_styled_content": "이 접을 수 있는 항목에는 강조 배경과 부드러운 전환이 있는 사용자 지정 스타일링이 있습니다."
+  "collapsible_styled_content": "이 접을 수 있는 항목에는 강조 배경과 부드러운 전환이 있는 사용자 지정 스타일링이 있습니다.",
+  "accordion_heading": "아코디언",
+  "accordion_single_label": "단일 항목",
+  "accordion_single_item1_trigger": "접근 가능한가요?",
+  "accordion_single_item1_content": "네. WAI-ARIA 디자인 패턴을 준수합니다.",
+  "accordion_multiple_label": "여러 항목",
+  "accordion_multiple_item1_trigger": "아코디언이란 무엇인가요?",
+  "accordion_multiple_item1_content": "아코디언은 세로로 쌓인 대화형 제목 세트로, 각각 콘텐츠 섹션을 표시합니다.",
+  "accordion_multiple_item2_trigger": "언제 사용하나요?",
+  "accordion_multiple_item2_content": "관련 정보를 구성하고 페이지의 수직 공간을 줄이기 위해 아코디언을 사용합니다.",
+  "accordion_multiple_item3_trigger": "어떻게 사용자 지정하나요?",
+  "accordion_multiple_item3_content": "props 및 CSS 클래스를 사용하여 스타일, 애니메이션 및 동작을 사용자 지정할 수 있습니다.",
+  "accordion_faq_label": "FAQ 스타일",
+  "accordion_faq_item1_trigger": "어떻게 시작하나요?",
+  "accordion_faq_item1_content": "아코디언 컴포넌트를 가져와서 인터페이스 구축을 시작하세요.",
+  "accordion_faq_item2_trigger": "무료로 사용할 수 있나요?",
+  "accordion_faq_item2_content": "네, 모든 컴포넌트는 오픈 소스이며 프로젝트에서 무료로 사용할 수 있습니다."
 }

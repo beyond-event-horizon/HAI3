@@ -165,6 +165,7 @@ export function getElementId(elementName: string): string {
  * Currently implemented elements (matching UIKitElementsScreen)
  */
 export const IMPLEMENTED_ELEMENTS = [
+  'Accordion',
   'Avatar',
   'Badge',
   'Button',

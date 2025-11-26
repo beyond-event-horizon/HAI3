@@ -206,5 +206,21 @@
   "collapsible_section2_content": "Conteúdo da segunda seção recolhível.",
   "collapsible_styled_label": "Recolhível estilizado",
   "collapsible_styled_trigger": "Seção de estilo personalizado",
-  "collapsible_styled_content": "Este recolhível tem um estilo personalizado com fundo de destaque e transições suaves."
+  "collapsible_styled_content": "Este recolhível tem um estilo personalizado com fundo de destaque e transições suaves.",
+  "accordion_heading": "Acordeão",
+  "accordion_single_label": "Item único",
+  "accordion_single_item1_trigger": "É acessível?",
+  "accordion_single_item1_content": "Sim. Adere ao padrão de design WAI-ARIA.",
+  "accordion_multiple_label": "Vários itens",
+  "accordion_multiple_item1_trigger": "O que é um acordeão?",
+  "accordion_multiple_item1_content": "Um acordeão é um conjunto de cabeçalhos interativos empilhados verticalmente que revelam cada um uma seção de conteúdo.",
+  "accordion_multiple_item2_trigger": "Quando usar?",
+  "accordion_multiple_item2_content": "Use acordeões para organizar informações relacionadas e reduzir a quantidade de espaço vertical na página.",
+  "accordion_multiple_item3_trigger": "Como personalizar?",
+  "accordion_multiple_item3_content": "Você pode personalizar o estilo, animação e comportamento usando props e classes CSS.",
+  "accordion_faq_label": "Estilo FAQ",
+  "accordion_faq_item1_trigger": "Como começar?",
+  "accordion_faq_item1_content": "Simplesmente importe os componentes do acordeão e comece a construir sua interface.",
+  "accordion_faq_item2_trigger": "É gratuito para usar?",
+  "accordion_faq_item2_content": "Sim, todos os componentes são de código aberto e gratuitos para usar em seus projetos."
 }

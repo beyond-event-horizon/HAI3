@@ -206,5 +206,21 @@
   "collapsible_section2_content": "Contenu de la deuxième section pliable.",
   "collapsible_styled_label": "Pliable stylisé",
   "collapsible_styled_trigger": "Section personnalisée",
-  "collapsible_styled_content": "Ce pliable a un style personnalisé avec un arrière-plan accentué et des transitions fluides."
+  "collapsible_styled_content": "Ce pliable a un style personnalisé avec un arrière-plan accentué et des transitions fluides.",
+  "accordion_heading": "Accordéon",
+  "accordion_single_label": "Élément unique",
+  "accordion_single_item1_trigger": "Est-il accessible?",
+  "accordion_single_item1_content": "Oui. Il adhère au modèle de conception WAI-ARIA.",
+  "accordion_multiple_label": "Plusieurs éléments",
+  "accordion_multiple_item1_trigger": "Qu'est-ce qu'un accordéon?",
+  "accordion_multiple_item1_content": "Un accordéon est un ensemble d'en-têtes interactifs empilés verticalement qui révèlent chacun une section de contenu.",
+  "accordion_multiple_item2_trigger": "Quand l'utiliser?",
+  "accordion_multiple_item2_content": "Utilisez les accordéons pour organiser les informations connexes et réduire l'espace vertical sur la page.",
+  "accordion_multiple_item3_trigger": "Comment le personnaliser?",
+  "accordion_multiple_item3_content": "Vous pouvez personnaliser le style, l'animation et le comportement en utilisant des props et des classes CSS.",
+  "accordion_faq_label": "Style FAQ",
+  "accordion_faq_item1_trigger": "Comment commencer?",
+  "accordion_faq_item1_content": "Importez simplement les composants de l'accordéon et commencez à construire votre interface.",
+  "accordion_faq_item2_trigger": "Est-ce gratuit à utiliser?",
+  "accordion_faq_item2_content": "Oui, tous les composants sont open source et gratuits à utiliser dans vos projets."
 }

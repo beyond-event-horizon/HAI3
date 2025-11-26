@@ -206,5 +206,21 @@
   "collapsible_section2_content": "2番目の折りたたみ可能なセクションのコンテンツ。",
   "collapsible_styled_label": "スタイル付き折りたたみ可能",
   "collapsible_styled_trigger": "カスタムスタイルセクション",
-  "collapsible_styled_content": "この折りたたみ可能には、アクセント背景とスムーズなトランジションを備えたカスタムスタイリングがあります。"
+  "collapsible_styled_content": "この折りたたみ可能には、アクセント背景とスムーズなトランジションを備えたカスタムスタイリングがあります。",
+  "accordion_heading": "アコーディオン",
+  "accordion_single_label": "単一項目",
+  "accordion_single_item1_trigger": "アクセシブルですか？",
+  "accordion_single_item1_content": "はい。WAI-ARIA設計パターンに準拠しています。",
+  "accordion_multiple_label": "複数項目",
+  "accordion_multiple_item1_trigger": "アコーディオンとは何ですか？",
+  "accordion_multiple_item1_content": "アコーディオンは、縦に積み重ねられたインタラクティブな見出しのセットで、それぞれがコンテンツのセクションを表示します。",
+  "accordion_multiple_item2_trigger": "いつ使用しますか？",
+  "accordion_multiple_item2_content": "関連情報を整理し、ページ上の垂直スペースを減らすためにアコーディオンを使用します。",
+  "accordion_multiple_item3_trigger": "カスタマイズ方法は？",
+  "accordion_multiple_item3_content": "プロップとCSSクラスを使用して、スタイル、アニメーション、動作をカスタマイズできます。",
+  "accordion_faq_label": "FAQスタイル",
+  "accordion_faq_item1_trigger": "始め方は？",
+  "accordion_faq_item1_content": "アコーディオンコンポーネントをインポートして、インターフェースの構築を開始するだけです。",
+  "accordion_faq_item2_trigger": "無料で使用できますか？",
+  "accordion_faq_item2_content": "はい、すべてのコンポーネントはオープンソースで、プロジェクトで無料で使用できます。"
 }

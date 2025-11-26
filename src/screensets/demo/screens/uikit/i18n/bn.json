@@ -206,5 +206,21 @@
   "collapsible_section2_content": "দ্বিতীয় ভাঁজযোগ্য বিভাগের বিষয়বস্তু।",
   "collapsible_styled_label": "স্টাইলযুক্ত ভাঁজযোগ্য",
   "collapsible_styled_trigger": "কাস্টম স্টাইল বিভাগ",
-  "collapsible_styled_content": "এই ভাঁজযোগ্যটিতে অ্যাকসেন্ট ব্যাকগ্রাউন্ড এবং মসৃণ ট্রানজিশন সহ কাস্টম স্টাইলিং রয়েছে।"
+  "collapsible_styled_content": "এই ভাঁজযোগ্যটিতে অ্যাকসেন্ট ব্যাকগ্রাউন্ড এবং মসৃণ ট্রানজিশন সহ কাস্টম স্টাইলিং রয়েছে।",
+  "accordion_heading": "অ্যাকর্ডিয়ন",
+  "accordion_single_label": "একক আইটেম",
+  "accordion_single_item1_trigger": "এটি কি অ্যাক্সেসযোগ্য?",
+  "accordion_single_item1_content": "হ্যাঁ। এটি WAI-ARIA ডিজাইন প্যাটার্ন মেনে চলে।",
+  "accordion_multiple_label": "একাধিক আইটেম",
+  "accordion_multiple_item1_trigger": "অ্যাকর্ডিয়ন কি?",
+  "accordion_multiple_item1_content": "একটি অ্যাকর্ডিয়ন হল একটি উল্লম্বভাবে স্ট্যাক করা ইন্টারঅ্যাক্টিভ শিরোনামের সেট যা প্রতিটি কন্টেন্টের একটি অংশ প্রকাশ করে।",
+  "accordion_multiple_item2_trigger": "কখন এটি ব্যবহার করবেন?",
+  "accordion_multiple_item2_content": "সম্পর্কিত তথ্য সংগঠিত করতে এবং পৃষ্ঠায় উল্লম্ব স্থান কমাতে অ্যাকর্ডিয়ন ব্যবহার করুন।",
+  "accordion_multiple_item3_trigger": "কীভাবে কাস্টমাইজ করবেন?",
+  "accordion_multiple_item3_content": "আপনি প্রপস এবং CSS ক্লাস ব্যবহার করে স্টাইলিং, অ্যানিমেশন এবং আচরণ কাস্টমাইজ করতে পারেন।",
+  "accordion_faq_label": "FAQ স্টাইল",
+  "accordion_faq_item1_trigger": "আমি কীভাবে শুরু করব?",
+  "accordion_faq_item1_content": "কেবল অ্যাকর্ডিয়ন কম্পোনেন্ট আমদানি করুন এবং আপনার ইন্টারফেস তৈরি করা শুরু করুন।",
+  "accordion_faq_item2_trigger": "এটি কি ব্যবহার করা বিনামূল্যে?",
+  "accordion_faq_item2_content": "হ্যাঁ, সমস্ত কম্পোনেন্ট ওপেন সোর্স এবং আপনার প্রকল্পগুলিতে ব্যবহারের জন্য বিনামূল্যে।"
 }

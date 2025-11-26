@@ -60,6 +60,14 @@ export {
   DialogDescription,
 } from './base/dialog';
 
+// shadcn accordion
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from './base/accordion';
+
 // shadcn collapsible
 export {
   Collapsible,

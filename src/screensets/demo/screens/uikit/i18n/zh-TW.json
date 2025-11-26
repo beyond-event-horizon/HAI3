@@ -206,5 +206,21 @@
   "collapsible_section2_content": "第二個可摺疊部分的內容。",
   "collapsible_styled_label": "樣式化可摺疊",
   "collapsible_styled_trigger": "自訂樣式部分",
-  "collapsible_styled_content": "此可摺疊項具有帶強調背景和平滑過渡的自訂樣式。"
+  "collapsible_styled_content": "此可摺疊項具有帶強調背景和平滑過渡的自訂樣式。",
+  "accordion_heading": "手風琴",
+  "accordion_single_label": "單項",
+  "accordion_single_item1_trigger": "它可訪問嗎？",
+  "accordion_single_item1_content": "是的。它遵循WAI-ARIA設計模式。",
+  "accordion_multiple_label": "多項",
+  "accordion_multiple_item1_trigger": "什麼是手風琴？",
+  "accordion_multiple_item1_content": "手風琴是一組垂直堆疊的互動式標題，每個標題都會顯示一部分內容。",
+  "accordion_multiple_item2_trigger": "何時使用它？",
+  "accordion_multiple_item2_content": "使用手風琴來組織相關資訊並減少頁面上的垂直空間。",
+  "accordion_multiple_item3_trigger": "如何定製？",
+  "accordion_multiple_item3_content": "您可以使用屬性和CSS類別自訂樣式、動畫和行為。",
+  "accordion_faq_label": "FAQ樣式",
+  "accordion_faq_item1_trigger": "我如何開始？",
+  "accordion_faq_item1_content": "只需匯入手風琴元件並開始建立您的介面。",
+  "accordion_faq_item2_trigger": "它可以免費使用嗎？",
+  "accordion_faq_item2_content": "是的，所有元件都是開源的，可以在您的專案中免費使用。"
 }
