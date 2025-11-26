@@ -84,33 +84,54 @@ function hexToHsl(hex: string): string {
   return `hsl(${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%)`;
 }
 
-// Remove deprecated color names (intentionally unused - we're filtering them out)
-/* eslint-disable @typescript-eslint/no-unused-vars */
-const {
-  lightBlue,
-  warmGray,
-  trueGray,
-  coolGray,
-  blueGray,
-  ...tailwindColors
-} = allColors;
-/* eslint-enable @typescript-eslint/no-unused-vars */
+// Modern Tailwind color names (excludes deprecated: lightBlue, warmGray, trueGray, coolGray, blueGray)
+const modernColorNames = [
+  'inherit',
+  'current',
+  'transparent',
+  'black',
+  'white',
+  'slate',
+  'gray',
+  'zinc',
+  'neutral',
+  'stone',
+  'red',
+  'orange',
+  'amber',
+  'yellow',
+  'lime',
+  'green',
+  'emerald',
+  'teal',
+  'cyan',
+  'sky',
+  'blue',
+  'indigo',
+  'violet',
+  'purple',
+  'fuchsia',
+  'pink',
+  'rose',
+] as const;
 
 // Convert all colors to HSL
 const colors: Record<string, unknown> = {};
 
-for (const [colorName, colorValue] of Object.entries(tailwindColors)) {
+for (const colorName of modernColorNames) {
+  const colorValue = allColors[colorName as keyof typeof allColors];
   if (typeof colorValue === 'string') {
     // Simple color (inherit, currentColor, transparent, black, white)
     colors[colorName] = hexToHsl(colorValue);
   } else if (typeof colorValue === 'object' && colorValue !== null) {
     // Color scale (slate, gray, etc.)
-    colors[colorName] = {};
+    const colorScale: Record<string, string> = {};
     for (const [shade, hex] of Object.entries(colorValue)) {
       if (typeof hex === 'string') {
-        (colors[colorName] as Record<string, string>)[shade] = hexToHsl(hex);
+        colorScale[shade] = hexToHsl(hex);
       }
     }
+    colors[colorName] = colorScale;
   }
 }
 
