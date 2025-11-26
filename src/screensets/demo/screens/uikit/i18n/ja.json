@@ -222,5 +222,9 @@
   "accordion_faq_item1_trigger": "始め方は？",
   "accordion_faq_item1_content": "アコーディオンコンポーネントをインポートして、インターフェースの構築を開始するだけです。",
   "accordion_faq_item2_trigger": "無料で使用できますか？",
-  "accordion_faq_item2_content": "はい、すべてのコンポーネントはオープンソースで、プロジェクトで無料で使用できます。"
+  "accordion_faq_item2_content": "はい、すべてのコンポーネントはオープンソースで、プロジェクトで無料で使用できます。",
+  "carousel_heading": "カルーセル",
+  "carousel_basic_label": "基本カルーセル",
+  "carousel_multiple_label": "ビューごとに複数のアイテム",
+  "carousel_gallery_label": "画像ギャラリースタイル"
 }

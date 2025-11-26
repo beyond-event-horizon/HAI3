@@ -222,5 +222,9 @@
   "accordion_faq_item1_trigger": "Wie fange ich an?",
   "accordion_faq_item1_content": "Importieren Sie einfach die Akkordeon-Komponenten und beginnen Sie mit dem Aufbau Ihrer Oberfläche.",
   "accordion_faq_item2_trigger": "Ist es kostenlos zu verwenden?",
-  "accordion_faq_item2_content": "Ja, alle Komponenten sind Open Source und kostenlos in Ihren Projekten zu verwenden."
+  "accordion_faq_item2_content": "Ja, alle Komponenten sind Open Source und kostenlos in Ihren Projekten zu verwenden.",
+  "carousel_heading": "Karussell",
+  "carousel_basic_label": "Grundlegendes Karussell",
+  "carousel_multiple_label": "Mehrere Elemente pro Ansicht",
+  "carousel_gallery_label": "Bildergalerie-Stil"
 }

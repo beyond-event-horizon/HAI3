@@ -222,5 +222,9 @@
   "accordion_faq_item1_trigger": "어떻게 시작하나요?",
   "accordion_faq_item1_content": "아코디언 컴포넌트를 가져와서 인터페이스 구축을 시작하세요.",
   "accordion_faq_item2_trigger": "무료로 사용할 수 있나요?",
-  "accordion_faq_item2_content": "네, 모든 컴포넌트는 오픈 소스이며 프로젝트에서 무료로 사용할 수 있습니다."
+  "accordion_faq_item2_content": "네, 모든 컴포넌트는 오픈 소스이며 프로젝트에서 무료로 사용할 수 있습니다.",
+  "carousel_heading": "캐러셀",
+  "carousel_basic_label": "기본 캐러셀",
+  "carousel_multiple_label": "뷰당 여러 항목",
+  "carousel_gallery_label": "이미지 갤러리 스타일"
 }

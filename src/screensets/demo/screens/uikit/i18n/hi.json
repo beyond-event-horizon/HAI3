@@ -222,5 +222,9 @@
   "accordion_faq_item1_trigger": "मैं कैसे शुरू करूं?",
   "accordion_faq_item1_content": "बस अकॉर्डियन कंपोनेंट्स को इम्पोर्ट करें और अपना इंटरफ़ेस बनाना शुरू करें।",
   "accordion_faq_item2_trigger": "क्या इसका उपयोग मुफ्त है?",
-  "accordion_faq_item2_content": "हां, सभी कंपोनेंट्स ओपन सोर्स हैं और आपके प्रोजेक्ट्स में उपयोग के लिए मुफ्त हैं।"
+  "accordion_faq_item2_content": "हां, सभी कंपोनेंट्स ओपन सोर्स हैं और आपके प्रोजेक्ट्स में उपयोग के लिए मुफ्त हैं।",
+  "carousel_heading": "कैरोसेल",
+  "carousel_basic_label": "बुनियादी कैरोसेल",
+  "carousel_multiple_label": "प्रति दृश्य एकाधिक आइटम",
+  "carousel_gallery_label": "छवि गैलरी शैली"
 }

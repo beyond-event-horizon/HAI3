@@ -222,5 +222,9 @@
   "accordion_faq_item1_trigger": "我如何开始？",
   "accordion_faq_item1_content": "只需导入手风琴组件并开始构建您的界面。",
   "accordion_faq_item2_trigger": "它可以免费使用吗？",
-  "accordion_faq_item2_content": "是的，所有组件都是开源的，可以在您的项目中免费使用。"
+  "accordion_faq_item2_content": "是的，所有组件都是开源的，可以在您的项目中免费使用。",
+  "carousel_heading": "轮播",
+  "carousel_basic_label": "基本轮播",
+  "carousel_multiple_label": "每个视图多个项目",
+  "carousel_gallery_label": "图片库样式"
 }

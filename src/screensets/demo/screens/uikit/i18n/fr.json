@@ -222,5 +222,9 @@
   "accordion_faq_item1_trigger": "Comment commencer?",
   "accordion_faq_item1_content": "Importez simplement les composants de l'accordéon et commencez à construire votre interface.",
   "accordion_faq_item2_trigger": "Est-ce gratuit à utiliser?",
-  "accordion_faq_item2_content": "Oui, tous les composants sont open source et gratuits à utiliser dans vos projets."
+  "accordion_faq_item2_content": "Oui, tous les composants sont open source et gratuits à utiliser dans vos projets.",
+  "carousel_heading": "Carrousel",
+  "carousel_basic_label": "Carrousel de base",
+  "carousel_multiple_label": "Plusieurs éléments par vue",
+  "carousel_gallery_label": "Style galerie d'images"
 }

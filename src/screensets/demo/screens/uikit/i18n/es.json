@@ -218,5 +218,9 @@
   "accordion_faq_item1_trigger": "¿Cómo empiezo?",
   "accordion_faq_item1_content": "Simplemente importe los componentes del acordeón y comience a construir su interfaz.",
   "accordion_faq_item2_trigger": "¿Es gratis de usar?",
-  "accordion_faq_item2_content": "Sí, todos los componentes son de código abierto y gratuitos para usar en sus proyectos."
+  "accordion_faq_item2_content": "Sí, todos los componentes son de código abierto y gratuitos para usar en sus proyectos.",
+  "carousel_heading": "Carrusel",
+  "carousel_basic_label": "Carrusel básico",
+  "carousel_multiple_label": "Múltiples elementos por vista",
+  "carousel_gallery_label": "Estilo de galería de imágenes"
 }

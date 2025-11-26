@@ -218,5 +218,9 @@
   "accordion_faq_item1_trigger": "كيف أبدأ؟",
   "accordion_faq_item1_content": "ببساطة قم باستيراد مكونات الأكورديون وابدأ في بناء واجهتك.",
   "accordion_faq_item2_trigger": "هل هو مجاني للاستخدام؟",
-  "accordion_faq_item2_content": "نعم، جميع المكونات مفتوحة المصدر ومجانية للاستخدام في مشاريعك."
+  "accordion_faq_item2_content": "نعم، جميع المكونات مفتوحة المصدر ومجانية للاستخدام في مشاريعك.",
+  "carousel_heading": "دائري",
+  "carousel_basic_label": "دائري أساسي",
+  "carousel_multiple_label": "عناصر متعددة في كل عرض",
+  "carousel_gallery_label": "نمط معرض الصور"
 }

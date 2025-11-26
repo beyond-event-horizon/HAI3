@@ -68,6 +68,16 @@ export {
   AccordionContent,
 } from './base/accordion';
 
+// shadcn carousel
+export type { CarouselApi } from './base/carousel';
+export {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from './base/carousel';
+
 // shadcn collapsible
 export {
   Collapsible,

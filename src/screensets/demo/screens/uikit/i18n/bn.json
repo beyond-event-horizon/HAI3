@@ -222,5 +222,9 @@
   "accordion_faq_item1_trigger": "আমি কীভাবে শুরু করব?",
   "accordion_faq_item1_content": "কেবল অ্যাকর্ডিয়ন কম্পোনেন্ট আমদানি করুন এবং আপনার ইন্টারফেস তৈরি করা শুরু করুন।",
   "accordion_faq_item2_trigger": "এটি কি ব্যবহার করা বিনামূল্যে?",
-  "accordion_faq_item2_content": "হ্যাঁ, সমস্ত কম্পোনেন্ট ওপেন সোর্স এবং আপনার প্রকল্পগুলিতে ব্যবহারের জন্য বিনামূল্যে।"
+  "accordion_faq_item2_content": "হ্যাঁ, সমস্ত কম্পোনেন্ট ওপেন সোর্স এবং আপনার প্রকল্পগুলিতে ব্যবহারের জন্য বিনামূল্যে।",
+  "carousel_heading": "ক্যারোসেল",
+  "carousel_basic_label": "মৌলিক ক্যারোসেল",
+  "carousel_multiple_label": "প্রতি ভিউতে একাধিক আইটেম",
+  "carousel_gallery_label": "ছবি গ্যালারি স্টাইল"
 }

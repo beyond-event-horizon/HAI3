@@ -222,5 +222,9 @@
   "accordion_faq_item1_trigger": "How do I get started?",
   "accordion_faq_item1_content": "Simply import the Accordion components and start building your interface.",
   "accordion_faq_item2_trigger": "Is it free to use?",
-  "accordion_faq_item2_content": "Yes, all components are open source and free to use in your projects."
+  "accordion_faq_item2_content": "Yes, all components are open source and free to use in your projects.",
+  "carousel_heading": "Carousel",
+  "carousel_basic_label": "Basic Carousel",
+  "carousel_multiple_label": "Multiple Items Per View",
+  "carousel_gallery_label": "Image Gallery Style"
 }

@@ -222,5 +222,9 @@
   "accordion_faq_item1_trigger": "Come iniziare?",
   "accordion_faq_item1_content": "Importa semplicemente i componenti della fisarmonica e inizia a costruire la tua interfaccia.",
   "accordion_faq_item2_trigger": "È gratuito da usare?",
-  "accordion_faq_item2_content": "Sì, tutti i componenti sono open source e gratuiti da usare nei tuoi progetti."
+  "accordion_faq_item2_content": "Sì, tutti i componenti sono open source e gratuiti da usare nei tuoi progetti.",
+  "carousel_heading": "Carosello",
+  "carousel_basic_label": "Carosello di base",
+  "carousel_multiple_label": "Più elementi per vista",
+  "carousel_gallery_label": "Stile galleria di immagini"
 }
