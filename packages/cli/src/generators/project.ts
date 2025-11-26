@@ -113,9 +113,11 @@ export async function generateProject(
   });
 
   // 5.2 package.json
+  // Use 'alpha' tag for @hai3 packages during alpha phase
+  // This resolves to the latest alpha version from npm
   const dependencies: Record<string, string> = {
-    '@hai3/uicore': '^0.1.0',
-    '@hai3/uikit-contracts': '^0.1.0',
+    '@hai3/uicore': 'alpha',
+    '@hai3/uikit-contracts': 'alpha',
     '@reduxjs/toolkit': '^2.2.1',
     lodash: '^4.17.21',
     'lucide-react': '^0.344.0',
@@ -125,7 +127,7 @@ export async function generateProject(
   };
 
   if (uikit === 'hai3') {
-    dependencies['@hai3/uikit'] = '^0.1.0';
+    dependencies['@hai3/uikit'] = 'alpha';
   }
 
   const devDependencies: Record<string, string> = {
@@ -148,7 +150,7 @@ export async function generateProject(
   };
 
   if (studio) {
-    devDependencies['@hai3/studio'] = '^0.1.0';
+    devDependencies['@hai3/studio'] = 'alpha';
   }
 
   const packageJson = {
