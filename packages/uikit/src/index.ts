@@ -17,6 +17,7 @@ export { Spinner, type SpinnerProps } from './base/spinner';
 export { Slider, SliderTrack, SliderRange, SliderThumb } from './base/slider';
 export { Progress } from './base/progress';
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './base/tooltip';
+export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor } from './base/popover';
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './base/card';
 export { Header, type HeaderProps } from './base/header'; // HAI3 custom base component
 

@@ -173,6 +173,7 @@ export const IMPLEMENTED_ELEMENTS = [
   'Carousel',
   'Collapsible',
   'Dialog',
+  'Popover',
   'Progress',
   'Select',
   'Sheet',
