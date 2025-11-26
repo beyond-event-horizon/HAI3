@@ -317,9 +317,11 @@ npm install -g @hai3/cli  # Global installation
 hai3 create <project-name>              # Interactive project creation
 hai3 create my-app --uikit=hai3 --studio  # Non-interactive
 
-# Update CLI and packages
+# Update CLI and packages (auto-detects alpha/stable channel)
 hai3 update                             # Inside project: updates CLI + packages
                                         # Outside: updates CLI only
+hai3 update --alpha                     # Force update to alpha channel
+hai3 update --stable                    # Force update to stable channel
 
 # Screenset management
 hai3 screenset create <name>            # Create new screenset

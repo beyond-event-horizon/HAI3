@@ -267,20 +267,32 @@ The CLI SHALL provide a `hai3 create <project-name>` command that scaffolds a ne
 
 The CLI SHALL provide a `hai3 update` command that updates the CLI globally, and when inside a HAI3 project, also updates project dependencies.
 
+The command SHALL support channel selection:
+- `--alpha` (`-a`): Force update to alpha/prerelease versions
+- `--stable` (`-s`): Force update to stable versions
+- Default: Auto-detect channel based on currently installed version
+
+#### Scenario: Channel auto-detection
+
+**Given** running `hai3 update` without channel flags
+**When** installed CLI version contains `-alpha`, `-beta`, or `-rc`
+**Then** the system SHALL update from the `alpha` npm tag
+**Otherwise** the system SHALL update from the `latest` npm tag
+
 #### Scenario: Update outside project
 
 **Given** running `hai3 update` outside a HAI3 project
 **When** no `hai3.config.json` found
-**Then** the system SHALL only update `@hai3/cli` globally
+**Then** the system SHALL only update `@hai3/cli` globally using the detected/specified channel
 
 #### Scenario: Update inside project
 
 **Given** running `hai3 update` inside a HAI3 project
 **When** `hai3.config.json` exists
 **Then** the system SHALL:
-- Update global CLI
-- Update all `@hai3/*` packages in project
-- Return summary of updated packages
+- Update global CLI using the detected/specified channel
+- Update all `@hai3/*` packages in project using the same channel
+- Return summary of updated packages and channel used
 
 ### Requirement: Screenset Create Command
 

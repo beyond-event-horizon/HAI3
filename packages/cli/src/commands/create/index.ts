@@ -13,6 +13,8 @@ export interface CreateCommandArgs {
   projectName: string;
   uikit?: 'hai3' | 'custom';
   studio?: boolean;
+  git?: boolean;
+  install?: boolean;
 }
 
 /**
