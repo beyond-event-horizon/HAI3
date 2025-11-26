@@ -98,6 +98,13 @@ Duplicates an existing screenset with automatic ID transformation.
 
 Updates CLI and framework packages to latest versions.
 
+**Options:**
+- `--alpha`, `-a` - Update to latest alpha/prerelease version
+- `--stable`, `-s` - Update to latest stable version
+
+**Channel Detection:**
+By default, the command auto-detects which channel to use based on the currently installed CLI version. If you have an alpha version installed, it updates from the alpha channel. If you have a stable version, it updates from the stable channel.
+
 **Behavior:**
 - Inside project: Updates CLI globally and framework packages in project
 - Outside project: Updates only CLI globally

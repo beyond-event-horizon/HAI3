@@ -2,13 +2,14 @@ import { execSync } from 'child_process';
 import fs from 'fs-extra';
 import path from 'path';
 import type { CommandDefinition } from '../../core/command.js';
-import { validationOk } from '../../core/types.js';
+import { validationOk, validationError } from '../../core/types.js';
 
 /**
  * Arguments for update command
  */
 export interface UpdateCommandArgs {
-  // No arguments needed
+  alpha?: boolean;
+  stable?: boolean;
 }
 
 /**
@@ -18,6 +19,28 @@ export interface UpdateCommandResult {
   cliUpdated: boolean;
   projectUpdated: boolean;
   updatedPackages: string[];
+  channel: 'alpha' | 'stable';
+}
+
+/**
+ * Detect the current release channel based on installed CLI version
+ * @returns 'alpha' if version contains prerelease identifier, 'stable' otherwise
+ */
+function detectCurrentChannel(): 'alpha' | 'stable' {
+  try {
+    const output = execSync('npm list -g @hai3/cli --json', { stdio: 'pipe' }).toString();
+    const data = JSON.parse(output);
+    const version = data.dependencies?.['@hai3/cli']?.version || '';
+
+    // Check for prerelease identifiers (alpha, beta, rc, etc.)
+    if (version.includes('-alpha') || version.includes('-beta') || version.includes('-rc')) {
+      return 'alpha';
+    }
+    return 'stable';
+  } catch {
+    // If detection fails, default to stable (safer)
+    return 'stable';
+  }
 }
 
 /**
@@ -28,12 +51,30 @@ export const updateCommand: CommandDefinition<
   UpdateCommandResult
 > = {
   name: 'update',
-  description:
-    'Update HAI3 CLI and project packages',
+  description: 'Update HAI3 CLI and project packages',
   args: [],
-  options: [],
+  options: [
+    {
+      name: 'alpha',
+      shortName: 'a',
+      description: 'Update to latest alpha/prerelease version',
+      type: 'boolean',
+      defaultValue: false,
+    },
+    {
+      name: 'stable',
+      shortName: 's',
+      description: 'Update to latest stable version',
+      type: 'boolean',
+      defaultValue: false,
+    },
+  ],
 
-  validate() {
+  validate(args) {
+    // Cannot specify both --alpha and --stable
+    if (args.alpha && args.stable) {
+      return validationError('CONFLICTING_OPTIONS', 'Cannot specify both --alpha and --stable');
+    }
     return validationOk();
   },
 
@@ -44,12 +85,28 @@ export const updateCommand: CommandDefinition<
     let projectUpdated = false;
     const updatedPackages: string[] = [];
 
-    // Always try to update CLI
+    // Determine which channel to use
+    let channel: 'alpha' | 'stable';
+    if (args.alpha) {
+      channel = 'alpha';
+    } else if (args.stable) {
+      channel = 'stable';
+    } else {
+      // Auto-detect based on current installation
+      channel = detectCurrentChannel();
+    }
+
+    const tag = channel === 'alpha' ? '@alpha' : '@latest';
+
+    logger.info(`Update channel: ${channel}`);
+    logger.newline();
+
+    // Update CLI
     logger.info('Checking for CLI updates...');
     try {
-      execSync('npm update -g @hai3/cli', { stdio: 'pipe' });
+      execSync(`npm install -g @hai3/cli${tag}`, { stdio: 'pipe' });
       cliUpdated = true;
-      logger.success('@hai3/cli updated');
+      logger.success(`@hai3/cli updated (${channel})`);
     } catch {
       logger.info('@hai3/cli is already up to date');
     }
@@ -81,11 +138,13 @@ export const updateCommand: CommandDefinition<
         logger.info(`Found ${packagesToUpdate.length} HAI3 packages to update`);
 
         try {
-          const updateCmd = `npm update ${packagesToUpdate.join(' ')}`;
+          // Install each package with the appropriate tag
+          const packagesWithTag = packagesToUpdate.map(pkg => `${pkg}${tag}`);
+          const updateCmd = `npm install ${packagesWithTag.join(' ')}`;
           execSync(updateCmd, { cwd: projectRoot, stdio: 'inherit' });
           projectUpdated = true;
           updatedPackages.push(...packagesToUpdate);
-          logger.success('Project packages updated');
+          logger.success(`Project packages updated (${channel})`);
         } catch {
           logger.warn('Failed to update some packages');
         }
@@ -105,6 +164,7 @@ export const updateCommand: CommandDefinition<
       cliUpdated,
       projectUpdated,
       updatedPackages,
+      channel,
     };
   },
 };
