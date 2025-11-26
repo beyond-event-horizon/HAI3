@@ -1,26 +1,52 @@
+/**
+ * Tailwind configuration for @hai3/uikit package
+ *
+ * This config is used to pre-compile CSS with all Tailwind classes
+ * used by uikit components. The output is shipped as dist/styles.css
+ * so consuming apps don't need to scan node_modules.
+ */
 import type { Config } from 'tailwindcss';
 import tailwindcssAnimate from 'tailwindcss-animate';
 
 export default {
+  // Scan all component source files for Tailwind classes
+  content: ['./src/**/*.{ts,tsx}'],
   darkMode: ['class'],
-  content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
-    // Monorepo: scan local package sources
-    './packages/*/src/**/*.{js,ts,jsx,tsx}',
-    './packages/*/dist/**/*.{js,mjs}',
-    // Standalone: scan installed @hai3 packages from node_modules
-    './node_modules/@hai3/*/dist/**/*.{js,mjs}',
-  ],
   safelist: [
-    // RTL utilities used in package components
+    // RTL utilities used in components
     'rtl:flex-row-reverse',
     'rtl:rotate-180',
     'rtl:-translate-x-4',
-    'ms-auto',  // Direction-aware margin (margin-inline-start: auto)
+    'ms-auto',
     // Data attribute + RTL combos for Switch
     'data-[state=checked]:ltr:translate-x-4',
     'data-[state=checked]:rtl:-translate-x-4',
+    // Layout utilities used by @hai3/uicore (Layout, Screen, Footer, etc.)
+    'flex',
+    'flex-col',
+    'flex-1',
+    'flex-row',
+    'items-center',
+    'justify-center',
+    'justify-between',
+    'gap-4',
+    'h-screen',
+    'h-full',
+    'h-12',
+    'w-screen',
+    'w-full',
+    'overflow-hidden',
+    'overflow-auto',
+    'bg-background',
+    'bg-muted/30',
+    'text-muted-foreground',
+    'text-primary',
+    'text-sm',
+    'border-t',
+    'border-border',
+    'px-6',
+    'py-3',
+    'size-8',
   ],
   theme: {
     extend: {
