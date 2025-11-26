@@ -25,7 +25,7 @@ export default [
     ],
   },
 
-  // Monorepo-specific: Package internals
+  // Monorepo-specific: Package internals and @/ aliases
   {
     files: ['packages/**/*'],
     rules: {
@@ -38,7 +38,58 @@ export default [
               message:
                 'MONOREPO VIOLATION: Import from package root, not internal paths.',
             },
+            {
+              group: ['@/*'],
+              message:
+                'PACKAGE VIOLATION: Use relative imports within packages. @/ aliases are only for app code (src/).',
+            },
           ],
+        },
+      ],
+    },
+  },
+
+  // App: Studio should only be imported via HAI3Provider (auto-detection)
+  {
+    files: ['src/**/*'],
+    ignores: ['src/main.tsx', '**/HAI3Provider.tsx'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@hai3/studio', '@hai3/studio/**'],
+              message:
+                'STUDIO VIOLATION: Studio should not be imported directly in app code. HAI3Provider auto-detects and loads Studio in development mode.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+
+  // Monorepo: uicore components must also follow flux rules (no direct slice dispatch)
+  {
+    files: [
+      'packages/uicore/src/components/**/*.tsx',
+      'packages/uicore/src/layout/domains/**/*.tsx',
+    ],
+    ignores: ['**/*.test.*', '**/*.spec.*'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector:
+            "CallExpression[callee.name='dispatch'] CallExpression[callee.name=/^set[A-Z]/]",
+          message:
+            'FLUX VIOLATION: Components cannot call slice reducers (setXxx functions). Use actions from /actions/ instead.',
+        },
+        {
+          selector:
+            "CallExpression[callee.object.name=/Store$/][callee.property.name!='getState']",
+          message:
+            'FLUX VIOLATION: Components cannot call custom store methods directly. Use Redux actions and useSelector.',
         },
       ],
     },
