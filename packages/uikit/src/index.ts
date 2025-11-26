@@ -120,6 +120,25 @@ export {
   DropdownMenuShortcut,
 } from './base/dropdown-menu';
 
+// Base context menu
+export {
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuCheckboxItem,
+  ContextMenuRadioItem,
+  ContextMenuLabel,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuGroup,
+  ContextMenuPortal,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuRadioGroup,
+} from './base/context-menu';
+
 // Composite components
 export { IconButton, type IconButtonProps } from './composite/buttons/IconButton';
 export { DropdownButton, type DropdownButtonProps } from './composite/buttons/DropdownButton';

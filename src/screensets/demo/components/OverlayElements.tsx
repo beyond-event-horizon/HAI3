@@ -14,6 +14,19 @@ import {
   HoverCard,
   HoverCardTrigger,
   HoverCardContent,
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuCheckboxItem,
+  ContextMenuRadioItem,
+  ContextMenuLabel,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubTrigger,
+  ContextMenuSubContent,
+  ContextMenuRadioGroup,
   Avatar,
   AvatarImage,
   AvatarFallback
@@ -27,11 +40,15 @@ import { UI_KIT_ELEMENTS_SCREEN_ID } from "../ids";
 
 /**
  * Overlay Elements Component
- * Contains Popover, HoverCard, and Tooltip demonstrations
+ * Contains Popover, HoverCard, ContextMenu, and Tooltip demonstrations
  * Uses parent screen (UIKitElementsScreen) translations
  */
 export const OverlayElements: React.FC = () => {
   const { t } = useTranslation();
+  const [showStatusBar, setShowStatusBar] = React.useState(true);
+  const [showActivityBar, setShowActivityBar] = React.useState(false);
+  const [showPanel, setShowPanel] = React.useState(false);
+  const [position, setPosition] = React.useState("bottom");
   
   // Helper function to access parent screen's translations
   const tk = (key: string) => t(`screen.${DEMO_SCREENSET_ID}.${UI_KIT_ELEMENTS_SCREEN_ID}:${key}`);
@@ -314,6 +331,216 @@ export const OverlayElements: React.FC = () => {
                   </div>
                 </HoverCardContent>
               </HoverCard>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Context Menu Element Block */}
+      <div data-element-id="element-context-menu" className="flex flex-col gap-4">
+        <TextLoader skeletonClassName="h-8 w-40">
+          <h2 className="text-2xl font-semibold">
+            {tk('contextmenu_heading')}
+          </h2>
+        </TextLoader>
+        <div className="flex flex-col gap-6 p-6 border border-border rounded-lg bg-background overflow-hidden">
+          
+          {/* Basic Context Menu */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-32" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('contextmenu_basic_label')}
+              </label>
+            </TextLoader>
+            <div className="flex justify-center">
+              <ContextMenu>
+                <ContextMenuTrigger asChild>
+                  <div className="flex h-32 w-64 items-center justify-center rounded-md border border-dashed text-sm cursor-context-menu">
+                    <TextLoader skeletonClassName="h-4 w-32" inheritColor>
+                      {tk('contextmenu_trigger')}
+                    </TextLoader>
+                  </div>
+                </ContextMenuTrigger>
+                <ContextMenuContent className="w-48">
+                  <ContextMenuItem>
+                    <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                      {tk('contextmenu_back')}
+                    </TextLoader>
+                    <ContextMenuShortcut>⌘[</ContextMenuShortcut>
+                  </ContextMenuItem>
+                  <ContextMenuItem disabled>
+                    <TextLoader skeletonClassName="h-4 w-20" inheritColor>
+                      {tk('contextmenu_forward')}
+                    </TextLoader>
+                    <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+                  </ContextMenuItem>
+                  <ContextMenuItem>
+                    <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                      {tk('contextmenu_reload')}
+                    </TextLoader>
+                    <ContextMenuShortcut>⌘R</ContextMenuShortcut>
+                  </ContextMenuItem>
+                  <ContextMenuSeparator />
+                  <ContextMenuItem>
+                    <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+                      {tk('contextmenu_more_tools')}
+                    </TextLoader>
+                  </ContextMenuItem>
+                </ContextMenuContent>
+              </ContextMenu>
+            </div>
+          </div>
+
+          {/* Context Menu with Checkboxes and Radio */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-48" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('contextmenu_advanced_label')}
+              </label>
+            </TextLoader>
+            <div className="flex justify-center">
+              <ContextMenu>
+                <ContextMenuTrigger asChild>
+                  <div className="flex h-32 w-64 items-center justify-center rounded-md border border-dashed text-sm cursor-context-menu">
+                    <TextLoader skeletonClassName="h-4 w-48" inheritColor>
+                      {tk('contextmenu_advanced_trigger')}
+                    </TextLoader>
+                  </div>
+                </ContextMenuTrigger>
+                <ContextMenuContent className="w-56">
+                  <ContextMenuItem>
+                    <TextLoader skeletonClassName="h-4 w-12" inheritColor>
+                      {tk('contextmenu_cut')}
+                    </TextLoader>
+                    <ContextMenuShortcut>⌘X</ContextMenuShortcut>
+                  </ContextMenuItem>
+                  <ContextMenuItem>
+                    <TextLoader skeletonClassName="h-4 w-12" inheritColor>
+                      {tk('contextmenu_copy')}
+                    </TextLoader>
+                    <ContextMenuShortcut>⌘C</ContextMenuShortcut>
+                  </ContextMenuItem>
+                  <ContextMenuItem>
+                    <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                      {tk('contextmenu_paste')}
+                    </TextLoader>
+                    <ContextMenuShortcut>⌘V</ContextMenuShortcut>
+                  </ContextMenuItem>
+                  <ContextMenuSeparator />
+                  <ContextMenuCheckboxItem
+                    checked={showStatusBar}
+                    onCheckedChange={setShowStatusBar}
+                  >
+                    <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+                      {tk('contextmenu_show_status_bar')}
+                    </TextLoader>
+                  </ContextMenuCheckboxItem>
+                  <ContextMenuCheckboxItem
+                    checked={showActivityBar}
+                    onCheckedChange={setShowActivityBar}
+                  >
+                    <TextLoader skeletonClassName="h-4 w-32" inheritColor>
+                      {tk('contextmenu_show_activity_bar')}
+                    </TextLoader>
+                  </ContextMenuCheckboxItem>
+                  <ContextMenuCheckboxItem
+                    checked={showPanel}
+                    onCheckedChange={setShowPanel}
+                  >
+                    <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+                      {tk('contextmenu_show_panel')}
+                    </TextLoader>
+                  </ContextMenuCheckboxItem>
+                  <ContextMenuSeparator />
+                  <ContextMenuLabel>
+                    <TextLoader skeletonClassName="h-4 w-20" inheritColor>
+                      {tk('contextmenu_position')}
+                    </TextLoader>
+                  </ContextMenuLabel>
+                  <ContextMenuRadioGroup value={position} onValueChange={setPosition}>
+                    <ContextMenuRadioItem value="top">
+                      <TextLoader skeletonClassName="h-4 w-8" inheritColor>
+                        {tk('contextmenu_top')}
+                      </TextLoader>
+                    </ContextMenuRadioItem>
+                    <ContextMenuRadioItem value="bottom">
+                      <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                        {tk('contextmenu_bottom')}
+                      </TextLoader>
+                    </ContextMenuRadioItem>
+                    <ContextMenuRadioItem value="right">
+                      <TextLoader skeletonClassName="h-4 w-12" inheritColor>
+                        {tk('contextmenu_right')}
+                      </TextLoader>
+                    </ContextMenuRadioItem>
+                  </ContextMenuRadioGroup>
+                </ContextMenuContent>
+              </ContextMenu>
+            </div>
+          </div>
+
+          {/* Context Menu with Submenu */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-40" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('contextmenu_submenu_label')}
+              </label>
+            </TextLoader>
+            <div className="flex justify-center">
+              <ContextMenu>
+                <ContextMenuTrigger asChild>
+                  <div className="flex h-32 w-64 items-center justify-center rounded-md border border-dashed text-sm cursor-context-menu">
+                    <TextLoader skeletonClassName="h-4 w-40" inheritColor>
+                      {tk('contextmenu_submenu_trigger')}
+                    </TextLoader>
+                  </div>
+                </ContextMenuTrigger>
+                <ContextMenuContent className="w-48">
+                  <ContextMenuItem>
+                    <TextLoader skeletonClassName="h-4 w-12" inheritColor>
+                      {tk('contextmenu_open')}
+                    </TextLoader>
+                  </ContextMenuItem>
+                  <ContextMenuItem>
+                    <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                      {tk('contextmenu_download')}
+                    </TextLoader>
+                  </ContextMenuItem>
+                  <ContextMenuSeparator />
+                  <ContextMenuSub>
+                    <ContextMenuSubTrigger>
+                      <TextLoader skeletonClassName="h-4 w-20" inheritColor>
+                        {tk('contextmenu_share')}
+                      </TextLoader>
+                    </ContextMenuSubTrigger>
+                    <ContextMenuSubContent className="w-48">
+                      <ContextMenuItem>
+                        <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                          {tk('contextmenu_email')}
+                        </TextLoader>
+                      </ContextMenuItem>
+                      <ContextMenuItem>
+                        <TextLoader skeletonClassName="h-4 w-20" inheritColor>
+                          {tk('contextmenu_messages')}
+                        </TextLoader>
+                      </ContextMenuItem>
+                      <ContextMenuItem>
+                        <TextLoader skeletonClassName="h-4 w-12" inheritColor>
+                          {tk('contextmenu_notes')}
+                        </TextLoader>
+                      </ContextMenuItem>
+                    </ContextMenuSubContent>
+                  </ContextMenuSub>
+                  <ContextMenuSeparator />
+                  <ContextMenuItem variant="destructive">
+                    <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                      {tk('contextmenu_delete')}
+                    </TextLoader>
+                    <ContextMenuShortcut>⌘⌫</ContextMenuShortcut>
+                  </ContextMenuItem>
+                </ContextMenuContent>
+              </ContextMenu>
             </div>
           </div>
 
