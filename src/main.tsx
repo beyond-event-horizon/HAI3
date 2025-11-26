@@ -1,16 +1,12 @@
 /// <reference types="vite/client" />
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import {
-  HAI3Provider,
-  apiRegistry,
-  store,
-} from '@hai3/uicore';
-import '@hai3/uikit/styles'; // Tailwind CSS
-import { App } from './App';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { HAI3Provider, apiRegistry, store } from '@hai3/uicore';
+import '@hai3/uikit/styles'; // UI Kit styles
 import '@/uikit/uikitRegistry'; // Auto-registers UI Kit (components + icons)
-import '@/themes/themeRegistry'; // Auto-registers themes
 import '@/screensets/screensetRegistry'; // Auto-registers screensets (includes API services + mocks + i18n loaders)
+import '@/themes/themeRegistry'; // Auto-registers themes
+import App from './App';
 
 // Initialize API services
 const initialUseMockApi = store.getState().uicore.app.useMockApi;
@@ -30,10 +26,10 @@ apiRegistry.initialize({
  * 4. Components re-render with actual text (translationsReady = true)
  * 5. In DEV mode: HAI3Provider auto-loads StudioOverlay if @hai3/studio is installed
  */
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
     <HAI3Provider>
       <App />
     </HAI3Provider>
-  </React.StrictMode>
+  </StrictMode>
 );

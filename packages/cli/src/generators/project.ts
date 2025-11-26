@@ -75,13 +75,35 @@ export async function generateProject(
 
   const manifest = await fs.readJson(manifestPath);
 
-  // 2. Copy root template files
+  // 2. Copy root template files (with minimal transformations where needed)
   for (const file of manifest.rootFiles) {
     const filePath = path.join(templatesDir, file);
     if (await fs.pathExists(filePath)) {
-      const content = await fs.readFile(filePath, 'utf-8');
+      let content = await fs.readFile(filePath, 'utf-8');
+
+      // Transform src/main.tsx for uikit='custom':
+      // - Remove @hai3/uikit/styles import (custom projects provide their own styles)
+      // - Add ./index.css import (for Tailwind directives)
+      if (file === 'src/main.tsx' && uikit === 'custom') {
+        content = content.replace(
+          /import '@hai3\/uikit\/styles';.*\n/g,
+          "import './index.css';\n"
+        );
+      }
+
       files.push({ path: file, content });
     }
+  }
+
+  // 2.1 Generate index.css for custom uikit (hai3 uikit includes Tailwind via @hai3/uikit/styles)
+  if (uikit === 'custom') {
+    files.push({
+      path: 'src/index.css',
+      content: `@tailwind base;
+@tailwind components;
+@tailwind utilities;
+`,
+    });
   }
 
   // 3. Copy template directories (.ai, .cursor, .windsurf, src/themes, etc.)
@@ -182,90 +204,22 @@ export async function generateProject(
     content: JSON.stringify(packageJson, null, 2) + '\n',
   });
 
-  // 5.3 src/main.tsx
-  const mainImports = [
-    "import { StrictMode } from 'react';",
-    "import { createRoot } from 'react-dom/client';",
-    "import { HAI3Provider } from '@hai3/uicore';",
-  ];
-  if (uikit === 'hai3') {
-    mainImports.push("import '@hai3/uikit/styles';");
-  }
-  mainImports.push(
-    "import '@/uikit/uikitRegistry';",
-    "import '@/screensets/screensetRegistry';",
-    "import '@/themes/themeRegistry';",
-    "import App from './App';",
-    "import './index.css';"
-  );
-
-  files.push({
-    path: 'src/main.tsx',
-    content: `${mainImports.join('\n')}
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <HAI3Provider>
-      <App />
-    </HAI3Provider>
-  </StrictMode>
-);
-`,
-  });
-
-  // 5.4 src/App.tsx
-  files.push({
-    path: 'src/App.tsx',
-    content: `import { AppRouter } from '@hai3/uicore';
-
-function App() {
-  return <AppRouter />;
-}
-
-export default App;
-`,
-  });
-
-  // 5.5 src/index.css
-  files.push({
-    path: 'src/index.css',
-    content: `@tailwind base;
-@tailwind components;
-@tailwind utilities;
-`,
-  });
-
-  // 5.6 src/screensets/screensetRegistry.tsx
-  files.push({
-    path: 'src/screensets/screensetRegistry.tsx',
-    content: `// Auto-discover and import all screensets
-// Glob pattern matches files like:
-//   demo/demoScreenset.tsx
-//   billing/billingScreenset.tsx
-//
-// Eager loading ensures side effects (screensetRegistry.register() calls)
-// execute before app renders
-const screensetModules = import.meta.glob('./*/*[Ss]creenset.tsx', { eager: true });
-
-// Export for debugging
-export { screensetModules };
-`,
-  });
-
-  // 5.7 Root wrapper files that re-export from presets/standalone/
+  // 5.3 Root wrapper files that re-export from presets/standalone/
   // These follow the same pattern as the monorepo but point to standalone presets
 
-  // .eslintrc.cjs - re-exports standalone ESLint config
+  // eslint.config.js - re-exports standalone ESLint config (ESLint 9 flat config)
   files.push({
-    path: '.eslintrc.cjs',
+    path: 'eslint.config.js',
     content: `/**
  * HAI3 ESLint Configuration (Root)
  *
  * This file re-exports the standalone preset.
- * DO NOT add rules here - add them to presets/standalone/configs/.eslintrc.cjs
+ * DO NOT add rules here - add them to presets/standalone/configs/eslint.config.js
  */
 
-module.exports = require('./presets/standalone/configs/.eslintrc.cjs');
+import standaloneConfig from './presets/standalone/configs/eslint.config.js';
+
+export default standaloneConfig;
 `,
   });
 
