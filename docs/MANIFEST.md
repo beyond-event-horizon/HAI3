@@ -1,4 +1,4 @@
-> Document version - v0.1 - EARLY DRAFT, Oct-17 2026
+> Document version - v0.1 - EARLY DRAFT, Oct-17 2024
 
 # HAI3 dev kit Manifest
 

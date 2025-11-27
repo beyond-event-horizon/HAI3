@@ -166,7 +166,21 @@ HAI3 defines a **three-stage development workflow** that maximizes AI efficiency
 
 ### Quick Start
 
-> NOTE: At this stage, HAI3 can only be explored within this repository. Future releases will include distributable `HAI3` npm packages.
+#### Option 1: Create a new project with CLI (Recommended)
+
+```bash
+# Install HAI3 CLI globally
+npm install -g @hai3/cli
+
+# Create a new project
+hai3 create my-app
+
+# Navigate to project and start development
+cd my-app
+npm run dev
+```
+
+#### Option 2: Clone this repository
 
 ```bash
 # Clone the repository
@@ -176,8 +190,8 @@ cd HAI3
 # Install dependencies
 npm ci
 
-# Build UI Core and UI Kit
-npm run build
+# Build packages
+npm run build:packages
 
 # Run the development server
 npm run dev
@@ -194,14 +208,17 @@ HAI3/                               # Repository root
 │   └── ROADMAP.md                  # Planned milestones
 ├── index.html                      # Vite HTML entry
 ├── packages/                       # Workspaces with reusable libraries
-│   ├── uicore/                     # UI core (layout engine, primitives)
-│   └── uikit/                      # UI kit (components built on core)
+│   ├── uikit-contracts/            # TypeScript interface definitions
+│   ├── uikit/                      # React component library
+│   ├── uicore/                     # Core framework (layout, Redux, events)
+│   ├── studio/                     # Development overlay (optional)
+│   └── cli/                        # CLI tool for project scaffolding
 ├── src/                            # App source code
 │   ├── App.tsx                     # Root React component
 │   ├── main.tsx                    # App entry; mounts React and providers
 │   ├── screensets/                 # Screensets (category in config)
-│   │   ├── demo/                   # Demo screenset (Drafts)
-│   │   ├── chat/                   # Chat screenset (Mockups)
+│   │   ├── demo/                   # Demo screenset
+│   │   ├── _blank/                 # Blank screenset template
 │   │   └── screensetRegistry.tsx   # Registry to switch screen-sets
 │   └── themes/                     # Theme tokens and registries
 │       ├── dark.ts                 # Dark theme
@@ -217,14 +234,22 @@ HAI3/                               # Repository root
 
 ### Creating a New Screen-Set
 
-> NOTE: At this stage, HAI3 can only be explored within this repository. Future releases will include distributable `HAI3` npm packages.
+Use the HAI3 CLI to create screensets:
 
-1. Create a new folder in `src/screensets/<screenset-name>`
-2. Add new screens by using your favorite AI agent / IDE just typing what you want to achieve in the prompt and asking it to put the code in your new `<screenset-name>` screenset folder
-3. AI will register the screen-set in `src/screensets/screensetRegistry.tsx` for you
-4. Run the app (`npm run build && npm run dev`) and switch to the new screen-set via the UI selector
+```bash
+# Create a new screenset
+hai3 screenset create my-screenset
 
-See [GUIDELINES.md](docs/GUIDELINES.md) for detailed development guidelines.
+# Copy an existing screenset with transformed IDs
+hai3 screenset copy demo myDemo
+```
+
+After creation:
+1. Add new screens using your favorite AI agent or IDE
+2. The screenset auto-registers via Vite glob pattern
+3. Run `npm run dev` and switch to the new screenset via the UI selector
+
+See [GUIDELINES.md](.ai/GUIDELINES.md) for detailed development guidelines.
 
 ### Building a Plugin/Integration
 
