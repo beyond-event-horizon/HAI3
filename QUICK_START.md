@@ -23,18 +23,19 @@ This guide will help you get started with HAI3 UI-Core development.
 ## Project Structure Overview
 
 ```
+packages/                           # Workspace packages
+├── uikit-contracts/                # TypeScript interface definitions
+├── uikit/                          # React component library
+├── uicore/                         # Core framework (layout, Redux, events)
+├── studio/                         # Development overlay (dev only)
+└── cli/                            # CLI tool for project scaffolding
+
 src/
-├── core/               # Core UI implementation
-│   ├── layout/         # CoreLayout component
-│   ├── store/          # Redux store (global state)
-│   └── hooks/          # Typed Redux hooks
-├── uikit/              # Reusable UI components
-│   └── layout/         # Layout components (Header, Footer, Menu, etc.)
-├── screensets/         # Screensets (category in config)
-│   ├── demo/           # Demo screenset
-│   └── chat/           # Chat screenset
-├── styles/             # Global styles and themes
-└── lib/                # Utility functions
+├── screensets/                     # Screensets (vertical slices)
+│   ├── demo/                       # Demo screenset
+│   └── _blank/                     # Blank screenset template
+├── themes/                         # Theme tokens and registries
+└── uikit/                          # App-level UIKit registration
 ```
 
 ## Creating Your First Screen
@@ -118,31 +119,25 @@ const [open, setOpen] = useState(false);
 
 ### Read state
 ```typescript
-import { useAppSelector } from '@/core/hooks/useRedux';
+import { useAppSelector } from '@hai3/uicore';
 
 const MyComponent = () => {
   const layout = useAppSelector(state => state.layout);
-  const user = useAppSelector(state => state.core.user);
 
-  return <div>Menu collapsed: {layout.menuCollapsed}</div>;
+  return <div>Menu collapsed: {layout.menu.collapsed}</div>;
 };
 ```
 
-### Dispatch actions
+### Use event-driven actions (recommended)
 ```typescript
-import { useAppDispatch } from '@/core/hooks/useRedux';
-import { toggleMenu, setUser } from '@/core/store';
+import { toggleMenu } from '@hai3/uicore';
 
 const MyComponent = () => {
-  const dispatch = useAppDispatch();
-
-  const handleToggle = () => {
-    dispatch(toggleMenu());
-  };
-
-  return <button onClick={handleToggle}>Toggle Menu</button>;
+  return <button onClick={toggleMenu}>Toggle Menu</button>;
 };
 ```
+
+HAI3 uses event-driven architecture. Prefer action creators that emit events over direct dispatch.
 
 ## Styling with Tailwind
 
@@ -213,52 +208,30 @@ HAI3 uses Tailwind CSS with custom theme tokens:
 
 ## Creating a Screenset
 
-Screensets are vertical slices of your application. Each screenset follows the vertical slice pattern with screens.
+Screensets are vertical slices of your application. Use the HAI3 CLI to create them:
 
-1. **Create screenset directory structure**
-   ```bash
-   mkdir -p src/screensets/my-screenset/screens/home
-   mkdir -p src/screensets/my-screenset/screens/settings
-   ```
+```bash
+# Create a new screenset
+hai3 screenset create my-screenset
 
-2. **Create screen components and slices**
-   ```bash
-   # Home screen
-   touch src/screensets/my-screenset/screens/home/HomeScreen.tsx
-   touch src/screensets/my-screenset/screens/home/homeSlice.ts
-   touch src/screensets/my-screenset/screens/home/index.ts
-
-   # Settings screen
-   touch src/screensets/my-screenset/screens/settings/SettingsScreen.tsx
-   touch src/screensets/my-screenset/screens/settings/settingsSlice.ts
-   touch src/screensets/my-screenset/screens/settings/index.ts
-   ```
-
-3. **Create supporting files**
-   ```bash
-   touch src/screensets/my-screenset/data.ts      # Simulated data
-   touch src/screensets/my-screenset/api.ts       # API simulation
-   touch src/screensets/my-screenset/store.ts     # Store configuration (optional)
-   touch src/screensets/my-screenset/index.ts     # Public exports
-   ```
+# Or copy an existing one with transformed IDs
+hai3 screenset copy demo myDemo
+```
 
 ### Example Screenset Structure:
 ```
 my-screenset/
-├── screens/              # Vertical slices (component + Redux slice)
-│   ├── home/
-│   │   ├── HomeScreen.tsx        # Screen component
-│   │   ├── homeSlice.ts          # Redux slice
-│   │   └── index.ts              # Exports component, actions, reducer
-│   └── settings/
-│       ├── SettingsScreen.tsx
-│       ├── settingsSlice.ts
-│       └── index.ts
-├── data.ts               # Simulated data for the screenset
-├── api.ts                # API simulation layer
-├── store.ts              # Store configuration (optional)
-└── index.ts              # Public exports
+├── ids.ts                # All IDs centralized here
+├── screens/              # Screen components
+│   └── home/
+│       ├── HomeScreen.tsx
+│       └── i18n/         # Per-screen translations
+├── i18n/                 # Screenset-level translations
+├── uikit/                # Icons (optional)
+└── myScreensetScreenset.tsx  # Self-registering config
 ```
+
+Screensets auto-register via Vite glob pattern - no manual import needed.
 
 ## Development Best Practices
 
@@ -290,16 +263,19 @@ my-screenset/
 ```bash
 # Development
 npm run dev              # Start dev server
-npm run build           # Build for production
-npm run preview         # Preview production build
+npm run build            # Build for production
+npm run build:packages   # Build workspace packages only
+npm run preview          # Preview production build
 
-# Code Quality
-npm run lint            # Run ESLint
-npm run type-check      # Check TypeScript types
+# Validation (run before commits)
+npm run lint             # Run ESLint
+npm run type-check       # Check TypeScript types
+npm run arch:check       # Architecture tests (must pass)
+npm run arch:deps        # Dependency rules check
 
 # Clean
-rm -rf node_modules     # Remove dependencies
-npm install             # Reinstall dependencies
+npm run clean:deps       # Remove node_modules + reinstall
+npm run clean:build      # Clean + build from scratch
 ```
 
 ## Next Steps

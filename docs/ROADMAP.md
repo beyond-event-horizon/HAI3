@@ -1,9 +1,67 @@
 # HAI3 Development Roadmap
 
-> **TARGET AUDIENCE:** Humans  
+> **TARGET AUDIENCE:** Humans
 > **PURPOSE:** Development planning and task tracking
 
 This roadmap outlines practical, actionable tasks organized by HAI3's 10 core values (V#1-V#10). Each task is designed to be achievable within the current codebase architecture.
+
+---
+
+## v0.1.0 Core Milestones
+
+### Architecture & Packages
+- [x] Implement basic version of Layout
+- [x] Introduce basic structure of UI Kit
+- [x] Implement basic data flow and state management
+- [x] Move UI Core and UI Kit to separate packages
+- [x] Create uikit-contracts package (interface definitions)
+- [x] Create studio package (development overlay)
+- [x] Create CLI package (project scaffolding)
+- [x] Migrate to flux architecture (event-driven)
+- [x] Remove dependency of UI Core on UI Kit (abstract via contracts)
+- [x] Implement UI Kit components registry
+
+### Navigation & Routing
+- [x] Navigation (application routing)
+- [x] Route registry with lazy initialization
+- [x] URL sync with Redux state
+
+### API Layer
+- [x] Basic interaction with API
+- [x] Support REST protocol in API services
+- [x] Support SSE protocol in API services
+- [x] Implement API mock plugin
+- [ ] Support updating data on backend events (SSE)
+
+### Localization
+- [x] Localization infrastructure
+- [x] Multi-language dictionary examples (36 languages)
+- [x] Implement screens lazy loading
+- [x] Implement per-screen i18n dictionaries lazy loading
+
+### Developer Tools
+- [x] Implement studio as a separate dev dependency
+- [x] Demo page with all UI Kit elements and style annotations
+- [x] HAI3 CLI for project creation
+- [x] HAI3 CLI for screenset management (create, copy)
+- [x] Develop HAI3-Samples in separate repository
+
+### Pending for v0.1.0
+- [ ] Role based access control
+- [ ] Define and document data types for interfaces (Tenant, User, UI Flags)
+- [ ] UI styles polishing
+- [ ] Add all shadcn components to UI Kit
+- [ ] Tests
+- [ ] Electron build
+
+### Architecture Checks (arch:check)
+- [x] Circular dependencies check
+- [x] HAI3 packages dependencies violations check
+- [x] Flux architecture violations check
+- [x] Unused imports and variables check
+- [x] Clean build validation
+- [x] Unused exports check (knip)
+- [ ] Hardcoded colors violations check
 
 ---
 
@@ -12,13 +70,16 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 **Goal**: Enable AI and human developers to build within a shared layout system without layout drift.
 
 ### Layout Configuration
+- [x] Basic layout structure (header, footer, menu, sidebar, screen, popup, overlay)
+- [x] Layout domains with Redux slices
 - [ ] Create proper centralized layout configuration
 - [ ] Add configurable header height, footer height, sidebar widths to layout config
-- [ ] Implement layout presets (compact, standard, spacious) in HAI3Core
+- [ ] Implement layout presets (compact, standard, spacious)
 - [ ] Add layout configuration UI in Settings screen
 
 ### Menu & Navigation
-- [ ] Implement menu collapse/expand toggle
+- [x] Implement menu collapse/expand toggle
+- [x] Menu items from screenset configuration
 - [ ] Implement menu item visibility rules based on configuration
 - [ ] Add support for nested menu items (sub-menus)
 - [ ] Create menu item ordering/reordering system
@@ -26,7 +87,7 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 
 ### Observability & Diagnostics
 - [ ] Create shared logger with configurable log levels
-- [ ] Add performance monitoring hooks in HAI3Core
+- [ ] Add performance monitoring hooks
 - [ ] Implement screen render time tracking
 - [ ] Create diagnostics panel in Settings screen
 
@@ -37,20 +98,23 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 **Goal**: Maintain visual integrity across auto-generated and manually crafted screens.
 
 ### Repository
-- [ ] Define the project repository layout
+- [x] Define the project repository layout
+- [x] NPM packages published (@hai3/cli, @hai3/uikit, @hai3/uicore, @hai3/studio, @hai3/uikit-contracts)
 - [ ] Define the config files layout with default values
 - [ ] Prepare the `docs/REPO_STRUCTURE.md`
-- [ ] To allow to use UI-core library (as submodule, or installed package) inside a screenset repository
-- [ ] The HAI3 submodule/package can be updated independently at any time, screens development is not affected
+- [ ] The HAI3 submodule/package can be updated independently at any time
 
 ### Screensets
-- [ ] Create a mechanism for screensets registration
-- [ ] Ensure the UI-Core part is layout-safe and doesn't have specific screensets of layout dependencies
-- [ ] Implement the customizable screenset switcher
+- [x] Create a mechanism for screensets registration
+- [x] Implement screenset categories (Drafts, Mockups, Production)
+- [x] Implement the customizable screenset switcher
+- [x] Auto-discovery via Vite glob pattern
+- [ ] Ensure the UI-Core part is layout-safe
 
 ### AI-guidelines
-- [ ] Define appopriate AI-guidelines for screen generation
-- [ ] Implement AI-guidelines validation
+- [x] Define AI-guidelines for screen generation (.ai/ folder)
+- [x] ESLint rules for screenset conventions
+- [ ] Implement AI-guidelines validation in CI
 
 ---
 
@@ -58,23 +122,26 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 
 **Goal**: Avoid design fragmentation - AI must behave like a trained team member reusing existing UI vocabulary.
 
-### Component Library Expansion
-- [ ] Create shared folder for reusable components
-- [ ] Move existing UI components from screensets to common/ui
+### Component Library
+- [x] Create shared UI Kit package
+- [x] Base components (button, card, dialog, dropdown-menu, input, select, etc.)
+- [x] Composite components (chat, navigation, user)
+- [x] Layout components (header, skeleton, spinner)
 - [ ] Add `Table.tsx` component with sorting, filtering, pagination
 - [ ] Add `Form.tsx` component with validation support
 - [ ] Add `Tabs.tsx` component
-- [ ] Add `Dropdown.tsx` component
 - [ ] Add `Toast.tsx` notification component
 - [ ] Add `Breadcrumb.tsx` component
-- [ ] Add `Chat.tsx` component
 
 ### Style System
+- [x] Theme registry for theme management
+- [x] Theme selector component
+- [x] Multiple built-in themes (light, dark, dracula, dracula-large)
+- [x] Tailwind CSS integration
 - [ ] Document all theme tokens in `docs/THEME_TOKENS.md`
 - [ ] Create Tailwind plugin for custom HAI3 utilities
 - [ ] Add CSS variable fallbacks for all theme tokens
 - [ ] Create style guide documentation with examples
-- [ ] Implement theme style switcher
 
 ---
 
@@ -83,20 +150,24 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 **Goal**: Treat UI screens as composable building blocks - easy to swap, version, and evolve.
 
 ### Screen Module System
+- [x] Screenset IDs centralized in ids.ts
+- [x] Lazy loading for screens
 - [ ] Create screen metadata schema (version, author, dependencies, description)
 - [ ] Implement screen validation system (schema validation, dependency checks)
 - [ ] Add screen versioning and compatibility checks
 - [ ] Create screen documentation template
 
 ### Screen Packaging & Distribution
+- [x] CLI tool for screenset creation
+- [x] CLI tool for screenset copying with ID transformation
 - [ ] Create CLI tool for screen packaging (`npm run pack-screen`)
 - [ ] Implement screen import/export functionality
-- [ ] Add Git submodule support documentation in `docs/SCREEN_SUBMODULES.md`
+- [ ] Add Git submodule support documentation
 - [ ] Create screen marketplace manifest format (JSON schema)
-- [ ] Document screen installation process
 
 ### Screen-Set Management
-- [ ] Implement runtime screen-set switching with state preservation
+- [x] Runtime screen-set switching
+- [x] State preservation during switching
 - [ ] Add screen-set configuration UI in Settings
 - [ ] Create screen-set comparison/diff tool for A/B testing
 - [ ] Add feature flag integration for screen-set toggling
@@ -118,8 +189,8 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 - [ ] Create placeholder registration and lifecycle hooks
 
 ### Microfrontend Registration & Loading
-- [ ] Design microfrontend API interface in `src/types/microfrontend.d.ts`
-- [ ] Create microfrontend registry in `src/lib/microfrontendRegistry.ts`
+- [ ] Design microfrontend API interface
+- [ ] Create microfrontend registry
 - [ ] Implement lazy loading for microfrontend modules
 - [ ] Add microfrontend metadata schema (version, author, permissions, dependencies)
 - [ ] Create microfrontend validation system
@@ -128,7 +199,7 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 - [ ] Implement Shadow DOM encapsulation for microfrontends
 - [ ] Create scoped CSS system for microfrontend styles
 - [ ] Implement sandboxed execution environment
-- [ ] Add separate storage namespaces (localStorage, IndexedDB) per microfrontend
+- [ ] Add separate storage namespaces per microfrontend
 - [ ] Create explicit event bus API for inter-microfrontend communication
 - [ ] Document event bus API and communication patterns
 
@@ -137,7 +208,7 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 - [ ] Add Trusted Types support to prevent XSS
 - [ ] Create permission system for microfrontend capabilities
 - [ ] Add microfrontend security audit logging
-- [ ] Document security best practices in `docs/MICROFRONTEND_SECURITY.md`
+- [ ] Document security best practices
 
 ### Plugin Management UI
 - [ ] Create plugin marketplace UI in Settings
@@ -147,7 +218,7 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 - [ ] Create plugin debugging tools
 
 ### Example & Documentation
-- [ ] Create example microfrontend in `src/plugins/example/`
+- [ ] Create example microfrontend
 - [ ] Document microfrontend development guide
 - [ ] Create microfrontend starter template
 - [ ] Add microfrontend testing utilities
@@ -159,21 +230,22 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 **Goal**: Provide a consistent global state model for all screens and services.
 
 ### State Management
-- [ ] Create `src/store/` folder structure
-- [ ] Implement `src/store/uiStore.ts` (theme, layout, preferences)
-- [ ] Implement `src/store/authStore.ts` (user, session, permissions)
-- [ ] Implement `src/store/entitiesStore.ts` (normalized data)
-- [ ] Add TypeScript types for all store slices
+- [x] Redux store with dynamic slice registration
+- [x] Layout state (header, footer, menu, sidebar, screen, popup, overlay)
+- [x] App state (theme, language, user, screenset)
+- [x] TypeScript types for all store slices (module augmentation)
+- [ ] Implement normalized entities store
+- [ ] Add state migration system for version upgrades
 
 ### Persistence Layer
-- [ ] Create `src/lib/storage.ts` with multi-tier storage (memory/session/IndexedDB)
+- [ ] Create multi-tier storage (memory/session/IndexedDB)
 - [ ] Implement automatic state persistence
-- [ ] Add state migration system for version upgrades
 - [ ] Implement state export/import for debugging
 
 ### Event System
-- [ ] Create `src/lib/eventBus.ts` for inter-screen communication
-- [ ] Document event naming conventions
+- [x] Create event bus for inter-screen communication
+- [x] Document event naming conventions
+- [x] Event types with TypeScript (EventPayloadMap)
 - [ ] Add event debugging tools in diagnostics panel
 
 ---
@@ -183,14 +255,18 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 **Goal**: Provide a consistent API access layer for all screens and services.
 
 ### API Client
-- [ ] Create `src/lib/apiClient.ts` with retry logic and error handling
-- [ ] Implement request/response interceptors
+- [x] Create BaseApiService with error handling
+- [x] Implement request/response interceptors (plugins)
+- [x] REST protocol support
+- [x] SSE protocol support
+- [x] Mock plugin for development
+- [x] API registry for service management
 - [ ] Add ETag support for caching
 - [ ] Implement request deduplication
 - [ ] Add request cancellation support
 
 ### Type Safety
-- [ ] Create `src/types/api.d.ts` for API contracts
+- [x] TypeScript types for API services
 - [ ] Add Zod schemas for runtime validation
 - [ ] Generate TypeScript types from OpenAPI specs (tooling)
 - [ ] Add API response mocking utilities
@@ -207,7 +283,7 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 **Goal**: Provide a consistent security layer for all screens and services. Built-in multitenancy and RBAC.
 
 ### Authentication
-- [ ] Create `auth` folder and config file
+- [ ] Create auth folder and config file
 - [ ] Implement OAuth2/OIDC client
 - [ ] Add session management with token rotation
 - [ ] Implement idle timeout detection
@@ -227,7 +303,7 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 ### Security Features
 - [ ] Implement Content-Security-Policy headers
 - [ ] Add IndexedDB encryption for sensitive data
-- [ ] Create audit logging system in `src/lib/audit.ts`
+- [ ] Create audit logging system
 - [ ] Add privacy mode toggle (disable telemetry)
 
 ---
@@ -237,20 +313,23 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 **Goal**: Ensure every screen is accessible, inclusive, and fully localizable across languages and regions.
 
 ### i18n Infrastructure
-- [ ] Set up i18next or similar i18n library
-- [ ] Create `locales/` folder structure
-- [ ] Implement locale detection and switching
-- [ ] Add language selector in Settings
+- [x] Set up i18n library
+- [x] Create localization folder structure
+- [x] Implement locale detection and switching
+- [x] Add language selector
+- [x] Support for 36 languages
 
 ### Translation Management
-- [ ] Create translation keys for all UI text in HAI3Core
-- [ ] Implement lazy loading for locale packs
+- [x] Create translation keys for UI text
+- [x] Implement lazy loading for locale packs
+- [x] Per-screen translation loading
+- [x] TextLoader component for loading states
 - [ ] Add missing translation warnings in dev mode
 - [ ] Create translation extraction tool
 
 ### Locale-Aware Formatting
-- [ ] Create `src/lib/formatters.ts` for date/number/currency formatting
-- [ ] Implement RTL layout support in themes.css
+- [ ] Create formatters for date/number/currency formatting
+- [ ] Implement RTL layout support
 - [ ] Add locale-aware sorting utilities
 - [ ] Test all screens with RTL languages
 
@@ -269,8 +348,7 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 ### Three-Tier Testing Strategy
 
 #### Unit/Component Tests (Tier 1)
-- [ ] Set up Jest for unit testing
-- [ ] Configure Vitest as alternative test runner
+- [ ] Set up Jest or Vitest for unit testing
 - [ ] Create test utilities for component testing
 - [ ] Add tests for business logic and state management
 - [ ] Implement test coverage reporting (target: 80%+)
@@ -297,7 +375,11 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 ### AI-Specific Quality Gates
 
 #### Static Analysis for AI Output (Quality Gate 1)
-- [ ] Create custom ESLint plugin for HAI3 rules in `tools/eslint-plugin-hai3/`
+- [x] Create custom ESLint plugin for HAI3 rules
+- [x] Add rule: domain-event-format (event naming conventions)
+- [x] Add rule: no-barrel-exports-events-effects
+- [x] Add rule: no-coordinator-effects
+- [x] Add rule: no-missing-domain-id
 - [ ] Add rule: Component vocabulary adherence (V#3) - only approved components
 - [ ] Add rule: i18n readiness (V#9) - no hardcoded strings
 - [ ] Add rule: Layout compliance (V#2) - proper layout template usage
@@ -366,10 +448,13 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 ## Cross-Cutting Concerns
 
 ### Build System & Deployment
+- [x] Vite build system
+- [x] Code splitting with lazy loading
+- [x] Hot module replacement
 - [ ] Create build configuration for CDN vs local deployment
 - [ ] Implement environment-specific builds (dev/staging/prod)
 - [ ] Add screen-set inclusion/exclusion in build config
-- [ ] Optimize bundle size with code splitting
+- [ ] Optimize bundle size
 - [ ] Add auto-update functionality for Electron app
 - [ ] Implement native menu bar for desktop app
 - [ ] Add system tray integration
@@ -381,6 +466,8 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 - [ ] Document on-premise installation process
 
 ### Documentation
+- [x] .ai/ folder with detailed guidelines
+- [x] API documentation in code
 - [ ] Complete Storybook documentation for all components
 - [ ] Write API documentation for all public interfaces
 - [ ] Create video tutorials for common tasks
@@ -389,9 +476,10 @@ This roadmap outlines practical, actionable tasks organized by HAI3's 10 core va
 - [ ] Add architecture decision records (ADRs)
 
 ### Developer Experience
+- [x] Hot module replacement (Vite)
+- [x] TypeScript IntelliSense support
+- [x] ESLint integration
 - [ ] Create VS Code extension for HAI3 development
-- [ ] Add hot module replacement for faster development
 - [ ] Create debugging guide documentation
 - [ ] Add development environment setup script
 - [ ] Create code snippets and templates
-- [ ] Add IntelliSense support for HAI3 APIs
