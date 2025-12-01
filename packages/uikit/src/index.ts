@@ -87,6 +87,79 @@ export {
   CollapsibleContent,
 } from './base/collapsible';
 
+// Chart components (Recharts wrapper)
+export {
+  // Custom wrappers
+  ChartContainer,
+  ChartTooltipContent,
+  ChartLegendContent,
+  
+  // Container
+  ResponsiveContainer,
+  
+  // Chart Types
+  LineChart,
+  BarChart,
+  AreaChart,
+  PieChart,
+  RadarChart,
+  ScatterChart,
+  ComposedChart,
+  RadialBarChart,
+  Treemap,
+  Sankey,
+  FunnelChart,
+  
+  // Chart Elements
+  Line,
+  Bar,
+  Area,
+  Pie,
+  Radar,
+  Scatter,
+  RadialBar,
+  Funnel,
+  
+  // Axes
+  XAxis,
+  YAxis,
+  ZAxis,
+  
+  // Grid & Reference
+  CartesianGrid,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  ReferenceLine,
+  ReferenceArea,
+  ReferenceDot,
+  Brush,
+  
+  // Labels
+  Label,
+  LabelList,
+  ChartTooltip,
+  ChartLegend,
+  
+  // Shapes & Utilities
+  Cell,
+  Cross,
+  Curve,
+  Dot,
+  Polygon,
+  Rectangle,
+  Sector,
+  Customized,
+  Text,
+  
+  // Error Bar
+  ErrorBar,
+  
+  // Types
+  type TooltipProps,
+  type LegendProps,
+} from './base/chart';
+
 // shadcn select (native-style)
 export {
   Select,
