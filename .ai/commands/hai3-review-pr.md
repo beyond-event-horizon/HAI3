@@ -1,6 +1,5 @@
----
-description: Review code changes against HAI3 guidelines
----
+<!-- @standalone -->
+# hai3:review-pr - Review Code Changes
 
 Ask the user for:
 1. Files changed (or analyze git diff)

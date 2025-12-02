@@ -1,6 +1,5 @@
----
-description: Explain HAI3 architecture concepts
----
+<!-- @standalone -->
+# hai3:arch-explain - Explain HAI3 Architecture Concepts
 
 Ask the user which concept they want explained, or detect from context:
 

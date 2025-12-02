@@ -1,6 +1,5 @@
----
-description: Show HAI3 rules for a specific area
----
+<!-- @standalone -->
+# hai3:rules - Show HAI3 Rules for Specific Area
 
 Ask the user which area they want rules for, or detect from context.
 
