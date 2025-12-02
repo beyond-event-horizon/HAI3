@@ -73,7 +73,8 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.344.0",
     "recharts": "^2.15.0",
-    "tailwind-merge": "^2.6.0"
+    "tailwind-merge": "^2.6.0",
+    "vaul": "^1.1.2"
   },
   "peerDependencies": {
     "@hai3/uikit-contracts": "*",

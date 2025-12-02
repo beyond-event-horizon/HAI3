@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonVariant, ButtonSize, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Sheet, SheetTrigger, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, Avatar, AvatarImage, AvatarFallback, Badge } from '@hai3/uikit';
+import { Button, ButtonVariant, ButtonSize, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose, Sheet, SheetTrigger, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, Avatar, AvatarImage, AvatarFallback, Badge } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { FormInput } from '../uikit/icons/FormInput';
 import { DEMO_SCREENSET_ID } from "../ids";
@@ -324,6 +324,61 @@ export const LayoutElements: React.FC = () => {
               </DialogFooter>
             </DialogContent>
           </Dialog>
+        </div>
+      </div>
+
+      {/* Drawer Element Block */}
+      <div data-element-id="element-drawer" className="flex flex-col gap-4">
+        <TextLoader skeletonClassName="h-8 w-24">
+          <h2 className="text-2xl font-semibold">
+            {tk('drawer_heading')}
+          </h2>
+        </TextLoader>
+        <div className="flex items-center justify-center gap-4 p-6 border border-border rounded-lg bg-background overflow-hidden">
+          <Drawer>
+            <DrawerTrigger asChild>
+              <Button variant={ButtonVariant.Outline}>
+                <TextLoader skeletonClassName="h-5 w-24" inheritColor>
+                  {tk('drawer_open')}
+                </TextLoader>
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent>
+              <DrawerHeader>
+                <DrawerTitle>
+                  <TextLoader skeletonClassName="h-6 w-32" inheritColor>
+                    {tk('drawer_title')}
+                  </TextLoader>
+                </DrawerTitle>
+                <DrawerDescription>
+                  <TextLoader skeletonClassName="h-4 w-full" inheritColor>
+                    {tk('drawer_description')}
+                  </TextLoader>
+                </DrawerDescription>
+              </DrawerHeader>
+              <div className="p-4">
+                <TextLoader skeletonClassName="h-4 w-full" inheritColor>
+                  <p className="text-sm text-muted-foreground">
+                    {tk('drawer_content')}
+                  </p>
+                </TextLoader>
+              </div>
+              <DrawerFooter>
+                <Button type="submit">
+                  <TextLoader skeletonClassName="h-5 w-16" inheritColor>
+                    {tk('drawer_submit')}
+                  </TextLoader>
+                </Button>
+                <DrawerClose asChild>
+                  <Button variant={ButtonVariant.Outline}>
+                    <TextLoader skeletonClassName="h-5 w-16" inheritColor>
+                      {tk('drawer_close')}
+                    </TextLoader>
+                  </Button>
+                </DrawerClose>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
         </div>
       </div>
 
