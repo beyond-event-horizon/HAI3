@@ -69,10 +69,17 @@ program
 program
   .command('update')
   .description('Update HAI3 CLI and project packages')
-  .action(async () => {
+  .option('-a, --alpha', 'Update to latest alpha/prerelease version')
+  .option('-s, --stable', 'Update to latest stable version')
+  .option('--templates-only', 'Only sync templates (skip CLI and package updates)')
+  .action(async (options: Record<string, unknown>) => {
     const result = await executeCommand(
       updateCommand,
-      {},
+      {
+        alpha: options.alpha as boolean | undefined,
+        stable: options.stable as boolean | undefined,
+        templatesOnly: options.templatesOnly as boolean | undefined,
+      },
       { interactive: true }
     );
 

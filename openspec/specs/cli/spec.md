@@ -265,7 +265,7 @@ The CLI SHALL provide a `hai3 update` command that updates the CLI globally, and
 The command SHALL support channel selection:
 - `--alpha` (`-a`): Force update to alpha/prerelease versions
 - `--stable` (`-s`): Force update to stable versions
-- `--ai-only`: Only sync AI configuration files (skip package updates)
+- `--templates-only`: Only sync templates (skip CLI and package updates)
 - Default: Auto-detect channel based on currently installed version
 
 #### Scenario: AI configuration sync
@@ -278,14 +278,14 @@ The command SHALL support channel selection:
 - Preserve `openspec/` directory (managed by `openspec update` separately)
 - Report which AI config files were updated
 
-#### Scenario: AI-only update
+#### Scenario: Templates-only update
 
-**Given** running `hai3 update --ai-only` inside a HAI3 project
+**Given** running `hai3 update --templates-only` inside a HAI3 project
 **When** the flag is provided
 **Then** the system SHALL:
 - Skip CLI update
 - Skip NPM package updates
-- Only sync AI configuration files from bundled templates
+- Only sync templates from bundled templates
 
 ### Requirement: Screenset Create Command
 

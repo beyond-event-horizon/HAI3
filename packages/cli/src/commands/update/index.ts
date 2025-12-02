@@ -11,7 +11,7 @@ import { validationOk, validationError } from '../../core/types.js';
 export interface UpdateCommandArgs {
   alpha?: boolean;
   stable?: boolean;
-  aiOnly?: boolean;
+  templatesOnly?: boolean;
 }
 
 /**
@@ -21,8 +21,8 @@ export interface UpdateCommandResult {
   cliUpdated: boolean;
   projectUpdated: boolean;
   updatedPackages: string[];
-  aiConfigsUpdated: boolean;
-  aiConfigFiles: string[];
+  templatesUpdated: boolean;
+  syncedTemplates: string[];
   channel: 'alpha' | 'stable';
 }
 
@@ -60,38 +60,57 @@ function getTemplatesDir(): string {
 }
 
 /**
- * AI configuration directories to sync from templates to project
- * These are copied from bundled templates (which come from presets/standalone/ai/)
+ * Template directories/files to sync from CLI templates to project
+ * Format: { src: path in templates, dest: path in project }
+ *
  * openspec/ is NOT synced here - it's managed by `openspec update` command
  */
-const AI_CONFIG_DIRS = ['.ai', '.claude', '.cursor', '.windsurf', '.cline', '.aider'];
+const SYNC_TEMPLATES = [
+  // AI configuration
+  { src: '.ai', dest: '.ai' },
+  { src: '.claude', dest: '.claude' },
+  { src: '.cursor', dest: '.cursor' },
+  { src: '.windsurf', dest: '.windsurf' },
+  { src: '.cline', dest: '.cline' },
+  { src: '.aider', dest: '.aider' },
+  // ESLint plugin with HAI3 rules
+  { src: 'eslint-plugin-local', dest: 'eslint-plugin-local' },
+  // Demo screenset
+  { src: 'src/screensets/demo', dest: 'src/screensets/demo' },
+  // Config files (tsconfig, eslint, dependency-cruiser)
+  { src: 'presets/standalone/configs', dest: 'presets/standalone/configs' },
+  // Scripts (generate-colors, test-architecture)
+  { src: 'presets/standalone/scripts', dest: 'presets/standalone/scripts' },
+];
 
 /**
- * Sync AI configuration files from bundled CLI templates to project
+ * Sync template files from bundled CLI templates to project
  * @param projectRoot - The root directory of the HAI3 project
  * @param logger - Logger instance for output
- * @returns Array of synced directory names
+ * @returns Array of synced paths
  */
-async function syncAiConfigs(
+async function syncTemplates(
   projectRoot: string,
   logger: { info: (msg: string) => void }
 ): Promise<string[]> {
   const templatesDir = getTemplatesDir();
   const synced: string[] = [];
 
-  for (const dir of AI_CONFIG_DIRS) {
-    const src = path.join(templatesDir, dir);
-    const dest = path.join(projectRoot, dir);
+  for (const { src, dest } of SYNC_TEMPLATES) {
+    const srcPath = path.join(templatesDir, src);
+    const destPath = path.join(projectRoot, dest);
 
     // Only sync if source exists in templates
-    if (await fs.pathExists(src)) {
+    if (await fs.pathExists(srcPath)) {
       try {
+        // Ensure parent directory exists
+        await fs.ensureDir(path.dirname(destPath));
         // Full replacement - remove old and copy new
-        await fs.remove(dest);
-        await fs.copy(src, dest);
-        synced.push(dir);
+        await fs.remove(destPath);
+        await fs.copy(srcPath, destPath);
+        synced.push(dest);
       } catch (err) {
-        logger.info(`  Warning: Could not sync ${dir}: ${err}`);
+        logger.info(`  Warning: Could not sync ${dest}: ${err}`);
       }
     }
   }
@@ -125,8 +144,8 @@ export const updateCommand: CommandDefinition<
       defaultValue: false,
     },
     {
-      name: 'ai-only',
-      description: 'Only sync AI configuration files (skip package updates)',
+      name: 'templates-only',
+      description: 'Only sync templates (skip CLI and package updates)',
       type: 'boolean',
       defaultValue: false,
     },
@@ -145,9 +164,9 @@ export const updateCommand: CommandDefinition<
 
     let cliUpdated = false;
     let projectUpdated = false;
-    let aiConfigsUpdated = false;
+    let templatesUpdated = false;
     const updatedPackages: string[] = [];
-    const aiConfigFiles: string[] = [];
+    const syncedTemplates: string[] = [];
 
     // Determine which channel to use
     let channel: 'alpha' | 'stable';
@@ -162,8 +181,8 @@ export const updateCommand: CommandDefinition<
 
     const tag = channel === 'alpha' ? '@alpha' : '@latest';
 
-    // Skip CLI and package updates if --ai-only
-    if (!args.aiOnly) {
+    // Skip CLI and package updates if --templates-only
+    if (!args.templatesOnly) {
       logger.info(`Update channel: ${channel}`);
       logger.newline();
 
@@ -224,18 +243,21 @@ export const updateCommand: CommandDefinition<
       }
     }
 
-    // Sync AI configuration files if inside a project
+    // Sync project templates if inside a project
     if (projectRoot) {
       logger.newline();
-      logger.info('Syncing AI configuration files...');
+      logger.info('Syncing project templates...');
 
-      const syncedFiles = await syncAiConfigs(projectRoot, logger);
-      if (syncedFiles.length > 0) {
-        aiConfigsUpdated = true;
-        aiConfigFiles.push(...syncedFiles);
-        logger.success(`AI configs updated: ${syncedFiles.join(', ')}`);
+      const synced = await syncTemplates(projectRoot, logger);
+      if (synced.length > 0) {
+        templatesUpdated = true;
+        syncedTemplates.push(...synced);
+        logger.success(`Templates updated: ${synced.length} directories`);
+        for (const file of synced) {
+          logger.info(`  - ${file}`);
+        }
       } else {
-        logger.info('AI configs are already up to date');
+        logger.info('Templates are already up to date');
       }
     }
 
@@ -246,8 +268,8 @@ export const updateCommand: CommandDefinition<
       cliUpdated,
       projectUpdated,
       updatedPackages,
-      aiConfigsUpdated,
-      aiConfigFiles,
+      templatesUpdated,
+      syncedTemplates,
       channel,
     };
   },
