@@ -1,6 +1,10 @@
 # UI Kit Base Components
 
-## Capabilities
+## Purpose
+
+Provides a collection of base UI components for the @hai3/uikit package, including data visualization with charts built on Recharts library.
+
+## Requirements
 
 ### Requirement: Chart Component
 
