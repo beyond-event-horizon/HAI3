@@ -10,8 +10,8 @@
  * - Files marked with <!-- @standalone:override --> use versions from presets/standalone/ai/
  * - Files without markers are monorepo-only (not copied)
  * - IDE global configs (.cursor/, .windsurf/, etc.) come from presets/standalone/ai/
- * - Command adapters (.claude/commands/hai3-*.md) are GENERATED from @standalone markers
- * - OpenSpec command adapters are copied from presets/standalone/ai/.claude/commands/openspec/
+ * - Command adapters (.claude/commands/hai3-*.md, .cursor/commands/hai3-*.md, .windsurf/workflows/hai3-*.md) are GENERATED
+ * - OpenSpec commands are copied from root .claude/commands/openspec/ to all IDE directories
  */
 import fs from 'fs-extra';
 import { trim } from 'lodash';
@@ -50,9 +50,9 @@ const config = {
     'presets/standalone', // Copy standalone presets (configs/, scripts/)
   ],
 
-  // IDE configurations from standalone preset (not marker-based)
+  // IDE configurations from standalone preset (rules only - commands are generated)
   ideConfigs: [
-    { src: 'presets/standalone/ai/.claude', dest: '.claude' },
+    // .claude is fully generated (commands + openspec), no preset needed
     { src: 'presets/standalone/ai/.cursor', dest: '.cursor' },
     { src: 'presets/standalone/ai/.windsurf', dest: '.windsurf' },
     { src: 'presets/standalone/ai/.cline', dest: '.cline' },
@@ -92,15 +92,24 @@ async function extractCommandDescription(filePath: string): Promise<string> {
 
 /**
  * Generate IDE command adapters from @standalone marked commands
+ * Generates adapters for Claude (commands), Cursor (commands), and Windsurf (workflows)
  */
 async function generateCommandAdapters(
   standaloneCommands: string[],
   templatesDir: string
-): Promise<number> {
+): Promise<{ claude: number; cursor: number; windsurf: number }> {
   const claudeCommandsDir = path.join(templatesDir, '.claude', 'commands');
-  await fs.ensureDir(claudeCommandsDir);
+  const cursorCommandsDir = path.join(templatesDir, '.cursor', 'commands');
+  const windsurfWorkflowsDir = path.join(templatesDir, '.windsurf', 'workflows');
 
-  let count = 0;
+  await fs.ensureDir(claudeCommandsDir);
+  await fs.ensureDir(cursorCommandsDir);
+  await fs.ensureDir(windsurfWorkflowsDir);
+
+  let claudeCount = 0;
+  let cursorCount = 0;
+  let windsurfCount = 0;
+
   for (const relativePath of standaloneCommands) {
     // Only process commands/ directory files
     if (!relativePath.startsWith('commands/')) continue;
@@ -109,19 +118,38 @@ async function generateCommandAdapters(
     const srcPath = path.join(PROJECT_ROOT, '.ai', relativePath);
     const description = await extractCommandDescription(srcPath);
 
-    const adapterContent = `---
+    // Claude adapter
+    const claudeContent = `---
 description: ${description}
 ---
 
 Use \`.ai/${relativePath}\` as the single source of truth.
 `;
+    await fs.writeFile(path.join(claudeCommandsDir, cmdFileName), claudeContent);
+    claudeCount++;
 
-    const destPath = path.join(claudeCommandsDir, cmdFileName);
-    await fs.writeFile(destPath, adapterContent);
-    count++;
+    // Cursor adapter (same format as Claude)
+    const cursorContent = `---
+description: ${description}
+---
+
+Use \`.ai/${relativePath}\` as the single source of truth.
+`;
+    await fs.writeFile(path.join(cursorCommandsDir, cmdFileName), cursorContent);
+    cursorCount++;
+
+    // Windsurf adapter (workflow format)
+    const windsurfContent = `---
+description: ${description}
+---
+
+Use \`.ai/${relativePath}\` as the single source of truth.
+`;
+    await fs.writeFile(path.join(windsurfWorkflowsDir, cmdFileName), windsurfContent);
+    windsurfCount++;
   }
 
-  return count;
+  return { claude: claudeCount, cursor: cursorCount, windsurf: windsurfCount };
 }
 
 /**
@@ -279,16 +307,36 @@ async function copyTemplates() {
     }
   }
 
-  // 5. Generate command adapters for Claude IDE
+  // 5. Generate command adapters for all IDEs
   console.log('\nGenerated Command Adapters:');
   const standaloneCommands = markedFiles
     .filter((f) => f.marker === 'standalone')
     .map((f) => f.relativePath);
-  const adapterCount = await generateCommandAdapters(
+  const adapterCounts = await generateCommandAdapters(
     standaloneCommands,
     TEMPLATES_DIR
   );
-  console.log(`  ✓ .claude/commands/ (${adapterCount} generated adapters)`);
+  console.log(`  ✓ .claude/commands/ (${adapterCounts.claude} generated)`);
+  console.log(`  ✓ .cursor/commands/ (${adapterCounts.cursor} generated)`);
+  console.log(`  ✓ .windsurf/workflows/ (${adapterCounts.windsurf} generated)`);
+
+  // 5b. Copy openspec commands from root to all IDE directories
+  console.log('\nOpenSpec Commands (from root):');
+  const openspecSrc = path.join(PROJECT_ROOT, '.claude', 'commands', 'openspec');
+  if (await fs.pathExists(openspecSrc)) {
+    const openspecDests = [
+      path.join(TEMPLATES_DIR, '.claude', 'commands', 'openspec'),
+      path.join(TEMPLATES_DIR, '.cursor', 'commands', 'openspec'),
+      path.join(TEMPLATES_DIR, '.windsurf', 'workflows', 'openspec'),
+    ];
+    for (const dest of openspecDests) {
+      await fs.copy(openspecSrc, dest);
+    }
+    const fileCount = await countFiles(openspecSrc);
+    console.log(`  ✓ openspec/ copied to all IDEs (${fileCount} files each)`);
+  } else {
+    console.log('  ⚠ .claude/commands/openspec/ not found, skipping');
+  }
 
   // 6. Copy screensets
   console.log('\nScreensets:');
