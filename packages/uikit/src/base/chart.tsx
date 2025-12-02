@@ -102,11 +102,23 @@ function ChartContainer({
   )
 }
 
+// Payload item types for tooltip and legend
+interface TooltipPayloadItem {
+  color?: string
+  name?: string
+  value?: string | number
+}
+
+interface LegendPayloadItem {
+  color?: string
+  value?: string
+}
+
 // Chart Tooltip Content - styled content for tooltips (to be used as custom content)
 interface ChartTooltipContentProps {
   className?: string
   label?: string
-  payload?: any[]
+  payload?: TooltipPayloadItem[]
   active?: boolean
 }
 
@@ -134,7 +146,7 @@ function ChartTooltipContent({
         </div>
       )}
       <div className="flex flex-col gap-1">
-        {payload.map((item: any, index: number) => (
+        {payload.map((item, index) => (
           <div key={index} className="flex items-center gap-2 text-xs">
             <div
               className="h-2 w-2 rounded-full"
@@ -152,7 +164,7 @@ function ChartTooltipContent({
 // Chart Legend Content - styled content for legends (to be used as custom content)
 interface ChartLegendContentProps {
   className?: string
-  payload?: any[]
+  payload?: LegendPayloadItem[]
 }
 
 function ChartLegendContent({
@@ -168,7 +180,7 @@ function ChartLegendContent({
       data-slot="chart-legend-content"
       className={cn("flex items-center justify-center gap-4 text-sm pt-4", className)}
     >
-      {payload.map((item: any, index: number) => (
+      {payload.map((item, index) => (
         <div key={index} className="flex items-center gap-2">
           <div
             className="h-3 w-3 rounded-sm"
