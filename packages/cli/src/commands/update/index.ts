@@ -65,8 +65,20 @@ function getTemplatesDir(): string {
  *
  * openspec/ is NOT synced here - it's managed by `openspec update` command
  */
-const SYNC_TEMPLATES = [
-  // AI configuration
+/**
+ * Template sync configuration
+ * - src: path in CLI templates directory
+ * - dest: path in target project
+ * - expand: if true, copy children of src to dest (not the directory itself)
+ */
+interface SyncTemplate {
+  src: string;
+  dest: string;
+  expand?: boolean;
+}
+
+const SYNC_TEMPLATES: SyncTemplate[] = [
+  // AI configuration (direct copies)
   { src: '.ai', dest: '.ai' },
   { src: '.claude', dest: '.claude' },
   { src: '.cursor', dest: '.cursor' },
@@ -77,10 +89,10 @@ const SYNC_TEMPLATES = [
   { src: 'eslint-plugin-local', dest: 'eslint-plugin-local' },
   // Demo screenset
   { src: 'src/screensets/demo', dest: 'src/screensets/demo' },
-  // Config files (tsconfig, eslint, dependency-cruiser)
-  { src: 'presets/standalone/configs', dest: 'presets/standalone/configs' },
-  // Scripts (generate-colors, test-architecture)
-  { src: 'presets/standalone/scripts', dest: 'presets/standalone/scripts' },
+  // Config files - expand children to project root
+  { src: 'presets/standalone/configs', dest: '.', expand: true },
+  // Scripts - expand children to scripts/ directory
+  { src: 'presets/standalone/scripts', dest: 'scripts', expand: true },
 ];
 
 /**
@@ -96,22 +108,36 @@ async function syncTemplates(
   const templatesDir = getTemplatesDir();
   const synced: string[] = [];
 
-  for (const { src, dest } of SYNC_TEMPLATES) {
+  for (const { src, dest, expand } of SYNC_TEMPLATES) {
     const srcPath = path.join(templatesDir, src);
-    const destPath = path.join(projectRoot, dest);
 
     // Only sync if source exists in templates
-    if (await fs.pathExists(srcPath)) {
-      try {
-        // Ensure parent directory exists
+    if (!(await fs.pathExists(srcPath))) {
+      continue;
+    }
+
+    try {
+      if (expand) {
+        // Expand mode: copy children of src directory to dest
+        const children = await fs.readdir(srcPath);
+        for (const child of children) {
+          const childSrcPath = path.join(srcPath, child);
+          const childDestPath = path.join(projectRoot, dest, child);
+          await fs.ensureDir(path.dirname(childDestPath));
+          await fs.remove(childDestPath);
+          await fs.copy(childSrcPath, childDestPath);
+          synced.push(path.join(dest, child));
+        }
+      } else {
+        // Direct copy mode
+        const destPath = path.join(projectRoot, dest);
         await fs.ensureDir(path.dirname(destPath));
-        // Full replacement - remove old and copy new
         await fs.remove(destPath);
         await fs.copy(srcPath, destPath);
         synced.push(dest);
-      } catch (err) {
-        logger.info(`  Warning: Could not sync ${dest}: ${err}`);
       }
+    } catch (err) {
+      logger.info(`  Warning: Could not sync ${src}: ${err}`);
     }
   }
 
