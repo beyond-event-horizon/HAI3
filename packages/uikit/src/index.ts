@@ -4,6 +4,7 @@
  */
 
 // Base UI Components (shadcn + HAI3 custom)
+export { AspectRatio } from './base/aspect-ratio';
 export { Avatar, AvatarImage, AvatarFallback } from './base/avatar';
 export { Button, type ButtonProps } from './base/button';
 // Re-export contract types to ensure consistency

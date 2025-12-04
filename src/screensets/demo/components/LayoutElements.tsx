@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonVariant, ButtonSize, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose, Sheet, SheetTrigger, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, Avatar, AvatarImage, AvatarFallback, Badge } from '@hai3/uikit';
+import { AspectRatio, Button, ButtonVariant, ButtonSize, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose, Sheet, SheetTrigger, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, Avatar, AvatarImage, AvatarFallback, Badge } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { FormInput } from '../uikit/icons/FormInput';
 import { DEMO_SCREENSET_ID } from "../ids";
@@ -18,6 +18,52 @@ export const LayoutElements: React.FC = () => {
 
   return (
     <>
+      {/* Aspect Ratio Element Block */}
+      <div data-element-id="element-aspect-ratio" className="flex flex-col gap-4">
+        <TextLoader skeletonClassName="h-8 w-32">
+          <h2 className="text-2xl font-semibold">
+            {tk('aspect_ratio_heading')}
+          </h2>
+        </TextLoader>
+        <div className="flex flex-col gap-6 p-6 border border-border rounded-lg bg-background overflow-hidden">
+          {/* 16:9 Aspect Ratio */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('aspect_ratio_16_9_label')}
+              </label>
+            </TextLoader>
+            <div className="w-full max-w-md">
+              <AspectRatio ratio={16 / 9}>
+                <img
+                  src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+                  alt="Landscape"
+                  className="h-full w-full rounded-md object-cover"
+                />
+              </AspectRatio>
+            </div>
+          </div>
+
+          {/* 1:1 Aspect Ratio */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('aspect_ratio_1_1_label')}
+              </label>
+            </TextLoader>
+            <div className="w-full max-w-xs">
+              <AspectRatio ratio={1}>
+                <img
+                  src="https://images.unsplash.com/photo-1535025183041-0991a977e25b?w=600&dpr=2&q=80"
+                  alt="Mountains"
+                  className="h-full w-full rounded-md object-cover"
+                />
+              </AspectRatio>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Card Element Block */}
       <div data-element-id="element-card" className="flex flex-col gap-4">
         <TextLoader skeletonClassName="h-8 w-24">
