@@ -1,5 +1,5 @@
 import React from 'react';
-import { AspectRatio, Button, ButtonVariant, ButtonSize, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose, ResizablePanelGroup, ResizablePanel, ResizableHandle, Sheet, SheetTrigger, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, Avatar, AvatarImage, AvatarFallback, Badge } from '@hai3/uikit';
+import { AspectRatio, Button, ButtonVariant, ButtonSize, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose, ResizablePanelGroup, ResizablePanel, ResizableHandle, ScrollArea, ScrollBar, Sheet, SheetTrigger, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, Avatar, AvatarImage, AvatarFallback, Badge } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { FormInput } from '../uikit/icons/FormInput';
 import { DEMO_SCREENSET_ID } from "../ids";
@@ -533,6 +533,79 @@ export const LayoutElements: React.FC = () => {
                 </ResizablePanelGroup>
               </ResizablePanel>
             </ResizablePanelGroup>
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll Area Element Block */}
+      <div data-element-id="element-scroll-area" className="flex flex-col gap-4">
+        <TextLoader skeletonClassName="h-8 w-32">
+          <h2 className="text-2xl font-semibold">
+            {tk('scroll_area_heading')}
+          </h2>
+        </TextLoader>
+        <div className="flex flex-col gap-6 p-6 border border-border rounded-lg bg-background overflow-hidden">
+          {/* Vertical Scroll Area */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-32" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('scroll_area_vertical_label')}
+              </label>
+            </TextLoader>
+            <ScrollArea className="h-72 w-48 rounded-md border">
+              <div className="p-4">
+                <TextLoader skeletonClassName="h-4 w-12" inheritColor>
+                  <h4 className="mb-4 text-sm leading-none font-medium">
+                    {tk('scroll_area_tags_title')}
+                  </h4>
+                </TextLoader>
+                {Array.from({ length: 50 }).map((_, i, a) => (
+                  <React.Fragment key={i}>
+                    <div className="text-sm">v1.2.0-beta.{a.length - i}</div>
+                    <div className="my-2 h-px bg-border" />
+                  </React.Fragment>
+                ))}
+              </div>
+            </ScrollArea>
+          </div>
+
+          {/* Horizontal Scroll Area */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-32" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('scroll_area_horizontal_label')}
+              </label>
+            </TextLoader>
+            <ScrollArea className="w-96 rounded-md border whitespace-nowrap">
+              <div className="flex w-max space-x-4 p-4">
+                {[
+                  { artist: 'Ornella Binni', art: 'https://images.unsplash.com/photo-1465869185982-5a1a7522cbcb?auto=format&fit=crop&w=300&q=80' },
+                  { artist: 'Tom Byrom', art: 'https://images.unsplash.com/photo-1548516173-3cabfa4607e9?auto=format&fit=crop&w=300&q=80' },
+                  { artist: 'Vladimir Malyavko', art: 'https://images.unsplash.com/photo-1494337480532-3725c85fd2ab?auto=format&fit=crop&w=300&q=80' },
+                ].map((artwork) => (
+                  <figure key={artwork.artist} className="shrink-0">
+                    <div className="overflow-hidden rounded-md">
+                      <img
+                        src={artwork.art}
+                        alt={`Photo by ${artwork.artist}`}
+                        className="aspect-[3/4] h-fit w-fit object-cover"
+                        width={300}
+                        height={400}
+                      />
+                    </div>
+                    <figcaption className="text-muted-foreground pt-2 text-xs whitespace-normal">
+                      <TextLoader skeletonClassName="h-3 w-20" inheritColor>
+                        {tk('scroll_area_photo_by')}{' '}
+                        <span className="text-foreground font-semibold">
+                          {artwork.artist}
+                        </span>
+                      </TextLoader>
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
           </div>
         </div>
       </div>

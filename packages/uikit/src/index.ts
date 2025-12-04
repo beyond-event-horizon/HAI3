@@ -84,6 +84,12 @@ export {
   ResizableHandle,
 } from './base/resizable';
 
+// radix scroll-area (custom scrollbars)
+export {
+  ScrollArea,
+  ScrollBar,
+} from './base/scroll-area';
+
 // shadcn accordion
 export {
   Accordion,

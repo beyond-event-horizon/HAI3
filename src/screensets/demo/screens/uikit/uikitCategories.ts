@@ -182,6 +182,7 @@ export const IMPLEMENTED_ELEMENTS = [
   'Popover',
   'Progress',
   'Resizable',
+  'Scroll Area',
   'Select',
   'Sheet',
   'Skeleton',
