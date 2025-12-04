@@ -77,6 +77,13 @@ export {
   DrawerDescription,
 } from './base/drawer';
 
+// react-resizable-panels (resizable layouts)
+export {
+  ResizablePanelGroup,
+  ResizablePanel,
+  ResizableHandle,
+} from './base/resizable';
+
 // shadcn accordion
 export {
   Accordion,

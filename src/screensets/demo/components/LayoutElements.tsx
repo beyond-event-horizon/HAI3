@@ -1,5 +1,5 @@
 import React from 'react';
-import { AspectRatio, Button, ButtonVariant, ButtonSize, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose, Sheet, SheetTrigger, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, Avatar, AvatarImage, AvatarFallback, Badge } from '@hai3/uikit';
+import { AspectRatio, Button, ButtonVariant, ButtonSize, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose, ResizablePanelGroup, ResizablePanel, ResizableHandle, Sheet, SheetTrigger, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, Avatar, AvatarImage, AvatarFallback, Badge } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { FormInput } from '../uikit/icons/FormInput';
 import { DEMO_SCREENSET_ID } from "../ids";
@@ -425,6 +425,115 @@ export const LayoutElements: React.FC = () => {
               </DrawerFooter>
             </DrawerContent>
           </Drawer>
+        </div>
+      </div>
+
+      {/* Resizable Element Block */}
+      <div data-element-id="element-resizable" className="flex flex-col gap-4">
+        <TextLoader skeletonClassName="h-8 w-32">
+          <h2 className="text-2xl font-semibold">
+            {tk('resizable_heading')}
+          </h2>
+        </TextLoader>
+        <div className="flex flex-col gap-6 p-6 border border-border rounded-lg bg-background overflow-hidden">
+          {/* Horizontal Resizable */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-32" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('resizable_horizontal_label')}
+              </label>
+            </TextLoader>
+            <ResizablePanelGroup
+              direction="horizontal"
+              className="min-h-[200px] max-w-md rounded-lg border"
+            >
+              <ResizablePanel defaultSize={50}>
+                <div className="flex h-full items-center justify-center p-6">
+                  <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                    <span className="font-semibold">{tk('resizable_panel_one')}</span>
+                  </TextLoader>
+                </div>
+              </ResizablePanel>
+              <ResizableHandle withHandle />
+              <ResizablePanel defaultSize={50}>
+                <div className="flex h-full items-center justify-center p-6">
+                  <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                    <span className="font-semibold">{tk('resizable_panel_two')}</span>
+                  </TextLoader>
+                </div>
+              </ResizablePanel>
+            </ResizablePanelGroup>
+          </div>
+
+          {/* Vertical Resizable */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-32" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('resizable_vertical_label')}
+              </label>
+            </TextLoader>
+            <ResizablePanelGroup
+              direction="vertical"
+              className="min-h-[300px] max-w-md rounded-lg border"
+            >
+              <ResizablePanel defaultSize={25}>
+                <div className="flex h-full items-center justify-center p-6">
+                  <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                    <span className="font-semibold">{tk('resizable_panel_one')}</span>
+                  </TextLoader>
+                </div>
+              </ResizablePanel>
+              <ResizableHandle />
+              <ResizablePanel defaultSize={75}>
+                <div className="flex h-full items-center justify-center p-6">
+                  <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                    <span className="font-semibold">{tk('resizable_panel_two')}</span>
+                  </TextLoader>
+                </div>
+              </ResizablePanel>
+            </ResizablePanelGroup>
+          </div>
+
+          {/* Nested Resizable (Horizontal + Vertical) */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-32" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('resizable_nested_label')}
+              </label>
+            </TextLoader>
+            <ResizablePanelGroup
+              direction="horizontal"
+              className="min-h-[200px] max-w-md rounded-lg border"
+            >
+              <ResizablePanel defaultSize={50}>
+                <div className="flex h-full items-center justify-center p-6">
+                  <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                    <span className="font-semibold">{tk('resizable_panel_one')}</span>
+                  </TextLoader>
+                </div>
+              </ResizablePanel>
+              <ResizableHandle />
+              <ResizablePanel defaultSize={50}>
+                <ResizablePanelGroup direction="vertical">
+                  <ResizablePanel defaultSize={25}>
+                    <div className="flex h-full items-center justify-center p-6">
+                      <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                        <span className="font-semibold">{tk('resizable_panel_two')}</span>
+                      </TextLoader>
+                    </div>
+                  </ResizablePanel>
+                  <ResizableHandle />
+                  <ResizablePanel defaultSize={75}>
+                    <div className="flex h-full items-center justify-center p-6">
+                      <TextLoader skeletonClassName="h-4 w-16" inheritColor>
+                        <span className="font-semibold">{tk('resizable_panel_three')}</span>
+                      </TextLoader>
+                    </div>
+                  </ResizablePanel>
+                </ResizablePanelGroup>
+              </ResizablePanel>
+            </ResizablePanelGroup>
+          </div>
         </div>
       </div>
 

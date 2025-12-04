@@ -181,6 +181,7 @@ export const IMPLEMENTED_ELEMENTS = [
   'Hover Card',
   'Popover',
   'Progress',
+  'Resizable',
   'Select',
   'Sheet',
   'Skeleton',
