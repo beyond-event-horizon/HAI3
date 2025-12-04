@@ -13,6 +13,7 @@
   ],
   "scripts": {
     "dev": "npm run generate:colors && vite",
+    "check:mcp": "npx tsx presets/standalone/scripts/check-mcp.ts",
     "build": "npm run build:packages && npm run generate:colors && vite build",
     "build:packages": "npm run build --workspace=@hai3/uikit-contracts && npm run build --workspace=@hai3/uikit && npm run build --workspace=@hai3/uicore && npm run build --workspace=@hai3/studio && npm run build --workspace=@hai3/cli",
     "lint": "npm run build --workspace=eslint-plugin-local && eslint . --max-warnings 0",
