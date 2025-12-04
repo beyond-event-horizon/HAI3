@@ -90,6 +90,9 @@ export {
   ScrollBar,
 } from './base/scroll-area';
 
+// radix separator (divider lines)
+export { Separator } from './base/separator';
+
 // shadcn accordion
 export {
   Accordion,

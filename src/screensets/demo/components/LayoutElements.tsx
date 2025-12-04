@@ -1,5 +1,5 @@
 import React from 'react';
-import { AspectRatio, Button, ButtonVariant, ButtonSize, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose, ResizablePanelGroup, ResizablePanel, ResizableHandle, ScrollArea, ScrollBar, Sheet, SheetTrigger, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, Avatar, AvatarImage, AvatarFallback, Badge } from '@hai3/uikit';
+import { AspectRatio, Button, ButtonVariant, ButtonSize, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose, ResizablePanelGroup, ResizablePanel, ResizableHandle, ScrollArea, ScrollBar, Separator, Sheet, SheetTrigger, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, Avatar, AvatarImage, AvatarFallback, Badge } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { FormInput } from '../uikit/icons/FormInput';
 import { DEMO_SCREENSET_ID } from "../ids";
@@ -606,6 +606,45 @@ export const LayoutElements: React.FC = () => {
               </div>
               <ScrollBar orientation="horizontal" />
             </ScrollArea>
+          </div>
+        </div>
+      </div>
+
+      {/* Separator Element Block */}
+      <div data-element-id="element-separator" className="flex flex-col gap-4">
+        <TextLoader skeletonClassName="h-8 w-32">
+          <h2 className="text-2xl font-semibold">
+            {tk('separator_heading')}
+          </h2>
+        </TextLoader>
+        <div className="flex flex-col gap-6 p-6 border border-border rounded-lg bg-background overflow-hidden">
+          <div>
+            <div className="space-y-1">
+              <TextLoader skeletonClassName="h-4 w-32" inheritColor>
+                <h4 className="text-sm leading-none font-medium">
+                  {tk('separator_title')}
+                </h4>
+              </TextLoader>
+              <TextLoader skeletonClassName="h-4 w-48" inheritColor>
+                <p className="text-muted-foreground text-sm">
+                  {tk('separator_description')}
+                </p>
+              </TextLoader>
+            </div>
+            <Separator className="my-4" />
+            <div className="flex h-5 items-center space-x-4 text-sm">
+              <TextLoader skeletonClassName="h-4 w-8" inheritColor>
+                <div>{tk('separator_blog')}</div>
+              </TextLoader>
+              <Separator orientation="vertical" />
+              <TextLoader skeletonClassName="h-4 w-8" inheritColor>
+                <div>{tk('separator_docs')}</div>
+              </TextLoader>
+              <Separator orientation="vertical" />
+              <TextLoader skeletonClassName="h-4 w-12" inheritColor>
+                <div>{tk('separator_source')}</div>
+              </TextLoader>
+            </div>
           </div>
         </div>
       </div>

@@ -184,6 +184,7 @@ export const IMPLEMENTED_ELEMENTS = [
   'Resizable',
   'Scroll Area',
   'Select',
+  'Separator',
   'Sheet',
   'Skeleton',
   'Slider',
