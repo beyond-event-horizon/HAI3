@@ -429,5 +429,14 @@
   "textarea_heading": "Área de texto",
   "textarea_default_label": "Predeterminado",
   "textarea_disabled_label": "Deshabilitado",
-  "textarea_placeholder": "Escribe tu mensaje aquí."
+  "textarea_placeholder": "Escribe tu mensaje aquí.",
+  "checkbox_heading": "Casilla de verificación",
+  "checkbox_basic_label": "Básico",
+  "checkbox_with_text_label": "Con descripción",
+  "checkbox_disabled_label": "Deshabilitado",
+  "checkbox_card_label": "Estilo tarjeta",
+  "checkbox_terms": "Aceptar términos y condiciones",
+  "checkbox_terms_description": "Al marcar esta casilla, acepta los términos y condiciones.",
+  "checkbox_notifications": "Activar notificaciones",
+  "checkbox_notifications_description": "Puede activar o desactivar las notificaciones en cualquier momento."
 }

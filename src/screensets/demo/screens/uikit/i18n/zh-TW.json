@@ -433,5 +433,14 @@
   "textarea_heading": "文字區域",
   "textarea_default_label": "預設",
   "textarea_disabled_label": "停用",
-  "textarea_placeholder": "在此輸入您的訊息。"
+  "textarea_placeholder": "在此輸入您的訊息。",
+  "checkbox_heading": "核取方塊",
+  "checkbox_basic_label": "基本",
+  "checkbox_with_text_label": "帶描述",
+  "checkbox_disabled_label": "停用",
+  "checkbox_card_label": "卡片樣式",
+  "checkbox_terms": "接受條款和條件",
+  "checkbox_terms_description": "點擊此核取方塊即表示您同意條款和條件。",
+  "checkbox_notifications": "啟用通知",
+  "checkbox_notifications_description": "您可以隨時啟用或停用通知。"
 }

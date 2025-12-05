@@ -433,5 +433,14 @@
   "textarea_heading": "Textarea",
   "textarea_default_label": "Default",
   "textarea_disabled_label": "Disabled",
-  "textarea_placeholder": "Type your message here."
+  "textarea_placeholder": "Type your message here.",
+  "checkbox_heading": "Checkbox",
+  "checkbox_basic_label": "Basic",
+  "checkbox_with_text_label": "With Description",
+  "checkbox_disabled_label": "Disabled",
+  "checkbox_card_label": "Card Style",
+  "checkbox_terms": "Accept terms and conditions",
+  "checkbox_terms_description": "By clicking this checkbox, you agree to the terms and conditions.",
+  "checkbox_notifications": "Enable notifications",
+  "checkbox_notifications_description": "You can enable or disable notifications at any time."
 }

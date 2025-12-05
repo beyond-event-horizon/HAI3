@@ -433,5 +433,14 @@
   "textarea_heading": "Área de texto",
   "textarea_default_label": "Padrão",
   "textarea_disabled_label": "Desabilitado",
-  "textarea_placeholder": "Digite sua mensagem aqui."
+  "textarea_placeholder": "Digite sua mensagem aqui.",
+  "checkbox_heading": "Caixa de seleção",
+  "checkbox_basic_label": "Básico",
+  "checkbox_with_text_label": "Com descrição",
+  "checkbox_disabled_label": "Desabilitado",
+  "checkbox_card_label": "Estilo cartão",
+  "checkbox_terms": "Aceitar termos e condições",
+  "checkbox_terms_description": "Ao marcar esta caixa, você concorda com os termos e condições.",
+  "checkbox_notifications": "Ativar notificações",
+  "checkbox_notifications_description": "Você pode ativar ou desativar as notificações a qualquer momento."
 }

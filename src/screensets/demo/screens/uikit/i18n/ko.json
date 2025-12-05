@@ -433,5 +433,14 @@
   "textarea_heading": "텍스트 영역",
   "textarea_default_label": "기본",
   "textarea_disabled_label": "비활성화",
-  "textarea_placeholder": "여기에 메시지를 입력하세요."
+  "textarea_placeholder": "여기에 메시지를 입력하세요.",
+  "checkbox_heading": "체크박스",
+  "checkbox_basic_label": "기본",
+  "checkbox_with_text_label": "설명 포함",
+  "checkbox_disabled_label": "비활성화",
+  "checkbox_card_label": "카드 스타일",
+  "checkbox_terms": "이용 약관에 동의",
+  "checkbox_terms_description": "이 체크박스를 클릭하면 이용 약관에 동의하게 됩니다.",
+  "checkbox_notifications": "알림 활성화",
+  "checkbox_notifications_description": "언제든지 알림을 활성화하거나 비활성화할 수 있습니다."
 }

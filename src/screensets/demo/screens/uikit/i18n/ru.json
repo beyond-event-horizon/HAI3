@@ -433,5 +433,14 @@
   "textarea_heading": "Текстовое поле",
   "textarea_default_label": "По умолчанию",
   "textarea_disabled_label": "Отключено",
-  "textarea_placeholder": "Введите ваше сообщение здесь."
+  "textarea_placeholder": "Введите ваше сообщение здесь.",
+  "checkbox_heading": "Флажок",
+  "checkbox_basic_label": "Базовый",
+  "checkbox_with_text_label": "С описанием",
+  "checkbox_disabled_label": "Отключено",
+  "checkbox_card_label": "Стиль карточки",
+  "checkbox_terms": "Принять условия",
+  "checkbox_terms_description": "Установив этот флажок, вы соглашаетесь с условиями.",
+  "checkbox_notifications": "Включить уведомления",
+  "checkbox_notifications_description": "Вы можете включить или отключить уведомления в любое время."
 }

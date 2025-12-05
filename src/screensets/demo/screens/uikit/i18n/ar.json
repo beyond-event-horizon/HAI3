@@ -429,5 +429,14 @@
   "textarea_heading": "منطقة النص",
   "textarea_default_label": "افتراضي",
   "textarea_disabled_label": "معطل",
-  "textarea_placeholder": "اكتب رسالتك هنا."
+  "textarea_placeholder": "اكتب رسالتك هنا.",
+  "checkbox_heading": "خانة الاختيار",
+  "checkbox_basic_label": "أساسي",
+  "checkbox_with_text_label": "مع وصف",
+  "checkbox_disabled_label": "معطل",
+  "checkbox_card_label": "نمط البطاقة",
+  "checkbox_terms": "قبول الشروط والأحكام",
+  "checkbox_terms_description": "بالنقر على هذا المربع، فإنك توافق على الشروط والأحكام.",
+  "checkbox_notifications": "تفعيل الإشعارات",
+  "checkbox_notifications_description": "يمكنك تفعيل أو تعطيل الإشعارات في أي وقت."
 }

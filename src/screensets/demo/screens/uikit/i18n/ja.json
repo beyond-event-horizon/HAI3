@@ -433,5 +433,14 @@
   "textarea_heading": "テキストエリア",
   "textarea_default_label": "デフォルト",
   "textarea_disabled_label": "無効",
-  "textarea_placeholder": "ここにメッセージを入力してください。"
+  "textarea_placeholder": "ここにメッセージを入力してください。",
+  "checkbox_heading": "チェックボックス",
+  "checkbox_basic_label": "基本",
+  "checkbox_with_text_label": "説明付き",
+  "checkbox_disabled_label": "無効",
+  "checkbox_card_label": "カードスタイル",
+  "checkbox_terms": "利用規約に同意する",
+  "checkbox_terms_description": "このチェックボックスをクリックすると、利用規約に同意したことになります。",
+  "checkbox_notifications": "通知を有効にする",
+  "checkbox_notifications_description": "いつでも通知を有効または無効にできます。"
 }

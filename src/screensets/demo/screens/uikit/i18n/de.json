@@ -433,5 +433,14 @@
   "textarea_heading": "Textbereich",
   "textarea_default_label": "Standard",
   "textarea_disabled_label": "Deaktiviert",
-  "textarea_placeholder": "Geben Sie hier Ihre Nachricht ein."
+  "textarea_placeholder": "Geben Sie hier Ihre Nachricht ein.",
+  "checkbox_heading": "Kontrollkästchen",
+  "checkbox_basic_label": "Standard",
+  "checkbox_with_text_label": "Mit Beschreibung",
+  "checkbox_disabled_label": "Deaktiviert",
+  "checkbox_card_label": "Karten-Stil",
+  "checkbox_terms": "Geschäftsbedingungen akzeptieren",
+  "checkbox_terms_description": "Durch Anklicken stimmen Sie den Geschäftsbedingungen zu.",
+  "checkbox_notifications": "Benachrichtigungen aktivieren",
+  "checkbox_notifications_description": "Sie können Benachrichtigungen jederzeit aktivieren oder deaktivieren."
 }

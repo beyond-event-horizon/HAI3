@@ -433,5 +433,14 @@
   "textarea_heading": "Zone de texte",
   "textarea_default_label": "Par défaut",
   "textarea_disabled_label": "Désactivé",
-  "textarea_placeholder": "Tapez votre message ici."
+  "textarea_placeholder": "Tapez votre message ici.",
+  "checkbox_heading": "Case à cocher",
+  "checkbox_basic_label": "Basique",
+  "checkbox_with_text_label": "Avec description",
+  "checkbox_disabled_label": "Désactivé",
+  "checkbox_card_label": "Style carte",
+  "checkbox_terms": "Accepter les conditions générales",
+  "checkbox_terms_description": "En cochant cette case, vous acceptez les conditions générales.",
+  "checkbox_notifications": "Activer les notifications",
+  "checkbox_notifications_description": "Vous pouvez activer ou désactiver les notifications à tout moment."
 }

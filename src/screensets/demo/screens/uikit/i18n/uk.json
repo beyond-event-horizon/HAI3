@@ -433,5 +433,14 @@
   "textarea_heading": "Текстове поле",
   "textarea_default_label": "За замовчуванням",
   "textarea_disabled_label": "Вимкнено",
-  "textarea_placeholder": "Введіть ваше повідомлення тут."
+  "textarea_placeholder": "Введіть ваше повідомлення тут.",
+  "checkbox_heading": "Прапорець",
+  "checkbox_basic_label": "Базовий",
+  "checkbox_with_text_label": "З описом",
+  "checkbox_disabled_label": "Вимкнено",
+  "checkbox_card_label": "Стиль картки",
+  "checkbox_terms": "Прийняти умови",
+  "checkbox_terms_description": "Встановивши цей прапорець, ви погоджуєтесь з умовами.",
+  "checkbox_notifications": "Увімкнути сповіщення",
+  "checkbox_notifications_description": "Ви можете вмикати або вимикати сповіщення в будь-який час."
 }

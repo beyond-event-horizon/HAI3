@@ -433,5 +433,14 @@
   "textarea_heading": "文本区域",
   "textarea_default_label": "默认",
   "textarea_disabled_label": "禁用",
-  "textarea_placeholder": "在此输入您的消息。"
+  "textarea_placeholder": "在此输入您的消息。",
+  "checkbox_heading": "复选框",
+  "checkbox_basic_label": "基本",
+  "checkbox_with_text_label": "带描述",
+  "checkbox_disabled_label": "禁用",
+  "checkbox_card_label": "卡片样式",
+  "checkbox_terms": "接受条款和条件",
+  "checkbox_terms_description": "点击此复选框即表示您同意条款和条件。",
+  "checkbox_notifications": "启用通知",
+  "checkbox_notifications_description": "您可以随时启用或禁用通知。"
 }

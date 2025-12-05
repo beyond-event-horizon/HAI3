@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Textarea } from '@hai3/uikit';
+import { Checkbox, Switch, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Textarea } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { DEMO_SCREENSET_ID } from "../ids";
 import { UI_KIT_ELEMENTS_SCREEN_ID } from "../ids";
@@ -21,6 +21,83 @@ export const FormElements: React.FC = () => {
 
   return (
     <>
+      {/* Checkbox Element Block */}
+      <div data-element-id="element-checkbox" className="flex flex-col gap-4">
+        <TextLoader skeletonClassName="h-8 w-28">
+          <h2 className="text-2xl font-semibold">
+            {tk('checkbox_heading')}
+          </h2>
+        </TextLoader>
+        <div className="flex flex-col gap-6 p-6 border border-border rounded-lg bg-background overflow-hidden">
+          {/* Basic Checkbox */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('checkbox_basic_label')}
+              </label>
+            </TextLoader>
+            <div className="flex items-center gap-3">
+              <Checkbox id="terms" />
+              <FormLabel htmlFor="terms">{tk('checkbox_terms')}</FormLabel>
+            </div>
+          </div>
+
+          {/* Checkbox with Description */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-32" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('checkbox_with_text_label')}
+              </label>
+            </TextLoader>
+            <div className="flex items-start gap-3">
+              <Checkbox id="terms-2" defaultChecked />
+              <div className="grid gap-2">
+                <FormLabel htmlFor="terms-2">{tk('checkbox_terms')}</FormLabel>
+                <p className="text-muted-foreground text-sm">
+                  {tk('checkbox_terms_description')}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Disabled Checkbox */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('checkbox_disabled_label')}
+              </label>
+            </TextLoader>
+            <div className="flex items-start gap-3">
+              <Checkbox id="toggle" disabled />
+              <FormLabel htmlFor="toggle">{tk('checkbox_notifications')}</FormLabel>
+            </div>
+          </div>
+
+          {/* Card Style Checkbox */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('checkbox_card_label')}
+              </label>
+            </TextLoader>
+            <label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-primary has-[[aria-checked=true]]:bg-primary/10 max-w-sm cursor-pointer">
+              <Checkbox
+                id="toggle-2"
+                defaultChecked
+              />
+              <div className="grid gap-1.5 font-normal">
+                <p className="text-sm leading-none font-medium">
+                  {tk('checkbox_notifications')}
+                </p>
+                <p className="text-muted-foreground text-sm">
+                  {tk('checkbox_notifications_description')}
+                </p>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
       {/* Input Element Block */}
       <div data-element-id="element-input" className="flex flex-col gap-4">
         <TextLoader skeletonClassName="h-8 w-24">
