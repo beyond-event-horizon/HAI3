@@ -46,6 +46,26 @@ export {
   BreadcrumbEllipsis,
 } from './base/breadcrumb';
 
+// shadcn menubar
+export {
+  Menubar,
+  MenubarPortal,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarContent,
+  MenubarGroup,
+  MenubarSeparator,
+  MenubarLabel,
+  MenubarItem,
+  MenubarShortcut,
+  MenubarCheckboxItem,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarSub,
+  MenubarSubTrigger,
+  MenubarSubContent,
+} from './base/menubar';
+
 // shadcn sheet (sidebar)
 export {
   Sheet,

@@ -11,6 +11,19 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  Menubar,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarContent,
+  MenubarItem,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarCheckboxItem,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
 } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { Slash } from 'lucide-react';
@@ -19,11 +32,14 @@ import { UI_KIT_ELEMENTS_SCREEN_ID } from "../ids";
 
 /**
  * Navigation Elements Component
- * Contains Breadcrumb demonstrations
+ * Contains Breadcrumb and Menubar demonstrations
  * Uses parent screen (UIKitElementsScreen) translations
  */
 export const NavigationElements: React.FC = () => {
   const { t } = useTranslation();
+  const [showBookmarksBar, setShowBookmarksBar] = React.useState(false);
+  const [showFullUrls, setShowFullUrls] = React.useState(true);
+  const [selectedProfile, setSelectedProfile] = React.useState("benoit");
   
   // Helper function to access parent screen's translations
   const tk = (key: string) => t(`screen.${DEMO_SCREENSET_ID}.${UI_KIT_ELEMENTS_SCREEN_ID}:${key}`);
@@ -133,6 +149,112 @@ export const NavigationElements: React.FC = () => {
               </BreadcrumbList>
             </Breadcrumb>
           </div>
+        </div>
+      </div>
+
+      {/* Menubar Element Block */}
+      <div data-element-id="element-menubar" className="flex flex-col gap-4">
+        <TextLoader skeletonClassName="h-8 w-32">
+          <h2 className="text-2xl font-semibold">
+            {tk('menubar_heading')}
+          </h2>
+        </TextLoader>
+        <div className="flex flex-col gap-6 p-6 border border-border rounded-lg bg-background overflow-hidden">
+          <Menubar>
+            <MenubarMenu>
+              <MenubarTrigger>{tk('menubar_file')}</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>
+                  {tk('menubar_new_tab')} <MenubarShortcut>⌘T</MenubarShortcut>
+                </MenubarItem>
+                <MenubarItem>
+                  {tk('menubar_new_window')} <MenubarShortcut>⌘N</MenubarShortcut>
+                </MenubarItem>
+                <MenubarItem disabled>{tk('menubar_new_incognito')}</MenubarItem>
+                <MenubarSeparator />
+                <MenubarSub>
+                  <MenubarSubTrigger>{tk('menubar_share')}</MenubarSubTrigger>
+                  <MenubarSubContent>
+                    <MenubarItem>{tk('menubar_email')}</MenubarItem>
+                    <MenubarItem>{tk('menubar_messages')}</MenubarItem>
+                    <MenubarItem>{tk('menubar_notes')}</MenubarItem>
+                  </MenubarSubContent>
+                </MenubarSub>
+                <MenubarSeparator />
+                <MenubarItem>
+                  {tk('menubar_print')} <MenubarShortcut>⌘P</MenubarShortcut>
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
+              <MenubarTrigger>{tk('menubar_edit')}</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>
+                  {tk('menubar_undo')} <MenubarShortcut>⌘Z</MenubarShortcut>
+                </MenubarItem>
+                <MenubarItem>
+                  {tk('menubar_redo')} <MenubarShortcut>⇧⌘Z</MenubarShortcut>
+                </MenubarItem>
+                <MenubarSeparator />
+                <MenubarSub>
+                  <MenubarSubTrigger>{tk('menubar_find')}</MenubarSubTrigger>
+                  <MenubarSubContent>
+                    <MenubarItem>{tk('menubar_search_web')}</MenubarItem>
+                    <MenubarSeparator />
+                    <MenubarItem>{tk('menubar_find_file')}</MenubarItem>
+                    <MenubarItem>{tk('menubar_find_next')}</MenubarItem>
+                    <MenubarItem>{tk('menubar_find_previous')}</MenubarItem>
+                  </MenubarSubContent>
+                </MenubarSub>
+                <MenubarSeparator />
+                <MenubarItem>{tk('menubar_cut')}</MenubarItem>
+                <MenubarItem>{tk('menubar_copy')}</MenubarItem>
+                <MenubarItem>{tk('menubar_paste')}</MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
+              <MenubarTrigger>{tk('menubar_view')}</MenubarTrigger>
+              <MenubarContent>
+                <MenubarCheckboxItem 
+                  checked={showBookmarksBar} 
+                  onCheckedChange={setShowBookmarksBar}
+                >
+                  {tk('menubar_always_show_bookmarks')}
+                </MenubarCheckboxItem>
+                <MenubarCheckboxItem 
+                  checked={showFullUrls} 
+                  onCheckedChange={setShowFullUrls}
+                >
+                  {tk('menubar_always_show_full_urls')}
+                </MenubarCheckboxItem>
+                <MenubarSeparator />
+                <MenubarItem inset>
+                  {tk('menubar_reload')} <MenubarShortcut>⌘R</MenubarShortcut>
+                </MenubarItem>
+                <MenubarItem inset disabled>
+                  {tk('menubar_force_reload')} <MenubarShortcut>⇧⌘R</MenubarShortcut>
+                </MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem inset>{tk('menubar_toggle_fullscreen')}</MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem inset>{tk('menubar_hide_sidebar')}</MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
+              <MenubarTrigger>{tk('menubar_profiles')}</MenubarTrigger>
+              <MenubarContent>
+                <MenubarRadioGroup value={selectedProfile} onValueChange={setSelectedProfile}>
+                  <MenubarRadioItem value="andy">Andy</MenubarRadioItem>
+                  <MenubarRadioItem value="benoit">Benoit</MenubarRadioItem>
+                  <MenubarRadioItem value="luis">Luis</MenubarRadioItem>
+                </MenubarRadioGroup>
+                <MenubarSeparator />
+                <MenubarItem inset>{tk('menubar_edit_profile')}</MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem inset>{tk('menubar_add_profile')}</MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
         </div>
       </div>
     </>
