@@ -418,5 +418,16 @@
   "tabs_current_password": "当前密码",
   "tabs_new_password": "新密码",
   "tabs_save_changes": "保存更改",
-  "tabs_save_password": "保存密码"
+  "tabs_save_password": "保存密码",
+  "input_heading": "输入框",
+  "input_default_label": "默认",
+  "input_file_label": "文件",
+  "input_disabled_label": "禁用",
+  "input_with_label_label": "带标签",
+  "input_email_placeholder": "邮箱",
+  "input_email_label": "邮箱",
+  "input_name_placeholder": "姓名",
+  "input_password_label": "密码",
+  "input_password_placeholder": "密码",
+  "input_new_password_label": "新密码"
 }

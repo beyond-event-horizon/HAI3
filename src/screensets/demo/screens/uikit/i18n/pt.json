@@ -418,5 +418,16 @@
   "tabs_current_password": "Senha atual",
   "tabs_new_password": "Nova senha",
   "tabs_save_changes": "Salvar alterações",
-  "tabs_save_password": "Salvar senha"
+  "tabs_save_password": "Salvar senha",
+  "input_heading": "Campo de entrada",
+  "input_default_label": "Padrão",
+  "input_file_label": "Arquivo",
+  "input_disabled_label": "Desabilitado",
+  "input_with_label_label": "Com rótulo",
+  "input_email_placeholder": "E-mail",
+  "input_email_label": "E-mail",
+  "input_name_placeholder": "Nome",
+  "input_password_label": "Senha",
+  "input_password_placeholder": "Senha",
+  "input_new_password_label": "Nova senha"
 }

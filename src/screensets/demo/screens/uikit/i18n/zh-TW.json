@@ -418,5 +418,16 @@
   "tabs_current_password": "目前密碼",
   "tabs_new_password": "新密碼",
   "tabs_save_changes": "儲存變更",
-  "tabs_save_password": "儲存密碼"
+  "tabs_save_password": "儲存密碼",
+  "input_heading": "輸入框",
+  "input_default_label": "預設",
+  "input_file_label": "檔案",
+  "input_disabled_label": "停用",
+  "input_with_label_label": "帶標籤",
+  "input_email_placeholder": "電子郵件",
+  "input_email_label": "電子郵件",
+  "input_name_placeholder": "姓名",
+  "input_password_label": "密碼",
+  "input_password_placeholder": "密碼",
+  "input_new_password_label": "新密碼"
 }

@@ -418,5 +418,16 @@
   "tabs_current_password": "Mot de passe actuel",
   "tabs_new_password": "Nouveau mot de passe",
   "tabs_save_changes": "Enregistrer les modifications",
-  "tabs_save_password": "Enregistrer le mot de passe"
+  "tabs_save_password": "Enregistrer le mot de passe",
+  "input_heading": "Champ de saisie",
+  "input_default_label": "Par défaut",
+  "input_file_label": "Fichier",
+  "input_disabled_label": "Désactivé",
+  "input_with_label_label": "Avec label",
+  "input_email_placeholder": "E-mail",
+  "input_email_label": "E-mail",
+  "input_name_placeholder": "Nom",
+  "input_password_label": "Mot de passe",
+  "input_password_placeholder": "Mot de passe",
+  "input_new_password_label": "Nouveau mot de passe"
 }

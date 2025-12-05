@@ -418,5 +418,16 @@
   "tabs_current_password": "Current password",
   "tabs_new_password": "New password",
   "tabs_save_changes": "Save changes",
-  "tabs_save_password": "Save password"
+  "tabs_save_password": "Save password",
+  "input_heading": "Input",
+  "input_default_label": "Default",
+  "input_file_label": "File",
+  "input_disabled_label": "Disabled",
+  "input_with_label_label": "With Label",
+  "input_email_placeholder": "Email",
+  "input_email_label": "Email",
+  "input_name_placeholder": "Name",
+  "input_password_label": "Password",
+  "input_password_placeholder": "Password",
+  "input_new_password_label": "New password"
 }

@@ -418,5 +418,16 @@
   "tabs_current_password": "Текущий пароль",
   "tabs_new_password": "Новый пароль",
   "tabs_save_changes": "Сохранить изменения",
-  "tabs_save_password": "Сохранить пароль"
+  "tabs_save_password": "Сохранить пароль",
+  "input_heading": "Поле ввода",
+  "input_default_label": "По умолчанию",
+  "input_file_label": "Файл",
+  "input_disabled_label": "Отключено",
+  "input_with_label_label": "С меткой",
+  "input_email_placeholder": "Эл. почта",
+  "input_email_label": "Эл. почта",
+  "input_name_placeholder": "Имя",
+  "input_password_label": "Пароль",
+  "input_password_placeholder": "Пароль",
+  "input_new_password_label": "Новый пароль"
 }

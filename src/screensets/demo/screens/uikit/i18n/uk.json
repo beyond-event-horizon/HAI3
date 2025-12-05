@@ -418,5 +418,16 @@
   "tabs_current_password": "Current password",
   "tabs_new_password": "New password",
   "tabs_save_changes": "Save changes",
-  "tabs_save_password": "Save password"
+  "tabs_save_password": "Save password",
+  "input_heading": "Поле введення",
+  "input_default_label": "За замовчуванням",
+  "input_file_label": "Файл",
+  "input_disabled_label": "Вимкнено",
+  "input_with_label_label": "З міткою",
+  "input_email_placeholder": "Ел. пошта",
+  "input_email_label": "Ел. пошта",
+  "input_name_placeholder": "Ім'я",
+  "input_password_label": "Пароль",
+  "input_password_placeholder": "Пароль",
+  "input_new_password_label": "Новий пароль"
 }

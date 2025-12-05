@@ -418,5 +418,16 @@
   "tabs_current_password": "現在のパスワード",
   "tabs_new_password": "新しいパスワード",
   "tabs_save_changes": "変更を保存",
-  "tabs_save_password": "パスワードを保存"
+  "tabs_save_password": "パスワードを保存",
+  "input_heading": "入力フィールド",
+  "input_default_label": "デフォルト",
+  "input_file_label": "ファイル",
+  "input_disabled_label": "無効",
+  "input_with_label_label": "ラベル付き",
+  "input_email_placeholder": "メール",
+  "input_email_label": "メール",
+  "input_name_placeholder": "名前",
+  "input_password_label": "パスワード",
+  "input_password_placeholder": "パスワード",
+  "input_new_password_label": "新しいパスワード"
 }

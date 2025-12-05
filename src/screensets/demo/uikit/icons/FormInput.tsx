@@ -19,7 +19,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   return (
     <Input
       id={id}
-      className={`${linkClassName} ${className}`.trim()}
+      className={`max-w-sm ${linkClassName} ${className}`.trim()}
       {...props}
     />
   );

@@ -414,5 +414,16 @@
   "tabs_current_password": "كلمة المرور الحالية",
   "tabs_new_password": "كلمة المرور الجديدة",
   "tabs_save_changes": "حفظ التغييرات",
-  "tabs_save_password": "حفظ كلمة المرور"
+  "tabs_save_password": "حفظ كلمة المرور",
+  "input_heading": "حقل الإدخال",
+  "input_default_label": "افتراضي",
+  "input_file_label": "ملف",
+  "input_disabled_label": "معطل",
+  "input_with_label_label": "مع تسمية",
+  "input_email_placeholder": "البريد الإلكتروني",
+  "input_email_label": "البريد الإلكتروني",
+  "input_name_placeholder": "الاسم",
+  "input_password_label": "كلمة المرور",
+  "input_password_placeholder": "كلمة المرور",
+  "input_new_password_label": "كلمة المرور الجديدة"
 }
