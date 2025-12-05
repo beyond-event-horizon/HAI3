@@ -37,10 +37,23 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+  Button,
 } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { Slash } from 'lucide-react';
 import { DEMO_SCREENSET_ID } from "../ids";
+import { FormInput } from '../uikit/icons/FormInput';
+import { FormLabel } from '../uikit/icons/FormLabel';
 import { UI_KIT_ELEMENTS_SCREEN_ID } from "../ids";
 
 /**
@@ -446,6 +459,71 @@ export const NavigationElements: React.FC = () => {
               </PaginationItem>
             </PaginationContent>
           </Pagination>
+        </div>
+      </div>
+
+      {/* Tabs Element Block */}
+      <div data-element-id="element-tabs" className="flex flex-col gap-4">
+        <TextLoader skeletonClassName="h-8 w-32">
+          <h2 className="text-2xl font-semibold">
+            {tk('tabs_heading')}
+          </h2>
+        </TextLoader>
+        <div className="flex flex-col gap-6 p-6 border border-border rounded-lg bg-background overflow-hidden">
+          <div className="flex w-full max-w-sm flex-col gap-6">
+            <Tabs defaultValue="account">
+              <TabsList>
+                <TabsTrigger value="account">{tk('tabs_account')}</TabsTrigger>
+                <TabsTrigger value="password">{tk('tabs_password')}</TabsTrigger>
+              </TabsList>
+              <TabsContent value="account">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{tk('tabs_account_title')}</CardTitle>
+                    <CardDescription>
+                      {tk('tabs_account_description')}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="grid gap-6">
+                    <div className="grid gap-3">
+                      <FormLabel htmlFor="tabs-demo-name">{tk('tabs_name')}</FormLabel>
+                      <FormInput id="tabs-demo-name" defaultValue="Pedro Duarte" />
+                    </div>
+                    <div className="grid gap-3">
+                      <FormLabel htmlFor="tabs-demo-username">{tk('tabs_username')}</FormLabel>
+                      <FormInput id="tabs-demo-username" defaultValue="@peduarte" />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button>{tk('tabs_save_changes')}</Button>
+                  </CardFooter>
+                </Card>
+              </TabsContent>
+              <TabsContent value="password">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>{tk('tabs_password_title')}</CardTitle>
+                    <CardDescription>
+                      {tk('tabs_password_description')}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="grid gap-6">
+                    <div className="grid gap-3">
+                      <FormLabel htmlFor="tabs-demo-current">{tk('tabs_current_password')}</FormLabel>
+                      <FormInput id="tabs-demo-current" type="password" />
+                    </div>
+                    <div className="grid gap-3">
+                      <FormLabel htmlFor="tabs-demo-new">{tk('tabs_new_password')}</FormLabel>
+                      <FormInput id="tabs-demo-new" type="password" />
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button>{tk('tabs_save_password')}</Button>
+                  </CardFooter>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </div>
     </>

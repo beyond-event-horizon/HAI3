@@ -405,5 +405,18 @@
   "navigation_menu_scroll_area_desc": "在视觉或语义上分隔内容。",
   "pagination_heading": "分页",
   "pagination_previous": "上一页",
-  "pagination_next": "下一页"
+  "pagination_next": "下一页",
+  "tabs_heading": "标签页",
+  "tabs_account": "账户",
+  "tabs_password": "密码",
+  "tabs_account_title": "账户",
+  "tabs_account_description": "在此处修改您的账户。完成后点击保存。",
+  "tabs_password_title": "密码",
+  "tabs_password_description": "在此处更改密码。保存后将退出登录。",
+  "tabs_name": "姓名",
+  "tabs_username": "用户名",
+  "tabs_current_password": "当前密码",
+  "tabs_new_password": "新密码",
+  "tabs_save_changes": "保存更改",
+  "tabs_save_password": "保存密码"
 }

@@ -401,5 +401,18 @@
   "navigation_menu_scroll_area_desc": "Separa contenido visual o semánticamente.",
   "pagination_heading": "Paginación",
   "pagination_previous": "Anterior",
-  "pagination_next": "Siguiente"
+  "pagination_next": "Siguiente",
+  "tabs_heading": "Pestañas",
+  "tabs_account": "Cuenta",
+  "tabs_password": "Contraseña",
+  "tabs_account_title": "Cuenta",
+  "tabs_account_description": "Realiza cambios en tu cuenta aquí. Haz clic en guardar cuando hayas terminado.",
+  "tabs_password_title": "Contraseña",
+  "tabs_password_description": "Cambia tu contraseña aquí. Después de guardar, se cerrará tu sesión.",
+  "tabs_name": "Nombre",
+  "tabs_username": "Usuario",
+  "tabs_current_password": "Contraseña actual",
+  "tabs_new_password": "Nueva contraseña",
+  "tabs_save_changes": "Guardar cambios",
+  "tabs_save_password": "Guardar contraseña"
 }

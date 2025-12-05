@@ -405,5 +405,18 @@
   "navigation_menu_scroll_area_desc": "在視覺或語意上分隔內容。",
   "pagination_heading": "分頁",
   "pagination_previous": "上一頁",
-  "pagination_next": "下一頁"
+  "pagination_next": "下一頁",
+  "tabs_heading": "標籤頁",
+  "tabs_account": "帳戶",
+  "tabs_password": "密碼",
+  "tabs_account_title": "帳戶",
+  "tabs_account_description": "在此處修改您的帳戶。完成後點擊儲存。",
+  "tabs_password_title": "密碼",
+  "tabs_password_description": "在此處更改密碼。儲存後將登出。",
+  "tabs_name": "姓名",
+  "tabs_username": "使用者名稱",
+  "tabs_current_password": "目前密碼",
+  "tabs_new_password": "新密碼",
+  "tabs_save_changes": "儲存變更",
+  "tabs_save_password": "儲存密碼"
 }

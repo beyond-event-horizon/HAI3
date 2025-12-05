@@ -405,5 +405,18 @@
   "navigation_menu_scroll_area_desc": "コンテンツを視覚的または意味的に分離。",
   "pagination_heading": "ページネーション",
   "pagination_previous": "前へ",
-  "pagination_next": "次へ"
+  "pagination_next": "次へ",
+  "tabs_heading": "タブ",
+  "tabs_account": "アカウント",
+  "tabs_password": "パスワード",
+  "tabs_account_title": "アカウント",
+  "tabs_account_description": "ここでアカウントを変更できます。完了したら保存をクリックしてください。",
+  "tabs_password_title": "パスワード",
+  "tabs_password_description": "ここでパスワードを変更できます。保存後、ログアウトされます。",
+  "tabs_name": "名前",
+  "tabs_username": "ユーザー名",
+  "tabs_current_password": "現在のパスワード",
+  "tabs_new_password": "新しいパスワード",
+  "tabs_save_changes": "変更を保存",
+  "tabs_save_password": "パスワードを保存"
 }

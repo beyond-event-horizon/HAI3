@@ -401,5 +401,18 @@
   "navigation_menu_scroll_area_desc": "يفصل المحتوى بصريًا أو دلاليًا.",
   "pagination_heading": "ترقيم الصفحات",
   "pagination_previous": "السابق",
-  "pagination_next": "التالي"
+  "pagination_next": "التالي",
+  "tabs_heading": "علامات التبويب",
+  "tabs_account": "الحساب",
+  "tabs_password": "كلمة المرور",
+  "tabs_account_title": "الحساب",
+  "tabs_account_description": "قم بإجراء التغييرات على حسابك هنا. انقر على حفظ عند الانتهاء.",
+  "tabs_password_title": "كلمة المرور",
+  "tabs_password_description": "غيّر كلمة مرورك هنا. بعد الحفظ، سيتم تسجيل خروجك.",
+  "tabs_name": "الاسم",
+  "tabs_username": "اسم المستخدم",
+  "tabs_current_password": "كلمة المرور الحالية",
+  "tabs_new_password": "كلمة المرور الجديدة",
+  "tabs_save_changes": "حفظ التغييرات",
+  "tabs_save_password": "حفظ كلمة المرور"
 }

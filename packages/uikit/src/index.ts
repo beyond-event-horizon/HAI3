@@ -77,6 +77,14 @@ export {
   PaginationEllipsis,
 } from './base/pagination';
 
+// shadcn tabs
+export {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from './base/tabs';
+
 // shadcn sheet (sidebar)
 export {
   Sheet,

@@ -2,6 +2,7 @@ import React from 'react';
 import { AspectRatio, Button, ButtonVariant, ButtonSize, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose, ResizablePanelGroup, ResizablePanel, ResizableHandle, ScrollArea, ScrollBar, Separator, Sheet, SheetTrigger, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, Avatar, AvatarImage, AvatarFallback, Badge } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { FormInput } from '../uikit/icons/FormInput';
+import { FormLabel } from '../uikit/icons/FormLabel';
 import { DEMO_SCREENSET_ID } from "../ids";
 import { UI_KIT_ELEMENTS_SCREEN_ID } from "../ids";
 
@@ -193,9 +194,9 @@ export const LayoutElements: React.FC = () => {
                   <div className="flex flex-col gap-6">
                     <div className="grid gap-2">
                       <TextLoader skeletonClassName="h-4 w-12" inheritColor>
-                        <label htmlFor="email" className="text-sm font-medium">
+                        <FormLabel htmlFor="email">
                           {tk('card_form_email_label')}
-                        </label>
+                        </FormLabel>
                       </TextLoader>
                       <FormInput
                         id="email"
@@ -207,9 +208,9 @@ export const LayoutElements: React.FC = () => {
                     <div className="grid gap-2">
                       <div className="flex items-center">
                         <TextLoader skeletonClassName="h-4 w-16" inheritColor>
-                          <label htmlFor="password" className="text-sm font-medium">
+                          <FormLabel htmlFor="password">
                             {tk('card_form_password_label')}
-                          </label>
+                          </FormLabel>
                         </TextLoader>
                         <TextLoader skeletonClassName="h-4 w-32 ml-auto" inheritColor>
                           <a
@@ -280,9 +281,9 @@ export const LayoutElements: React.FC = () => {
                 <div className="grid gap-4">
                   <div className="grid gap-3">
                     <TextLoader skeletonClassName="h-4 w-12" inheritColor>
-                      <label htmlFor="name-1" className="text-sm font-medium">
+                      <FormLabel htmlFor="name-1">
                         {tk('dialog_name_label')}
-                      </label>
+                      </FormLabel>
                     </TextLoader>
                     <FormInput
                       id="name-1"
@@ -293,9 +294,9 @@ export const LayoutElements: React.FC = () => {
                   </div>
                   <div className="grid gap-3">
                     <TextLoader skeletonClassName="h-4 w-20" inheritColor>
-                      <label htmlFor="username-1" className="text-sm font-medium">
+                      <FormLabel htmlFor="username-1">
                         {tk('dialog_username_label')}
-                      </label>
+                      </FormLabel>
                     </TextLoader>
                     <FormInput
                       id="username-1"
@@ -678,12 +679,12 @@ export const LayoutElements: React.FC = () => {
                   </TextLoader>
                 </SheetDescription>
               </SheetHeader>
-              <div className="grid flex-1 auto-rows-min gap-6 px-4">
+              <div className="grid flex-1 auto-rows-min gap-6 px-4 py-4">
                 <div className="grid gap-3">
                   <TextLoader skeletonClassName="h-4 w-12" inheritColor>
-                    <label htmlFor="sheet-demo-name" className="text-sm font-medium">
+                    <FormLabel htmlFor="sheet-demo-name">
                       {tk('sheet_name_label')}
-                    </label>
+                    </FormLabel>
                   </TextLoader>
                   <FormInput
                     id="sheet-demo-name"
@@ -693,9 +694,9 @@ export const LayoutElements: React.FC = () => {
                 </div>
                 <div className="grid gap-3">
                   <TextLoader skeletonClassName="h-4 w-20" inheritColor>
-                    <label htmlFor="sheet-demo-username" className="text-sm font-medium">
+                    <FormLabel htmlFor="sheet-demo-username">
                       {tk('sheet_username_label')}
-                    </label>
+                    </FormLabel>
                   </TextLoader>
                   <FormInput
                     id="sheet-demo-username"

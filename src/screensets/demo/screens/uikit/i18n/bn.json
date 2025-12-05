@@ -405,5 +405,18 @@
   "navigation_menu_scroll_area_desc": "Visually or semantically separates content.",
   "pagination_heading": "পৃষ্ঠা নম্বরকরণ",
   "pagination_previous": "আগের",
-  "pagination_next": "পরবর্তী"
+  "pagination_next": "পরবর্তী",
+  "tabs_heading": "Tabs",
+  "tabs_account": "Account",
+  "tabs_password": "Password",
+  "tabs_account_title": "Account",
+  "tabs_account_description": "Make changes to your account here. Click save when you're done.",
+  "tabs_password_title": "Password",
+  "tabs_password_description": "Change your password here. After saving, you'll be logged out.",
+  "tabs_name": "Name",
+  "tabs_username": "Username",
+  "tabs_current_password": "Current password",
+  "tabs_new_password": "New password",
+  "tabs_save_changes": "Save changes",
+  "tabs_save_password": "Save password"
 }

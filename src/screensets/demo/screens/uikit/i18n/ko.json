@@ -405,5 +405,18 @@
   "navigation_menu_scroll_area_desc": "시각적 또는 의미적으로 콘텐츠를 분리.",
   "pagination_heading": "페이지네이션",
   "pagination_previous": "이전",
-  "pagination_next": "다음"
+  "pagination_next": "다음",
+  "tabs_heading": "탭",
+  "tabs_account": "계정",
+  "tabs_password": "비밀번호",
+  "tabs_account_title": "계정",
+  "tabs_account_description": "여기서 계정을 변경하세요. 완료되면 저장을 클릭하세요.",
+  "tabs_password_title": "비밀번호",
+  "tabs_password_description": "여기서 비밀번호를 변경하세요. 저장 후 로그아웃됩니다.",
+  "tabs_name": "이름",
+  "tabs_username": "사용자 이름",
+  "tabs_current_password": "현재 비밀번호",
+  "tabs_new_password": "새 비밀번호",
+  "tabs_save_changes": "변경 사항 저장",
+  "tabs_save_password": "비밀번호 저장"
 }

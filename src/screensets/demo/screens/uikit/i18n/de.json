@@ -405,5 +405,18 @@
   "navigation_menu_scroll_area_desc": "Trennt Inhalte visuell oder semantisch.",
   "pagination_heading": "Seitennavigation",
   "pagination_previous": "Zurück",
-  "pagination_next": "Weiter"
+  "pagination_next": "Weiter",
+  "tabs_heading": "Tabs",
+  "tabs_account": "Konto",
+  "tabs_password": "Passwort",
+  "tabs_account_title": "Konto",
+  "tabs_account_description": "Nehmen Sie hier Änderungen an Ihrem Konto vor. Klicken Sie auf Speichern, wenn Sie fertig sind.",
+  "tabs_password_title": "Passwort",
+  "tabs_password_description": "Ändern Sie hier Ihr Passwort. Nach dem Speichern werden Sie abgemeldet.",
+  "tabs_name": "Name",
+  "tabs_username": "Benutzername",
+  "tabs_current_password": "Aktuelles Passwort",
+  "tabs_new_password": "Neues Passwort",
+  "tabs_save_changes": "Änderungen speichern",
+  "tabs_save_password": "Passwort speichern"
 }

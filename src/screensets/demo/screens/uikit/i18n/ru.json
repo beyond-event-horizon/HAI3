@@ -405,5 +405,18 @@
   "navigation_menu_scroll_area_desc": "Визуально или семантически разделяет контент.",
   "pagination_heading": "Пагинация",
   "pagination_previous": "Назад",
-  "pagination_next": "Далее"
+  "pagination_next": "Далее",
+  "tabs_heading": "Вкладки",
+  "tabs_account": "Аккаунт",
+  "tabs_password": "Пароль",
+  "tabs_account_title": "Аккаунт",
+  "tabs_account_description": "Внесите изменения в свой аккаунт здесь. Нажмите сохранить, когда закончите.",
+  "tabs_password_title": "Пароль",
+  "tabs_password_description": "Измените пароль здесь. После сохранения вы выйдете из системы.",
+  "tabs_name": "Имя",
+  "tabs_username": "Имя пользователя",
+  "tabs_current_password": "Текущий пароль",
+  "tabs_new_password": "Новый пароль",
+  "tabs_save_changes": "Сохранить изменения",
+  "tabs_save_password": "Сохранить пароль"
 }
