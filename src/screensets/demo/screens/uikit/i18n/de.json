@@ -402,5 +402,8 @@
   "navigation_menu_progress": "Fortschritt",
   "navigation_menu_progress_desc": "Zeigt einen Indikator für den Fertigstellungsfortschritt einer Aufgabe an.",
   "navigation_menu_scroll_area": "Scrollbereich",
-  "navigation_menu_scroll_area_desc": "Trennt Inhalte visuell oder semantisch."
+  "navigation_menu_scroll_area_desc": "Trennt Inhalte visuell oder semantisch.",
+  "pagination_heading": "Seitennavigation",
+  "pagination_previous": "Zurück",
+  "pagination_next": "Weiter"
 }

@@ -402,5 +402,8 @@
   "navigation_menu_progress": "진행률",
   "navigation_menu_progress_desc": "작업 완료 진행률을 보여주는 표시기.",
   "navigation_menu_scroll_area": "스크롤 영역",
-  "navigation_menu_scroll_area_desc": "시각적 또는 의미적으로 콘텐츠를 분리."
+  "navigation_menu_scroll_area_desc": "시각적 또는 의미적으로 콘텐츠를 분리.",
+  "pagination_heading": "페이지네이션",
+  "pagination_previous": "이전",
+  "pagination_next": "다음"
 }

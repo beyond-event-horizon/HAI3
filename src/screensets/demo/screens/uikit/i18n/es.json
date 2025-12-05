@@ -398,5 +398,8 @@
   "navigation_menu_progress": "Progreso",
   "navigation_menu_progress_desc": "Muestra un indicador del progreso de completación de una tarea.",
   "navigation_menu_scroll_area": "Área de desplazamiento",
-  "navigation_menu_scroll_area_desc": "Separa contenido visual o semánticamente."
+  "navigation_menu_scroll_area_desc": "Separa contenido visual o semánticamente.",
+  "pagination_heading": "Paginación",
+  "pagination_previous": "Anterior",
+  "pagination_next": "Siguiente"
 }

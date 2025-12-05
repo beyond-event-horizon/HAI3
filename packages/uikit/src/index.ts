@@ -66,6 +66,17 @@ export {
   MenubarSubContent,
 } from './base/menubar';
 
+// shadcn pagination
+export {
+  Pagination,
+  PaginationContent,
+  PaginationLink,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+} from './base/pagination';
+
 // shadcn sheet (sidebar)
 export {
   Sheet,

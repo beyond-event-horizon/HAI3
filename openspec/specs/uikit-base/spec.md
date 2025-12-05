@@ -542,3 +542,144 @@ Given a user viewing the breadcrumb demo in a non-English language
 When translations are loaded
 Then all breadcrumb labels display in the selected language
 
+### Requirement: Pagination Component
+The UI kit SHALL provide Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, and PaginationEllipsis components for building accessible pagination controls with page links, navigation arrows, and ellipsis for truncated page ranges.
+
+#### Scenario: Basic Pagination Navigation
+Given a user viewing paginated content
+When the pagination component is rendered
+Then the pagination displays previous/next controls and page number links with proper ARIA labels
+
+### Requirement: Pagination Demo Example
+The UI kit demo SHALL provide an example for the Pagination component in the Navigation category demonstrating previous/next navigation, numbered page links with active state, and ellipsis for truncated ranges, using `tk()` for translations.
+
+#### Scenario: Demo Example Display
+Given a user viewing the Navigation category in UIKitElementsScreen
+When the Pagination example is rendered
+Then a functional pagination with numbered pages and navigation controls is displayed
+
+### Requirement: Pagination in Category System
+The UI kit element registry SHALL include 'Pagination' in the IMPLEMENTED_ELEMENTS array to mark it as an available component in the Navigation category.
+
+#### Scenario: Category Menu Shows Pagination
+Given a user viewing the UIKit category menu
+When the Navigation category is selected
+Then 'Pagination' appears as an implemented element
+
+### Requirement: Pagination Translations
+The UI kit translations SHALL provide localized strings for all 36 supported languages with keys including:
+- `pagination_heading` - Section heading
+- `pagination_previous` - Previous button label
+- `pagination_next` - Next button label
+
+#### Scenario: Translated Pagination Labels
+Given a user viewing the pagination demo in a non-English language
+When translations are loaded
+Then all pagination labels display in the selected language
+
+### Requirement: Navigation Menu Demo Example
+The UI kit demo SHALL provide an example for the Navigation Menu component in the Navigation category demonstrating a horizontal navigation bar with dropdown menus containing links and descriptions, using `tk()` for translations.
+
+#### Scenario: Demo Example Display
+Given a user viewing the Navigation category in UIKitElementsScreen
+When the Navigation Menu example is rendered
+Then a functional navigation menu with expandable dropdown sections is displayed
+
+### Requirement: Navigation Menu in Category System
+The UI kit element registry SHALL include 'Navigation Menu' in the IMPLEMENTED_ELEMENTS array to mark it as an available component in the Navigation category.
+
+#### Scenario: Category Menu Shows Navigation Menu
+Given a user viewing the UIKit category menu
+When the Navigation category is selected
+Then 'Navigation Menu' appears as an implemented element
+
+### Requirement: Navigation Menu Translations
+The UI kit translations SHALL provide localized strings for all 36 supported languages with keys including:
+- `navigation_menu_heading` - Section heading
+- `navigation_menu_getting_started` - Getting Started menu trigger
+- `navigation_menu_components` - Components menu trigger
+- `navigation_menu_documentation` - Documentation link
+- `navigation_menu_hai3_desc` - HAI3 description
+- `navigation_menu_introduction` - Introduction link title
+- `navigation_menu_introduction_desc` - Introduction link description
+- `navigation_menu_installation` - Installation link title
+- `navigation_menu_installation_desc` - Installation link description
+- `navigation_menu_typography` - Typography link title
+- `navigation_menu_typography_desc` - Typography link description
+- `navigation_menu_alert_dialog` - Alert Dialog link title
+- `navigation_menu_alert_dialog_desc` - Alert Dialog link description
+- `navigation_menu_hover_card` - Hover Card link title
+- `navigation_menu_hover_card_desc` - Hover Card link description
+- `navigation_menu_progress` - Progress link title
+- `navigation_menu_progress_desc` - Progress link description
+- `navigation_menu_scroll_area` - Scroll Area link title
+- `navigation_menu_scroll_area_desc` - Scroll Area link description
+
+#### Scenario: Translated Navigation Menu Labels
+Given a user viewing the navigation menu demo in a non-English language
+When translations are loaded
+Then all navigation menu labels display in the selected language
+
+### Requirement: Menubar Component
+The UI kit SHALL provide Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem, MenubarSeparator, MenubarLabel, MenubarCheckboxItem, MenubarRadioGroup, MenubarRadioItem, MenubarSub, MenubarSubTrigger, MenubarSubContent, MenubarShortcut, MenubarGroup, and MenubarPortal components for building desktop-style menu bar interfaces with support for submenus, checkbox items, radio groups, and keyboard navigation.
+
+#### Scenario: Desktop Menu Interface
+Given a user viewing an application with a menubar
+When the menubar component is rendered
+Then the menubar displays menu triggers with accessible dropdown menus and keyboard navigation
+
+### Requirement: Menubar Demo Example
+The UI kit demo SHALL provide an example for the Menubar component in the Navigation category demonstrating a complete menu bar with File, Edit, and View menus including submenus, checkboxes, radio items, and keyboard shortcuts using `tk()` for translations.
+
+#### Scenario: Demo Example Display
+Given a user viewing the Navigation category in UIKitElementsScreen
+When the Menubar example is rendered
+Then a functional menu bar with multiple menus and interactive items is displayed
+
+### Requirement: Menubar in Category System
+The UI kit element registry SHALL include 'Menubar' in the IMPLEMENTED_ELEMENTS array to mark it as an available component in the Navigation category.
+
+#### Scenario: Category Menu Shows Menubar
+Given a user viewing the UIKit category menu
+When the Navigation category is selected
+Then 'Menubar' appears as an implemented element
+
+### Requirement: Menubar Translations
+The UI kit translations SHALL provide localized strings for all 36 supported languages with keys including:
+- `menubar_heading` - Section heading
+- `menubar_file` - File menu
+- `menubar_edit` - Edit menu
+- `menubar_view` - View menu
+- `menubar_profiles` - Profiles menu
+- `menubar_new_tab` - New Tab item
+- `menubar_new_window` - New Window item
+- `menubar_new_incognito` - New Incognito Window item (disabled)
+- `menubar_share` - Share submenu
+- `menubar_email` - Email item
+- `menubar_messages` - Messages item
+- `menubar_notes` - Notes item
+- `menubar_print` - Print item
+- `menubar_undo` - Undo item
+- `menubar_redo` - Redo item
+- `menubar_find` - Find submenu
+- `menubar_search_web` - Search the web item
+- `menubar_find_file` - Find... item
+- `menubar_find_next` - Find Next item
+- `menubar_find_previous` - Find Previous item
+- `menubar_cut` - Cut item
+- `menubar_copy` - Copy item
+- `menubar_paste` - Paste item
+- `menubar_always_show_bookmarks` - Always Show Bookmarks Bar checkbox
+- `menubar_always_show_full_urls` - Always Show Full URLs checkbox
+- `menubar_reload` - Reload item
+- `menubar_force_reload` - Force Reload item (disabled)
+- `menubar_toggle_fullscreen` - Toggle Fullscreen item
+- `menubar_hide_sidebar` - Hide Sidebar item
+- `menubar_edit_profile` - Edit profile item
+- `menubar_add_profile` - Add Profile item
+
+#### Scenario: Translated Menubar Labels
+Given a user viewing the menubar demo in a non-English language
+When translations are loaded
+Then all menubar labels display in the selected language
+

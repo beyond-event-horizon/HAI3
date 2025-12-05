@@ -182,6 +182,7 @@ export const IMPLEMENTED_ELEMENTS = [
   'Hover Card',
   'Menubar',
   'Navigation Menu',
+  'Pagination',
   'Popover',
   'Progress',
   'Resizable',

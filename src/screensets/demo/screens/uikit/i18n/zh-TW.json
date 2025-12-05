@@ -402,5 +402,8 @@
   "navigation_menu_progress": "進度",
   "navigation_menu_progress_desc": "顯示任務完成進度的指示器。",
   "navigation_menu_scroll_area": "捲動區域",
-  "navigation_menu_scroll_area_desc": "在視覺或語意上分隔內容。"
+  "navigation_menu_scroll_area_desc": "在視覺或語意上分隔內容。",
+  "pagination_heading": "分頁",
+  "pagination_previous": "上一頁",
+  "pagination_next": "下一頁"
 }

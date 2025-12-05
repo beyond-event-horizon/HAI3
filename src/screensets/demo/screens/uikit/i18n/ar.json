@@ -398,5 +398,8 @@
   "navigation_menu_progress": "التقدم",
   "navigation_menu_progress_desc": "يعرض مؤشر يوضح تقدم إكمال المهمة.",
   "navigation_menu_scroll_area": "منطقة التمرير",
-  "navigation_menu_scroll_area_desc": "يفصل المحتوى بصريًا أو دلاليًا."
+  "navigation_menu_scroll_area_desc": "يفصل المحتوى بصريًا أو دلاليًا.",
+  "pagination_heading": "ترقيم الصفحات",
+  "pagination_previous": "السابق",
+  "pagination_next": "التالي"
 }

@@ -402,5 +402,8 @@
   "navigation_menu_progress": "进度",
   "navigation_menu_progress_desc": "显示任务完成进度的指示器。",
   "navigation_menu_scroll_area": "滚动区域",
-  "navigation_menu_scroll_area_desc": "在视觉或语义上分隔内容。"
+  "navigation_menu_scroll_area_desc": "在视觉或语义上分隔内容。",
+  "pagination_heading": "分页",
+  "pagination_previous": "上一页",
+  "pagination_next": "下一页"
 }

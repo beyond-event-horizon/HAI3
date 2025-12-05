@@ -402,5 +402,8 @@
   "navigation_menu_progress": "Progresso",
   "navigation_menu_progress_desc": "Exibe um indicador mostrando o progresso de uma tarefa.",
   "navigation_menu_scroll_area": "Área de rolagem",
-  "navigation_menu_scroll_area_desc": "Separa conteúdo visual ou semanticamente."
+  "navigation_menu_scroll_area_desc": "Separa conteúdo visual ou semanticamente.",
+  "pagination_heading": "Paginação",
+  "pagination_previous": "Anterior",
+  "pagination_next": "Próximo"
 }

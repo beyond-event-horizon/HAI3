@@ -402,5 +402,8 @@
   "navigation_menu_progress": "プログレス",
   "navigation_menu_progress_desc": "タスクの完了進捗を示すインジケーターを表示。",
   "navigation_menu_scroll_area": "スクロールエリア",
-  "navigation_menu_scroll_area_desc": "コンテンツを視覚的または意味的に分離。"
+  "navigation_menu_scroll_area_desc": "コンテンツを視覚的または意味的に分離。",
+  "pagination_heading": "ページネーション",
+  "pagination_previous": "前へ",
+  "pagination_next": "次へ"
 }

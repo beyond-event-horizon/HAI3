@@ -402,5 +402,8 @@
   "navigation_menu_progress": "Прогресс",
   "navigation_menu_progress_desc": "Отображает индикатор завершения задачи.",
   "navigation_menu_scroll_area": "Область прокрутки",
-  "navigation_menu_scroll_area_desc": "Визуально или семантически разделяет контент."
+  "navigation_menu_scroll_area_desc": "Визуально или семантически разделяет контент.",
+  "pagination_heading": "Пагинация",
+  "pagination_previous": "Назад",
+  "pagination_next": "Далее"
 }

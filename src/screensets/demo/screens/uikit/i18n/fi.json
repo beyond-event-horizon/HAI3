@@ -402,5 +402,8 @@
   "navigation_menu_progress": "Progress",
   "navigation_menu_progress_desc": "Displays an indicator showing the completion progress of a task.",
   "navigation_menu_scroll_area": "Scroll Area",
-  "navigation_menu_scroll_area_desc": "Visually or semantically separates content."
+  "navigation_menu_scroll_area_desc": "Visually or semantically separates content.",
+  "pagination_heading": "Sivutus",
+  "pagination_previous": "Edellinen",
+  "pagination_next": "Seuraava"
 }
