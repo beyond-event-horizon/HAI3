@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Хлебные крошки",
+  "breadcrumb_custom_separator_label": "Пользовательский разделитель",
+  "breadcrumb_dropdown_label": "Выпадающее меню",
+  "breadcrumb_home": "Главная",
+  "breadcrumb_components": "Компоненты",
+  "breadcrumb_breadcrumb": "Хлебные крошки",
+  "breadcrumb_documentation": "Документация",
+  "breadcrumb_themes": "Темы",
+  "breadcrumb_github": "GitHub"
 }

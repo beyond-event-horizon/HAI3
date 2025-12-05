@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Brødkrumme",
+  "breadcrumb_custom_separator_label": "Brugerdefineret separator",
+  "breadcrumb_dropdown_label": "Rullemenu",
+  "breadcrumb_home": "Hjem",
+  "breadcrumb_components": "Komponenter",
+  "breadcrumb_breadcrumb": "Brødkrumme",
+  "breadcrumb_documentation": "Dokumentation",
+  "breadcrumb_themes": "Temaer",
+  "breadcrumb_github": "GitHub"
 }

@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "ब्रेडक्रम्ब",
+  "breadcrumb_custom_separator_label": "कस्टम सेपरेटर",
+  "breadcrumb_dropdown_label": "ड्रॉपडाउन",
+  "breadcrumb_home": "होम",
+  "breadcrumb_components": "कंपोनेंट्स",
+  "breadcrumb_breadcrumb": "ब्रेडक्रम्ब",
+  "breadcrumb_documentation": "दस्तावेज़ीकरण",
+  "breadcrumb_themes": "थीम्स",
+  "breadcrumb_github": "गिटहब"
 }

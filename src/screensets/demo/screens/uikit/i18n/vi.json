@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Đường dẫn",
+  "breadcrumb_custom_separator_label": "Dấu phân cách tùy chỉnh",
+  "breadcrumb_dropdown_label": "Menu thả xuống",
+  "breadcrumb_home": "Trang chủ",
+  "breadcrumb_components": "Thành phần",
+  "breadcrumb_breadcrumb": "Đường dẫn",
+  "breadcrumb_documentation": "Tài liệu",
+  "breadcrumb_themes": "Chủ đề",
+  "breadcrumb_github": "GitHub"
 }

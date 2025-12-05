@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "נתיב ניווט",
+  "breadcrumb_custom_separator_label": "מפריד מותאם אישית",
+  "breadcrumb_dropdown_label": "תפריט נפתח",
+  "breadcrumb_home": "בית",
+  "breadcrumb_components": "רכיבים",
+  "breadcrumb_breadcrumb": "נתיב ניווט",
+  "breadcrumb_documentation": "תיעוד",
+  "breadcrumb_themes": "ערכות נושא",
+  "breadcrumb_github": "גיטהאב"
 }

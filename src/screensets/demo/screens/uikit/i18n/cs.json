@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Drobečková navigace",
+  "breadcrumb_custom_separator_label": "Vlastní oddělovač",
+  "breadcrumb_dropdown_label": "Rozbalovací nabídka",
+  "breadcrumb_home": "Domů",
+  "breadcrumb_components": "Komponenty",
+  "breadcrumb_breadcrumb": "Drobečková navigace",
+  "breadcrumb_documentation": "Dokumentace",
+  "breadcrumb_themes": "Motivy",
+  "breadcrumb_github": "GitHub"
 }

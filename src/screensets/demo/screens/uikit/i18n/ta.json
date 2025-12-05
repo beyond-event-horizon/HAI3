@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "பிரெட்க்ரம்ப்",
+  "breadcrumb_custom_separator_label": "தனிப்பயன் பிரிப்பான்",
+  "breadcrumb_dropdown_label": "கீழ்தோன்றும் பட்டி",
+  "breadcrumb_home": "முகப்பு",
+  "breadcrumb_components": "கூறுகள்",
+  "breadcrumb_breadcrumb": "பிரெட்க்ரம்ப்",
+  "breadcrumb_documentation": "ஆவணமாக்கம்",
+  "breadcrumb_themes": "கருப்பொருள்கள்",
+  "breadcrumb_github": "கிட்ஹப்"
 }

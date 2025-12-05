@@ -34,11 +34,11 @@ export const UIKIT_CATEGORIES: UIKitCategory[] = [
     label: 'Navigation',
     translationKey: 'category_navigation',
     elements: [
-      'Navigation Menu',
       'Breadcrumb',
+      'Menubar',
+      'Navigation Menu',
       'Pagination',
       'Tabs',
-      'Menubar',
     ],
   },
   {
@@ -169,6 +169,7 @@ export const IMPLEMENTED_ELEMENTS = [
   'Aspect Ratio',
   'Avatar',
   'Badge',
+  'Breadcrumb',
   'Button',
   'Card',
   'Carousel',

@@ -339,5 +339,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "فتات الخبز",
+  "breadcrumb_custom_separator_label": "فاصل مخصص",
+  "breadcrumb_dropdown_label": "قائمة منسدلة",
+  "breadcrumb_home": "الرئيسية",
+  "breadcrumb_components": "المكونات",
+  "breadcrumb_breadcrumb": "فتات الخبز",
+  "breadcrumb_documentation": "التوثيق",
+  "breadcrumb_themes": "السمات",
+  "breadcrumb_github": "جيت هاب"
 }

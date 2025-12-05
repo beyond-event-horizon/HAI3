@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "İçerik Haritası",
+  "breadcrumb_custom_separator_label": "Özel Ayırıcı",
+  "breadcrumb_dropdown_label": "Açılır Menü",
+  "breadcrumb_home": "Ana Sayfa",
+  "breadcrumb_components": "Bileşenler",
+  "breadcrumb_breadcrumb": "İçerik Haritası",
+  "breadcrumb_documentation": "Belgeler",
+  "breadcrumb_themes": "Temalar",
+  "breadcrumb_github": "GitHub"
 }

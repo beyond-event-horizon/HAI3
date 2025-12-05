@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Okruchy chleba",
+  "breadcrumb_custom_separator_label": "Niestandardowy separator",
+  "breadcrumb_dropdown_label": "Menu rozwijane",
+  "breadcrumb_home": "Strona główna",
+  "breadcrumb_components": "Komponenty",
+  "breadcrumb_breadcrumb": "Okruchy chleba",
+  "breadcrumb_documentation": "Dokumentacja",
+  "breadcrumb_themes": "Motywy",
+  "breadcrumb_github": "GitHub"
 }

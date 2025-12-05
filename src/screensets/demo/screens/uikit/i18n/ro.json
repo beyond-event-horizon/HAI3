@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Breadcrumb",
+  "breadcrumb_custom_separator_label": "Separator personalizat",
+  "breadcrumb_dropdown_label": "Meniu derulant",
+  "breadcrumb_home": "Acasă",
+  "breadcrumb_components": "Componente",
+  "breadcrumb_breadcrumb": "Breadcrumb",
+  "breadcrumb_documentation": "Documentație",
+  "breadcrumb_themes": "Teme",
+  "breadcrumb_github": "GitHub"
 }

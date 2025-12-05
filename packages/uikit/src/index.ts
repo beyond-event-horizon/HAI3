@@ -35,6 +35,17 @@ export {
   NavigationMenuViewport,
 } from './base/navigation-menu';
 
+// shadcn breadcrumb
+export {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+} from './base/breadcrumb';
+
 // shadcn sheet (sidebar)
 export {
   Sheet,

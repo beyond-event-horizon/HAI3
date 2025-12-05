@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "パンくずリスト",
+  "breadcrumb_custom_separator_label": "カスタム区切り文字",
+  "breadcrumb_dropdown_label": "ドロップダウン",
+  "breadcrumb_home": "ホーム",
+  "breadcrumb_components": "コンポーネント",
+  "breadcrumb_breadcrumb": "パンくずリスト",
+  "breadcrumb_documentation": "ドキュメント",
+  "breadcrumb_themes": "テーマ",
+  "breadcrumb_github": "GitHub"
 }

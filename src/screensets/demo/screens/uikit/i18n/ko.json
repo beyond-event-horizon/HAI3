@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "브레드크럼",
+  "breadcrumb_custom_separator_label": "사용자 정의 구분자",
+  "breadcrumb_dropdown_label": "드롭다운",
+  "breadcrumb_home": "홈",
+  "breadcrumb_components": "컴포넌트",
+  "breadcrumb_breadcrumb": "브레드크럼",
+  "breadcrumb_documentation": "문서",
+  "breadcrumb_themes": "테마",
+  "breadcrumb_github": "GitHub"
 }

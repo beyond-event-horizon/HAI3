@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "ব্রেডক্রাম্ব",
+  "breadcrumb_custom_separator_label": "কাস্টম বিভাজক",
+  "breadcrumb_dropdown_label": "ড্রপডাউন",
+  "breadcrumb_home": "হোম",
+  "breadcrumb_components": "কম্পোনেন্ট",
+  "breadcrumb_breadcrumb": "ব্রেডক্রাম্ব",
+  "breadcrumb_documentation": "ডকুমেন্টেশন",
+  "breadcrumb_themes": "থিম",
+  "breadcrumb_github": "গিটহাব"
 }

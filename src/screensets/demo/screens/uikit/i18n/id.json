@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Breadcrumb",
+  "breadcrumb_custom_separator_label": "Pemisah Kustom",
+  "breadcrumb_dropdown_label": "Dropdown",
+  "breadcrumb_home": "Beranda",
+  "breadcrumb_components": "Komponen",
+  "breadcrumb_breadcrumb": "Breadcrumb",
+  "breadcrumb_documentation": "Dokumentasi",
+  "breadcrumb_themes": "Tema",
+  "breadcrumb_github": "GitHub"
 }

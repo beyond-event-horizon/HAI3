@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "面包屑",
+  "breadcrumb_custom_separator_label": "自定义分隔符",
+  "breadcrumb_dropdown_label": "下拉菜单",
+  "breadcrumb_home": "首页",
+  "breadcrumb_components": "组件",
+  "breadcrumb_breadcrumb": "面包屑",
+  "breadcrumb_documentation": "文档",
+  "breadcrumb_themes": "主题",
+  "breadcrumb_github": "GitHub"
 }

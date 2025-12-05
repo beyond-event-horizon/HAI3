@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Murupolku",
+  "breadcrumb_custom_separator_label": "Mukautettu erotin",
+  "breadcrumb_dropdown_label": "Pudotusvalikko",
+  "breadcrumb_home": "Etusivu",
+  "breadcrumb_components": "Komponentit",
+  "breadcrumb_breadcrumb": "Murupolku",
+  "breadcrumb_documentation": "Dokumentaatio",
+  "breadcrumb_themes": "Teemat",
+  "breadcrumb_github": "GitHub"
 }

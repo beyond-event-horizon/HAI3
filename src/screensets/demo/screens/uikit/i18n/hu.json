@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Kenyérmorzsa",
+  "breadcrumb_custom_separator_label": "Egyéni elválasztó",
+  "breadcrumb_dropdown_label": "Legördülő menü",
+  "breadcrumb_home": "Kezdőlap",
+  "breadcrumb_components": "Komponensek",
+  "breadcrumb_breadcrumb": "Kenyérmorzsa",
+  "breadcrumb_documentation": "Dokumentáció",
+  "breadcrumb_themes": "Témák",
+  "breadcrumb_github": "GitHub"
 }

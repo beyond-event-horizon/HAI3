@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Brödsmula",
+  "breadcrumb_custom_separator_label": "Anpassad avgränsare",
+  "breadcrumb_dropdown_label": "Rullgardinsmeny",
+  "breadcrumb_home": "Hem",
+  "breadcrumb_components": "Komponenter",
+  "breadcrumb_breadcrumb": "Brödsmula",
+  "breadcrumb_documentation": "Dokumentation",
+  "breadcrumb_themes": "Teman",
+  "breadcrumb_github": "GitHub"
 }

@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Хлібні крихти",
+  "breadcrumb_custom_separator_label": "Власний роздільник",
+  "breadcrumb_dropdown_label": "Випадаюче меню",
+  "breadcrumb_home": "Головна",
+  "breadcrumb_components": "Компоненти",
+  "breadcrumb_breadcrumb": "Хлібні крихти",
+  "breadcrumb_documentation": "Документація",
+  "breadcrumb_themes": "Теми",
+  "breadcrumb_github": "GitHub"
 }

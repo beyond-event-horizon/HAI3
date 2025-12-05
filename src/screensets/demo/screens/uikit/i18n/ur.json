@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "بریڈ کرمب",
+  "breadcrumb_custom_separator_label": "حسب ضرورت علیحدگی",
+  "breadcrumb_dropdown_label": "ڈراپ ڈاؤن",
+  "breadcrumb_home": "ہوم",
+  "breadcrumb_components": "اجزاء",
+  "breadcrumb_breadcrumb": "بریڈ کرمب",
+  "breadcrumb_documentation": "دستاویزات",
+  "breadcrumb_themes": "تھیمز",
+  "breadcrumb_github": "گٹ ہب"
 }

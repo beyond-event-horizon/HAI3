@@ -339,5 +339,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Migas de pan",
+  "breadcrumb_custom_separator_label": "Separador personalizado",
+  "breadcrumb_dropdown_label": "Menú desplegable",
+  "breadcrumb_home": "Inicio",
+  "breadcrumb_components": "Componentes",
+  "breadcrumb_breadcrumb": "Migas de pan",
+  "breadcrumb_documentation": "Documentación",
+  "breadcrumb_themes": "Temas",
+  "breadcrumb_github": "GitHub"
 }

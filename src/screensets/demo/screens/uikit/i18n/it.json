@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Breadcrumb",
+  "breadcrumb_custom_separator_label": "Separatore personalizzato",
+  "breadcrumb_dropdown_label": "Menu a discesa",
+  "breadcrumb_home": "Home",
+  "breadcrumb_components": "Componenti",
+  "breadcrumb_breadcrumb": "Breadcrumb",
+  "breadcrumb_documentation": "Documentazione",
+  "breadcrumb_themes": "Temi",
+  "breadcrumb_github": "GitHub"
 }

@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "เบรดครัมบ์",
+  "breadcrumb_custom_separator_label": "ตัวคั่นกำหนดเอง",
+  "breadcrumb_dropdown_label": "เมนูแบบเลื่อนลง",
+  "breadcrumb_home": "หน้าแรก",
+  "breadcrumb_components": "คอมโพเนนต์",
+  "breadcrumb_breadcrumb": "เบรดครัมบ์",
+  "breadcrumb_documentation": "เอกสาร",
+  "breadcrumb_themes": "ธีม",
+  "breadcrumb_github": "GitHub"
 }

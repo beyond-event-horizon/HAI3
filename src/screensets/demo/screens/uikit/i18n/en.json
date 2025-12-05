@@ -226,7 +226,6 @@
   "element_slider": "Slider",
   "element_accordion": "Accordion",
   "element_collapsible": "Collapsible",
-  "element_context_menu": "Context Menu",
   "categories_heading": "Categories",
   "elements_implemented": "elements implemented",
   "of": "of",
@@ -344,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Breadcrumb",
+  "breadcrumb_custom_separator_label": "Custom Separator",
+  "breadcrumb_dropdown_label": "Dropdown",
+  "breadcrumb_home": "Home",
+  "breadcrumb_components": "Components",
+  "breadcrumb_breadcrumb": "Breadcrumb",
+  "breadcrumb_documentation": "Documentation",
+  "breadcrumb_themes": "Themes",
+  "breadcrumb_github": "GitHub"
 }

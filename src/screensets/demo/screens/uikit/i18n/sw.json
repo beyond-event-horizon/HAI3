@@ -343,5 +343,14 @@
   "dropdownmenu_pdf": "PDF",
   "dropdownmenu_csv": "CSV",
   "dropdownmenu_json": "JSON",
-  "dropdownmenu_disabled": "Disabled Item"
+  "dropdownmenu_disabled": "Disabled Item",
+  "breadcrumb_heading": "Breadcrumb",
+  "breadcrumb_custom_separator_label": "Kitenganishi maalum",
+  "breadcrumb_dropdown_label": "Menyu ya kushuka",
+  "breadcrumb_home": "Nyumbani",
+  "breadcrumb_components": "Vipengele",
+  "breadcrumb_breadcrumb": "Breadcrumb",
+  "breadcrumb_documentation": "Nyaraka",
+  "breadcrumb_themes": "Mandhari",
+  "breadcrumb_github": "GitHub"
 }
