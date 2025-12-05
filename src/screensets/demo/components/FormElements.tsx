@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@hai3/uikit';
+import { Switch, Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, Textarea } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { DEMO_SCREENSET_ID } from "../ids";
 import { UI_KIT_ELEMENTS_SCREEN_ID } from "../ids";
@@ -156,6 +156,36 @@ export const FormElements: React.FC = () => {
               checked={airplaneMode}
               onCheckedChange={setAirplaneMode}
             />
+          </div>
+        </div>
+      </div>
+
+      {/* Textarea Element Block */}
+      <div data-element-id="element-textarea" className="flex flex-col gap-4">
+        <TextLoader skeletonClassName="h-8 w-24">
+          <h2 className="text-2xl font-semibold">
+            {tk('textarea_heading')}
+          </h2>
+        </TextLoader>
+        <div className="flex flex-col gap-6 p-6 border border-border rounded-lg bg-background overflow-hidden">
+          {/* Default Textarea */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('textarea_default_label')}
+              </label>
+            </TextLoader>
+            <Textarea placeholder={tk('textarea_placeholder')} className="max-w-sm" />
+          </div>
+
+          {/* Disabled Textarea */}
+          <div className="flex flex-col gap-2">
+            <TextLoader skeletonClassName="h-4 w-24" inheritColor>
+              <label className="text-xs text-muted-foreground">
+                {tk('textarea_disabled_label')}
+              </label>
+            </TextLoader>
+            <Textarea disabled placeholder={tk('textarea_placeholder')} className="max-w-sm" />
           </div>
         </div>
       </div>

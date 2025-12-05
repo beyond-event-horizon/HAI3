@@ -429,5 +429,9 @@
   "input_name_placeholder": "名前",
   "input_password_label": "パスワード",
   "input_password_placeholder": "パスワード",
-  "input_new_password_label": "新しいパスワード"
+  "input_new_password_label": "新しいパスワード",
+  "textarea_heading": "テキストエリア",
+  "textarea_default_label": "デフォルト",
+  "textarea_disabled_label": "無効",
+  "textarea_placeholder": "ここにメッセージを入力してください。"
 }

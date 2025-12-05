@@ -425,5 +425,9 @@
   "input_name_placeholder": "الاسم",
   "input_password_label": "كلمة المرور",
   "input_password_placeholder": "كلمة المرور",
-  "input_new_password_label": "كلمة المرور الجديدة"
+  "input_new_password_label": "كلمة المرور الجديدة",
+  "textarea_heading": "منطقة النص",
+  "textarea_default_label": "افتراضي",
+  "textarea_disabled_label": "معطل",
+  "textarea_placeholder": "اكتب رسالتك هنا."
 }

@@ -429,5 +429,9 @@
   "input_name_placeholder": "姓名",
   "input_password_label": "密码",
   "input_password_placeholder": "密码",
-  "input_new_password_label": "新密码"
+  "input_new_password_label": "新密码",
+  "textarea_heading": "文本区域",
+  "textarea_default_label": "默认",
+  "textarea_disabled_label": "禁用",
+  "textarea_placeholder": "在此输入您的消息。"
 }

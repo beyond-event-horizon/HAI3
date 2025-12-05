@@ -425,5 +425,9 @@
   "input_name_placeholder": "Nombre",
   "input_password_label": "Contraseña",
   "input_password_placeholder": "Contraseña",
-  "input_new_password_label": "Nueva contraseña"
+  "input_new_password_label": "Nueva contraseña",
+  "textarea_heading": "Área de texto",
+  "textarea_default_label": "Predeterminado",
+  "textarea_disabled_label": "Deshabilitado",
+  "textarea_placeholder": "Escribe tu mensaje aquí."
 }

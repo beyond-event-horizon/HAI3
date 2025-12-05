@@ -196,6 +196,7 @@ export const IMPLEMENTED_ELEMENTS = [
   'Spinner',
   'Switch',
   'Tabs',
+  'Textarea',
   'Tooltip',
 ];
 

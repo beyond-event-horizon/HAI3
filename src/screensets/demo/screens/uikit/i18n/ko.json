@@ -429,5 +429,9 @@
   "input_name_placeholder": "이름",
   "input_password_label": "비밀번호",
   "input_password_placeholder": "비밀번호",
-  "input_new_password_label": "새 비밀번호"
+  "input_new_password_label": "새 비밀번호",
+  "textarea_heading": "텍스트 영역",
+  "textarea_default_label": "기본",
+  "textarea_disabled_label": "비활성화",
+  "textarea_placeholder": "여기에 메시지를 입력하세요."
 }

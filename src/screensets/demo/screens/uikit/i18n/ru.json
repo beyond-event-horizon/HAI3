@@ -429,5 +429,9 @@
   "input_name_placeholder": "Имя",
   "input_password_label": "Пароль",
   "input_password_placeholder": "Пароль",
-  "input_new_password_label": "Новый пароль"
+  "input_new_password_label": "Новый пароль",
+  "textarea_heading": "Текстовое поле",
+  "textarea_default_label": "По умолчанию",
+  "textarea_disabled_label": "Отключено",
+  "textarea_placeholder": "Введите ваше сообщение здесь."
 }
