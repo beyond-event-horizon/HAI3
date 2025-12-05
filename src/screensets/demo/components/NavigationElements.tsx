@@ -24,6 +24,12 @@ import {
   MenubarSub,
   MenubarSubContent,
   MenubarSubTrigger,
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
 } from '@hai3/uikit';
 import { useTranslation, TextLoader } from '@hai3/uicore';
 import { Slash } from 'lucide-react';
@@ -32,7 +38,7 @@ import { UI_KIT_ELEMENTS_SCREEN_ID } from "../ids";
 
 /**
  * Navigation Elements Component
- * Contains Breadcrumb and Menubar demonstrations
+ * Contains Breadcrumb, Menubar, and Navigation Menu demonstrations
  * Uses parent screen (UIKitElementsScreen) translations
  */
 export const NavigationElements: React.FC = () => {
@@ -255,6 +261,149 @@ export const NavigationElements: React.FC = () => {
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
+        </div>
+      </div>
+
+      {/* Navigation Menu Element Block */}
+      <div data-element-id="element-navigation-menu" className="flex flex-col gap-4">
+        <TextLoader skeletonClassName="h-80 w-40">
+          <h2 className="text-2xl font-semibold">
+            {tk('navigation_menu_heading')}
+          </h2>
+        </TextLoader>
+        <div className="flex flex-col gap-6 p-6 border border-border rounded-lg bg-background">
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>{tk('navigation_menu_getting_started')}</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                    <li className="row-span-3">
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                          href="#"
+                        >
+                          <div className="mb-2 mt-4 text-lg font-medium">
+                            HAI3
+                          </div>
+                          <p className="text-sm leading-tight text-muted-foreground">
+                            {tk('navigation_menu_hai3_desc')}
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          href="#"
+                        >
+                          <div className="text-sm font-medium leading-none">{tk('navigation_menu_introduction')}</div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            {tk('navigation_menu_introduction_desc')}
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          href="#"
+                        >
+                          <div className="text-sm font-medium leading-none">{tk('navigation_menu_installation')}</div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            {tk('navigation_menu_installation_desc')}
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          href="#"
+                        >
+                          <div className="text-sm font-medium leading-none">{tk('navigation_menu_typography')}</div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            {tk('navigation_menu_typography_desc')}
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>{tk('navigation_menu_components')}</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          href="#"
+                        >
+                          <div className="text-sm font-medium leading-none">{tk('navigation_menu_alert_dialog')}</div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            {tk('navigation_menu_alert_dialog_desc')}
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          href="#"
+                        >
+                          <div className="text-sm font-medium leading-none">{tk('navigation_menu_hover_card')}</div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            {tk('navigation_menu_hover_card_desc')}
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          href="#"
+                        >
+                          <div className="text-sm font-medium leading-none">{tk('navigation_menu_progress')}</div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            {tk('navigation_menu_progress_desc')}
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          href="#"
+                        >
+                          <div className="text-sm font-medium leading-none">{tk('navigation_menu_scroll_area')}</div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            {tk('navigation_menu_scroll_area_desc')}
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                  href="#"
+                >
+                  {tk('navigation_menu_documentation')}
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
       </div>
     </>

@@ -181,6 +181,7 @@ export const IMPLEMENTED_ELEMENTS = [
   'Dropdown Menu',
   'Hover Card',
   'Menubar',
+  'Navigation Menu',
   'Popover',
   'Progress',
   'Resizable',
